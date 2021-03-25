@@ -6,22 +6,12 @@
 'use strict';
 
 import Discord = require('discord.js');
-import fs = require('fs');
 import DiscordStuff = require("./DiscordStuff.js");
 import config = require('../ToCompile/config.json');
 import botCommands from './commandindex';
-const client = new Discord.Client();
 
 const discordUser = new DiscordStuff.DiscordUser();
-
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-const commands = new Discord.Collection();
-
-commandFiles.map(file => {
-	const command = require(`./commands/${file}`);
-	commands.set(command.name, command);
-	return command;
-});
+const client = new Discord.Client();
 
 client.once('ready', async () => {
 	try {
@@ -103,12 +93,12 @@ client.on('message', async (msg) => {
 client.on('messageReactionAdd', async (messageReaction, user) => {
 	const command = 'onmessagereactionadd';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any)
+		const cmdName = await (botCommands.commands.get(command) as any)
 			.execute(messageReaction, client, user, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
@@ -120,7 +110,7 @@ client.on('messageReactionAdd', async (messageReaction, user) => {
 client.on('guildDelete', async guild => {
 	const command = 'onguilddelete';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -144,7 +134,7 @@ client.on('guildBanAdd', async (guild, user) => {
 	}
 	const command = 'onguildbanadd';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -168,7 +158,7 @@ client.on('guildBanRemove', async (guild, user) => {
 	}
 	const command = 'onguildbanremove';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -192,7 +182,7 @@ client.on('guildMemberAdd', async member => {
 	}
 	const command = 'onguildmemberadd';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -215,7 +205,7 @@ client.on('guildMemberRemove', async member => {
 		}
 	}
 	const command = 'onguildmemberremove';
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -239,12 +229,12 @@ client.on('guildMemberUpdate', async (oldGuildMember, newGuildMember) => {
 			}
 		}
 		const command = 'ondisplaynamechange';
-		if (!commands.has(command)) {
+		if (!botCommands.commands.has(command)) {
 			return;
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await (commands.get(command) as any)
+			const cmdName = await (botCommands.commands.get(command) as any)
 				.execute(client, oldGuildMember, newGuildMember, discordUser);
 			console.log(`Completed Command: ${cmdName}`);
 			return;
@@ -262,12 +252,12 @@ client.on('guildMemberUpdate', async (oldGuildMember, newGuildMember) => {
 			}
 		}
 		const command = 'onnicknamechange';
-		if (!commands.has(command)) {
+		if (!botCommands.commands.has(command)) {
 			return;
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await (commands.get(command) as any)
+			const cmdName = await (botCommands.commands.get(command) as any)
 				.execute(client, oldGuildMember, newGuildMember, discordUser);
 			console.log(`Completed Command: ${cmdName}`);
 			return;
@@ -295,12 +285,12 @@ client.on('guildMemberUpdate', async (oldGuildMember, newGuildMember) => {
 		}
 		const command = 'onroleaddorremove';
 
-		if (!commands.has(command)) {
+		if (!botCommands.commands.has(command)) {
 			return;
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await (commands.get(command) as any)
+			const cmdName = await (botCommands.commands.get(command) as any)
 				.execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager,
 					newGuildMember, collectionSizeDifference, discordUser);
 			console.log(`Completed Command: ${cmdName}`);
@@ -322,7 +312,7 @@ client.on('inviteCreate', async (invite) => {
 	}
 	const command = 'oninvitecreate';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -346,7 +336,7 @@ client.on('messageDelete', async (message) => {
 	}
 	const command = 'onmessagedelete';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -370,7 +360,7 @@ client.on('messageDeleteBulk', async (collection) => {
 	}
 	const command = 'onmessagedeletebulk';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -394,7 +384,7 @@ client.on('roleCreate', async (role) => {
 	}
 	const command = 'onrolecreate';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -418,7 +408,7 @@ client.on('roleDelete', async (role) => {
 	}
 	const command = 'onroledelete';
 
-	if (!commands.has(command)) {
+	if (!botCommands.commands.has(command)) {
 		return;
 	}
 	try {
@@ -446,12 +436,12 @@ client.on('userUpdate', async (oldUser, newUser) => {
 							} else {
 								const command = 'onusernamechange';
 
-								if (!commands.has(command)) {
+								if (!botCommands.commands.has(command)) {
 									return;
 								}
 								try {
 									console.log(`Command: '${command}' entered by system.`);
-									const cmdName = await (commands.get(command) as any)
+									const cmdName = await (botCommands.commands.get(command) as any)
 										.execute(client, oldUser, newUser, guildArray[x], discordUser);
 									console.log(`Completed Command: ${cmdName}`);
 									break;

@@ -1,4 +1,4 @@
-// onguildmemberremove.js - Module for my "on guild member remove" command.
+// onguildmemberremove.ts - Module for my "on guild member remove" command.
 // Mar 12, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,89 +39,93 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Discord = require('discord.js');
-var DiscordStuff = require('../DiscordStuff');
-module.exports = {
-    name: 'onguildmemberremove',
-    description: "It's an automatic one!",
-    /**
-     * @param {Discord.Client}          client
-     * @param {Discord.GuildMember}     guildMember
-     * @param {DiscordStuff.DiscordUser}discordUser
-     * @returns {String}
-     */
-    execute: function (client, guildMember, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var guildData, logs, x, textChannel, currentGuild, auditLog, augitLogEntry, msgEmbed, msgString, msgString, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 9, , 10]);
-                        if (!(guildMember instanceof Discord.GuildMember)) {
-                            return [2 /*return*/, this.name];
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var Discord = require("discord.js");
+var DiscordStuff = require("../DiscordStuff");
+var command = new DiscordStuff.BotCommand();
+command.name = 'onguildmemberremove';
+command.description = "It's an automatic one!";
+/**
+ * @param {Discord.Client}          client
+ * @param {Discord.GuildMember}     guildMember
+ * @param {DiscordStuff.DiscordUser}discordUser
+ * @returns {Promise<string>}
+ */
+function execute(client, guildMember, discordUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var guildData, logs, x, textChannel, currentGuild, auditLog, augitLogEntry, msgEmbed, msgString, msgString, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 9, , 10]);
+                    if (!(guildMember instanceof Discord.GuildMember)) {
+                        return [2 /*return*/, command.name];
+                    }
+                    return [4 /*yield*/, discordUser.getGuildDataFromDB(guildMember.guild)];
+                case 1:
+                    guildData = _a.sent();
+                    logs = new DiscordStuff.Log();
+                    for (x = 0; x < guildData.logs.length; x += 1) {
+                        if (guildData.logs[x].nameSmall === 'guildmemberremove') {
+                            logs = guildData.logs[x];
+                            break;
                         }
-                        return [4 /*yield*/, discordUser.getGuildDataFromDB(guildMember.guild)];
-                    case 1:
-                        guildData = _a.sent();
-                        logs = new DiscordStuff.Log();
-                        for (x = 0; x < guildData.logs.length; x += 1) {
-                            if (guildData.logs[x].nameSmall === 'guildmemberremove') {
-                                logs = guildData.logs[x];
-                                break;
-                            }
-                        }
-                        textChannel = new Discord.TextChannel(guildMember.guild, {});
-                        return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                    case 2:
-                        textChannel = _a.sent();
-                        return [4 /*yield*/, client.guilds.fetch(guildMember.guild.id)];
-                    case 3:
-                        currentGuild = _a.sent();
-                        return [4 /*yield*/, guildMember.guild.fetchAuditLogs({ type: 'MEMBER_KICK', limit: 1 })];
-                    case 4:
-                        auditLog = _a.sent();
-                        augitLogEntry = auditLog.entries
-                            .find(function (auditLogs) { return Date.now() - auditLogs.createdTimestamp < 5000; });
-                        msgEmbed = new Discord.MessageEmbed();
-                        if (!(augitLogEntry !== undefined)) return [3 /*break*/, 6];
-                        msgString = "__**Kicked By:**__ <@!" + augitLogEntry.executor.id + "> (" + augitLogEntry.executor.tag + ")\n";
-                        msgString += "__**Member Count**__: " + currentGuild.memberCount + "\n";
-                        msgString += "__**User:**__ <@!" + guildMember.id + ">\n";
-                        msgString += "__**User Tag:**__ " + guildMember.user.tag + "\n";
-                        msgString += "__**Username:**__ " + guildMember.user.username + "\n";
-                        msgString += "__**User ID:**__ " + guildMember.id + "\n";
-                        msgEmbed.setAuthor(guildMember.user.username, guildMember.user
-                            .avatarURL()).setColor(guildMember.displayColor).setDescription(msgString)
-                            .setThumbnail(guildMember.user.avatarURL())
-                            .setTimestamp(Date())
-                            .setTitle('__**Guild Member Kicked:**__');
-                        return [4 /*yield*/, textChannel.send(msgEmbed)];
-                    case 5:
-                        _a.sent();
-                        return [3 /*break*/, 8];
-                    case 6:
-                        msgString = "__**Member Count**__: " + currentGuild.memberCount + "\n";
-                        msgString += "__**User:**__ <@!" + guildMember.id + ">\n";
-                        msgString += "__**User Tag:**__ " + guildMember.user.tag + "\n";
-                        msgString += "__**Username:**__ " + guildMember.user.username + "\n";
-                        msgString += "__**User ID:**__ " + guildMember.id + "\n";
-                        msgEmbed.setColor(guildMember.displayColor)
-                            .setDescription(msgString).setThumbnail(guildMember.user.avatarURL())
-                            .setTimestamp(Date())
-                            .setTitle('__**Guild Member Left:**__');
-                        return [4 /*yield*/, textChannel.send(msgEmbed)];
-                    case 7:
-                        _a.sent();
-                        _a.label = 8;
-                    case 8: return [2 /*return*/, this.name];
-                    case 9:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 10: return [2 /*return*/];
-                }
-            });
+                    }
+                    return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
+                case 2:
+                    textChannel = _a.sent();
+                    return [4 /*yield*/, client.guilds.fetch(guildMember.guild.id)];
+                case 3:
+                    currentGuild = _a.sent();
+                    return [4 /*yield*/, guildMember.guild.fetchAuditLogs({ type: 'MEMBER_KICK', limit: 1 })];
+                case 4:
+                    auditLog = _a.sent();
+                    augitLogEntry = auditLog.entries
+                        .find(function (auditLogs) { return Date.now() - auditLogs.createdTimestamp < 5000; });
+                    msgEmbed = new Discord.MessageEmbed();
+                    if (!(augitLogEntry !== undefined)) return [3 /*break*/, 6];
+                    msgString = "__**Kicked By:**__ <@!" + augitLogEntry.executor.id + "> (" + augitLogEntry.executor.tag + ")\n";
+                    msgString += "__**Member Count**__: " + currentGuild.memberCount + "\n";
+                    msgString += "__**User:**__ <@!" + guildMember.id + ">\n";
+                    msgString += "__**User Tag:**__ " + guildMember.user.tag + "\n";
+                    msgString += "__**Username:**__ " + guildMember.user.username + "\n";
+                    msgString += "__**User ID:**__ " + guildMember.id + "\n";
+                    msgEmbed.setAuthor(guildMember.user.username, guildMember.user
+                        .avatarURL()).setColor(guildMember.displayColor).setDescription(msgString)
+                        .setThumbnail(guildMember.user.avatarURL())
+                        .setTimestamp(Date())
+                        .setTitle('__**Guild Member Kicked:**__');
+                    return [4 /*yield*/, textChannel.send(msgEmbed)];
+                case 5:
+                    _a.sent();
+                    return [3 /*break*/, 8];
+                case 6:
+                    msgString = "__**Member Count**__: " + currentGuild.memberCount + "\n";
+                    msgString += "__**User:**__ <@!" + guildMember.id + ">\n";
+                    msgString += "__**User Tag:**__ " + guildMember.user.tag + "\n";
+                    msgString += "__**Username:**__ " + guildMember.user.username + "\n";
+                    msgString += "__**User ID:**__ " + guildMember.id + "\n";
+                    msgEmbed.setColor(guildMember.displayColor)
+                        .setDescription(msgString)
+                        .setThumbnail(guildMember.user.avatarURL())
+                        .setTimestamp(Date())
+                        .setTitle('__**Guild Member Left:**__');
+                    return [4 /*yield*/, textChannel.send(msgEmbed)];
+                case 7:
+                    _a.sent();
+                    _a.label = 8;
+                case 8: return [2 /*return*/, command.name];
+                case 9:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 10: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;
