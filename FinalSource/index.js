@@ -168,25 +168,25 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
 }); });
 client.on('messageReactionAdd', function (messageReaction, user) { return __awaiter(void 0, void 0, void 0, function () {
     var command, cmdName, error_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 command = 'onmessagereactionadd';
                 if (!commandindex_1.default.commands.has(command)) {
                     return [2 /*return*/];
                 }
-                _a.label = 1;
+                _b.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
+                _b.trys.push([1, 3, , 4]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, commandindex_1.default.commands.get(command)
-                        .execute(messageReaction, client, user, discordUser)];
+                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(messageReaction, client, user, discordUser))];
             case 2:
-                cmdName = _a.sent();
+                cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 3:
-                error_4 = _a.sent();
+                error_4 = _b.sent();
                 console.log(error_4);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
@@ -366,13 +366,14 @@ client.on('guildMemberRemove', function (member) { return __awaiter(void 0, void
 }); });
 client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { return __awaiter(void 0, void 0, void 0, function () {
     var guildData, x, command, cmdName, error_10, guildData, x, command, cmdName, error_11, oldGuildMemberRoleManager, newGuildMemberRoleManager, collectionSizeDifference, guildData, x, command, cmdName, error_12;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, _b, _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
             case 0:
                 if (!(oldGuildMember.displayName !== newGuildMember.displayName)) return [3 /*break*/, 5];
                 return [4 /*yield*/, discordUser.getGuildDataFromDB(oldGuildMember.guild)];
             case 1:
-                guildData = _a.sent();
+                guildData = _d.sent();
                 for (x = 0; x < guildData.logs.length; x += 1) {
                     if (guildData.logs[x].nameSmall === 'displaynamechange') {
                         if (guildData.logs[x].enabled === false) {
@@ -384,24 +385,23 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 if (!commandindex_1.default.commands.has(command)) {
                     return [2 /*return*/];
                 }
-                _a.label = 2;
+                _d.label = 2;
             case 2:
-                _a.trys.push([2, 4, , 5]);
+                _d.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, commandindex_1.default.commands.get(command)
-                        .execute(client, oldGuildMember, newGuildMember, discordUser)];
+                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, oldGuildMember, newGuildMember, discordUser))];
             case 3:
-                cmdName = _a.sent();
+                cmdName = _d.sent();
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_10 = _a.sent();
+                error_10 = _d.sent();
                 return [2 /*return*/];
             case 5:
                 if (!(oldGuildMember.nickname !== newGuildMember.nickname)) return [3 /*break*/, 10];
                 return [4 /*yield*/, discordUser.getGuildDataFromDB(oldGuildMember.guild)];
             case 6:
-                guildData = _a.sent();
+                guildData = _d.sent();
                 for (x = 0; x < guildData.logs.length; x += 1) {
                     if (guildData.logs[x].nameSmall === 'nicknamechange') {
                         if (guildData.logs[x].enabled === false) {
@@ -413,18 +413,17 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 if (!commandindex_1.default.commands.has(command)) {
                     return [2 /*return*/];
                 }
-                _a.label = 7;
+                _d.label = 7;
             case 7:
-                _a.trys.push([7, 9, , 10]);
+                _d.trys.push([7, 9, , 10]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, commandindex_1.default.commands.get(command)
-                        .execute(client, oldGuildMember, newGuildMember, discordUser)];
+                return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(command)) === null || _b === void 0 ? void 0 : _b.function(client, oldGuildMember, newGuildMember, discordUser))];
             case 8:
-                cmdName = _a.sent();
+                cmdName = _d.sent();
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 9:
-                error_11 = _a.sent();
+                error_11 = _d.sent();
                 return [2 /*return*/];
             case 10:
                 oldGuildMemberRoleManager = new Discord.GuildMemberRoleManager(oldGuildMember);
@@ -436,7 +435,7 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 if (!(collectionSizeDifference !== 0)) return [3 /*break*/, 15];
                 return [4 /*yield*/, discordUser.getGuildDataFromDB(newGuildMember.guild)];
             case 11:
-                guildData = _a.sent();
+                guildData = _d.sent();
                 for (x = 0; x < guildData.logs.length; x += 1) {
                     if (guildData.logs[x].nameSmall === 'roleaddorremove') {
                         if (guildData.logs[x].enabled === false) {
@@ -448,18 +447,17 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 if (!commandindex_1.default.commands.has(command)) {
                     return [2 /*return*/];
                 }
-                _a.label = 12;
+                _d.label = 12;
             case 12:
-                _a.trys.push([12, 14, , 15]);
+                _d.trys.push([12, 14, , 15]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, commandindex_1.default.commands.get(command)
-                        .execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser)];
+                return [4 /*yield*/, ((_c = commandindex_1.default.commands.get(command)) === null || _c === void 0 ? void 0 : _c.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser))];
             case 13:
-                cmdName = _a.sent();
+                cmdName = _d.sent();
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 14:
-                error_12 = _a.sent();
+                error_12 = _d.sent();
                 console.log(error_12);
                 return [3 /*break*/, 15];
             case 15: return [2 /*return*/];
@@ -648,28 +646,29 @@ client.on('roleDelete', function (role) { return __awaiter(void 0, void 0, void 
 }); });
 client.on('userUpdate', function (oldUser, newUser) { return __awaiter(void 0, void 0, void 0, function () {
     var guildArray, x, guildMembersArray, y, guildData, z, command, cmdName, error_18;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 if (!(oldUser.username !== newUser.username)) return [3 /*break*/, 13];
                 guildArray = client.guilds.cache.array();
                 x = 0;
-                _a.label = 1;
+                _b.label = 1;
             case 1:
                 if (!(x < guildArray.length)) return [3 /*break*/, 13];
                 return [4 /*yield*/, guildArray[x].members.fetch()];
             case 2:
-                guildMembersArray = (_a.sent()).array();
+                guildMembersArray = (_b.sent()).array();
                 y = 0;
-                _a.label = 3;
+                _b.label = 3;
             case 3:
                 if (!(y < guildMembersArray.length)) return [3 /*break*/, 12];
                 if (!(guildMembersArray[y].id === oldUser.id)) return [3 /*break*/, 11];
                 return [4 /*yield*/, discordUser.getGuildDataFromDB(guildArray[x])];
             case 4:
-                guildData = _a.sent();
+                guildData = _b.sent();
                 z = 0;
-                _a.label = 5;
+                _b.label = 5;
             case 5:
                 if (!(z < guildData.logs.length)) return [3 /*break*/, 11];
                 if (!(guildData.logs[z].nameSmall === 'usernamechange')) return [3 /*break*/, 10];
@@ -680,18 +679,17 @@ client.on('userUpdate', function (oldUser, newUser) { return __awaiter(void 0, v
                 if (!commandindex_1.default.commands.has(command)) {
                     return [2 /*return*/];
                 }
-                _a.label = 7;
+                _b.label = 7;
             case 7:
-                _a.trys.push([7, 9, , 10]);
+                _b.trys.push([7, 9, , 10]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, commandindex_1.default.commands.get(command)
-                        .execute(client, oldUser, newUser, guildArray[x], discordUser)];
+                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, oldUser, newUser, guildArray[x], discordUser))];
             case 8:
-                cmdName = _a.sent();
+                cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
                 return [3 /*break*/, 11];
             case 9:
-                error_18 = _a.sent();
+                error_18 = _b.sent();
                 console.log(error_18);
                 return [2 /*return*/];
             case 10:

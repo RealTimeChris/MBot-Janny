@@ -98,8 +98,7 @@ client.on('messageReactionAdd', async (messageReaction, user) => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (botCommands.commands.get(command) as any)
-			.execute(messageReaction, client, user, discordUser);
+		const cmdName = await (botCommands.commands.get(command)?.function(messageReaction, client, user, discordUser));
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -234,8 +233,8 @@ client.on('guildMemberUpdate', async (oldGuildMember, newGuildMember) => {
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await (botCommands.commands.get(command) as any)
-				.execute(client, oldGuildMember, newGuildMember, discordUser);
+			const cmdName = await (botCommands.commands.get(command)?.function(client, oldGuildMember,
+				newGuildMember, discordUser));
 			console.log(`Completed Command: ${cmdName}`);
 			return;
 		} catch (error) {
@@ -257,8 +256,8 @@ client.on('guildMemberUpdate', async (oldGuildMember, newGuildMember) => {
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await (botCommands.commands.get(command) as any)
-				.execute(client, oldGuildMember, newGuildMember, discordUser);
+			const cmdName = await (botCommands.commands.get(command)?.function(client, oldGuildMember,
+				newGuildMember, discordUser));
 			console.log(`Completed Command: ${cmdName}`);
 			return;
 		} catch (error) {
@@ -290,9 +289,8 @@ client.on('guildMemberUpdate', async (oldGuildMember, newGuildMember) => {
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await (botCommands.commands.get(command) as any)
-				.execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager,
-					newGuildMember, collectionSizeDifference, discordUser);
+			const cmdName = await (botCommands.commands.get(command)?.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager,
+					newGuildMember, collectionSizeDifference, discordUser));
 			console.log(`Completed Command: ${cmdName}`);
 			return;
 		} catch (error) {
@@ -441,8 +439,8 @@ client.on('userUpdate', async (oldUser, newUser) => {
 								}
 								try {
 									console.log(`Command: '${command}' entered by system.`);
-									const cmdName = await (botCommands.commands.get(command) as any)
-										.execute(client, oldUser, newUser, guildArray[x], discordUser);
+									const cmdName = await (botCommands.commands.get(command)?.function(client, oldUser,
+										newUser, guildArray[x], discordUser));
 									console.log(`Completed Command: ${cmdName}`);
 									break;
 								} catch (error) {
