@@ -76,4 +76,8 @@ var test_1 = __importDefault(require("./commands/test"));
 commands.set(test_1.default.name, test_1.default);
 var timedmessages_1 = __importDefault(require("./commands/timedmessages"));
 commands.set(timedmessages_1.default.name, timedmessages_1.default);
+var trackuser_1 = __importDefault(require("./commands/trackuser"));
+commands.set(trackuser_1.default.name, trackuser_1.default);
+var userinfo_1 = __importDefault(require("./commands/userinfo"));
+commands.set(userinfo_1.default.name, userinfo_1.default);
 exports.default = { commands: commands };

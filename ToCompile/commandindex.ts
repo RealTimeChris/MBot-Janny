@@ -76,7 +76,9 @@ import test from './commands/test'
 commands.set(test.name, test);
 import timedmessages from './commands/timedmessages';
 commands.set(timedmessages.name, timedmessages);
-
-
+import trackuser from './commands/trackuser'
+commands.set(trackuser.name, trackuser);
+import userinfo from './commands/userinfo'
+commands.set(userinfo.name, userinfo);
 
 export default {commands};

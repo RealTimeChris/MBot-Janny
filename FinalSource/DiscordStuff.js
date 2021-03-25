@@ -1687,7 +1687,7 @@ var DiscordUser = /** @class */ (function () {
                             })];
                     case 41:
                         error_24 = _a.sent();
-                        return [4 /*yield*/, this.getGuildDataFromDB(guild.guildID)];
+                        return [4 /*yield*/, this.getGuildDataFromDB(client.guilds.resolve(guild.guildID))];
                     case 42:
                         newGuild = _a.sent();
                         newGuild.deletionChannels[channelIndex].timeOfLastPurge = 0;

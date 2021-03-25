@@ -1,4 +1,4 @@
-// userinfo.js - Module for my user info command.
+// userinfo.ts - Module for my user info command.
 // Jan 29, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,136 +39,140 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Discord = require('discord.js');
-var DiscordStuff = require('../DiscordStuff');
-module.exports = {
-    name: 'userinfo',
-    description: '!userinfo to display your own info!\nOr !userinfo = @USERMENTION, to display the info of another user!',
-    /**
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var Discord = require("discord.js");
+var DiscordStuff = require("../DiscordStuff");
+var command = new DiscordStuff.BotCommand();
+command.name = 'userinfo';
+command.description = '!userinfo to display your own info!\nOr !userinfo = @USERMENTION, to display the info of another user!';
+/**
      * Displays info about a selected user.
      * @param   {Discord.Message}           message
      * @param   {String[]}                  args
      * @param   {DiscordStuff.DiscordUser}  discordUser
-     * @returns {String}
+     * @returns {Promise<string>}
      */
-    execute: function (message, args) {
-        return __awaiter(this, void 0, void 0, function () {
-            var areWeInADM, userID, userMentionRegExp, userIDRegExp, argZero, userIDOne, guildMemberManager, guildMember, error_1, fields, field, field1, field2, field3, field4, field5, permissionsArray, msgString, x, field6, field7, messageEmbed, error_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 15, , 16]);
-                        return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
-                    case 1:
-                        areWeInADM = _a.sent();
-                        if (areWeInADM === true) {
-                            return [2 /*return*/, this.name];
+function execute(message, args) {
+    return __awaiter(this, void 0, void 0, function () {
+        var areWeInADM, userID, userMentionRegExp, userIDRegExp, argZero, userIDOne, guildMemberManager, guildMember, error_1, fields, field, field1, field2, field3, field4, field5, permissionsArray, msgString, x, field6, field7, messageEmbed, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 15, , 16]);
+                    return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
+                case 1:
+                    areWeInADM = _a.sent();
+                    if (areWeInADM === true) {
+                        return [2 /*return*/, command.name];
+                    }
+                    userID = String('');
+                    userMentionRegExp = /.{2,3}\d{18}>/;
+                    userIDRegExp = /\d{18}/;
+                    if (!(args[0] === undefined)) return [3 /*break*/, 2];
+                    userID = message.author.id;
+                    return [3 /*break*/, 6];
+                case 2:
+                    if (!(args[0].match(userIDRegExp)[0] === null
+                        && args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 5];
+                    return [4 /*yield*/, message.reply('Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)')];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, message.delete()];
+                case 4:
+                    _a.sent();
+                    return [2 /*return*/, command.name];
+                case 5:
+                    if (args[0].match(userMentionRegExp) != null) {
+                        userID = args[0].substring(3, args[0].length - 1);
+                    }
+                    else if (args[0].match(userIDRegExp)[0] != null) {
+                        argZero = args[0];
+                        userIDOne = argZero.match(userIDRegExp)[0];
+                        userID = userIDOne;
+                    }
+                    _a.label = 6;
+                case 6:
+                    guildMemberManager = new Discord.GuildMemberManager(message.guild);
+                    guildMember = void 0;
+                    _a.label = 7;
+                case 7:
+                    _a.trys.push([7, 9, , 12]);
+                    return [4 /*yield*/, guildMemberManager.fetch(userID)];
+                case 8:
+                    guildMember = _a.sent();
+                    return [3 /*break*/, 12];
+                case 9:
+                    error_1 = _a.sent();
+                    return [4 /*yield*/, message.reply('Sorry, but that user could not be found!')];
+                case 10:
+                    _a.sent();
+                    return [4 /*yield*/, message.delete()];
+                case 11:
+                    _a.sent();
+                    return [2 /*return*/, command.name];
+                case 12:
+                    fields = [];
+                    field = { name: '__User Tag:__', value: guildMember.user.tag, inline: true };
+                    fields.push(field);
+                    field1 = { name: '__User Name:__', value: guildMember.user.username, inline: true };
+                    fields.push(field1);
+                    field2 = { name: '__Display Name:__', value: guildMember.displayName, inline: true };
+                    fields.push(field2);
+                    field3 = { name: '__User ID:__', value: guildMember.id, inline: true };
+                    fields.push(field3);
+                    field4 = { name: '__Status:__', value: guildMember.presence.status, inline: true };
+                    fields.push(field4);
+                    field5 = { name: '__Joined:__', value: guildMember.joinedAt, inline: true };
+                    fields.push(field5);
+                    permissionsArray = guildMember.permissions.toArray();
+                    msgString = String();
+                    for (x = 0; x < permissionsArray.length; x += 1) {
+                        if (permissionsArray[x].split('_')[2] !== undefined) {
+                            msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0].substr(1).toLowerCase() + " " + permissionsArray[x]
+                                .split('_')[1].substr(0, 1) + permissionsArray[x].split('_')[1].substr(1).toLowerCase() + " " + permissionsArray[x].split('_')[2]
+                                .substr(0, 1) + permissionsArray[x].split('_')[2].substr(1).toLowerCase();
                         }
-                        userID = String('');
-                        userMentionRegExp = /.{2,3}\d{18}>/;
-                        userIDRegExp = /\d{18}/;
-                        if (!(args[0] === undefined)) return [3 /*break*/, 2];
-                        userID = message.author.id;
-                        return [3 /*break*/, 6];
-                    case 2:
-                        if (!(args[0].match(userIDRegExp)[0] === null
-                            && args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 5];
-                        return [4 /*yield*/, message.reply('Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)')];
-                    case 3:
-                        _a.sent();
-                        return [4 /*yield*/, message.delete()];
-                    case 4:
-                        _a.sent();
-                        return [2 /*return*/, this.name];
-                    case 5:
-                        if (args[0].match(userMentionRegExp) != null) {
-                            userID = args[0].substring(3, args[0].length - 1);
+                        else if (permissionsArray[x].split('_')[1] !== undefined) {
+                            msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0].substr(1).toLowerCase() + "\t" + permissionsArray[x]
+                                .split('_')[1].substr(0, 1) + permissionsArray[x].split('_')[1].substr(1).toLowerCase();
                         }
-                        else if (args[0].match(userIDRegExp)[0] != null) {
-                            argZero = args[0];
-                            userIDOne = argZero.match(userIDRegExp)[0];
-                            userID = userIDOne;
+                        else {
+                            msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0].substr(1).toLowerCase();
                         }
-                        _a.label = 6;
-                    case 6:
-                        guildMemberManager = new Discord.GuildMemberManager(message.guild);
-                        guildMember = void 0;
-                        _a.label = 7;
-                    case 7:
-                        _a.trys.push([7, 9, , 12]);
-                        return [4 /*yield*/, guildMemberManager.fetch(userID)];
-                    case 8:
-                        guildMember = _a.sent();
-                        return [3 /*break*/, 12];
-                    case 9:
-                        error_1 = _a.sent();
-                        return [4 /*yield*/, message.reply('Sorry, but that user could not be found!')];
-                    case 10:
-                        _a.sent();
-                        return [4 /*yield*/, message.delete()];
-                    case 11:
-                        _a.sent();
-                        return [2 /*return*/, this.name];
-                    case 12:
-                        fields = [];
-                        field = { name: '__User Tag:__', value: guildMember.user.tag, inline: true };
-                        fields.push(field);
-                        field1 = { name: '__User Name:__', value: guildMember.user.username, inline: true };
-                        fields.push(field1);
-                        field2 = { name: '__Display Name:__', value: guildMember.displayName, inline: true };
-                        fields.push(field2);
-                        field3 = { name: '__User ID:__', value: guildMember.id, inline: true };
-                        fields.push(field3);
-                        field4 = { name: '__Status:__', value: guildMember.presence.status, inline: true };
-                        fields.push(field4);
-                        field5 = { name: '__Joined:__', value: guildMember.joinedAt, inline: true };
-                        fields.push(field5);
-                        permissionsArray = guildMember.permissions.toArray();
-                        msgString = String();
-                        for (x = 0; x < permissionsArray.length; x += 1) {
-                            if (permissionsArray[x].split('_')[2] !== undefined) {
-                                msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0].substr(1).toLowerCase() + " " + permissionsArray[x]
-                                    .split('_')[1].substr(0, 1) + permissionsArray[x].split('_')[1].substr(1).toLowerCase() + " " + permissionsArray[x].split('_')[2]
-                                    .substr(0, 1) + permissionsArray[x].split('_')[2].substr(1).toLowerCase();
-                            }
-                            else if (permissionsArray[x].split('_')[1] !== undefined) {
-                                msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0].substr(1).toLowerCase() + "\t" + permissionsArray[x]
-                                    .split('_')[1].substr(0, 1) + permissionsArray[x].split('_')[1].substr(1).toLowerCase();
-                            }
-                            else {
-                                msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0].substr(1).toLowerCase();
-                            }
-                            if (x < permissionsArray.length - 1) {
-                                msgString += ', ';
-                            }
+                        if (x < permissionsArray.length - 1) {
+                            msgString += ', ';
                         }
-                        field6 = { name: '__Roles:__', value: "" + guildMember.roles.cache.array(), inline: false };
-                        fields.push(field6);
-                        field7 = { name: '__Permissions:__', value: msgString, inline: false };
-                        fields.push(field7);
-                        messageEmbed = new Discord.MessageEmbed();
-                        messageEmbed
-                            .setColor(guildMember.displayColor)
-                            .setTimestamp(Date())
-                            .setTitle('__**User Info:**__')
-                            .setImage(guildMember.user.avatarURL())
-                            .setAuthor(message.author.username, message.author.avatarURL());
-                        messageEmbed.fields = fields;
-                        return [4 /*yield*/, message.channel.send(messageEmbed)];
-                    case 13:
-                        _a.sent();
-                        return [4 /*yield*/, message.delete()];
-                    case 14:
-                        _a.sent();
-                        return [2 /*return*/, this.name];
-                    case 15:
-                        error_2 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_2);
-                            })];
-                    case 16: return [2 /*return*/];
-                }
-            });
+                    }
+                    field6 = { name: '__Roles:__', value: "" + guildMember.roles.cache.array(), inline: false };
+                    fields.push(field6);
+                    field7 = { name: '__Permissions:__', value: msgString, inline: false };
+                    fields.push(field7);
+                    messageEmbed = new Discord.MessageEmbed();
+                    messageEmbed
+                        .setColor(guildMember.displayColor)
+                        .setTimestamp(Date())
+                        .setTitle('__**User Info:**__')
+                        .setImage(guildMember.user.avatarURL())
+                        .setAuthor(message.author.username, message.author.avatarURL());
+                    messageEmbed.fields = fields;
+                    return [4 /*yield*/, message.channel.send(messageEmbed)];
+                case 13:
+                    _a.sent();
+                    return [4 /*yield*/, message.delete()];
+                case 14:
+                    _a.sent();
+                    return [2 /*return*/, command.name];
+                case 15:
+                    error_2 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_2);
+                        })];
+                case 16: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

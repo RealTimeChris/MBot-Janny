@@ -84,9 +84,9 @@ export declare class DiscordUserData {
     startupCall: boolean;
     activeInviteGuilds: string[];
     botCommanders: string[];
-    trackingGuildIDs: Discord.GuildResolvable[];
-    trackingChannelIDs: Discord.ChannelResolvable[];
-    trackedUserIDs: Discord.UserResolvable[];
+    trackingGuildIDs: string[];
+    trackingChannelIDs: string[];
+    trackedUserIDs: string[];
     trackedUserNames: string[];
 }
 export declare class BotCommand {

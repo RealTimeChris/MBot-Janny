@@ -155,9 +155,9 @@ export class DiscordUserData {
 	startupCall: boolean = Boolean(true);
 	activeInviteGuilds: string[] = [];
 	botCommanders: string[] = [];
-	trackingGuildIDs: Discord.GuildResolvable[] = [];
-	trackingChannelIDs: Discord.ChannelResolvable[] = [];
-	trackedUserIDs: Discord.UserResolvable[] = [];
+	trackingGuildIDs: string[] = [];
+	trackingChannelIDs: string[] = [];
+	trackedUserIDs: string[] = [];
 	trackedUserNames: string[] = [];
 }
 
@@ -1252,7 +1252,7 @@ export class DiscordUser {
 				resolve();
 			});
 		} catch (error) {
-			const newGuild = await this.getGuildDataFromDB(guild.guildID);
+			const newGuild = await this.getGuildDataFromDB(client.guilds.resolve(guild.guildID) as Discord.Guild);
 			(newGuild.deletionChannels[channelIndex] as DeletionChannel).timeOfLastPurge = 0;
 			(newGuild.deletionChannels[channelIndex] as DeletionChannel).currentlyBeingDeleted = false;
 			await this.updateGuildDataInDB(newGuild);
