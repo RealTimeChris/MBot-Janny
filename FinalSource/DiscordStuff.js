@@ -138,7 +138,6 @@ var Log = /** @class */ (function () {
     return Log;
 }());
 exports.Log = Log;
-module.exports.Log = Log;
 // Class representing a single guild/server.
 var GuildData = /** @class */ (function () {
     function GuildData() {

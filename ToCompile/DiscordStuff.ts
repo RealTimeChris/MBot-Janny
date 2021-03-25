@@ -11,16 +11,11 @@ import config = require('./config.json');
 
 // Class representing permission overwrites for Discord.
 export class PermissionOverwrites {
-	deny: number = Number();
-
-	allow: number = Number();
-
-	id: string = String();
-
-	channel;
-
-	type: string = String();
-
+	deny: string[] = [];
+	allow: string[] = [];
+	id: string | null = null;
+	channel: Discord.GuildChannel | null;
+	type: string | null = null;
 	/**
 	* @param {Discord.Guild} guild
 	*/
@@ -31,104 +26,72 @@ export class PermissionOverwrites {
 
 // Class representing some info about a given user.
 export class UserRecord {
-	userID: string = String();
-
-	lastKnownUsername: string = String();
-
-	lastKnownUserTag: string = String();
+	userID: string | null = null;
+	lastKnownUsername: string | null = null;
+	lastKnownUserTag: string | null = null;
 }
 
 // Class representing some info about a given server.
 export class ServerRecord {
 	replacementServerInvite: string = String();
-
 	serverName: string = String();
-
 	serverID: string = String();
-
 	userRecords: UserRecord[] = [];
 }
 
 // Class representing a single guild/server member.
 export class GuildMemberData {
 	previousRoleIDs: string[] = [];
-
 	previousPermissionOverwrites: PermissionOverwrites[] = [];
-
 	userID: string = String();
-
 	userName: string = String();
-
 	displayName: string = String();
 }
 
 // Class representing an actively-being-pruned channel.
 export class DeletionChannel {
 	channelID: string = String();
-
 	numberOfMessagesToSave: number = Number();
-
 	timeOfLastPurge: number = Number();
-
 	currentlyBeingDeleted: boolean = Boolean();
-
 	deletionMessageID: string = String();
 }
 
 // Class representing a timed message to be sent out.
 export class TimedMessage {
 	textChannelID: string = String();
-
 	messageContent: string = String();
-
 	msBetweenSends: number = Number();
-
 	timeOfLastSend: number = Number();
-
 	name: string = String();
 }
 
 // Class representing a "server-joining verification" system.
 export class VerificationSystem {
 	channelID: string = String();
-
 	messageID: string = String();
-
 	emoji: string = String();
 }
 
 // Class representing a single log for something on a server.
 export class Log {
 	name: string = String();
-
 	nameSmall: string = String();
-
 	enabled: boolean = Boolean(false);
-
 	loggingChannelID: string = String();
-
 	loggingChannelName: string = String();
 }
-module.exports.Log = Log;
 
 // Class representing a single guild/server.
 export class GuildData {
 	ghostedRoleID: string = String();
-
 	timedMessages: TimedMessage[] = [];
-
 	guildID: string = String();
-
 	guildName: string = String();
-
 	guildMemberCount: number = Number();
-
 	logs: Log[] = [];
-
 	verificationSystem: VerificationSystem = new VerificationSystem();
-
 	deletionChannels: DeletionChannel[] = [];
-
 	defaultRoleIDs: string[] = [];
 
 	constructor() {
@@ -177,52 +140,31 @@ export class GuildData {
 // Class representing a single instance of "Discord".
 export class DiscordUserData {
 	userID: string = String();
-
 	userName: string = String();
-
 	guildCount: number = Number();
-
 	msBetweenCacheBackup: number = Number();
-
 	currencyName: string = String();
-
 	timeOfLastUpdateAndSave: number = Number();
-
 	prefix: string = String();
-
 	dataBaseFilePath: string = String();
-
 	msBetweenRecordUpdates: number = Number();
-
 	timeOfLastRecordUpdate: number = Number();
-
 	msBetweenInvites: number = Number();
-
 	timeOfLastInvite: number = Number();
-
 	msBetweenMessageDeletion: number = Number();
-
 	startupCall: boolean = Boolean();
-
 	activeInviteGuilds: string[] = [];
-
 	botCommanders: string[] = [];
-
 	trackingGuildIDs: string[] = [];
-
 	trackingChannelIDs: string[] = [];
-
 	trackedUserIDs: string[] = [];
-
 	trackedUserNames: string[] = [];
 }
 
 // Class representing a function/command.
 export class BotCommand {
 	name: string = String();
-
 	description: string = String();
-
 	function: Function = Function();
 }
 
@@ -555,11 +497,8 @@ export async function recurseThroughServerRecords(dataBase: Level, liveGuildArra
 // Class representing an entire instance of Discord, from the perspective of a given bot.
 export class DiscordUser {
 	userData = new DiscordUserData();
-
 	guildsData = new Map<string, GuildData>();
-
 	guildMembersData = new Map<string, GuildMemberData>();
-
 	dataBase: any;
 
 	/**
@@ -639,7 +578,7 @@ export class DiscordUser {
 * @param   {DiscordUserData}           newUserData
 * @returns {Promise<void>}
 */
-	private async updateUserDataInDB(newUserData: DiscordUserData): Promise<void> {
+	async updateUserDataInDB(newUserData: DiscordUserData): Promise<void> {
 		try {
 			this.userData = newUserData;
 			let userDataString = JSON.stringify(this.userData);

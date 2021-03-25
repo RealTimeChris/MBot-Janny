@@ -176,7 +176,7 @@ export declare class DiscordUser {
 * @param   {DiscordUserData}           newUserData
 * @returns {Promise<void>}
 */
-    private updateUserDataInDB;
+    updateUserDataInDB(newUserData: DiscordUserData): Promise<void>;
     /**
 * * Updates the cache of user data.
 * @param   {Discord.Client}    client

@@ -40,58 +40,62 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
 var Discord = require("discord.js");
-module.exports = {
-    name: 'displayguildsdata',
-    description: '!displayguildsdata to display the guild info of the bots in chat!',
-    /**
+var DiscordStuff = require("../DiscordStuff.js");
+var command = new DiscordStuff.BotCommand;
+command.name = 'displayguildsdata';
+command.description = '!displayguildsdata to display the guild info of the bots in chat!';
+/**
      * Displays all of the data for all of the guilds, either in console or in chat.
      * @param   {Discord.Message}             message
      * @param   {String[]}                    args
      * @param   {DiscordStuff.DiscordUser}    discordUser
      * @returns {String}
      */
-    execute: function (message, args, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var currentCount_1, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        currentCount_1 = 0;
-                        discordUser.guildsData.forEach(function (guild) {
-                            var msgString = String('');
-                            msgString += "__Guild Name:__ " + guild.guildName + "\n";
-                            msgString += "__Guild ID:__ " + guild.guildID + "\n";
-                            msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";
-                            var guildID = guild.guildID;
-                            var currentGuild = new Discord.Guild(message.client, {});
-                            currentGuild = message.client.guilds.resolve(guildID);
-                            msgString += "__Created:__ " + currentGuild.createdAt + "\n";
-                            msgString += "__Guild Owner:__ <@!" + currentGuild.owner.id + "> (" + currentGuild.owner.user.tag + ")\n";
-                            console.log(msgString);
-                            var messageEmbed = new Discord.MessageEmbed()
-                                .setThumbnail(currentGuild.iconURL())
-                                .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
-                                .setTimestamp(Date())
-                                .setDescription(msgString);
-                            message.channel.send(messageEmbed);
-                            currentCount_1 += 1;
-                        });
-                        if (!(message.channel.type !== 'dm')) return [3 /*break*/, 2];
-                        return [4 /*yield*/, message.delete()];
-                    case 1:
-                        _a.sent();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/, this.name];
-                    case 3:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 4: return [2 /*return*/];
-                }
-            });
+function execute(message, args, discordUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var currentCount_1, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 3, , 4]);
+                    currentCount_1 = 0;
+                    discordUser.guildsData.forEach(function (guild) {
+                        var msgString = String('');
+                        msgString += "__Guild Name:__ " + guild.guildName + "\n";
+                        msgString += "__Guild ID:__ " + guild.guildID + "\n";
+                        msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";
+                        var guildID = guild.guildID;
+                        var currentGuild = new Discord.Guild(message.client, {});
+                        currentGuild = message.client.guilds.resolve(guildID);
+                        msgString += "__Created:__ " + currentGuild.createdAt + "\n";
+                        msgString += "__Guild Owner:__ <@!" + currentGuild.owner.id + "> (" + currentGuild.owner.user.tag + ")\n";
+                        console.log(msgString);
+                        var messageEmbed = new Discord.MessageEmbed()
+                            .setThumbnail(currentGuild.iconURL())
+                            .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
+                            .setTimestamp(Date())
+                            .setDescription(msgString);
+                        message.channel.send(messageEmbed);
+                        currentCount_1 += 1;
+                    });
+                    if (!(message.channel.type !== 'dm')) return [3 /*break*/, 2];
+                    return [4 /*yield*/, message.delete()];
+                case 1:
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [2 /*return*/, command.name];
+                case 3:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 4: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;
