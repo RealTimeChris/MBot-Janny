@@ -6,4 +6,6 @@ import DiscordStuff = require('../DiscordStuff.js');
 * @param   {DiscordStuff.DiscordUser}    discordUser
 * @returns {Promise<string>}
 */
-export declare function botInfo(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string>;
+export declare function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string>;
+declare const _default: DiscordStuff.BotCommand;
+export default _default;

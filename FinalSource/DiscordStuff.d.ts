@@ -89,6 +89,11 @@ export declare class DiscordUserData {
     trackedUserIDs: string[];
     trackedUserNames: string[];
 }
+export declare class BotCommand {
+    name: string;
+    description: string;
+    function: Function;
+}
 /**
  * Returns that last text channel from a given guild.
  * @param   {Discord.Client}        client

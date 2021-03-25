@@ -9,6 +9,7 @@ import Discord = require('discord.js');
 import fs = require('fs');
 import DiscordStuff = require("./DiscordStuff.js");
 import config = require('../ToCompile/config.json');
+import botCommands from './commands/commandindex';
 const client = new Discord.Client();
 
 const discordUser = new DiscordStuff.DiscordUser();
@@ -53,6 +54,27 @@ client.on('message', async (msg) => {
 			for (let x = 0; x < args.length; x += 1) {
 				args[x] = (args[x] as string).trim();
 			}
+		}
+
+
+		if (!botCommands.commands.has(command)){
+			return;
+		}
+		try {
+			console.log(`Command: '${command}' entered by user: ${msg.author.username}`);
+			const cmdName = await botCommands.commands.get(command)?.function(msg, args, discordUser);
+			console.log(`Completed Command: ${cmdName}`);
+			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
+			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
+			await discordUser.saveCacheIfTimeHasPassed(client);
+			await DiscordStuff.sendTimedMessagesIfTimeHasPassed(client, discordUser);
+			discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch((error: Error) => {
+				console.log(error);
+			});
+			return;
+		} catch (error) {
+			console.log(error);
+			msg.reply('There was an error trying to execute that command!');
 		}
 
 		if (!commands.has(command)) {

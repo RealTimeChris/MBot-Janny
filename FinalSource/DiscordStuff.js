@@ -40,10 +40,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DiscordUser = exports.recurseThroughServerRecords = exports.sendTimedMessagesIfTimeHasPassed = exports.applyDefaultRoles = exports.areWeInADM = exports.doWeHaveAdminPermission = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = exports.getLastTextChannelInGuild = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = void 0;
+exports.DiscordUser = exports.recurseThroughServerRecords = exports.sendTimedMessagesIfTimeHasPassed = exports.applyDefaultRoles = exports.areWeInADM = exports.doWeHaveAdminPermission = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = exports.getLastTextChannelInGuild = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = void 0;
 var Discord = require("discord.js");
 var level_ts_1 = require("level-ts");
-var config = require('./config.json');
+var config = require("./config.json");
 // Class representing permission overwrites for Discord.
 var PermissionOverwrites = /** @class */ (function () {
     /**
@@ -221,6 +221,16 @@ var DiscordUserData = /** @class */ (function () {
     return DiscordUserData;
 }());
 exports.DiscordUserData = DiscordUserData;
+// Class representing a function/command.
+var BotCommand = /** @class */ (function () {
+    function BotCommand() {
+        this.name = String();
+        this.description = String();
+        this.function = Function();
+    }
+    return BotCommand;
+}());
+exports.BotCommand = BotCommand;
 /**
  * Returns that last text channel from a given guild.
  * @param   {Discord.Client}        client

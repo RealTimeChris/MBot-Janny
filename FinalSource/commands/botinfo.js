@@ -40,15 +40,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.botInfo = void 0;
+exports.execute = void 0;
 var Discord = require("discord.js");
+var DiscordStuff = require("../DiscordStuff.js");
+var command = new DiscordStuff.BotCommand();
+command.name = 'botinfo';
+command.description = '!botinfo to display info about this bot in chat!';
 /*** Displays the data about the currend user.
 * @param   {Discord.Message}             message
 * @param   {String[]}                    args
 * @param   {DiscordStuff.DiscordUser}    discordUser
 * @returns {Promise<string>}
 */
-function botInfo(message, args, discordUser) {
+function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var fields, field1, field2, field3, field4, messageEmbed, error_1;
         return __generator(this, function (_a) {
@@ -79,7 +83,7 @@ function botInfo(message, args, discordUser) {
                     _a.sent();
                     _a.label = 3;
                 case 3: return [2 /*return*/, new Promise(function (resolve, reject) {
-                        resolve(name);
+                        resolve(command.name);
                     })];
                 case 4:
                     error_1 = _a.sent();
@@ -91,4 +95,6 @@ function botInfo(message, args, discordUser) {
         });
     });
 }
-exports.botInfo = botInfo;
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

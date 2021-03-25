@@ -5,8 +5,11 @@
 
 'use strict'
 
+import DiscordStuff = require('../DiscordStuff');
 
-declare module CommandIndex{
-    import botinfo from './botinfo';
-        
-}
+const commands: Map<string, DiscordStuff.BotCommand> = new Map();
+import botinfo from './botinfo';
+commands.set(botinfo.name, botinfo);
+
+export default {commands};
+

@@ -7,7 +7,7 @@
 
 import Discord = require('discord.js');
 import Level from 'level-ts';
-const config = require('./config.json');
+import config = require('./config.json');
 
 // Class representing permission overwrites for Discord.
 export class PermissionOverwrites {
