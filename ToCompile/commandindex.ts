@@ -40,6 +40,9 @@ import onguildmemberremove from './commands/onguildmemberremove'
 commands.set(onguildmemberremove.name, onguildmemberremove);
 import oninvitecreate from './commands/oninvitecreate'
 commands.set(oninvitecreate.name, oninvitecreate);
+import onmessagedelete from './commands/onmessagedelete'
+commands.set(onmessagedelete.name, onmessagedelete);
+
 
 import purge from './commands/purge'
 import { copyFile } from 'fs';

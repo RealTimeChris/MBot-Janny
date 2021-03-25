@@ -44,8 +44,8 @@ var Discord = require("discord.js");
 var DiscordStuff = require("./DiscordStuff.js");
 var config = require("../ToCompile/config.json");
 var commandindex_1 = require("./commandindex");
-var client = new Discord.Client();
 var discordUser = new DiscordStuff.DiscordUser();
+var client = new Discord.Client();
 client.once('ready', function () { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {

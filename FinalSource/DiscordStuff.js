@@ -995,32 +995,27 @@ var DiscordUser = /** @class */ (function () {
 */
     DiscordUser.prototype.getGuildMemberDataFromDB = function (guildMember) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildMemberDataString, guildMemberData_1, error_12, guildMemberData_2;
+            var guildMemberData, guildMemberDataNew_1, error_12, guildMemberData_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.dataBase.get(guildMember.guild.id + " + " + guildMember.id)];
                     case 1:
-                        guildMemberDataString = _a.sent();
-                        guildMemberData_1 = JSON.parse(guildMemberDataString);
+                        guildMemberData = _a.sent();
+                        guildMemberDataNew_1 = JSON.parse(guildMemberData);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(guildMemberData_1);
+                                resolve(guildMemberDataNew_1);
                             })];
                     case 2:
                         error_12 = _a.sent();
-                        if (error_12.type === 'NotFoundError') {
-                            console.log("Adding new entry for guild member data! For member: " + guildMember.user.username);
-                            guildMemberData_2 = new GuildMemberData();
-                            guildMemberData_2.displayName = guildMember.displayName;
-                            guildMemberData_2.userID = guildMember.id;
-                            guildMemberData_2.userName = guildMember.user.username;
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
-                                    resolve(guildMemberData_2);
-                                })];
-                        }
+                        console.log("Adding new entry for guild member data! For member: " + guildMember.user.username);
+                        guildMemberData_1 = new GuildMemberData();
+                        guildMemberData_1.displayName = guildMember.displayName;
+                        guildMemberData_1.userID = guildMember.id;
+                        guildMemberData_1.userName = guildMember.user.username;
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_12);
+                                resolve(guildMemberData_1);
                             })];
                     case 3: return [2 /*return*/];
                 }

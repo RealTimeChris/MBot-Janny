@@ -738,24 +738,19 @@ export class DiscordUser {
 */
 	async getGuildMemberDataFromDB(guildMember: Discord.GuildMember): Promise<GuildMemberData> {
 		try {
-			const guildMemberDataString = await (this.dataBase as Level).get(`${guildMember.guild.id} + ${guildMember.id}`) as string;
-			const guildMemberData = JSON.parse(guildMemberDataString) as GuildMemberData;
+			const guildMemberData = await (this.dataBase as Level).get(`${guildMember.guild.id} + ${guildMember.id}`);
+			const guildMemberDataNew = JSON.parse(guildMemberData) as GuildMemberData;
 			return new Promise((resolve, reject) => {
-				resolve(guildMemberData)
+				resolve(guildMemberDataNew);
 			});
 		} catch (error) {
-			if (error.type === 'NotFoundError') {
-				console.log(`Adding new entry for guild member data! For member: ${guildMember.user.username}`);
-				const guildMemberData = new GuildMemberData();
-				guildMemberData.displayName = guildMember.displayName;
-				guildMemberData.userID = guildMember.id;
-				guildMemberData.userName = guildMember.user.username;
-				return new Promise((resolve, reject) => {
-					resolve(guildMemberData);
-				});
-			}
+			console.log(`Adding new entry for guild member data! For member: ${guildMember.user.username}`);
+			const guildMemberData = new GuildMemberData();
+			guildMemberData.displayName = guildMember.displayName;
+			guildMemberData.userID = guildMember.id;
+			guildMemberData.userName = guildMember.user.username;
 			return new Promise((resolve, reject) => {
-				reject(error);
+				resolve(guildMemberData);
 			});
 		}
 	}
@@ -791,7 +786,7 @@ export class DiscordUser {
 			const liveDataGuildArray = client.guilds.cache.array();
 			for (let x = 0; x < liveDataGuildArray.length; x += 1) {
 				const liveDataGuildMemberArray = (await (liveDataGuildArray[x] as Discord.Guild).members.fetch()).array();
-
+				
 				for (let y = 0; y < liveDataGuildMemberArray.length; y += 1) {
 					let guildMemberData = await this.getGuildMemberDataFromDB(liveDataGuildMemberArray[y] as Discord.GuildMember) as GuildMemberData;
 					if (this.guildMembersData.get(`${(liveDataGuildArray[x] as Discord.Guild).id} + ${(liveDataGuildMemberArray[y] as Discord.GuildMember).id}`) !== undefined) {
