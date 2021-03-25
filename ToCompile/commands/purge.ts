@@ -17,7 +17,7 @@ command.description = '!purge = AMOUNTTODELETE, between 1 and 100 messages!';
  * @param   {Discord.Message}             message
  * @param   {String[]}                    args
  * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {String}
+ * @returns {Promise<string>}
  */
 export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {

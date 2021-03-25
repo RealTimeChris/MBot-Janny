@@ -39,10 +39,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiscordUser = exports.recurseThroughServerRecords = exports.sendTimedMessagesIfTimeHasPassed = exports.applyDefaultRoles = exports.areWeInADM = exports.doWeHaveAdminPermission = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = exports.getLastTextChannelInGuild = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = void 0;
 var Discord = require("discord.js");
-var level_ts_1 = require("level-ts");
+var level_ts_1 = __importDefault(require("level-ts"));
 var config = require("./config.json");
 // Class representing permission overwrites for Discord.
 var PermissionOverwrites = /** @class */ (function () {

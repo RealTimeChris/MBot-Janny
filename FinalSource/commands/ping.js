@@ -39,40 +39,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-module.exports = {
-    name: 'ping',
-    description: 'Simply enter !ping',
-    /**
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var DiscordStuff = require("../DiscordStuff.js");
+var command = new DiscordStuff.BotCommand();
+command.name = 'ping';
+command.description = 'Simply enter !ping';
+/**
      * A testing function for the early implementation of the command handler.
      * @param   {Discord.Message}             message
      * @param   {String[]}                    args
      * @param   {DiscordStuff.DiscordUser}    discordUser
      * @returns {String}
      */
-    execute: function (message) {
-        return __awaiter(this, void 0, void 0, function () {
-            var error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        return [4 /*yield*/, message.reply('Pong!')];
-                    case 1:
-                        _a.sent();
-                        if (!(message.channel.type !== 'dm')) return [3 /*break*/, 3];
-                        return [4 /*yield*/, message.delete()];
-                    case 2:
-                        _a.sent();
-                        _a.label = 3;
-                    case 3: return [2 /*return*/, this.name];
-                    case 4:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 5: return [2 /*return*/];
-                }
-            });
+function execute(message) {
+    return __awaiter(this, void 0, void 0, function () {
+        var error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 4, , 5]);
+                    return [4 /*yield*/, message.reply('Pong!')];
+                case 1:
+                    _a.sent();
+                    if (!(message.channel.type !== 'dm')) return [3 /*break*/, 3];
+                    return [4 /*yield*/, message.delete()];
+                case 2:
+                    _a.sent();
+                    _a.label = 3;
+                case 3: return [2 /*return*/, command.name];
+                case 4:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 5: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

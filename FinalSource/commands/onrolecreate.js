@@ -1,4 +1,4 @@
-// onrolecreate.js - Module for my "on role create" command.
+// onrolecreate.ts - Module for my "on role create" command.
 // Mar 12, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,67 +39,70 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Discord = require('discord.js');
-var DiscordStuff = require('../DiscordStuff');
-module.exports = {
-    name: 'onrolecreate',
-    description: "It's an automatic one!",
-    /**
-     * @param {Discord.Client}              client
-     * @param {Discord.Role}                role
-     * @param {DiscordStuff.DiscordUser}    discordUser
-     * @returns {String}
-     */
-    execute: function (client, role, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var guildData, logs, x, textChannel, auditLogs, auditLogEntry, currentGuild, msgEmbed, msgString, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 6, , 7]);
-                        if (!(role instanceof Discord.Role)) {
-                            return [2 /*return*/, this.name];
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var Discord = require("discord.js");
+var DiscordStuff = require("../DiscordStuff");
+var command = new DiscordStuff.BotCommand();
+command.name = 'onrolecreate';
+command.description = "It's an automatic one!";
+/**
+ * @param {Discord.Client}              client
+ * @param {Discord.Role}                role
+ * @param {DiscordStuff.DiscordUser}    discordUser
+ * @returns {Promise<string>}
+ */
+function execute(client, role, discordUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var guildData, logs, x, textChannel, auditLogs, auditLogEntry, currentGuild, msgEmbed, msgString, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 6, , 7]);
+                    if (!(role instanceof Discord.Role)) {
+                        return [2 /*return*/, command.name];
+                    }
+                    return [4 /*yield*/, discordUser.getGuildDataFromDB(role.guild)];
+                case 1:
+                    guildData = _a.sent();
+                    logs = new DiscordStuff.Log();
+                    for (x = 0; x < guildData.logs.length; x += 1) {
+                        if (guildData.logs[x].nameSmall === 'rolecreate') {
+                            logs = guildData.logs[x];
+                            break;
                         }
-                        return [4 /*yield*/, discordUser.getGuildDataFromDB(role.guild)];
-                    case 1:
-                        guildData = _a.sent();
-                        logs = new DiscordStuff.Log();
-                        for (x = 0; x < guildData.logs.length; x += 1) {
-                            if (guildData.logs[x].nameSmall === 'rolecreate') {
-                                logs = guildData.logs[x];
-                                break;
-                            }
-                        }
-                        textChannel = new Discord.TextChannel(role.guild, {});
-                        return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                    case 2:
-                        textChannel = _a.sent();
-                        return [4 /*yield*/, role.guild.fetchAuditLogs({ type: 'ROLE_CREATE', limit: 1 })];
-                    case 3:
-                        auditLogs = _a.sent();
-                        auditLogEntry = auditLogs.entries
-                            .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
-                        return [4 /*yield*/, client.guilds.fetch(role.guild.id)];
-                    case 4:
-                        currentGuild = _a.sent();
-                        msgEmbed = new Discord.MessageEmbed();
-                        msgString = String('');
-                        msgString = "__**New Role:**__ <@&" + role.id + "> (" + role.name + ")\n";
-                        msgString += "__**Created By:**__ <@!" + auditLogEntry.executor.id + "> (" + auditLogEntry.executor.tag + ")\n";
-                        msgString += "__**Role Count:**__ " + currentGuild.roles.cache.size;
-                        msgEmbed.setTitle('__**Role Created:**__').setTimestamp(Date()).setDescription(msgString).setColor(role.color);
-                        return [4 /*yield*/, textChannel.send(msgEmbed)];
-                    case 5:
-                        _a.sent();
-                        return [2 /*return*/, this.name];
-                    case 6:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 7: return [2 /*return*/];
-                }
-            });
+                    }
+                    return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
+                case 2:
+                    textChannel = _a.sent();
+                    return [4 /*yield*/, role.guild.fetchAuditLogs({ type: 'ROLE_CREATE', limit: 1 })];
+                case 3:
+                    auditLogs = _a.sent();
+                    auditLogEntry = auditLogs.entries
+                        .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
+                    return [4 /*yield*/, client.guilds.fetch(role.guild.id)];
+                case 4:
+                    currentGuild = _a.sent();
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgString = String('');
+                    msgString = "__**New Role:**__ <@&" + role.id + "> (" + role.name + ")\n";
+                    msgString += "__**Created By:**__ <@!" + auditLogEntry.executor.id + "> (" + auditLogEntry.executor.tag + ")\n";
+                    msgString += "__**Role Count:**__ " + currentGuild.roles.cache.size;
+                    msgEmbed.setTitle('__**Role Created:**__').setTimestamp(Date()).setDescription(msgString).setColor(role.color);
+                    return [4 /*yield*/, textChannel.send(msgEmbed)];
+                case 5:
+                    _a.sent();
+                    return [2 /*return*/, command.name];
+                case 6:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 7: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

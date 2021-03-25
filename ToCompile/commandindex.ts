@@ -52,11 +52,19 @@ import onnicknamechange from './commands/onnicknamechange';
 commands.set(onnicknamechange.name, onnicknamechange);
 import onroleaddorremove from './commands/onroleaddorremove';
 commands.set(onroleaddorremove.name, onroleaddorremove);
-
-
-
+import onrolecreate from './commands/onrolecreate';
+commands.set(onrolecreate.name, onrolecreate);
+import onroledelete from './commands/onroledelete';
+commands.set(onroledelete.name, onroledelete);
+import onusernamechange from './commands/onusernamechange';
+commands.set(onusernamechange.name, onusernamechange);
+import ping from './commands/ping';
+commands.set(ping.name, ping);
 import purge from './commands/purge'
-import { copyFile } from 'fs';
 commands.set(purge.name, purge);
+import serverinfo from './commands/serverinfo'
+commands.set(serverinfo.name, serverinfo);
+
+
 
 export default {commands};
