@@ -1,4 +1,4 @@
-// listdbguilds.js - Module for my "list db guilds" command.
+// listdbguilds.ts - Module for my "list db guilds" command.
 // Mar 21, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,93 +39,128 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var DiscordStuff = require('../DiscordStuff');
-module.exports = {
-    name: 'listdbguilds',
-    descriptions: '!listdbguilds, to list guilds that this bot is no longer in!',
-    /**
-     * @param {Discord.Message} message
-     * @param {String[]} args
-     * @param {DiscordStuff.DiscordUser} discordUser
-     */
-    execute: function (message, args, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var areWeAnAdmin, guildsArray_1, error_1;
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 11, , 12]);
-                        return [4 /*yield*/, DiscordStuff.doWeHaveAdminPermission(message, discordUser)];
-                    case 1:
-                        areWeAnAdmin = _a.sent();
-                        if (!areWeAnAdmin) {
-                            return [2 /*return*/, this.name];
-                        }
-                        if (!(args[0] === undefined)) return [3 /*break*/, 5];
-                        return [4 /*yield*/, message.reply('Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)')];
-                    case 2:
-                        _a.sent();
-                        if (!message.deletable) return [3 /*break*/, 4];
-                        return [4 /*yield*/, message.delete()];
-                    case 3:
-                        _a.sent();
-                        _a.label = 4;
-                    case 4: return [2 /*return*/, this.name];
-                    case 5:
-                        if (!(args[0].toLowerCase() !== 'janny' && args[0].toLowerCase() !== 'musichouse' && args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 9];
-                        return [4 /*yield*/, message.reply('Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)')];
-                    case 6:
-                        _a.sent();
-                        if (!message.deletable) return [3 /*break*/, 8];
-                        return [4 /*yield*/, message.delete()];
-                    case 7:
-                        _a.sent();
-                        _a.label = 8;
-                    case 8: return [2 /*return*/, this.name];
-                    case 9:
-                        if (args[0].toLowerCase() !== 'janny') {
-                            return [2 /*return*/, this.name];
-                        }
-                        guildsArray_1 = message.client.guilds.cache.array();
-                        discordUser.dataBase.createReadStream()
-                            .on('data', function (data) {
-                            if (data.key.length === 18 && data.key !== discordUser.userData.userID) {
-                                var isItFound = false;
-                                for (var x = 0; x < guildsArray_1.length; x += 1) {
-                                    if (data.key === guildsArray_1[x].id) {
-                                        isItFound = true;
-                                    }
-                                }
-                                if (isItFound === false) {
-                                    message.reply("Guild Name: " + JSON.parse(data.value).guildName + "\nGuild ID: " + JSON.parse(data.value).guildID);
-                                }
-                            }
-                        })
-                            .on('error', function (err) {
-                            console.log('Oh my!', err);
-                        })
-                            .on('close', function () {
-                            console.log('Stream closed');
-                        })
-                            .on('end', function () { return __awaiter(_this, void 0, void 0, function () {
-                            return __generator(this, function (_a) {
-                                console.log('Stream ended');
-                                return [2 /*return*/];
-                            });
-                        }); });
-                        return [4 /*yield*/, message.delete()];
-                    case 10:
-                        _a.sent();
-                        return [2 /*return*/, this.name];
-                    case 11:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 12: return [2 /*return*/];
-                }
-            });
-        });
-    },
+var __asyncValues = (this && this.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var DiscordStuff = require("../DiscordStuff");
+var command = new DiscordStuff.BotCommand();
+command.name = 'listdbguilds';
+command.description = '!listdbguilds, to list guilds that this bot is no longer in!';
+/**
+ * @param   {Discord.Message}           message
+ * @param   {String[]}                  args
+ * @param   {DiscordStuff.DiscordUser}  discordUser
+ * @returns {Promise<string>}
+ */
+function execute(message, args, discordUser) {
+    var e_1, _a;
+    return __awaiter(this, void 0, void 0, function () {
+        var areWeInADM, areWeAnAdmin, guildsArray, iterator, iterator_1, iterator_1_1, _b, key, value, isItFound, x, e_1_1, error_1;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    _c.trys.push([0, 25, , 26]);
+                    return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
+                case 1:
+                    areWeInADM = _c.sent();
+                    if (areWeInADM) {
+                        return [2 /*return*/, command.name];
+                    }
+                    return [4 /*yield*/, DiscordStuff.doWeHaveAdminPermission(message, discordUser)];
+                case 2:
+                    areWeAnAdmin = _c.sent();
+                    if (!areWeAnAdmin) {
+                        return [2 /*return*/, command.name];
+                    }
+                    if (!(args[0] === undefined)) return [3 /*break*/, 6];
+                    return [4 /*yield*/, message.reply('Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)')];
+                case 3:
+                    _c.sent();
+                    if (!message.deletable) return [3 /*break*/, 5];
+                    return [4 /*yield*/, message.delete()];
+                case 4:
+                    _c.sent();
+                    _c.label = 5;
+                case 5: return [2 /*return*/, command.name];
+                case 6:
+                    if (!(args[0].toLowerCase() !== 'janny' && args[0].toLowerCase() !== 'musichouse' && args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 10];
+                    return [4 /*yield*/, message.reply('Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)')];
+                case 7:
+                    _c.sent();
+                    if (!message.deletable) return [3 /*break*/, 9];
+                    return [4 /*yield*/, message.delete()];
+                case 8:
+                    _c.sent();
+                    _c.label = 9;
+                case 9: return [2 /*return*/, command.name];
+                case 10:
+                    if (args[0].toLowerCase() !== 'janny') {
+                        return [2 /*return*/, command.name];
+                    }
+                    guildsArray = message.client.guilds.cache.array();
+                    iterator = discordUser.dataBase.iterate({});
+                    _c.label = 11;
+                case 11:
+                    _c.trys.push([11, 16, 17, 22]);
+                    iterator_1 = __asyncValues(iterator);
+                    _c.label = 12;
+                case 12: return [4 /*yield*/, iterator_1.next()];
+                case 13:
+                    if (!(iterator_1_1 = _c.sent(), !iterator_1_1.done)) return [3 /*break*/, 15];
+                    _b = iterator_1_1.value, key = _b.key, value = _b.value;
+                    if (key.length === 18 && key !== discordUser.userData.userID) {
+                        isItFound = false;
+                        for (x = 0; x < guildsArray.length; x += 1) {
+                            if (key === guildsArray[x].id) {
+                                isItFound = true;
+                            }
+                        }
+                        if (isItFound === false) {
+                            message.reply("Guild Name: " + value.guildName + "\nGuild ID: " + value.guildID);
+                        }
+                    }
+                    _c.label = 14;
+                case 14: return [3 /*break*/, 12];
+                case 15: return [3 /*break*/, 22];
+                case 16:
+                    e_1_1 = _c.sent();
+                    e_1 = { error: e_1_1 };
+                    return [3 /*break*/, 22];
+                case 17:
+                    _c.trys.push([17, , 20, 21]);
+                    if (!(iterator_1_1 && !iterator_1_1.done && (_a = iterator_1.return))) return [3 /*break*/, 19];
+                    return [4 /*yield*/, _a.call(iterator_1)];
+                case 18:
+                    _c.sent();
+                    _c.label = 19;
+                case 19: return [3 /*break*/, 21];
+                case 20:
+                    if (e_1) throw e_1.error;
+                    return [7 /*endfinally*/];
+                case 21: return [7 /*endfinally*/];
+                case 22: return [4 /*yield*/, iterator.end()];
+                case 23:
+                    _c.sent();
+                    return [4 /*yield*/, message.delete()];
+                case 24:
+                    _c.sent();
+                    return [2 /*return*/, command.name];
+                case 25:
+                    error_1 = _c.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 26: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

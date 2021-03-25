@@ -17,9 +17,9 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
  * @param {Discord.Message} 			message
  * @param {String[]} 					args
  * @param {DiscordStuff.DiscordUser}	discordUser
- * @returns {String}
+ * @returns {Prmoise<string>}
  */
-    export async function  execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser) {
+    export async function  execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         const doWeHaveAdminPerms = await DiscordStuff.doWeHaveAdminPermission(message, discordUser);
 
@@ -89,12 +89,12 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
         const roleManager = new Discord.RoleManager((message.guild as Discord.Guild));
 
-        let ghostedRole = await roleManager.fetch(guildData.ghostedRoleID);
+        let ghostedRole = await roleManager.fetch((guildData.ghostedRoleID as string));
 
         const memberRoleManager = new Discord.GuildMemberRoleManager(currentGuildMember);
 
         const memberRoleManagerBot = new Discord.GuildMemberRoleManager(((message.client
-            .guilds.resolve(guildData.guildID) as Discord.Guild).members.resolve((message.client.user as Discord.User).id) as Discord.GuildMember));
+            .guilds.resolve((guildData.guildID as string)) as Discord.Guild).members.resolve((message.client.user as Discord.User).id) as Discord.GuildMember));
 
         if (!(ghostedRole instanceof Discord.Role)) {
             ghostedRole = await roleManager.create({
@@ -110,9 +110,9 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
         if (whatAreWeDoing === 'add' || whatAreWeDoing === 'remove') {
             for (let x = 0; x < channelsArray.length; x += 1) {
                 const voicePermissionOptions = new DiscordStuff.PermissionOverwrites((message
-                    .client.guilds.resolve(guildData.guildID) as Discord.Guild));
+                    .client.guilds.resolve((guildData.guildID as string)) as Discord.Guild));
                 voicePermissionOptions.channel = null;
-                voicePermissionOptions.id = guildData.ghostedRoleID;
+                voicePermissionOptions.id = (guildData.ghostedRoleID  as string);
                 voicePermissionOptions.type = 'role';
                 voicePermissionOptions.allow = ['VIEW_CHANNEL'];
                 voicePermissionOptions.deny = ['ADMINISTRATOR', 'CREATE_INSTANT_INVITE', 'KICK_MEMBERS', 'BAN_MEMBERS',
@@ -121,9 +121,9 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
                     'MANAGE_ROLES', 'MANAGE_WEBHOOKS', 'MANAGE_EMOJIS'];
 
                 const textPermissionOptions = new DiscordStuff.PermissionOverwrites(message
-                    .client.guilds.resolve(guildData.guildID) as Discord.Guild);
+                    .client.guilds.resolve((guildData.guildID as string)) as Discord.Guild);
                 textPermissionOptions.channel = null;
-                textPermissionOptions.id = guildData.ghostedRoleID;
+                textPermissionOptions.id = (guildData.ghostedRoleID as string);
                 textPermissionOptions.type = 'role';
                 textPermissionOptions.allow = ['VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'];
                 textPermissionOptions.deny = ['ADMINISTRATOR', 'CREATE_INSTANT_INVITE', 'KICK_MEMBERS', 'BAN_MEMBERS',
@@ -134,24 +134,24 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
                 if ((channelsArray[x] as Discord.Channel).type === 'voice') {
                     let currentChannel = new Discord.VoiceChannel((message.guild as Discord.Guild), {});
-                    currentChannel = channelsArray[x];
+                    currentChannel = channelsArray[x] as Discord.VoiceChannel;
 
                     let isItFound = false;
                     let currentChannelPerms;
                     for (let y = 0; y < memberRoleManager.cache.array().length; y += 1) {
                         if (guildData.verificationSystem.channelID !== null) {
-                            if (memberRoleManager.cache.array()[y].name === '@everyone') {
+                            if ((memberRoleManager.cache.array()[y] as Discord.Role).name === '@everyone') {
                                 continue;
                             }
                         }
                         currentChannelPerms = currentChannel
-                            .permissionsFor(memberRoleManager.cache.array()[y]);
-                        if (currentChannelPerms.has('VIEW_CHANNEL')) {
+                            .permissionsFor((memberRoleManager.cache.array()[y]as Discord.Role));
+                        if ((currentChannelPerms as Discord.Permissions).has('VIEW_CHANNEL')) {
                             isItFound = true;
                         }
                     }
                     currentChannelPerms = currentChannel.permissionsFor(currentGuildMember);
-                    if (currentChannelPerms.has('VIEW_CHANNEL')) {
+                    if ((currentChannelPerms as Discord.Permissions).has('VIEW_CHANNEL')) {
                         isItFound = true;
                     }
 
@@ -162,41 +162,41 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
                     const currentOverwritesArray = currentChannel.permissionOverwrites.array();
 
                     voicePermissionOptions.channel = currentChannel;
-                    currentOverwritesArray.push(voicePermissionOptions);
+                    currentOverwritesArray.push((voicePermissionOptions as unknown) as Discord.PermissionOverwrites);
                     await currentChannel.overwritePermissions(currentOverwritesArray);
                 } else {
-                    let currentChannel = new Discord.GuildChannel(message.guild, {});
-                    currentChannel = channelsArray[x];
+                    let currentChannel = new Discord.GuildChannel((message.guild as Discord.Guild), {});
+                    currentChannel = channelsArray[x] as Discord.GuildChannel;
 
                     let isItFound1 = false;
                     let isItFound2 = false;
                     let currentChannelPerms;
                     for (let y = 0; y < memberRoleManager.cache.array().length; y += 1) {
                         if (guildData.verificationSystem.channelID !== null) {
-                            if (memberRoleManager.cache.array()[y].name === '@everyone') {
+                            if ((memberRoleManager.cache.array()[y] as Discord.Role).name === '@everyone') {
                                 continue;
                             }
                         }
                         currentChannelPerms = currentChannel
-                            .permissionsFor(memberRoleManager.cache.array()[y]);
-                        if (currentChannelPerms.has('VIEW_CHANNEL')) {
+                            .permissionsFor((memberRoleManager.cache.array()[y] as Discord.Role));
+                        if ((currentChannelPerms as Discord.Permissions).has('VIEW_CHANNEL')) {
                             isItFound1 = true;
                         }
-                        if (currentChannelPerms.has('READ_MESSAGE_HISTORY')) {
+                        if ((currentChannelPerms as Discord.Permissions).has('READ_MESSAGE_HISTORY')) {
                             isItFound2 = true;
                         }
                     }
                     currentChannelPerms = currentChannel.permissionsFor(currentGuildMember);
-                    if (currentChannelPerms.has('VIEW_CHANNEL')) {
+                    if ((currentChannelPerms as Discord.Permissions).has('VIEW_CHANNEL')) {
                         isItFound1 = true;
                     }
-                    if (currentChannelPerms.has('READ_MESSAGE_HISTORY')) {
+                    if ((currentChannelPerms as Discord.Permissions).has('READ_MESSAGE_HISTORY')) {
                         isItFound2 = true;
                     }
 
                     if (isItFound1 === false) {
                         const argOne = textPermissionOptions.allow[1];
-                        textPermissionOptions.allow[0] = argOne;
+                        textPermissionOptions.allow[0] = argOne as string;
                         textPermissionOptions.allow.splice(1, 1);
                         textPermissionOptions.deny.push('VIEW_CHANNEL');
                     }
@@ -212,15 +212,15 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
                     const currentOverwritesArray = currentChannel.permissionOverwrites.array();
 
                     textPermissionOptions.channel = currentChannel;
-                    currentOverwritesArray.push(textPermissionOptions);
+                    currentOverwritesArray.push((textPermissionOptions as unknown) as Discord.PermissionOverwrites);
                     await currentChannel.overwritePermissions(currentOverwritesArray);
                 }
             }
         }
 
-        const ghostedUserArray = [];
+        const ghostedUserArray: Discord.GuildMember[] = [];
         for (let x = 0; x < ghostedRole.members.array().length; x += 1) {
-            ghostedUserArray.push(ghostedRole.members.array()[x]);
+            ghostedUserArray.push((ghostedRole.members.array()[x] as Discord.GuildMember));
         }
 
         if (whatAreWeDoing === 'viewing') {
@@ -233,7 +233,7 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
                     if (x % 5 === 0 && x > 1) {
                         msgString += '\n';
                     }
-                    msgString += `<@!${ghostedUserArray[x].id}>`;
+                    msgString += `<@!${(ghostedUserArray[x] as Discord.GuildMember).id}>`;
                     if (x < ghostedUserArray.length - 1) {
                         msgString += ', ';
                     }
@@ -242,10 +242,10 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             msgString += '\n------';
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor(message.author.username, message.author.avatarURL())
+            msgEmbed.setAuthor(message.author.username, (message.author.avatarURL() as string))
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
-                .setTimestamp(Date())
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Currently Ghosted Members:**__');
 
             await message.channel.send(msgEmbed);
@@ -253,7 +253,7 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
             return command.name;
         } if (whatAreWeDoing === 'add') {
             for (let x = 0; x < ghostedUserArray.length; x += 1) {
-                if (currentGuildMember.id === ghostedUserArray[x].id) {
+                if (currentGuildMember.id === (ghostedUserArray[x] as Discord.GuildMember).id) {
                     await message.reply('They are already ghosted!');
                     await message.delete();
                     return command.name;
@@ -264,17 +264,17 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             guildMemberData.previousRoleIDs.push(memberRoleManager.highest.id);
             for (let x = 0; x < memberRoleManager.cache.array().length; x += 1) {
-                if (memberRoleManager.cache.array()[x].id === memberRoleManager.highest.id) {
+                if ((memberRoleManager.cache.array()[x] as Discord.Role).id === memberRoleManager.highest.id) {
                     continue;
                 }
-                if (memberRoleManager.cache.array()[x].name !== '@everyone' && memberRoleManager.cache.array()[x].id !== memberRoleManager.highest.id) {
-                    guildMemberData.previousRoleIDs.push(memberRoleManager.cache.array()[x].id);
+                if ((memberRoleManager.cache.array()[x] as Discord.Role).name !== '@everyone' && (memberRoleManager.cache.array()[x] as Discord.Role).id !== memberRoleManager.highest.id) {
+                    guildMemberData.previousRoleIDs.push((memberRoleManager.cache.array()[x] as Discord.Role).id);
                 }
             }
 
             for (let x = 0; x < guildMemberData.previousRoleIDs.length; x += 1) {
                 try {
-                    await memberRoleManager.remove(guildMemberData.previousRoleIDs[x]);
+                    await memberRoleManager.remove((memberRoleManager.cache.array()[x] as Discord.Role));
                 } catch (error) {
                     if (error.message === 'Missing Permissions') {
                         continue;
@@ -283,27 +283,27 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
             }
 
             for (let x = 0; x < channelsArray.length; x += 1) {
-                const currentChannel = channelsArray[x];
+                const currentChannel = channelsArray[x] as Discord.GuildChannel;
 
                 const currentChannelOverwritesArray = currentChannel.permissionOverwrites.array();
 
                 for (let y = 0; y < currentChannelOverwritesArray.length; y += 1) {
-                    if (currentChannelOverwritesArray[y].id === currentGuildMember.id) {
+                    if ((currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).id === currentGuildMember.id) {
                         const permOWs = new DiscordStuff
-                            .PermissionOverwrites(message.client.guilds.resolve(guildData.guildID));
-                        permOWs.allow = currentChannelOverwritesArray[y].allow.toArray();
-                        permOWs.deny = currentChannelOverwritesArray[y].deny.toArray();
+                            .PermissionOverwrites(message.client.guilds.resolve((guildData.guildID as string))as Discord.Guild);
+                        permOWs.allow = (currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).allow.toArray();
+                        permOWs.deny = (currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).deny.toArray();
                         permOWs.id = currentGuildMember.id;
                         permOWs.type = 'member';
                         permOWs.channel = currentChannel;
                         guildMemberData.previousPermissionOverwrites
                             .push(permOWs);
-                        await currentChannelOverwritesArray[y].delete();
+                        await (currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).delete();
                     }
                 }
             }
 
-            await discordUser.updateGuildMemberDataInDB(guildMemberData, guildData.guildID);
+            await discordUser.updateGuildMemberDataInDB(guildMemberData, (guildData.guildID as string));
 
             if (currentGuildMember.voice.channel) {
                 currentGuildMember.voice.kick();
@@ -311,13 +311,13 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             await memberRoleManager.add(ghostedRole.id);
 
-            const msgString = `------\n**Hello! You've been REDACTED, on the server ${message.guild.name},
+            const msgString = `------\n**Hello! You've been REDACTED, on the server ${(message.guild as Discord.Guild).name},
             for the following reason(s):	${ghostReason}\n Please, contact a moderator or admin to clear this issue up! Thanks!**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor(message.client.user.username, message.client.user.avatarURL())
+            msgEmbed.setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
-                .setTimestamp(Date())
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**You\'ve been ghosted:**__');
 
             const dmChannel = await currentGuildMember.createDM(true);
@@ -325,10 +325,10 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             const msgString2 = `------\n__Hello! You've ghosted the following member__: <@!${guildMemberData.userID}> (${guildMemberData.userName})\n------`;
             const msgEmbed2 = new Discord.MessageEmbed();
-            msgEmbed2.setAuthor(message.client.user.username, message.client.user.avatarURL())
+            msgEmbed2.setAuthor((message.client.user as Discord.User).username, (message.client.user as Discord.User).avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setDescription(msgString2)
-                .setTimestamp(Date())
+                .setTimestamp((Date() as unknown ) as Date)
                 .setTitle('__**New Server Member Ghosted:**__');
 
             await message.channel.send(msgEmbed2);
@@ -336,7 +336,7 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
         } if (whatAreWeDoing === 'remove') {
             let isItFound = false;
             for (let x = 0; x < ghostedUserArray.length; x += 1) {
-                if (currentGuildMember.id === ghostedUserArray[x].id) {
+                if (currentGuildMember.id === (ghostedUserArray[x] as Discord.GuildMember).id) {
                     isItFound = true;
                     break;
                 }
@@ -354,7 +354,7 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             for (let x = 0; x < guildMemberData.previousRoleIDs.length; x += 1) {
                 try {
-                    await memberRoleManager.add(guildMemberData.previousRoleIDs[x]);
+                    await memberRoleManager.add((guildMemberData.previousRoleIDs[x] as string));
                 } catch (error) {
                     if (error.message === 'Missing Permissions') {
                         continue;
@@ -365,29 +365,29 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
             for (let x = 0; x < channelsArray.length; x += 1) {
                 const currentChannel = channelsArray[x];
 
-                const currentChannelOverwritesArray = currentChannel.permissionOverwrites.array();
+                const currentChannelOverwritesArray = (currentChannel as Discord.GuildChannel).permissionOverwrites.array();
 
                 for (let z = 0; z < guildMemberData.previousPermissionOverwrites.length; z += 1) {
-                    if (guildMemberData.previousPermissionOverwrites[z]
-                        .channel.id === channelsArray[x].id) {
-                        currentChannelOverwritesArray.push(guildMemberData.previousPermissionOverwrites[z]);
+                    if (((guildMemberData.previousPermissionOverwrites[z] as DiscordStuff.PermissionOverwrites)
+                        .channel as Discord. GuildChannel).id === (channelsArray[x] as Discord.GuildChannel).id) {
+                        currentChannelOverwritesArray.push((guildMemberData.previousPermissionOverwrites[z] as unknown) as Discord.PermissionOverwrites)
                     }
                 }
-                await currentChannel.overwritePermissions(currentChannelOverwritesArray);
+                await (currentChannel as Discord.GuildChannel).overwritePermissions(currentChannelOverwritesArray);
             }
 
             guildMemberData.previousPermissionOverwrites = [];
             guildMemberData.previousRoleIDs = [];
-            await discordUser.updateGuildMemberDataInDB(guildMemberData, guildData.guildID);
+            await discordUser.updateGuildMemberDataInDB(guildMemberData, (guildData.guildID as string));
 
             await memberRoleManager.remove(ghostedRole.id);
 
             const msgString = '------\n**Hello! You\'ve had your redacted status removed! Have a great day!**\n------';
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor(message.client.user.username, message.client.user.avatarURL())
+            msgEmbed.setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
-                .setTimestamp(Date())
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**You\'ve been un-ghosted:**__');
 
             const dmChannel = await currentGuildMember.createDM(true);
@@ -395,10 +395,10 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             const msgString2 = `------\n__Hello! You've un-ghosted the following member__: <@!${guildMemberData.userID}> (${guildMemberData.userName})\n------`;
             const msgEmbed2 = new Discord.MessageEmbed();
-            msgEmbed2.setAuthor(message.client.user.username, message.client.user.avatarURL())
+            msgEmbed2.setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
                 .setColor([0, 0, 255])
                 .setDescription(msgString2)
-                .setTimestamp(Date())
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**New Server Member Un-Ghosted:**__');
 
             await message.channel.send(msgEmbed2);

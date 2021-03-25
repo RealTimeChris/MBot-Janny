@@ -1,4 +1,4 @@
-// jannyoptions.js - Module for my "gamehouse options" command.
+// jannyoptions.ts - Module for my "gamehouse options" command.
 // Mar 14, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,114 +39,118 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Discord = require('discord.js');
-var DiscordStuff = require('../DiscordStuff');
-module.exports = {
-    name: 'jannyoptions',
-    description: '!jannyoptions, to display a list of options for this bot!',
-    /**
-     * @param   {Discord.Message}           message
-     * @param   {String[]}                  args
-     * @param   {DiscordStuff.DiscordUser}  discordUser
-     * @returns {String}
-     */
-    execute: function (message, args, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var areWeInADM, doWeHaveAdminPerms, guildData, msgEmbed, fields, resultIcon, x, logsField, defaultRolesField, deletionChannelsField, serverRecordKey, serverRecordString, serverRecordObject, replacementServerInviteField, requireServerVerificationField, timedMessagesField, userData, x, trackUsersField, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 8, , 9]);
-                        return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
-                    case 1:
-                        areWeInADM = _a.sent();
-                        if (areWeInADM === true) {
-                            return [2 /*return*/, this.name];
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var Discord = require("discord.js");
+var DiscordStuff = require("../DiscordStuff");
+var command = new DiscordStuff.BotCommand();
+command.name = 'jannyoptions';
+command.description = '!jannyoptions, to display a list of options for this bot!';
+/**
+ * @param   {Discord.Message}           message
+ * @param   {String[]}                  args
+ * @param   {DiscordStuff.DiscordUser}  discordUser
+ * @returns {Prmise<string>}
+ */
+function execute(message, args, discordUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var areWeInADM, doWeHaveAdminPerms, guildData, msgEmbed, fields, resultIcon, x, logsField, defaultRolesField, deletionChannelsField, serverRecordKey, serverRecordString, serverRecordObject, replacementServerInviteField, requireServerVerificationField, timedMessagesField, userData, x, trackUsersField, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 8, , 9]);
+                    return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
+                case 1:
+                    areWeInADM = _a.sent();
+                    if (areWeInADM === true) {
+                        return [2 /*return*/, command.name];
+                    }
+                    return [4 /*yield*/, DiscordStuff.doWeHaveAdminPermission(message, discordUser)];
+                case 2:
+                    doWeHaveAdminPerms = _a.sent();
+                    if (doWeHaveAdminPerms === false) {
+                        return [2 /*return*/, command.name];
+                    }
+                    return [4 /*yield*/, discordUser.getGuildDataFromDB(message.guild)];
+                case 3:
+                    guildData = _a.sent();
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgEmbed.setAuthor(message.client.user.username, message.client.user.avatarURL()).setTimestamp(Date()).setTitle('__**Janny Options:**__').setColor([0, 0, 255])
+                        .setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
+                    fields = [];
+                    resultIcon = '❌';
+                    for (x = 0; x < guildData.logs.length; x += 1) {
+                        if (guildData.logs[x].enabled === true) {
+                            resultIcon = '✅';
+                            break;
                         }
-                        return [4 /*yield*/, DiscordStuff.doWeHaveAdminPermission(message, discordUser)];
-                    case 2:
-                        doWeHaveAdminPerms = _a.sent();
-                        if (doWeHaveAdminPerms === false) {
-                            return [2 /*return*/, this.name];
-                        }
-                        return [4 /*yield*/, discordUser.getGuildDataFromDB(message.guild)];
-                    case 3:
-                        guildData = _a.sent();
-                        msgEmbed = new Discord.MessageEmbed();
-                        msgEmbed.setAuthor(message.client.user.username, message.client.user.avatarURL()).setTimestamp(Date()).setTitle('__**Janny Options:**__').setColor([0, 0, 255])
-                            .setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
-                        fields = [];
-                        resultIcon = '❌';
-                        for (x = 0; x < guildData.logs.length; x += 1) {
-                            if (guildData.logs[x].enabled === true) {
-                                resultIcon = '✅';
-                                break;
-                            }
-                        }
-                        logsField = { name: '__**Logs:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!managelogs'", inline: true };
-                        fields.push(logsField);
-                        resultIcon = '❌';
-                        if (guildData.defaultRoleIDs.length > 0) {
+                    }
+                    logsField = { name: '__**Logs:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!managelogs'", inline: true };
+                    fields.push(logsField);
+                    resultIcon = '❌';
+                    if (guildData.defaultRoleIDs.length > 0) {
+                        resultIcon = '✅';
+                    }
+                    defaultRolesField = { name: '__**Default Roles:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setdefaultrole'", inline: true };
+                    fields.push(defaultRolesField);
+                    resultIcon = '❌';
+                    if (guildData.deletionChannels.length > 0) {
+                        resultIcon = '✅';
+                    }
+                    deletionChannelsField = { name: '__**Delete Messages From Channels:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setdeletionstatus'", inline: true };
+                    fields.push(deletionChannelsField);
+                    resultIcon = '❌';
+                    serverRecordKey = message.guild.id + " + Record";
+                    return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
+                case 4:
+                    serverRecordString = _a.sent();
+                    serverRecordObject = JSON.parse(serverRecordString);
+                    if (serverRecordObject.replacementServerInvite !== '') {
+                        resultIcon = '✅';
+                    }
+                    replacementServerInviteField = { name: '__**Replacement Server Invite:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setreplacementinvite'", inline: true };
+                    fields.push(replacementServerInviteField);
+                    resultIcon = '❌';
+                    if (guildData.verificationSystem.channelID != null) {
+                        resultIcon = '✅';
+                    }
+                    requireServerVerificationField = { name: '__**Require Server Verification:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setverificationsystem'", inline: true };
+                    fields.push(requireServerVerificationField);
+                    resultIcon = '❌';
+                    if (guildData.timedMessages.length > 0) {
+                        resultIcon = '✅';
+                    }
+                    timedMessagesField = { name: '__**Send Out Timed Messages:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!timedmessages'", inline: true };
+                    fields.push(timedMessagesField);
+                    return [4 /*yield*/, discordUser.getUserDataFromDB(message.client)];
+                case 5:
+                    userData = _a.sent();
+                    resultIcon = '❌';
+                    for (x = 0; x < userData.trackingGuildIDs.length; x += 1) {
+                        if (userData.trackingGuildIDs[x] === message.guild.id) {
                             resultIcon = '✅';
                         }
-                        defaultRolesField = { name: '__**Default Roles:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setdefaultrole'", inline: true };
-                        fields.push(defaultRolesField);
-                        resultIcon = '❌';
-                        if (guildData.deletionChannels.length > 0) {
-                            resultIcon = '✅';
-                        }
-                        deletionChannelsField = { name: '__**Delete Messages From Channels:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setdeletionstatus'", inline: true };
-                        fields.push(deletionChannelsField);
-                        resultIcon = '❌';
-                        serverRecordKey = message.guild.id + " + Record";
-                        return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
-                    case 4:
-                        serverRecordString = _a.sent();
-                        serverRecordObject = JSON.parse(serverRecordString);
-                        if (serverRecordObject.replacementServerInvite !== '') {
-                            resultIcon = '✅';
-                        }
-                        replacementServerInviteField = { name: '__**Replacement Server Invite:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setreplacementinvite'", inline: true };
-                        fields.push(replacementServerInviteField);
-                        resultIcon = '❌';
-                        if (guildData.verificationSystem.channelID != null) {
-                            resultIcon = '✅';
-                        }
-                        requireServerVerificationField = { name: '__**Require Server Verification:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setverificationsystem'", inline: true };
-                        fields.push(requireServerVerificationField);
-                        resultIcon = '❌';
-                        if (guildData.timedMessages.length > 0) {
-                            resultIcon = '✅';
-                        }
-                        timedMessagesField = { name: '__**Send Out Timed Messages:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!timedmessages'", inline: true };
-                        fields.push(timedMessagesField);
-                        return [4 /*yield*/, discordUser.getUserDataFromDB(message.client)];
-                    case 5:
-                        userData = _a.sent();
-                        resultIcon = '❌';
-                        for (x = 0; x < userData.trackingGuildIDs.length; x += 1) {
-                            if (userData.trackingGuildIDs[x] === message.guild.id) {
-                                resultIcon = '✅';
-                            }
-                        }
-                        trackUsersField = { name: "__**Track User's Messages:**__", value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!trackuser'", inline: true };
-                        fields.push(trackUsersField);
-                        msgEmbed.fields = fields;
-                        return [4 /*yield*/, message.channel.send(msgEmbed)];
-                    case 6:
-                        _a.sent();
-                        return [4 /*yield*/, message.delete()];
-                    case 7:
-                        _a.sent();
-                        return [2 /*return*/, this.name];
-                    case 8:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 9: return [2 /*return*/];
-                }
-            });
+                    }
+                    trackUsersField = { name: "__**Track User's Messages:**__", value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!trackuser'", inline: true };
+                    fields.push(trackUsersField);
+                    msgEmbed.fields = fields;
+                    return [4 /*yield*/, message.channel.send(msgEmbed)];
+                case 6:
+                    _a.sent();
+                    return [4 /*yield*/, message.delete()];
+                case 7:
+                    _a.sent();
+                    return [2 /*return*/, command.name];
+                case 8:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 9: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

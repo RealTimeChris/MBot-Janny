@@ -39,17 +39,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __asyncValues = (this && this.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = void 0;
 var Discord = require("discord.js");
 var DiscordStuff = require("../DiscordStuff");
+var Data = /** @class */ (function () {
+    function Data() {
+        this.key = String('');
+    }
+    return Data;
+}());
 var DeletedCounter = /** @class */ (function () {
     function DeletedCounter() {
         this.deletedCount = 0;
-        this.data = undefined;
+        this.data = new Data();
     }
-    DeletedCounter.prototype.setData = function (data) {
-        this.data = data;
+    DeletedCounter.prototype.setData = function (key, value) {
+        var newData = new Data();
+        newData.key = key;
+        newData.value = value;
+        this.data = newData;
     };
     DeletedCounter.prototype.getData = function () {
         return this.data;
@@ -64,18 +80,31 @@ var DeletedCounter = /** @class */ (function () {
 }());
 function onData(dbKey, discordUser, deletedCounter) {
     return __awaiter(this, void 0, void 0, function () {
+        var error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!(deletedCounter.getData() !== undefined && dbKey !== '')) return [3 /*break*/, 2];
-                    if (!deletedCounter.getData().key.includes(dbKey)) return [3 /*break*/, 2];
+                    if (!(deletedCounter.getData() !== undefined && dbKey !== '')) return [3 /*break*/, 6];
+                    if (!deletedCounter.getData().key.includes(dbKey)) return [3 /*break*/, 6];
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 6]);
                     console.log(deletedCounter.getData().key, '=', JSON.parse(deletedCounter.getData().value));
                     return [4 /*yield*/, discordUser.dataBase.del(deletedCounter.getData().key)];
-                case 1:
+                case 2:
                     _a.sent();
                     deletedCounter.incrementDeletedCount();
-                    _a.label = 2;
-                case 2: return [2 /*return*/];
+                    return [3 /*break*/, 6];
+                case 3:
+                    error_1 = _a.sent();
+                    if (!error_1.message.includes('Unexpected token')) return [3 /*break*/, 5];
+                    return [4 /*yield*/, discordUser.dataBase.del(deletedCounter.getData().key)];
+                case 4:
+                    _a.sent();
+                    deletedCounter.incrementDeletedCount();
+                    _a.label = 5;
+                case 5: return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
             }
         });
     });
@@ -90,115 +119,131 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
      * @returns {Promise<strin>}
      */
 function execute(message, args, discordUser) {
+    var e_1, _a;
     return __awaiter(this, void 0, void 0, function () {
-        var areWeACommander, dbKey_1, argZero, deletedCounter_1, error_1;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var areWeInADM, areWeACommander, dbKey, argZero, deletedCounter, iterator, iterator_1, iterator_1_1, _b, key, value, e_1_1, msgEmbed, error_2;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _a.trys.push([0, 17, , 18]);
-                    return [4 /*yield*/, DiscordStuff.doWeHaveAdminPermission(message, discordUser)];
+                    _c.trys.push([0, 32, , 35]);
+                    return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
-                    areWeACommander = _a.sent();
+                    areWeInADM = _c.sent();
+                    if (areWeInADM) {
+                        return [2 /*return*/, command.name];
+                    }
+                    return [4 /*yield*/, DiscordStuff.doWeHaveAdminPermission(message, discordUser)];
+                case 2:
+                    areWeACommander = _c.sent();
                     if (!areWeACommander) {
                         return [2 /*return*/, command.name];
                     }
-                    if (!(args[0] === undefined)) return [3 /*break*/, 5];
+                    if (!(args[0] === undefined)) return [3 /*break*/, 6];
                     return [4 /*yield*/, message.reply('Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)')];
-                case 2:
-                    _a.sent();
-                    if (!message.deletable) return [3 /*break*/, 4];
-                    return [4 /*yield*/, message.delete()];
                 case 3:
-                    _a.sent();
-                    _a.label = 4;
-                case 4: return [2 /*return*/, command.name];
-                case 5:
-                    if (!(args[0].toLowerCase() !== 'janny' && args[0].toLowerCase() !== 'musichouse' && args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 9];
-                    return [4 /*yield*/, message.reply('Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)')];
-                case 6:
-                    _a.sent();
-                    if (!message.deletable) return [3 /*break*/, 8];
+                    _c.sent();
+                    if (!message.deletable) return [3 /*break*/, 5];
                     return [4 /*yield*/, message.delete()];
+                case 4:
+                    _c.sent();
+                    _c.label = 5;
+                case 5: return [2 /*return*/, command.name];
+                case 6:
+                    if (!(args[0].toLowerCase() !== 'janny' && args[0].toLowerCase() !== 'musichouse' && args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 10];
+                    return [4 /*yield*/, message.reply('Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)')];
                 case 7:
-                    _a.sent();
-                    _a.label = 8;
-                case 8: return [2 /*return*/, command.name];
-                case 9:
+                    _c.sent();
+                    if (!message.deletable) return [3 /*break*/, 9];
+                    return [4 /*yield*/, message.delete()];
+                case 8:
+                    _c.sent();
+                    _c.label = 9;
+                case 9: return [2 /*return*/, command.name];
+                case 10:
                     if (args[0].toLowerCase() !== 'janny') {
                         return [2 /*return*/, command.name];
                     }
-                    if (!(args[1] === undefined)) return [3 /*break*/, 13];
+                    if (!(args[1] === undefined)) return [3 /*break*/, 14];
                     return [4 /*yield*/, message.reply('Please, enter a DB key to search for!')];
-                case 10:
-                    _a.sent();
-                    if (!message.deletable) return [3 /*break*/, 12];
-                    return [4 /*yield*/, message.delete()];
                 case 11:
-                    _a.sent();
-                    _a.label = 12;
-                case 12: return [2 /*return*/, command.name];
-                case 13:
-                    dbKey_1 = String('');
+                    _c.sent();
+                    if (!message.deletable) return [3 /*break*/, 13];
+                    return [4 /*yield*/, message.delete()];
+                case 12:
+                    _c.sent();
+                    _c.label = 13;
+                case 13: return [2 /*return*/, command.name];
+                case 14:
+                    dbKey = String('');
                     if (args[1] !== undefined) {
                         argZero = args[1].toString();
-                        dbKey_1 = argZero;
+                        dbKey = argZero;
                     }
-                    deletedCounter_1 = new DeletedCounter();
-                    return [4 /*yield*/, discordUser.dataBase.createReadStream()
-                            .on('data', function (data) { return __awaiter(_this, void 0, void 0, function () {
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        if (!data.key.includes(dbKey_1)) return [3 /*break*/, 2];
-                                        deletedCounter_1.setData(data);
-                                        return [4 /*yield*/, onData(dbKey_1, discordUser, deletedCounter_1)];
-                                    case 1:
-                                        _a.sent();
-                                        _a.label = 2;
-                                    case 2: return [2 /*return*/];
-                                }
-                            });
-                        }); })
-                            .on('error', function (err) {
-                            console.log('Oh my!', err);
-                        })
-                            .on('close', function () {
-                            console.log('Stream closed');
-                        })
-                            .on('end', function () { return __awaiter(_this, void 0, void 0, function () {
-                            var msgEmbed;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        msgEmbed = new Discord.MessageEmbed();
-                                        msgEmbed.setAuthor(message.author.username, message.author.avatarURL())
-                                            .setColor([0, 0, 255])
-                                            .setDescription("------\n__**Number of Deleted Entries**__: " + deletedCounter_1.returnDeletedCount() + "\n------")
-                                            .setTimestamp(Date.now())
-                                            .setTitle('__**Deleted DB Entries:**__');
-                                        return [4 /*yield*/, message.channel.send(msgEmbed)];
-                                    case 1:
-                                        _a.sent();
-                                        console.log('Stream ended');
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); })];
-                case 14:
-                    _a.sent();
-                    if (!message.deletable) return [3 /*break*/, 16];
-                    return [4 /*yield*/, message.delete()];
+                    deletedCounter = new DeletedCounter();
+                    iterator = discordUser.dataBase.iterate({});
+                    _c.label = 15;
                 case 15:
-                    _a.sent();
-                    _a.label = 16;
-                case 16: return [2 /*return*/, command.name];
+                    _c.trys.push([15, 21, 22, 27]);
+                    iterator_1 = __asyncValues(iterator);
+                    _c.label = 16;
+                case 16: return [4 /*yield*/, iterator_1.next()];
                 case 17:
-                    error_1 = _a.sent();
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            reject(error_1);
-                        })];
-                case 18: return [2 /*return*/];
+                    if (!(iterator_1_1 = _c.sent(), !iterator_1_1.done)) return [3 /*break*/, 20];
+                    _b = iterator_1_1.value, key = _b.key, value = _b.value;
+                    console.log(value);
+                    if (!key.includes(dbKey)) return [3 /*break*/, 19];
+                    deletedCounter.setData(key, value);
+                    return [4 /*yield*/, onData(dbKey, discordUser, deletedCounter)];
+                case 18:
+                    _c.sent();
+                    _c.label = 19;
+                case 19: return [3 /*break*/, 16];
+                case 20: return [3 /*break*/, 27];
+                case 21:
+                    e_1_1 = _c.sent();
+                    e_1 = { error: e_1_1 };
+                    return [3 /*break*/, 27];
+                case 22:
+                    _c.trys.push([22, , 25, 26]);
+                    if (!(iterator_1_1 && !iterator_1_1.done && (_a = iterator_1.return))) return [3 /*break*/, 24];
+                    return [4 /*yield*/, _a.call(iterator_1)];
+                case 23:
+                    _c.sent();
+                    _c.label = 24;
+                case 24: return [3 /*break*/, 26];
+                case 25:
+                    if (e_1) throw e_1.error;
+                    return [7 /*endfinally*/];
+                case 26: return [7 /*endfinally*/];
+                case 27: return [4 /*yield*/, iterator.end()];
+                case 28:
+                    _c.sent();
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgEmbed.setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription("------\n__**Number of Deleted Entries**__: " + deletedCounter.returnDeletedCount() + "\n------")
+                        .setTimestamp(Date.now())
+                        .setTitle('__**Deleted DB Entries:**__');
+                    return [4 /*yield*/, message.channel.send(msgEmbed)];
+                case 29:
+                    _c.sent();
+                    if (!message.deletable) return [3 /*break*/, 31];
+                    return [4 /*yield*/, message.delete()];
+                case 30:
+                    _c.sent();
+                    _c.label = 31;
+                case 31: return [2 /*return*/, command.name];
+                case 32:
+                    error_2 = _c.sent();
+                    if (!message.deletable) return [3 /*break*/, 34];
+                    return [4 /*yield*/, message.delete()];
+                case 33:
+                    _c.sent();
+                    _c.label = 34;
+                case 34: return [2 /*return*/, new Promise(function (resolve, reject) {
+                        reject(error_2);
+                    })];
+                case 35: return [2 /*return*/];
             }
         });
     });

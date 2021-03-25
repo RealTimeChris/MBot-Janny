@@ -51,7 +51,7 @@ command.description = '!displayguildsdata to display the guild info of the bots 
      * @param   {Discord.Message}             message
      * @param   {String[]}                    args
      * @param   {DiscordStuff.DiscordUser}    discordUser
-     * @returns {String}
+     * @returns {Promise<string>}
      */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {

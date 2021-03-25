@@ -1,25 +1,25 @@
 import Discord = require('discord.js');
 import Level from 'level-ts';
 export declare class PermissionOverwrites {
-    deny: number;
-    allow: number;
-    id: string;
-    channel: Discord.GuildChannel;
-    type: string;
+    deny: string[];
+    allow: string[];
+    id: string | null;
+    channel: Discord.GuildChannel | null;
+    type: string | null;
     /**
     * @param {Discord.Guild} guild
     */
     constructor(guild: Discord.Guild);
 }
 export declare class UserRecord {
-    userID: string;
+    userID: Discord.UserResolvable;
     lastKnownUsername: string;
     lastKnownUserTag: string;
 }
 export declare class ServerRecord {
     replacementServerInvite: string;
     serverName: string;
-    serverID: string;
+    serverID: Discord.GuildResolvable;
     userRecords: UserRecord[];
 }
 export declare class GuildMemberData {
@@ -34,7 +34,7 @@ export declare class DeletionChannel {
     numberOfMessagesToSave: number;
     timeOfLastPurge: number;
     currentlyBeingDeleted: boolean;
-    deletionMessageID: string;
+    deletionMessageID: Discord.MessageResolvable;
 }
 export declare class TimedMessage {
     textChannelID: string;
@@ -56,9 +56,9 @@ export declare class Log {
     loggingChannelName: string;
 }
 export declare class GuildData {
-    ghostedRoleID: string;
+    ghostedRoleID: Discord.RoleResolvable;
     timedMessages: TimedMessage[];
-    guildID: string;
+    guildID: Discord.GuildResolvable;
     guildName: string;
     guildMemberCount: number;
     logs: Log[];
@@ -68,7 +68,7 @@ export declare class GuildData {
     constructor();
 }
 export declare class DiscordUserData {
-    userID: string;
+    userID: Discord.UserResolvable;
     userName: string;
     guildCount: number;
     msBetweenCacheBackup: number;
@@ -84,14 +84,14 @@ export declare class DiscordUserData {
     startupCall: boolean;
     activeInviteGuilds: string[];
     botCommanders: string[];
-    trackingGuildIDs: string[];
-    trackingChannelIDs: string[];
-    trackedUserIDs: string[];
+    trackingGuildIDs: Discord.GuildResolvable[];
+    trackingChannelIDs: Discord.ChannelResolvable[];
+    trackedUserIDs: Discord.UserResolvable[];
     trackedUserNames: string[];
 }
 export declare class BotCommand {
     name: string;
-    description: string;
+    description: string | null;
     function: Function;
 }
 /**
@@ -213,13 +213,13 @@ export declare class DiscordUser {
 * @param   {String}            guildID
 * @returns {Promise<void>}
 */
-    private updateGuildMemberDataInDB;
+    updateGuildMemberDataInDB(guildMemberData: GuildMemberData, guildID: string): Promise<void>;
     /**
 * Function for updating all of the guild member's data caches,
 * @param   {Discord.Client} client
 * @returns {Promise<void>}
 */
-    updateGuildMembersData(client: Discord.Client): Promise<void>;
+    private updateGuildMembersData;
     /**
 * Updates the current data cache from live objects,
 * and the,JSON data file, and saves it to the JSON file.

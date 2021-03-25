@@ -1,6 +1,5 @@
-import DiscordStuff = require("../DiscordStuff");
-export const name: string;
-export const description: string;
+import Discord = require('discord.js');
+import DiscordStuff = require('../DiscordStuff');
 /**
  * Purges up to 100 messages from a given channel at a time.
  * @param   {Discord.Message}             message
@@ -8,12 +7,6 @@ export const description: string;
  * @param   {DiscordStuff.DiscordUser}    discordUser
  * @returns {String}
  */
-export function execute(message: any, args: string[], discordUser: DiscordStuff.DiscordUser): string;
-/**
- * Purges up to 100 messages from a given channel at a time.
- * @param   {Discord.Message}             message
- * @param   {String[]}                    args
- * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {String}
- */
-export function execute(message: any, args: string[], discordUser: DiscordStuff.DiscordUser): string;
+export declare function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string>;
+declare const _default: DiscordStuff.BotCommand;
+export default _default;

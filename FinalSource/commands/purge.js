@@ -1,4 +1,4 @@
-// purge.js - Module for my purge messages command.
+// purge.ts - Module for my purge messages command.
 // Jan 30, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,62 +39,67 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var DiscordStuff = require('../DiscordStuff');
-module.exports = {
-    name: 'purge',
-    description: '!purge = AMOUNTTODELETE, between 1 and 100 messages!',
-    /**
-     * Purges up to 100 messages from a given channel at a time.
-     * @param   {Discord.Message}             message
-     * @param   {String[]}                    args
-     * @param   {DiscordStuff.DiscordUser}    discordUser
-     * @returns {String}
-     */
-    execute: function (message, args, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var areWeInADM, doWeHaveAdminPerms, regExp, deleteCount, newMessage, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 7, , 8]);
-                        return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
-                    case 1:
-                        areWeInADM = _a.sent();
-                        if (areWeInADM === true) {
-                            return [2 /*return*/, this.name];
-                        }
-                        return [4 /*yield*/, DiscordStuff.doWeHaveAdminPermission(message, discordUser)];
-                    case 2:
-                        doWeHaveAdminPerms = _a.sent();
-                        if (doWeHaveAdminPerms === false) {
-                            return [2 /*return*/, this.name];
-                        }
-                        regExp = new RegExp(/\d{1,3}/);
-                        if (!(args[0] === undefined || !regExp.test(args[0])
-                            || parseInt(args[0], 10) <= 0 || parseInt(args[0], 10) > 100)) return [3 /*break*/, 5];
-                        return [4 /*yield*/, message.reply('Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)')];
-                    case 3:
-                        _a.sent();
-                        return [4 /*yield*/, message.delete()];
-                    case 4:
-                        _a.sent();
-                        return [2 /*return*/, this.name];
-                    case 5:
-                        deleteCount = parseInt(args[0].match(regExp)[0], 10);
-                        message.channel.bulkDelete(deleteCount, true);
-                        return [4 /*yield*/, message.reply("Deleted " + deleteCount.toString() + " messages!")];
-                    case 6:
-                        newMessage = _a.sent();
-                        newMessage.delete({ timeout: 5000 });
-                        return [2 /*return*/, this.name];
-                    case 7:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 8: return [2 /*return*/];
-                }
-            });
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var DiscordStuff = require("../DiscordStuff");
+var command = new DiscordStuff.BotCommand();
+command.name = 'purge';
+command.description = '!purge = AMOUNTTODELETE, between 1 and 100 messages!';
+/**
+ * Purges up to 100 messages from a given channel at a time.
+ * @param   {Discord.Message}             message
+ * @param   {String[]}                    args
+ * @param   {DiscordStuff.DiscordUser}    discordUser
+ * @returns {String}
+ */
+function execute(message, args, discordUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var areWeInADM, doWeHaveAdminPerms, regExp, deleteCount, currentChannel, newMessage, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 7, , 8]);
+                    return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
+                case 1:
+                    areWeInADM = _a.sent();
+                    if (areWeInADM === true) {
+                        return [2 /*return*/, command.name];
+                    }
+                    return [4 /*yield*/, DiscordStuff.doWeHaveAdminPermission(message, discordUser)];
+                case 2:
+                    doWeHaveAdminPerms = _a.sent();
+                    if (doWeHaveAdminPerms === false) {
+                        return [2 /*return*/, command.name];
+                    }
+                    regExp = new RegExp(/\d{1,3}/);
+                    if (!(args[0] === undefined || !regExp.test(args[0])
+                        || parseInt(args[0], 10) <= 0 || parseInt(args[0], 10) > 100)) return [3 /*break*/, 5];
+                    return [4 /*yield*/, message.reply('Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)')];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, message.delete()];
+                case 4:
+                    _a.sent();
+                    return [2 /*return*/, command.name];
+                case 5:
+                    deleteCount = parseInt(args[0].match(regExp)[0], 10);
+                    currentChannel = message.channel;
+                    currentChannel.bulkDelete(deleteCount, true);
+                    return [4 /*yield*/, message.reply("Deleted " + deleteCount.toString() + " messages!")];
+                case 6:
+                    newMessage = _a.sent();
+                    newMessage.delete({ timeout: 5000 });
+                    return [2 /*return*/, command.name];
+                case 7:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 8: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

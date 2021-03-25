@@ -50,10 +50,10 @@ var PermissionOverwrites = /** @class */ (function () {
     * @param {Discord.Guild} guild
     */
     function PermissionOverwrites(guild) {
-        this.deny = Number();
-        this.allow = Number();
-        this.id = String();
-        this.type = String();
+        this.deny = [];
+        this.allow = [];
+        this.id = null;
+        this.type = null;
         this.channel = new Discord.GuildChannel(guild, {});
     }
     return PermissionOverwrites;
@@ -62,9 +62,9 @@ exports.PermissionOverwrites = PermissionOverwrites;
 // Class representing some info about a given user.
 var UserRecord = /** @class */ (function () {
     function UserRecord() {
-        this.userID = String();
-        this.lastKnownUsername = String();
-        this.lastKnownUserTag = String();
+        this.userID = '';
+        this.lastKnownUsername = '';
+        this.lastKnownUserTag = '';
     }
     return UserRecord;
 }());
@@ -72,9 +72,9 @@ exports.UserRecord = UserRecord;
 // Class representing some info about a given server.
 var ServerRecord = /** @class */ (function () {
     function ServerRecord() {
-        this.replacementServerInvite = String();
-        this.serverName = String();
-        this.serverID = String();
+        this.replacementServerInvite = '';
+        this.serverName = '';
+        this.serverID = '';
         this.userRecords = [];
     }
     return ServerRecord;
@@ -85,9 +85,9 @@ var GuildMemberData = /** @class */ (function () {
     function GuildMemberData() {
         this.previousRoleIDs = [];
         this.previousPermissionOverwrites = [];
-        this.userID = String();
-        this.userName = String();
-        this.displayName = String();
+        this.userID = '';
+        this.userName = '';
+        this.displayName = '';
     }
     return GuildMemberData;
 }());
@@ -95,11 +95,11 @@ exports.GuildMemberData = GuildMemberData;
 // Class representing an actively-being-pruned channel.
 var DeletionChannel = /** @class */ (function () {
     function DeletionChannel() {
-        this.channelID = String();
-        this.numberOfMessagesToSave = Number();
+        this.channelID = '';
+        this.numberOfMessagesToSave = Number(0);
         this.timeOfLastPurge = Number();
         this.currentlyBeingDeleted = Boolean();
-        this.deletionMessageID = String();
+        this.deletionMessageID = '';
     }
     return DeletionChannel;
 }());
@@ -107,11 +107,11 @@ exports.DeletionChannel = DeletionChannel;
 // Class representing a timed message to be sent out.
 var TimedMessage = /** @class */ (function () {
     function TimedMessage() {
-        this.textChannelID = String();
-        this.messageContent = String();
-        this.msBetweenSends = Number();
-        this.timeOfLastSend = Number();
-        this.name = String();
+        this.textChannelID = '';
+        this.messageContent = String(0);
+        this.msBetweenSends = Number(0);
+        this.timeOfLastSend = Number(0);
+        this.name = '';
     }
     return TimedMessage;
 }());
@@ -119,9 +119,9 @@ exports.TimedMessage = TimedMessage;
 // Class representing a "server-joining verification" system.
 var VerificationSystem = /** @class */ (function () {
     function VerificationSystem() {
-        this.channelID = String();
-        this.messageID = String();
-        this.emoji = String();
+        this.channelID = '';
+        this.messageID = '';
+        this.emoji = '';
     }
     return VerificationSystem;
 }());
@@ -129,11 +129,11 @@ exports.VerificationSystem = VerificationSystem;
 // Class representing a single log for something on a server.
 var Log = /** @class */ (function () {
     function Log() {
-        this.name = String();
-        this.nameSmall = String();
+        this.name = '';
+        this.nameSmall = '';
         this.enabled = Boolean(false);
-        this.loggingChannelID = String();
-        this.loggingChannelName = String();
+        this.loggingChannelID = '';
+        this.loggingChannelName = '';
     }
     return Log;
 }());
@@ -141,11 +141,11 @@ exports.Log = Log;
 // Class representing a single guild/server.
 var GuildData = /** @class */ (function () {
     function GuildData() {
-        this.ghostedRoleID = String();
+        this.ghostedRoleID = '';
         this.timedMessages = [];
-        this.guildID = String();
-        this.guildName = String();
-        this.guildMemberCount = Number();
+        this.guildID = '';
+        this.guildName = '';
+        this.guildMemberCount = Number(0);
         this.logs = [];
         this.verificationSystem = new VerificationSystem();
         this.deletionChannels = [];
@@ -196,20 +196,20 @@ exports.GuildData = GuildData;
 // Class representing a single instance of "Discord".
 var DiscordUserData = /** @class */ (function () {
     function DiscordUserData() {
-        this.userID = String();
-        this.userName = String();
-        this.guildCount = Number();
-        this.msBetweenCacheBackup = Number();
-        this.currencyName = String();
-        this.timeOfLastUpdateAndSave = Number();
-        this.prefix = String();
-        this.dataBaseFilePath = String();
-        this.msBetweenRecordUpdates = Number();
-        this.timeOfLastRecordUpdate = Number();
-        this.msBetweenInvites = Number();
-        this.timeOfLastInvite = Number();
-        this.msBetweenMessageDeletion = Number();
-        this.startupCall = Boolean();
+        this.userID = '';
+        this.userName = '';
+        this.guildCount = Number(0);
+        this.msBetweenCacheBackup = Number(0);
+        this.currencyName = '';
+        this.timeOfLastUpdateAndSave = Number(0);
+        this.prefix = '';
+        this.dataBaseFilePath = '';
+        this.msBetweenRecordUpdates = Number(0);
+        this.timeOfLastRecordUpdate = Number(0);
+        this.msBetweenInvites = Number(0);
+        this.timeOfLastInvite = Number(0);
+        this.msBetweenMessageDeletion = Number(0);
+        this.startupCall = Boolean(true);
         this.activeInviteGuilds = [];
         this.botCommanders = [];
         this.trackingGuildIDs = [];
@@ -223,8 +223,8 @@ exports.DiscordUserData = DiscordUserData;
 // Class representing a function/command.
 var BotCommand = /** @class */ (function () {
     function BotCommand() {
-        this.name = String();
-        this.description = String();
+        this.name = '';
+        this.description = null;
         this.function = Function();
     }
     return BotCommand;
@@ -1000,11 +1000,9 @@ var DiscordUser = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        guildMemberDataString = String();
                         return [4 /*yield*/, this.dataBase.get(guildMember.guild.id + " + " + guildMember.id)];
                     case 1:
                         guildMemberDataString = _a.sent();
-                        guildMemberData_1 = new GuildMemberData();
                         guildMemberData_1 = JSON.parse(guildMemberDataString);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(guildMemberData_1);
@@ -1759,6 +1757,11 @@ var DiscordUser = /** @class */ (function () {
                                 currentGuild = _a.sent();
                                 currentChannel = currentGuild.channels
                                     .resolve(newGuildData.verificationSystem.channelID);
+                                if (currentChannel === null) {
+                                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                                            reject();
+                                        })];
+                                }
                                 msgManager = new Discord.MessageManager(currentChannel);
                                 return [4 /*yield*/, msgManager
                                         .fetch(newGuildData.verificationSystem.messageID)];

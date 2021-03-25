@@ -8,13 +8,21 @@
 import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff');
 
+class Data{
+	value: any;
+	key: string = String('');
+}
+
 class DeletedCounter {
 	deletedCount: number = 0;
 
-	data = undefined;
+	data: Data = new Data();
 
-	setData(data: any) {
-		this.data = data;
+	setData(key: string, value: any) {
+		const newData = new Data();
+		newData.key = key;
+		newData.value = value;
+		this.data = newData;
 	}
 
 	getData() {
@@ -32,10 +40,18 @@ class DeletedCounter {
 
 async function onData(dbKey: string, discordUser: DiscordStuff.DiscordUser, deletedCounter: DeletedCounter) {
 	if (deletedCounter.getData() !== undefined && dbKey !== '') {
-		if ((deletedCounter.getData() as any).key.includes(dbKey)) {
-			console.log((deletedCounter.getData() as any).key, '=', JSON.parse((deletedCounter.getData() as any).value));
-			await discordUser.dataBase.del((deletedCounter.getData() as any).key);
-			deletedCounter.incrementDeletedCount();
+		if (deletedCounter.getData().key.includes(dbKey)) {
+			try{
+				console.log(deletedCounter.getData().key, '=', JSON.parse(deletedCounter.getData().value));
+				await discordUser.dataBase.del(deletedCounter.getData().key);
+				deletedCounter.incrementDeletedCount();
+			}
+			catch(error){
+				if (error.message.includes('Unexpected token')){
+					await discordUser.dataBase.del(deletedCounter.getData().key);
+					deletedCounter.incrementDeletedCount();
+				}
+			}
 		}
 	}
 }
@@ -52,6 +68,12 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 	 */
  export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
+		const areWeInADM = await DiscordStuff.areWeInADM(message);
+
+		if (areWeInADM){
+			return command.name;
+		}
+
 		const areWeACommander = await DiscordStuff.doWeHaveAdminPermission(message, discordUser);
 
 		if (!areWeACommander) {
@@ -90,41 +112,36 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 		}
 
 		const deletedCounter = new DeletedCounter();
-		await discordUser.dataBase.createReadStream()
-			.on('data', async (data: any) => {
-				if (data.key.includes(dbKey)) {
-					deletedCounter.setData(data);
-					await onData(dbKey, discordUser, deletedCounter);
-				}
-			})
-			.on('error', (err: Error) => {
-				console.log('Oh my!', err);
-			})
-			.on('close', () => {
-				console.log('Stream closed');
-			})
-			.on('end', async () => {
-				const msgEmbed = new Discord.MessageEmbed();
-				msgEmbed.setAuthor(message.author.username, (message.author.avatarURL() as string))
-					.setColor([0, 0, 255])
-					.setDescription(`------\n__**Number of Deleted Entries**__: ${deletedCounter.returnDeletedCount()}\n------`)
-					.setTimestamp(Date.now())
-					.setTitle('__**Deleted DB Entries:**__');
-				await message.channel.send(msgEmbed);
-				console.log('Stream ended');
-			});
+		const iterator = discordUser.dataBase.iterate({});
+		for await (const {key, value} of iterator){
+			console.log(value);
+            if (key.includes(dbKey)){
+				deletedCounter.setData(key, value);
+				await onData(dbKey, discordUser, deletedCounter)
+			}
+        }
 
+		await iterator.end();
+		const msgEmbed = new Discord.MessageEmbed();
+		msgEmbed.setAuthor(message.author.username, (message.author.avatarURL() as string))
+			.setColor([0, 0, 255])
+			.setDescription(`------\n__**Number of Deleted Entries**__: ${deletedCounter.returnDeletedCount()}\n------`)
+			.setTimestamp(Date.now())
+			.setTitle('__**Deleted DB Entries:**__');
+		await message.channel.send(msgEmbed);
+		
 		if (message.deletable) {
 			await message.delete();
 		}
 		return command.name;
 	} catch (error) {
+		if (message.deletable) {
+			await message.delete();
+		}
 		return new Promise((resolve, reject) => {
 			reject(error);
 		});
 	}
 }
-
 command.function = execute;
-
 export default command as DiscordStuff.BotCommand;

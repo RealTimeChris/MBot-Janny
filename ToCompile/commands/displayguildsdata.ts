@@ -17,9 +17,9 @@ command.description = '!displayguildsdata to display the guild info of the bots 
      * @param   {Discord.Message}             message
      * @param   {String[]}                    args
      * @param   {DiscordStuff.DiscordUser}    discordUser
-     * @returns {String}
+     * @returns {Promise<string>}
      */
- export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser) {
+ export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
 		let currentCount = 0;
 		discordUser.guildsData.forEach(guild => {
@@ -31,7 +31,7 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 			const { guildID } = guild;
 			let currentGuild = new Discord.Guild(message.client, {});
 
-			currentGuild = message.client.guilds.resolve(guildID) as Discord.Guild;
+			currentGuild = message.client.guilds.resolve(guildID as Discord.GuildResolvable) as Discord.Guild;
 
 			msgString += `__Created:__ ${currentGuild.createdAt}\n`;
 			msgString += `__Guild Owner:__ <@!${(currentGuild.owner as Discord.GuildMember).id}> (${(currentGuild.owner as Discord.GuildMember).user.tag})\n`;

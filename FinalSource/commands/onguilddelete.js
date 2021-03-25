@@ -1,4 +1,4 @@
-// onguilddelete.js - Module for my "on guild delete" command.
+// onguilddelete.ts - Module for my "on guild delete" command.
 // Feb 22, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,43 +39,47 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var DiscordStuff = require('../DiscordStuff');
-module.exports = {
-    name: 'onguilddelete',
-    description: "It's an automatic one!",
-    /**
-     * @param   {Discord.Guild}             guild
-     * @param   {DiscordStuff.DiscordUser}  discordUser
-     * @returns {String}
-     */
-    execute: function (guild, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var serverRecordKey, serverRecordString, serverRecordObject, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        if (!(discordUser instanceof DiscordStuff.DiscordUser)) {
-                            return [2 /*return*/, this.name];
-                        }
-                        serverRecordKey = guild.id + " + Record";
-                        return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
-                    case 1:
-                        serverRecordString = _a.sent();
-                        serverRecordObject = JSON.parse(serverRecordString);
-                        if (serverRecordObject.replacementServerInvite.length >= 2) {
-                            discordUser.userData.activeInviteGuilds.push(guild.id);
-                            discordUser.updateUserDataInDB(discordUser.userData, guild.client);
-                        }
-                        return [2 /*return*/, this.name];
-                    case 2:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 3: return [2 /*return*/];
-                }
-            });
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var DiscordStuff = require("../DiscordStuff");
+var command = new DiscordStuff.BotCommand();
+command.name = 'onguilddelete';
+command.description = "It's an automatic one!";
+/**
+ * @param   {Discord.Guild}             guild
+ * @param   {DiscordStuff.DiscordUser}  discordUser
+ * @returns {Promise<string>}
+ */
+function execute(guild, discordUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var serverRecordKey, serverRecordString, serverRecordObject, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    if (!(discordUser instanceof DiscordStuff.DiscordUser)) {
+                        return [2 /*return*/, command.name];
+                    }
+                    serverRecordKey = guild.id + " + Record";
+                    return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
+                case 1:
+                    serverRecordString = _a.sent();
+                    serverRecordObject = JSON.parse(serverRecordString);
+                    if (serverRecordObject.replacementServerInvite.length >= 2) {
+                        discordUser.userData.activeInviteGuilds.push(guild.id);
+                        discordUser.updateUserDataInDB(discordUser.userData);
+                    }
+                    return [2 /*return*/, command.name];
+                case 2:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 3: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

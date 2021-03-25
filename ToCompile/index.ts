@@ -9,7 +9,7 @@ import Discord = require('discord.js');
 import fs = require('fs');
 import DiscordStuff = require("./DiscordStuff.js");
 import config = require('../ToCompile/config.json');
-import botCommands from './commands/commandindex';
+import botCommands from './commandindex';
 const client = new Discord.Client();
 
 const discordUser = new DiscordStuff.DiscordUser();
@@ -56,7 +56,6 @@ client.on('message', async (msg) => {
 			}
 		}
 
-
 		if (!botCommands.commands.has(command)){
 			return;
 		}
@@ -76,35 +75,15 @@ client.on('message', async (msg) => {
 			console.log(error);
 			msg.reply('There was an error trying to execute that command!');
 		}
-
-		if (!commands.has(command)) {
-			return;
-		}
-		try {
-			console.log(`Command: '${command}' entered by user: ${msg.author.username}`);
-			const cmdName = await (commands.get(command) as any).execute(msg, args, discordUser);
-			console.log(`Completed Command: ${cmdName}`);
-			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
-			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
-			await discordUser.saveCacheIfTimeHasPassed(client);
-			await DiscordStuff.sendTimedMessagesIfTimeHasPassed(client, discordUser);
-			discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch((error: Error) => {
-				console.log(error);
-			});
-			return;
-		} catch (error) {
-			console.log(error);
-			msg.reply('There was an error trying to execute that command!');
-		}
 	} else if (msg.author.id !== (client.user as Discord.User).id) {
 		const command = 'message';
 
-		if (!commands.has(command)) {
+		if (!botCommands.commands.has(command)) {
 			return;
 		}
 		try {
 			console.log(`Standard message entered: ${msg.author.username}`);
-			const cmdName = await (commands.get(command) as any).execute(msg, discordUser);
+			const cmdName = await botCommands.commands.get(command)?.function(msg);
 			console.log(`Completed Command: ${cmdName}`);
 			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
 			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
@@ -146,7 +125,7 @@ client.on('guildDelete', async guild => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(guild, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(guild, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -170,7 +149,7 @@ client.on('guildBanAdd', async (guild, user) => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(client, guild, user, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(client, guild, user, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -194,7 +173,7 @@ client.on('guildBanRemove', async (guild, user) => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(client, guild, user, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(client, guild, user, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -218,7 +197,7 @@ client.on('guildMemberAdd', async member => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(client, member, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(client, member, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -241,7 +220,7 @@ client.on('guildMemberRemove', async member => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(client, member, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(client, member, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -348,7 +327,7 @@ client.on('inviteCreate', async (invite) => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(client, invite, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(client, invite, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -372,7 +351,7 @@ client.on('messageDelete', async (message) => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(client, message, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(client, message, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -396,7 +375,7 @@ client.on('messageDeleteBulk', async (collection) => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(client, collection, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(client, collection, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -420,7 +399,7 @@ client.on('roleCreate', async (role) => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(client, role, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(client, role, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -444,7 +423,7 @@ client.on('roleDelete', async (role) => {
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (commands.get(command) as any).execute(client, role, discordUser);
+		const cmdName = await botCommands.commands.get(command)?.function(client, role, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {

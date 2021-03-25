@@ -26,16 +26,16 @@ export class PermissionOverwrites {
 
 // Class representing some info about a given user.
 export class UserRecord {
-	userID: string | null = null;
-	lastKnownUsername: string | null = null;
-	lastKnownUserTag: string | null = null;
+	userID: Discord.UserResolvable = '';
+	lastKnownUsername: string = '';
+	lastKnownUserTag: string = '';
 }
 
 // Class representing some info about a given server.
 export class ServerRecord {
-	replacementServerInvite: string = String();
-	serverName: string = String();
-	serverID: string = String();
+	replacementServerInvite: string = '';
+	serverName: string = '';
+	serverID: Discord.GuildResolvable = '';
 	userRecords: UserRecord[] = [];
 }
 
@@ -43,52 +43,52 @@ export class ServerRecord {
 export class GuildMemberData {
 	previousRoleIDs: string[] = [];
 	previousPermissionOverwrites: PermissionOverwrites[] = [];
-	userID: string = String();
-	userName: string = String();
-	displayName: string = String();
+	userID: string = '';
+	userName: string = '';
+	displayName: string = '';
 }
 
 // Class representing an actively-being-pruned channel.
 export class DeletionChannel {
-	channelID: string = String();
-	numberOfMessagesToSave: number = Number();
+	channelID: string = '';
+	numberOfMessagesToSave: number = Number(0);
 	timeOfLastPurge: number = Number();
 	currentlyBeingDeleted: boolean = Boolean();
-	deletionMessageID: string = String();
+	deletionMessageID: Discord.MessageResolvable = '';
 }
 
 // Class representing a timed message to be sent out.
 export class TimedMessage {
-	textChannelID: string = String();
-	messageContent: string = String();
-	msBetweenSends: number = Number();
-	timeOfLastSend: number = Number();
-	name: string = String();
+	textChannelID: string = '';
+	messageContent: string = String(0);
+	msBetweenSends: number = Number(0);
+	timeOfLastSend: number = Number(0);
+	name: string = '';
 }
 
 // Class representing a "server-joining verification" system.
 export class VerificationSystem {
-	channelID: string = String();
-	messageID: string = String();
-	emoji: string = String();
+	channelID: string = '';
+	messageID: string = '';
+	emoji: string = '';
 }
 
 // Class representing a single log for something on a server.
 export class Log {
-	name: string = String();
-	nameSmall: string = String();
+	name: string = '';
+	nameSmall: string  = '';
 	enabled: boolean = Boolean(false);
-	loggingChannelID: string = String();
-	loggingChannelName: string = String();
+	loggingChannelID: string = '';
+	loggingChannelName: string = '';
 }
 
 // Class representing a single guild/server.
 export class GuildData {
-	ghostedRoleID: string = String();
+	ghostedRoleID: Discord.RoleResolvable = '';
 	timedMessages: TimedMessage[] = [];
-	guildID: string = String();
-	guildName: string = String();
-	guildMemberCount: number = Number();
+	guildID: Discord.GuildResolvable = '';
+	guildName: string = '';
+	guildMemberCount: number = Number(0);
 	logs: Log[] = [];
 	verificationSystem: VerificationSystem = new VerificationSystem();
 	deletionChannels: DeletionChannel[] = [];
@@ -139,32 +139,32 @@ export class GuildData {
 
 // Class representing a single instance of "Discord".
 export class DiscordUserData {
-	userID: string = String();
-	userName: string = String();
-	guildCount: number = Number();
-	msBetweenCacheBackup: number = Number();
-	currencyName: string = String();
-	timeOfLastUpdateAndSave: number = Number();
-	prefix: string = String();
-	dataBaseFilePath: string = String();
-	msBetweenRecordUpdates: number = Number();
-	timeOfLastRecordUpdate: number = Number();
-	msBetweenInvites: number = Number();
-	timeOfLastInvite: number = Number();
-	msBetweenMessageDeletion: number = Number();
-	startupCall: boolean = Boolean();
+	userID: Discord.UserResolvable = '';
+	userName: string = '';
+	guildCount: number = Number(0);
+	msBetweenCacheBackup: number = Number(0);
+	currencyName: string = '';
+	timeOfLastUpdateAndSave: number = Number(0);
+	prefix: string = '';
+	dataBaseFilePath: string = '';
+	msBetweenRecordUpdates: number = Number(0);
+	timeOfLastRecordUpdate: number = Number(0);
+	msBetweenInvites: number = Number(0);
+	timeOfLastInvite: number = Number(0);
+	msBetweenMessageDeletion: number = Number(0);
+	startupCall: boolean = Boolean(true);
 	activeInviteGuilds: string[] = [];
 	botCommanders: string[] = [];
-	trackingGuildIDs: string[] = [];
-	trackingChannelIDs: string[] = [];
-	trackedUserIDs: string[] = [];
+	trackingGuildIDs: Discord.GuildResolvable[] = [];
+	trackingChannelIDs: Discord.ChannelResolvable[] = [];
+	trackedUserIDs: Discord.UserResolvable[] = [];
 	trackedUserNames: string[] = [];
 }
 
 // Class representing a function/command.
 export class BotCommand {
-	name: string = String();
-	description: string = String();
+	name: string = '';
+	description: string | null = null;
 	function: Function = Function();
 }
 
@@ -493,7 +493,7 @@ export async function recurseThroughServerRecords(dataBase: Level, liveGuildArra
 		});
 	}
 }
- 
+
 // Class representing an entire instance of Discord, from the perspective of a given bot.
 export class DiscordUser {
 	userData = new DiscordUserData();
@@ -677,8 +677,8 @@ export class DiscordUser {
 */
 	async updateGuildDataInDB(guildData: GuildData): Promise<void> {
 		try {
-			this.guildsData.set(guildData.guildID, guildData);
-			let guildDataString = JSON.stringify(this.guildsData.get(guildData.guildID));
+			this.guildsData.set((guildData.guildID as string), guildData);
+			let guildDataString = JSON.stringify(this.guildsData.get((guildData.guildID as string)));
 			await this.dataBase.put(guildData.guildID, guildDataString);
 			guildDataString = await this.dataBase.get(guildData.guildID);
 			console.log('New Guild Cache:');
@@ -738,12 +738,10 @@ export class DiscordUser {
 */
 	async getGuildMemberDataFromDB(guildMember: Discord.GuildMember): Promise<GuildMemberData> {
 		try {
-			let guildMemberDataString: string = String();
-			guildMemberDataString = await (this.dataBase as Level).get(`${guildMember.guild.id} + ${guildMember.id}`);
-			let guildMemberData = new GuildMemberData();
-			guildMemberData = JSON.parse(guildMemberDataString);
+			const guildMemberDataString = await (this.dataBase as Level).get(`${guildMember.guild.id} + ${guildMember.id}`) as string;
+			const guildMemberData = JSON.parse(guildMemberDataString) as GuildMemberData;
 			return new Promise((resolve, reject) => {
-				resolve(guildMemberData);
+				resolve(guildMemberData)
 			});
 		} catch (error) {
 			if (error.type === 'NotFoundError') {
@@ -768,7 +766,7 @@ export class DiscordUser {
 * @param   {String}            guildID
 * @returns {Promise<void>}
 */
-	private async updateGuildMemberDataInDB(guildMemberData: GuildMemberData, guildID: string): Promise<void> {
+	async updateGuildMemberDataInDB(guildMemberData: GuildMemberData, guildID: string): Promise<void> {
 		try {
 			this.guildMembersData.set(`${guildID} + ${guildMemberData.userID}`, guildMemberData);
 			const guildMemberDataString = JSON.stringify(this.guildMembersData.get(`${guildID} + ${guildMemberData.userID}`));
@@ -788,7 +786,7 @@ export class DiscordUser {
 * @param   {Discord.Client} client
 * @returns {Promise<void>}
 */
-	async updateGuildMembersData(client: Discord.Client): Promise<void> {
+	private async updateGuildMembersData(client: Discord.Client): Promise<void> {
 		try {
 			const liveDataGuildArray = client.guilds.cache.array();
 			for (let x = 0; x < liveDataGuildArray.length; x += 1) {
@@ -1301,9 +1299,14 @@ export class DiscordUser {
 			const newGuildData = guildData;
 			try {
 				if (newGuildData.verificationSystem.channelID != null) {
-					const currentGuild = await client.guilds.fetch(newGuildData.guildID);
+					const currentGuild = await client.guilds.fetch((newGuildData.guildID as string));
 					const currentChannel = currentGuild.channels
 						.resolve(newGuildData.verificationSystem.channelID) as Discord.TextChannel;
+					if (currentChannel === null){
+						return new Promise((resolve, reject) => {
+							reject();
+						})
+					}
 					const msgManager = new Discord.MessageManager(currentChannel);
 					const oldVerificationMessage = await msgManager
 						.fetch(newGuildData.verificationSystem.messageID);
