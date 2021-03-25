@@ -1,4 +1,4 @@
-// onmessagedeletebulk.js - Module for my "on message delete bulk" command.
+// onmessagedeletebulk.ts - Module for my "on message delete bulk" command.
 // Mar 12, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,82 +39,85 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Discord = require('discord.js');
-var DiscordStuff = require('../DiscordStuff');
-module.exports = {
-    name: 'onmessagedeletebulk',
-    description: "It's an automatic one!",
-    /**
-     * @param {Discord.Client}                              client
-     * @param {Discord.Collection<String, Discord.Message>} collection
-     * @param {DiscordStuff.DiscordUser}                    discordUser
-     * @returns {String}
-     */
-    execute: function (client, collection, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var guildData, logs, x, textChannel, msgEmbed, msgString, keyArray, x, currentMessage, msgString2, msgEmbed2, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 10, , 11]);
-                        if (!(collection instanceof Discord.Collection)) {
-                            return [2 /*return*/, this.name];
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var Discord = require("discord.js");
+var DiscordStuff = require("../DiscordStuff");
+var command = new DiscordStuff.BotCommand();
+command.name = 'onmessagedeletebulk';
+command.description = "It's an automatic one!";
+/**
+ * @param {Discord.Client}                              client
+ * @param {Discord.Collection<String, Discord.Message>} collection
+ * @param {DiscordStuff.DiscordUser}                    discordUser
+ * @returns {Promise<string>}
+ */
+function execute(client, collection, discordUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var guildData, logs, x, textChannel, msgEmbed, msgString, keyArray, x, currentMessage, msgString2, msgEmbed2, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 10, , 11]);
+                    if (!(collection instanceof Discord.Collection)) {
+                        return [2 /*return*/, command.name];
+                    }
+                    return [4 /*yield*/, discordUser.getGuildDataFromDB(collection.first().guild)];
+                case 1:
+                    guildData = _a.sent();
+                    logs = new DiscordStuff.Log();
+                    for (x = 0; x < guildData.logs.length; x += 1) {
+                        if (guildData.logs[x].nameSmall === 'messagedeletebulk') {
+                            logs = guildData.logs[x];
+                            break;
                         }
-                        return [4 /*yield*/, discordUser.getGuildDataFromDB(collection.first().guild)];
-                    case 1:
-                        guildData = _a.sent();
-                        logs = new DiscordStuff.Log();
-                        for (x = 0; x < guildData.logs.length; x += 1) {
-                            if (guildData.logs[x].nameSmall === 'messagedeletebulk') {
-                                logs = guildData.logs[x];
-                                break;
-                            }
-                        }
-                        textChannel = new Discord.TextChannel(collection.first().guild, {});
-                        return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                    case 2:
-                        textChannel = _a.sent();
-                        msgEmbed = new Discord.MessageEmbed();
-                        msgString = String('');
-                        msgString = "__**Number of Messages:**__ " + collection.size + "\n";
-                        msgEmbed.setTitle('__**Messages Bulk Deleted:**__').setTimestamp(Date()).setDescription(msgString).setColor([0, 0, 255]);
-                        return [4 /*yield*/, textChannel.send(msgEmbed)];
-                    case 3:
-                        _a.sent();
-                        keyArray = collection.keyArray();
-                        x = 0;
-                        _a.label = 4;
-                    case 4:
-                        if (!(x < keyArray.length)) return [3 /*break*/, 9];
-                        currentMessage = collection.get(keyArray[x]);
-                        if (!(currentMessage.content !== '')) return [3 /*break*/, 6];
-                        msgString2 = "__**Message Author:**__ <@!" + currentMessage.author.id + "> (" + currentMessage.author.tag + ")\n";
-                        msgString2 += "__**Message Id:**__ " + currentMessage.id + "\n";
-                        msgString2 += "__**Message Content:**__ " + currentMessage.content;
-                        msgEmbed.setTitle("__**Deleted Message: " + (x + 1) + " of " + keyArray.length + "**__").setTimestamp(Date()).setDescription(msgString2).setColor([0, 0, 255]);
-                        return [4 /*yield*/, textChannel.send(msgEmbed)];
-                    case 5:
-                        _a.sent();
-                        _a.label = 6;
-                    case 6:
-                        if (!(currentMessage.embeds.length > 0)) return [3 /*break*/, 8];
-                        msgEmbed2 = currentMessage.embeds[0];
-                        return [4 /*yield*/, textChannel.send("Message Content: " + (x + 1) + " of " + keyArray.length, { embed: msgEmbed2 })];
-                    case 7:
-                        _a.sent();
-                        _a.label = 8;
-                    case 8:
-                        x += 1;
-                        return [3 /*break*/, 4];
-                    case 9: return [2 /*return*/, this.name];
-                    case 10:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 11: return [2 /*return*/];
-                }
-            });
+                    }
+                    return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
+                case 2:
+                    textChannel = _a.sent();
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgString = String('');
+                    msgString = "__**Number of Messages:**__ " + collection.size + "\n";
+                    msgEmbed.setTitle('__**Messages Bulk Deleted:**__').setTimestamp(Date()).setDescription(msgString).setColor([0, 0, 255]);
+                    return [4 /*yield*/, textChannel.send(msgEmbed)];
+                case 3:
+                    _a.sent();
+                    keyArray = collection.keyArray();
+                    x = 0;
+                    _a.label = 4;
+                case 4:
+                    if (!(x < keyArray.length)) return [3 /*break*/, 9];
+                    currentMessage = collection.get(keyArray[x]);
+                    if (!(currentMessage.content !== '')) return [3 /*break*/, 6];
+                    msgString2 = "__**Message Author:**__ <@!" + currentMessage.author.id + "> (" + currentMessage.author.tag + ")\n";
+                    msgString2 += "__**Message Id:**__ " + currentMessage.id + "\n";
+                    msgString2 += "__**Message Content:**__ " + currentMessage.content;
+                    msgEmbed.setTitle("__**Deleted Message: " + (x + 1) + " of " + keyArray.length + "**__").setTimestamp(Date()).setDescription(msgString2).setColor([0, 0, 255]);
+                    return [4 /*yield*/, textChannel.send(msgEmbed)];
+                case 5:
+                    _a.sent();
+                    _a.label = 6;
+                case 6:
+                    if (!(currentMessage.embeds.length > 0)) return [3 /*break*/, 8];
+                    msgEmbed2 = currentMessage.embeds[0];
+                    return [4 /*yield*/, textChannel.send("Message Content: " + (x + 1) + " of " + keyArray.length, { embed: msgEmbed2 })];
+                case 7:
+                    _a.sent();
+                    _a.label = 8;
+                case 8:
+                    x += 1;
+                    return [3 /*break*/, 4];
+                case 9: return [2 /*return*/, command.name];
+                case 10:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 11: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

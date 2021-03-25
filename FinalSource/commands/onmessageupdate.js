@@ -1,4 +1,4 @@
-// onmessageupdate.js - Module for my "on message update" command.
+// onmessageupdate.ts - Module for my "on message update" command.
 // Mar 12, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,73 +39,76 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Discord = require('discord.js');
-var DiscordStuff = require('../DiscordStuff');
-module.exports = {
-    name: 'onmessageupdate',
-    description: "It's an automatic one!",
-    /**
-     * @param {Discord.Client}              client
-     * @param {Discord.Message}             oldMessage
-     * @param {Discord.Message}             newMessage
-     * @param {DiscordStuff.DiscordUser}    discordUser
-     * @returns {String}
-     */
-    execute: function (client, oldMessage, newMessage, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var guildData, logs, x, textChannel, msgEmbed, msgString, x, msgEmbed2, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 8, , 9]);
-                        if (!(newMessage instanceof Discord.Message)) {
-                            return [2 /*return*/, this.name];
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var Discord = require("discord.js");
+var DiscordStuff = require("../DiscordStuff");
+var command = new DiscordStuff.BotCommand();
+command.name = 'onmessageupdate';
+command.description = "It's an automatic one!";
+/**
+ * @param {Discord.Client}              client
+ * @param {Discord.Message}             oldMessage
+ * @param {Discord.Message}             newMessage
+ * @param {DiscordStuff.DiscordUser}    discordUser
+ * @returns {Promise<string>}
+ */
+function execute(client, oldMessage, newMessage, discordUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var guildData, logs, x, textChannel, msgEmbed, msgString, x, msgEmbed2, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 8, , 9]);
+                    if (!(newMessage instanceof Discord.Message)) {
+                        return [2 /*return*/, command.name];
+                    }
+                    return [4 /*yield*/, discordUser.getGuildDataFromDB(newMessage.guild)];
+                case 1:
+                    guildData = _a.sent();
+                    logs = new DiscordStuff.Log();
+                    for (x = 0; x < guildData.logs.length; x += 1) {
+                        if (guildData.logs[x].nameSmall === 'messageupdate') {
+                            logs = guildData.logs[x];
+                            break;
                         }
-                        return [4 /*yield*/, discordUser.getGuildDataFromDB(newMessage.guild)];
-                    case 1:
-                        guildData = _a.sent();
-                        logs = new DiscordStuff.Log();
-                        for (x = 0; x < guildData.logs.length; x += 1) {
-                            if (guildData.logs[x].nameSmall === 'messageupdate') {
-                                logs = guildData.logs[x];
-                                break;
-                            }
-                        }
-                        textChannel = new Discord.TextChannel(newMessage.guild, {});
-                        return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                    case 2:
-                        textChannel = _a.sent();
-                        msgEmbed = new Discord.MessageEmbed();
-                        msgString = String('');
-                        msgString = "__**Message Author:**__ <@!" + newMessage.author.id + "> (" + newMessage.author.tag + ")\n";
-                        msgString += "__**Message ID:**__ " + newMessage.id + "\n";
-                        msgString += "__**Old Content:**__ \n" + oldMessage.content + "\n";
-                        msgString += "__**New Content:**__ " + newMessage.content;
-                        msgEmbed.setTitle('__**Message Updated:**__').setTimestamp(Date()).setDescription(msgString).setColor([0, 0, 255]);
-                        return [4 /*yield*/, textChannel.send(msgEmbed)];
-                    case 3:
-                        _a.sent();
-                        x = 0;
-                        _a.label = 4;
-                    case 4:
-                        if (!(x < newMessage.embeds.length)) return [3 /*break*/, 7];
-                        msgEmbed2 = newMessage.embeds[0];
-                        return [4 /*yield*/, textChannel.send('Message Content!', { embed: msgEmbed2 })];
-                    case 5:
-                        _a.sent();
-                        _a.label = 6;
-                    case 6:
-                        x += 1;
-                        return [3 /*break*/, 4];
-                    case 7: return [2 /*return*/, this.name];
-                    case 8:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 9: return [2 /*return*/];
-                }
-            });
+                    }
+                    return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
+                case 2:
+                    textChannel = _a.sent();
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgString = String('');
+                    msgString = "__**Message Author:**__ <@!" + newMessage.author.id + "> (" + newMessage.author.tag + ")\n";
+                    msgString += "__**Message ID:**__ " + newMessage.id + "\n";
+                    msgString += "__**Old Content:**__ \n" + oldMessage.content + "\n";
+                    msgString += "__**New Content:**__ " + newMessage.content;
+                    msgEmbed.setTitle('__**Message Updated:**__').setTimestamp(Date()).setDescription(msgString).setColor([0, 0, 255]);
+                    return [4 /*yield*/, textChannel.send(msgEmbed)];
+                case 3:
+                    _a.sent();
+                    x = 0;
+                    _a.label = 4;
+                case 4:
+                    if (!(x < newMessage.embeds.length)) return [3 /*break*/, 7];
+                    msgEmbed2 = newMessage.embeds[0];
+                    return [4 /*yield*/, textChannel.send('Message Content!', { embed: msgEmbed2 })];
+                case 5:
+                    _a.sent();
+                    _a.label = 6;
+                case 6:
+                    x += 1;
+                    return [3 /*break*/, 4];
+                case 7: return [2 /*return*/, command.name];
+                case 8:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 9: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

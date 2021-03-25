@@ -34,14 +34,25 @@ import onguildbanremove from './commands/onguildbanremove';
 commands.set(onguildbanremove.name, onguildbanremove);
 import onguilddelete from './commands/onguilddelete';
 commands.set(onguilddelete.name, onguilddelete);
-import onguildmemberadd from './commands/onguildmemberadd'
+import onguildmemberadd from './commands/onguildmemberadd';
 commands.set(onguildmemberadd.name, onguildmemberadd);
-import onguildmemberremove from './commands/onguildmemberremove'
+import onguildmemberremove from './commands/onguildmemberremove';
 commands.set(onguildmemberremove.name, onguildmemberremove);
-import oninvitecreate from './commands/oninvitecreate'
+import oninvitecreate from './commands/oninvitecreate';
 commands.set(oninvitecreate.name, oninvitecreate);
-import onmessagedelete from './commands/onmessagedelete'
+import onmessagedelete from './commands/onmessagedelete';
 commands.set(onmessagedelete.name, onmessagedelete);
+import onmessagedeletebulk from './commands/onmessagedeletebulk';
+commands.set(onmessagedeletebulk.name, onmessagedeletebulk);
+import onmessagereactionadd from './commands/onmessagereactionadd';
+commands.set(onmessagereactionadd.name, onmessagereactionadd);
+import onmessageupdate from './commands/onmessageupdate';
+commands.set(onmessageupdate.name, onmessageupdate);
+import onnicknamechange from './commands/onnicknamechange';
+commands.set(onnicknamechange.name, onnicknamechange);
+import onroleaddorremove from './commands/onroleaddorremove';
+commands.set(onroleaddorremove.name, onroleaddorremove);
+
 
 
 import purge from './commands/purge'
