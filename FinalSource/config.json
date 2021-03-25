@@ -1,0 +1,13 @@
+{
+    "botToken": "ODE0NjM1NzQwNDY5OTE5NzY0.YDgupw.-A4S5knWie1G8iAIh2iax6-Hdhs",
+    "commandsFilePath": "/My Stuff/Projects/Discord Bots/MBot-Janny TS1/commands",
+    "discordStuffFilePath": "/My Stuff/Projects/Discord Bots/MBot-Janny TS1/DiscordStuff.js",
+    "dataBaseFilePath": "/mnt/c/My Stuff/Projects/Discord Bots/MBot-Janny TS1/DBFolder/MainDB",
+    "prefix": "!",
+    "msBetweenCacheBackup": 60000,
+    "msBetweenRecordUpdates": 60000,
+    "currencyName": "MBux",
+    "msBetweenInvites": 60000,
+    "msBetweenMessageDeletion": 60000,
+    "botCommanders": ["773112821478850570", "802191276015222825", "822263158051045396"]
+}
