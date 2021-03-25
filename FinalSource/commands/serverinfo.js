@@ -1,4 +1,4 @@
-// serverinfo.js - Module file for my display server info command.
+// serverinfo.ts - Module file for my display server info command.
 // Jan 29, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,131 +39,135 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Discord = require('discord.js');
-module.exports = {
-    name: 'serverinfo',
-    description: '!serverinfo to get info about the current server!\n!serverinfo = SERVERID to display info about that server!',
-    /**
-     * Displays the info of a chosen server.
-     * @param {Discord.Message}             message
-     * @param {String[]}                    args
-     * @param {DiscordStuff.DiscordUser}    discordUser
-     * @returns {String}
-     */
-    execute: function (message, args) {
-        return __awaiter(this, void 0, void 0, function () {
-            var idRegExp, currentServerID, argZero, serverArray, currentServer, x, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 16, , 17]);
-                        idRegExp = /\d{18}/;
-                        currentServerID = void 0;
-                        if (!(args[0] === undefined && message.channel.type !== 'dm')) return [3 /*break*/, 1];
-                        currentServerID = message.guild.id;
-                        return [3 /*break*/, 8];
-                    case 1:
-                        if (!(args[0] === undefined && message.channel.type === 'dm')) return [3 /*break*/, 3];
-                        return [4 /*yield*/, message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)')];
-                    case 2:
-                        _a.sent();
-                        return [2 /*return*/, this.name];
-                    case 3:
-                        if (!!idRegExp.test(args[0])) return [3 /*break*/, 7];
-                        return [4 /*yield*/, message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)')];
-                    case 4:
-                        _a.sent();
-                        if (!(message.channel.type !== 'dm')) return [3 /*break*/, 6];
-                        return [4 /*yield*/, message.delete()];
-                    case 5:
-                        _a.sent();
-                        _a.label = 6;
-                    case 6: return [2 /*return*/, this.name];
-                    case 7:
-                        argZero = args[0];
-                        currentServerID = argZero;
-                        _a.label = 8;
-                    case 8:
-                        serverArray = [new Discord.Guild()];
-                        serverArray = message.client.guilds.cache.array().sort();
-                        currentServer = null;
-                        for (x = 0; x < serverArray.length; x += 1) {
-                            if (currentServerID === serverArray[x].id) {
-                                currentServer = serverArray[x];
-                            }
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var Discord = require("discord.js");
+var DiscordStuff = require("../DiscordStuff.js");
+var command = new DiscordStuff.BotCommand();
+command.name = 'serverinfo';
+command.description = '!serverinfo to get info about the current server!\n!serverinfo = SERVERID to display info about that server!';
+/**
+ * Displays the info of a chosen server.
+ * @param {Discord.Message}             message
+ * @param {String[]}                    args
+ * @param {DiscordStuff.DiscordUser}    discordUser
+ * @returns {Promise<string>}
+ */
+function execute(message, args) {
+    return __awaiter(this, void 0, void 0, function () {
+        var idRegExp, currentServerID, argZero, serverArray, currentServer, x, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 16, , 17]);
+                    idRegExp = /\d{18}/;
+                    currentServerID = void 0;
+                    if (!(args[0] === undefined && message.channel.type !== 'dm')) return [3 /*break*/, 1];
+                    currentServerID = message.guild.id;
+                    return [3 /*break*/, 8];
+                case 1:
+                    if (!(args[0] === undefined && message.channel.type === 'dm')) return [3 /*break*/, 3];
+                    return [4 /*yield*/, message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)')];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/, command.name];
+                case 3:
+                    if (!!idRegExp.test(args[0])) return [3 /*break*/, 7];
+                    return [4 /*yield*/, message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)')];
+                case 4:
+                    _a.sent();
+                    if (!(message.channel.type !== 'dm')) return [3 /*break*/, 6];
+                    return [4 /*yield*/, message.delete()];
+                case 5:
+                    _a.sent();
+                    _a.label = 6;
+                case 6: return [2 /*return*/, command.name];
+                case 7:
+                    argZero = args[0];
+                    currentServerID = argZero;
+                    _a.label = 8;
+                case 8:
+                    serverArray = message.client.guilds.cache.array().sort();
+                    currentServer = null;
+                    for (x = 0; x < serverArray.length; x += 1) {
+                        if (currentServerID === serverArray[x].id) {
+                            currentServer = serverArray[x];
                         }
-                        if (!(currentServer == null)) return [3 /*break*/, 12];
-                        return [4 /*yield*/, message.reply('Sorry! No matching servers were found!')];
-                    case 9:
-                        _a.sent();
-                        if (!(message.channel.type !== 'dm')) return [3 /*break*/, 11];
-                        return [4 /*yield*/, message.delete()];
-                    case 10:
-                        _a.sent();
-                        _a.label = 11;
-                    case 11: return [2 /*return*/, this.name];
-                    case 12:
-                        categoryCount = 0;
-                        voiceChannelCount = 0;
-                        textChannelCount = 0;
-                        for (x = 0; x < currentServer.channels.cache.size; x += 1) {
-                            if (currentServer.channels.cache.array()[x].type === 'voice') {
-                                voiceChannelCount += 1;
-                            }
-                            if (currentServer.channels.cache.array()[x].type === 'text') {
-                                textChannelCount += 1;
-                            }
-                            if (currentServer.channels.cache.array()[x].type === 'category') {
-                                categoryCount += 1;
-                            }
+                    }
+                    if (!(currentServer == null)) return [3 /*break*/, 12];
+                    return [4 /*yield*/, message.reply('Sorry! No matching servers were found!')];
+                case 9:
+                    _a.sent();
+                    if (!(message.channel.type !== 'dm')) return [3 /*break*/, 11];
+                    return [4 /*yield*/, message.delete()];
+                case 10:
+                    _a.sent();
+                    _a.label = 11;
+                case 11: return [2 /*return*/, command.name];
+                case 12:
+                    categoryCount = 0;
+                    voiceChannelCount = 0;
+                    textChannelCount = 0;
+                    for (x = 0; x < currentServer.channels.cache.size; x += 1) {
+                        if (currentServer.channels.cache.array()[x].type === 'voice') {
+                            voiceChannelCount += 1;
                         }
-                        fields = [];
-                        field1 = { name: '__Server Name:__', value: currentServer.name, inline: true };
-                        fields.push(field1);
-                        field2 = { name: '__Server ID:__', value: currentServer.id, inline: true };
-                        fields.push(field2);
-                        field3 = { name: '__Server Member Count:__', value: currentServer.memberCount, inline: true };
-                        fields.push(field3);
-                        field4 = { name: '__Server Owner:__', value: "<@!" + currentServer.owner.user.id + "> (" + currentServer.owner.user.tag + ")", inline: true };
-                        fields.push(field4);
-                        field5 = { name: '__Server Owner ID:__', value: currentServer.ownerID, inline: true };
-                        fields.push(field5);
-                        field6 = { name: '__Role Count:__', value: currentServer.roles.cache.size, inline: true };
-                        fields.push(field6);
-                        field7 = { name: '__Channel Category Count:__', value: categoryCount, inline: true };
-                        fields.push(field7);
-                        field8 = { name: '__Text Channel Count:__', value: textChannelCount, inline: true };
-                        fields.push(field8);
-                        field9 = { name: '__Voice Channel Count:__', value: voiceChannelCount, inline: true };
-                        fields.push(field9);
-                        field10 = { name: '__Created At:__', value: currentServer.createdAt, inline: true };
-                        fields.push(field10);
-                        field11 = { name: '__Region:__', value: currentServer.region, inline: true };
-                        fields.push(field11);
-                        messageEmbed = new Discord.MessageEmbed()
-                            .setImage(currentServer.iconURL())
-                            .setTitle('__**Server Info:**__')
-                            .setTimestamp(Date())
-                            .setAuthor(message.author.username, message.author.avatarURL())
-                            .setColor([0, 0, 255]);
-                        messageEmbed.fields = fields;
-                        return [4 /*yield*/, message.channel.send(messageEmbed)];
-                    case 13:
-                        _a.sent();
-                        if (!(message.channel.type !== 'dm')) return [3 /*break*/, 15];
-                        return [4 /*yield*/, message.delete()];
-                    case 14:
-                        _a.sent();
-                        _a.label = 15;
-                    case 15: return [2 /*return*/, this.name];
-                    case 16:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 17: return [2 /*return*/];
-                }
-            });
+                        if (currentServer.channels.cache.array()[x].type === 'text') {
+                            textChannelCount += 1;
+                        }
+                        if (currentServer.channels.cache.array()[x].type === 'category') {
+                            categoryCount += 1;
+                        }
+                    }
+                    fields = [];
+                    field1 = { name: '__Server Name:__', value: currentServer.name, inline: true };
+                    fields.push(field1);
+                    field2 = { name: '__Server ID:__', value: currentServer.id, inline: true };
+                    fields.push(field2);
+                    field3 = { name: '__Server Member Count:__', value: currentServer.memberCount, inline: true };
+                    fields.push(field3);
+                    field4 = { name: '__Server Owner:__', value: "<@!" + currentServer.owner.user.id + "> \n        (" + currentServer.owner.user.tag + ")", inline: true };
+                    fields.push(field4);
+                    field5 = { name: '__Server Owner ID:__', value: currentServer.ownerID, inline: true };
+                    fields.push(field5);
+                    field6 = { name: '__Role Count:__', value: currentServer.roles.cache.size, inline: true };
+                    fields.push(field6);
+                    field7 = { name: '__Channel Category Count:__', value: categoryCount, inline: true };
+                    fields.push(field7);
+                    field8 = { name: '__Text Channel Count:__', value: textChannelCount, inline: true };
+                    fields.push(field8);
+                    field9 = { name: '__Voice Channel Count:__', value: voiceChannelCount, inline: true };
+                    fields.push(field9);
+                    field10 = { name: '__Created At:__', value: currentServer.createdAt, inline: true };
+                    fields.push(field10);
+                    field11 = { name: '__Region:__', value: currentServer.region, inline: true };
+                    fields.push(field11);
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setImage(currentServer.iconURL())
+                        .setTitle('__**Server Info:**__')
+                        .setTimestamp(Date())
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255]);
+                    messageEmbed.fields = fields;
+                    return [4 /*yield*/, message.channel.send(messageEmbed)];
+                case 13:
+                    _a.sent();
+                    if (!(message.channel.type !== 'dm')) return [3 /*break*/, 15];
+                    return [4 /*yield*/, message.delete()];
+                case 14:
+                    _a.sent();
+                    _a.label = 15;
+                case 15: return [2 /*return*/, command.name];
+                case 16:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 17: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

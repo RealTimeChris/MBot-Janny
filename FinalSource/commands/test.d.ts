@@ -1,16 +1,11 @@
-export const name: string;
-export const description: string;
+import Discord = require('discord.js');
+import DiscordStuff = require('../DiscordStuff.js');
 /**
  * @param   {Discord.Message}             message
  * @param   {String[]}                    args
  * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {String}
+ * @returns {Promise<string>}
  */
-export function execute(message: any): string;
-/**
- * @param   {Discord.Message}             message
- * @param   {String[]}                    args
- * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {String}
- */
-export function execute(message: any): string;
+export declare function execute(message: Discord.Message): Promise<string>;
+declare const _default: DiscordStuff.BotCommand;
+export default _default;

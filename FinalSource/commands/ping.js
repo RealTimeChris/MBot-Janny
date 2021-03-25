@@ -1,4 +1,4 @@
-// ping.js - Module for the "ping - pong" command.
+// ping.ts - Module for the "ping - pong" command.
 // Jan 29, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -50,7 +50,7 @@ command.description = 'Simply enter !ping';
      * @param   {Discord.Message}             message
      * @param   {String[]}                    args
      * @param   {DiscordStuff.DiscordUser}    discordUser
-     * @returns {String}
+     * @returns {Promise<string>}
      */
 function execute(message) {
     return __awaiter(this, void 0, void 0, function () {

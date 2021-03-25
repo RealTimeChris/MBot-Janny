@@ -54,7 +54,7 @@ export class DeletionChannel {
 	numberOfMessagesToSave: number = Number(0);
 	timeOfLastPurge: number = Number();
 	currentlyBeingDeleted: boolean = Boolean();
-	deletionMessageID: Discord.MessageResolvable = '';
+	deletionMessageID: string = '';
 }
 
 // Class representing a timed message to be sent out.
@@ -1252,6 +1252,10 @@ export class DiscordUser {
 				resolve();
 			});
 		} catch (error) {
+			const newGuild = await this.getGuildDataFromDB(guild.guildID);
+			(newGuild.deletionChannels[channelIndex] as DeletionChannel).timeOfLastPurge = 0;
+			(newGuild.deletionChannels[channelIndex] as DeletionChannel).currentlyBeingDeleted = false;
+			await this.updateGuildDataInDB(newGuild);
 			return new Promise((resolve, reject) => {
 				reject(error);
 			});

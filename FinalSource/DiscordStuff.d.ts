@@ -34,7 +34,7 @@ export declare class DeletionChannel {
     numberOfMessagesToSave: number;
     timeOfLastPurge: number;
     currentlyBeingDeleted: boolean;
-    deletionMessageID: Discord.MessageResolvable;
+    deletionMessageID: string;
 }
 export declare class TimedMessage {
     textChannelID: string;

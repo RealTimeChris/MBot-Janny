@@ -60,10 +60,22 @@ import onusernamechange from './commands/onusernamechange';
 commands.set(onusernamechange.name, onusernamechange);
 import ping from './commands/ping';
 commands.set(ping.name, ping);
-import purge from './commands/purge'
+import purge from './commands/purge';
 commands.set(purge.name, purge);
-import serverinfo from './commands/serverinfo'
+import serverinfo from './commands/serverinfo';
 commands.set(serverinfo.name, serverinfo);
+import etdefaultrole from './commands/setdefaultrole';
+commands.set(etdefaultrole.name, etdefaultrole);
+import setdeletionstatus from './commands/setdeletionstatus';
+commands.set(setdeletionstatus.name, setdeletionstatus);
+import setreplacementinvite from './commands/setreplacementinvite';
+commands.set(setreplacementinvite.name, setreplacementinvite);
+import setverificationsystem from './commands/setverificationsystem';
+commands.set(setverificationsystem.name, setverificationsystem);
+import test from './commands/test'
+commands.set(test.name, test);
+import timedmessages from './commands/timedmessages';
+commands.set(timedmessages.name, timedmessages);
 
 
 

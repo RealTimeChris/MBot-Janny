@@ -5,7 +5,7 @@ import DiscordStuff = require('../DiscordStuff');
  * @param   {Discord.Message}             message
  * @param   {String[]}                    args
  * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {String}
+ * @returns {Promise<string>}
  */
 export declare function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string>;
 declare const _default: DiscordStuff.BotCommand;

@@ -1,4 +1,4 @@
-// test.js - Module for my testing stuff.
+// test.ts - Module for my testing stuff.
 // Feb 4, 2021
 // Chris M.
 // https://github.com/RealTimeChriss
@@ -39,36 +39,41 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-module.exports = {
-    name: 'test',
-    description: '!test',
-    /**
-     * @param   {Discord.Message}             message
-     * @param   {String[]}                    args
-     * @param   {DiscordStuff.DiscordUser}    discordUser
-     * @returns {String}
-     */
-    execute: function (message) {
-        return __awaiter(this, void 0, void 0, function () {
-            var error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        if (!message.deletable) return [3 /*break*/, 2];
-                        return [4 /*yield*/, message.delete()];
-                    case 1:
-                        _a.sent();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/, this.name];
-                    case 3:
-                        error_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 4: return [2 /*return*/];
-                }
-            });
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
+var DiscordStuff = require("../DiscordStuff.js");
+var command = new DiscordStuff.BotCommand();
+command.name = 'test';
+command.description = '!test';
+/**
+ * @param   {Discord.Message}             message
+ * @param   {String[]}                    args
+ * @param   {DiscordStuff.DiscordUser}    discordUser
+ * @returns {Promise<string>}
+ */
+function execute(message) {
+    return __awaiter(this, void 0, void 0, function () {
+        var error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 3, , 4]);
+                    if (!message.deletable) return [3 /*break*/, 2];
+                    return [4 /*yield*/, message.delete()];
+                case 1:
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [2 /*return*/, command.name];
+                case 3:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 4: return [2 /*return*/];
+            }
         });
-    },
-};
+    });
+}
+exports.execute = execute;
+command.function = execute;
+exports.default = command;

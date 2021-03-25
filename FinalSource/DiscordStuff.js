@@ -1435,11 +1435,11 @@ var DiscordUser = /** @class */ (function () {
 */
     DiscordUser.prototype.deleteMessagesIfTimeHasPassed = function (client, guild, channelIndex) {
         return __awaiter(this, void 0, void 0, function () {
-            var numberOfMessagesToSave, channelID, newGuild, currentChannel, error_23, currentTime, timeDifference, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_24;
+            var numberOfMessagesToSave, channelID, newGuild, currentChannel, error_23, currentTime, timeDifference, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_24, newGuild;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 41, , 42]);
+                        _a.trys.push([0, 41, , 44]);
                         numberOfMessagesToSave = guild.deletionChannels[channelIndex].numberOfMessagesToSave;
                         channelID = guild.deletionChannels[channelIndex].channelID;
                         newGuild = guild;
@@ -1687,10 +1687,18 @@ var DiscordUser = /** @class */ (function () {
                             })];
                     case 41:
                         error_24 = _a.sent();
+                        return [4 /*yield*/, this.getGuildDataFromDB(guild.guildID)];
+                    case 42:
+                        newGuild = _a.sent();
+                        newGuild.deletionChannels[channelIndex].timeOfLastPurge = 0;
+                        newGuild.deletionChannels[channelIndex].currentlyBeingDeleted = false;
+                        return [4 /*yield*/, this.updateGuildDataInDB(newGuild)];
+                    case 43:
+                        _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_24);
                             })];
-                    case 42: return [2 /*return*/];
+                    case 44: return [2 /*return*/];
                 }
             });
         });

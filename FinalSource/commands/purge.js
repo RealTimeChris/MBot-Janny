@@ -50,7 +50,7 @@ command.description = '!purge = AMOUNTTODELETE, between 1 and 100 messages!';
  * @param   {Discord.Message}             message
  * @param   {String[]}                    args
  * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {String}
+ * @returns {Promise<string>}
  */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
