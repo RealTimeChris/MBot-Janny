@@ -1,4 +1,4 @@
-// displayguildsdata.js - Module for my displayguildsdata command.
+// displayguildsdata.ts - Module for my displayguildsdata command.
 // Jan 30, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,7 +39,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Discord = require('discord.js');
+Object.defineProperty(exports, "__esModule", { value: true });
+var Discord = require("discord.js");
 module.exports = {
     name: 'displayguildsdata',
     description: '!displayguildsdata to display the guild info of the bots in chat!',

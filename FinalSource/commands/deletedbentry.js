@@ -1,4 +1,4 @@
-// deletedbentry.js - Module for my "delete db entry" command.
+// deletedbentry.ts - Module for my "delete db entry" command.
 // Mar 18, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -39,8 +39,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Discord = require('discord.js');
-var DiscordStuff = require('../DiscordStuff');
+Object.defineProperty(exports, "__esModule", { value: true });
+var Discord = require("discord.js");
+var DiscordStuff = require("../DiscordStuff");
 var DeletedCounter = /** @class */ (function () {
     function DeletedCounter() {
         this.deletedCount = 0;

@@ -1,8 +1,8 @@
 {
-    "botToken": "ODE0NjM1NzQwNDY5OTE5NzY0.YDgupw.qRDlnitjeI0vJsFu5pwIieDL1CM",
-    "commandsFilePath": "/My Stuff/Projects/Discord Bots/MBot-Janny TS1/commands",
-    "discordStuffFilePath": "/My Stuff/Projects/Discord Bots/MBot-Janny TS1/DiscordStuff.js",
-    "dataBaseFilePath": "/mnt/c/My Stuff/Projects/Discord Bots/MBot-Janny TS1/DBFolder/MainDB",
+    "botToken": "ODE0NjM1NzQwNDY5OTE5NzY0.YDgupw.zNN0fCcxafAWP0CzQ8LvFnHtwz0",
+    "commandsFilePath": "/My Stuff/Projects/Discord Bots/MBot-Janny/commands",
+    "discordStuffFilePath": "/My Stuff/Projects/Discord Bots/MBot-Janny/DiscordStuff.js",
+    "dataBaseFilePath": "/My Stuff/Projects/Discord Bots/MBot-Janny/DBFolder/MainDB",
     "prefix": "!",
     "msBetweenCacheBackup": 60000,
     "msBetweenRecordUpdates": 60000,

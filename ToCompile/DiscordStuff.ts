@@ -217,6 +217,15 @@ export class DiscordUserData {
 	trackedUserNames: string[] = [];
 }
 
+// Class representing a function/command.
+export class BotCommand {
+	name: string = String();
+
+	description: string = String();
+
+	function: Function = Function();
+}
+
 /**
  * Returns that last text channel from a given guild.
  * @param   {Discord.Client}        client
