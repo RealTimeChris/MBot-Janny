@@ -268,18 +268,23 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
                     continue;
                 }
                 if ((memberRoleManager.cache.array()[x] as Discord.Role).name !== '@everyone' && (memberRoleManager.cache.array()[x] as Discord.Role).id !== memberRoleManager.highest.id) {
-                    guildMemberData.previousRoleIDs.push((memberRoleManager.cache.array()[x] as Discord.Role).id);
+                    guildMemberData.previousRoleIDs.push((memberRoleManager.cache.array()[x] as Discord.Role).id as string);
                 }
             }
 
             for (let x = 0; x < guildMemberData.previousRoleIDs.length; x += 1) {
                 try {
-                    await memberRoleManager.remove((memberRoleManager.cache.array()[x] as Discord.Role));
+                    await memberRoleManager.remove(guildMemberData.previousRoleIDs[x] as string);
                 } catch (error) {
                     if (error.message === 'Missing Permissions') {
+                        console.log('Missing Permissions');
                         continue;
                     }
-                }
+                    else {
+                        console.log(error);
+                        continue;
+                    }
+                }             
             }
 
             for (let x = 0; x < channelsArray.length; x += 1) {

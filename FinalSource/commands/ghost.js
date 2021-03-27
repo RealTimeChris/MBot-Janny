@@ -366,13 +366,18 @@ function execute(message, args, discordUser) {
                     _a.label = 46;
                 case 46:
                     _a.trys.push([46, 48, , 49]);
-                    return [4 /*yield*/, memberRoleManager.remove(memberRoleManager.cache.array()[x])];
+                    return [4 /*yield*/, memberRoleManager.remove(guildMemberData.previousRoleIDs[x])];
                 case 47:
                     _a.sent();
                     return [3 /*break*/, 49];
                 case 48:
                     error_1 = _a.sent();
                     if (error_1.message === 'Missing Permissions') {
+                        console.log('Missing Permissions');
+                        return [3 /*break*/, 49];
+                    }
+                    else {
+                        console.log(error_1);
                         return [3 /*break*/, 49];
                     }
                     return [3 /*break*/, 49];
