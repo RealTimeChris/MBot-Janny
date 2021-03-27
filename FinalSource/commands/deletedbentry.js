@@ -52,7 +52,7 @@ var Discord = require("discord.js");
 var DiscordStuff = require("../DiscordStuff");
 var Data = /** @class */ (function () {
     function Data() {
-        this.key = String('');
+        this.key = '';
     }
     return Data;
 }());
@@ -160,7 +160,7 @@ function execute(message, args, discordUser) {
                     _c.label = 9;
                 case 9: return [2 /*return*/, command.name];
                 case 10:
-                    if (args[0].toLowerCase() !== 'janny') {
+                    if (args[0].toLowerCase() !== 'gamehouse') {
                         return [2 /*return*/, command.name];
                     }
                     if (!(args[1] === undefined)) return [3 /*break*/, 14];

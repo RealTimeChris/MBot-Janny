@@ -9,8 +9,8 @@ import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff');
 
 class Data{
+	key: string = '';
 	value: any;
-	key: string = String('');
 }
 
 class DeletedCounter {
@@ -18,27 +18,27 @@ class DeletedCounter {
 
 	data: Data = new Data();
 
-	setData(key: string, value: any) {
+	setData(key: string, value: any): void {
 		const newData = new Data();
 		newData.key = key;
 		newData.value = value;
 		this.data = newData;
 	}
 
-	getData() {
+	getData(): Data {
 		return this.data;
 	}
 
-	incrementDeletedCount() {
+	incrementDeletedCount(): void {
 		this.deletedCount += 1;
 	}
 
-	returnDeletedCount() {
+	returnDeletedCount(): number {
 		return this.deletedCount;
 	}
 }
 
-async function onData(dbKey: string, discordUser: DiscordStuff.DiscordUser, deletedCounter: DeletedCounter) {
+async function onData(dbKey: string, discordUser: DiscordStuff.DiscordUser, deletedCounter: DeletedCounter): Promise<void> {
 	if (deletedCounter.getData() !== undefined && dbKey !== '') {
 		if (deletedCounter.getData().key.includes(dbKey)) {
 			try{
@@ -94,7 +94,7 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 			}
 			return command.name;
 		}
-		if (args[0].toLowerCase() !== 'janny') {
+		if (args[0].toLowerCase() !== 'gamehouse') {
 			return command.name;
 		}
 		if (args[1] === undefined) {
