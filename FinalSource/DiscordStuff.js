@@ -51,9 +51,6 @@ var config = require("./config.json");
  * Class representing permission overwrites for Discord.
  */
 var PermissionOverwrites = /** @class */ (function () {
-    /**
-    * @param {Discord.Guild} guild
-    */
     function PermissionOverwrites(guild) {
         this.deny = [];
         this.allow = [];
@@ -396,7 +393,7 @@ function doWeHaveAdminPermission(message, discordUser) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     currentChannelPermissions = message.member.permissionsIn(message.channel);
-                    permissionStrings = 'ADMINISTRATOR';
+                    permissionStrings = ['ADMINISTRATOR'];
                     areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
                     areTheyACommander = checkForBotCommanderStatus(message.author.id, discordUser.userData.botCommanders);
                     if (areTheyAnAdmin === true || areTheyACommander === true) {
@@ -548,7 +545,6 @@ function sendTimedMessagesIfTimeHasPassed(client, discordUser) {
                     })];
             }
             catch (error) {
-                console.log(error);
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         reject(error);
                     })];
@@ -999,14 +995,19 @@ var DiscordUser = /** @class */ (function () {
                             })];
                     case 2:
                         error_12 = _a.sent();
-                        console.log("Adding new entry for guild member data! For member: " + guildMember.user.username);
-                        guildMemberData_1 = new GuildMemberData();
-                        guildMemberData_1.displayName = guildMember.displayName;
-                        guildMemberData_1.userID = guildMember.id;
-                        guildMemberData_1.userName = guildMember.user.username;
-                        console.log(error_12);
+                        if (error_12.type === 'NotFoundError') {
+                            console.log("Adding new entry for guild member data! For member: " + guildMember.user.username);
+                            guildMemberData_1 = new GuildMemberData();
+                            guildMemberData_1.displayName = guildMember.displayName;
+                            guildMemberData_1.userID = guildMember.id;
+                            guildMemberData_1.userName = guildMember.user.username;
+                            console.log(error_12);
+                            return [2 /*return*/, new Promise(function (resolve, reject) {
+                                    resolve(guildMemberData_1);
+                                })];
+                        }
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(guildMemberData_1);
+                                reject(error_12);
                             })];
                     case 3: return [2 /*return*/];
                 }

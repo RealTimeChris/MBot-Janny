@@ -7,6 +7,7 @@
 
 import Discord = require('discord.js');
 import Level from 'level-ts';
+import { rejects } from 'node:assert';
 import config = require('./config.json');
 
 /**
@@ -18,9 +19,6 @@ export class PermissionOverwrites {
 	id: string = '';
 	channel: Discord.GuildChannel | null;
 	type: string = '';
-	/**
-	* @param {Discord.Guild} guild
-	*/
 	constructor(guild: Discord.Guild) {
 		this.channel = new Discord.GuildChannel(guild, {});
 	}
@@ -248,23 +246,23 @@ export async function recurseThroughMessagePages(userID: string, message: Discor
 			} else if (reaction.emoji.name === '▶️' && (newCurrentPageIndex === (messageEmbeds.length - 1))) {
 				reaction.users.remove(userID);
 				newCurrentPageIndex = 0;
-				const messageEmbed = messageEmbeds[newCurrentPageIndex];
-				await message.edit(messageEmbed as Discord.MessageEmbed);
+				const messageEmbed = messageEmbeds[newCurrentPageIndex] as Discord.MessageEmbed;
+				await message.edit(messageEmbed);
 			} else if (reaction.emoji.name === '▶️' && (newCurrentPageIndex < messageEmbeds.length)) {
 				reaction.users.remove(userID);
 				newCurrentPageIndex += 1;
-				const messageEmbed = messageEmbeds[newCurrentPageIndex];
-				await message.edit(messageEmbed as Discord.MessageEmbed);
+				const messageEmbed = messageEmbeds[newCurrentPageIndex] as Discord.MessageEmbed;
+				await message.edit(messageEmbed);
 			} else if (reaction.emoji.name === '◀️' && (newCurrentPageIndex > 0)) {
 				reaction.users.remove(userID);
 				newCurrentPageIndex -= 1;
-				const messageEmbed = messageEmbeds[newCurrentPageIndex];
-				await message.edit(messageEmbed as Discord.MessageEmbed);
+				const messageEmbed = messageEmbeds[newCurrentPageIndex] as Discord.MessageEmbed;
+				await message.edit(messageEmbed);
 			} else if (reaction.emoji.name === '◀️' && (newCurrentPageIndex === 0)) {
 				reaction.users.remove(userID);
 				newCurrentPageIndex = messageEmbeds.length - 1;
-				const messageEmbed = messageEmbeds[newCurrentPageIndex];
-				await message.edit(messageEmbed as Discord.MessageEmbed);
+				const messageEmbed = messageEmbeds[newCurrentPageIndex] as Discord.MessageEmbed;
+				await message.edit(messageEmbed);
 			}
 		});
 
@@ -292,7 +290,7 @@ export async function doWeHaveAdminPermission(message: Discord.Message, discordU
 	try {
 		const currentChannelPermissions = (message.member as Discord.GuildMember).permissionsIn(message.channel);
 
-		const permissionStrings = 'ADMINISTRATOR';
+		const permissionStrings = ['ADMINISTRATOR'] as Discord.PermissionString[];
 
 		const areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
 
@@ -395,7 +393,6 @@ export async function sendTimedMessagesIfTimeHasPassed(client: Discord.Client, d
 			resolve();
 		});
 	} catch (error) {
-		console.log(error);
 		return new Promise((resolve, reject) => {
 			reject(error);
 		});
@@ -731,16 +728,21 @@ export class DiscordUser {
 			return new Promise((resolve, reject) => {
 				resolve(guildMemberDataNew);
 			});
-		} catch (error) {	
-			console.log(`Adding new entry for guild member data! For member: ${guildMember.user.username}`);
-			const guildMemberData = new GuildMemberData();
-			guildMemberData.displayName = guildMember.displayName;
-			guildMemberData.userID = guildMember.id;
-			guildMemberData.userName = guildMember.user.username;
-			console.log(error);
+		} catch (error) {
+			if (error.type === 'NotFoundError'){
+				console.log(`Adding new entry for guild member data! For member: ${guildMember.user.username}`);
+				const guildMemberData = new GuildMemberData();
+				guildMemberData.displayName = guildMember.displayName;
+				guildMemberData.userID = guildMember.id;
+				guildMemberData.userName = guildMember.user.username;
+				console.log(error);
+				return new Promise((resolve, reject) => {
+					resolve(guildMemberData);
+				});
+			}
 			return new Promise((resolve, reject) => {
-				resolve(guildMemberData);
-			});
+				reject(error)
+			});			
 		}
 	}
 

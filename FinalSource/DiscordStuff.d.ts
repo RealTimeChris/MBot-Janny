@@ -9,9 +9,6 @@ export declare class PermissionOverwrites {
     id: string;
     channel: Discord.GuildChannel | null;
     type: string;
-    /**
-    * @param {Discord.Guild} guild
-    */
     constructor(guild: Discord.Guild);
 }
 /**
