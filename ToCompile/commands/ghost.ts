@@ -419,7 +419,5 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
         });
     }
 }
-
 command.function = execute;
-
 export default command as DiscordStuff.BotCommand;

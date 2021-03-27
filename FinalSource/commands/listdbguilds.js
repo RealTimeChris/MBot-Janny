@@ -61,7 +61,7 @@ command.description = '!listdbguilds, to list guilds that this bot is no longer 
 function execute(message, args, discordUser) {
     var e_1, _a;
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, areWeAnAdmin, guildsArray, iterator, iterator_1, iterator_1_1, _b, key, value, isItFound, x, e_1_1, error_1;
+        var areWeInADM, areWeAnAdmin, guildsArray, iterator, iterator_1, iterator_1_1, _b, key, value, isItFound, x, newValue, e_1_1, error_1;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -121,8 +121,9 @@ function execute(message, args, discordUser) {
                                 isItFound = true;
                             }
                         }
+                        newValue = JSON.parse(value);
                         if (isItFound === false) {
-                            message.reply("Guild Name: " + value.guildName + "\nGuild ID: " + value.guildID);
+                            message.reply("Guild Name: " + newValue.guildName + "\nGuild ID: " + newValue.guildID);
                         }
                     }
                     _c.label = 14;

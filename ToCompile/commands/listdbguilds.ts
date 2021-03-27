@@ -7,7 +7,6 @@
 
 import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff');
-import Level from "level-ts"
 
 const command = new DiscordStuff.BotCommand();
 command.name = 'listdbguilds';
@@ -63,8 +62,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                         isItFound = true;
                     }
                 }
+				const newValue = JSON.parse(value);
                 if (isItFound === false) {
-                    message.reply(`Guild Name: ${value.guildName}\nGuild ID: ${value.guildID}`);
+                    message.reply(`Guild Name: ${newValue.guildName}\nGuild ID: ${newValue.guildID}`);
                 }
             }
         }

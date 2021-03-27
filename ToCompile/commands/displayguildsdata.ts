@@ -57,7 +57,5 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 		});
 	}
 }
-
 command.function = execute;
-
 export default command as DiscordStuff.BotCommand;

@@ -117,12 +117,16 @@ function execute(message, args, discordUser) {
                             }
                             return isItFound;
                         });
+                        var isItFoundFinal = false;
                         for (var y = 0; y < isItFoundReal.length; y += 1) {
-                            if (isItFoundReal[y] === false) {
-                                console.log('Removing a missing guild role from the list of defaults.');
-                                guildData_1.defaultRoleIDs.splice(x, 1);
-                                discordUser.updateGuildDataInDB(guildData_1);
+                            if (isItFoundReal[y] === true) {
+                                isItFoundFinal = true;
                             }
+                        }
+                        if (isItFoundFinal === false) {
+                            console.log('Removing a missing guild role from the list of defaults.');
+                            guildData_1.defaultRoleIDs.splice(x, 1);
+                            discordUser.updateGuildDataInDB(guildData_1);
                         }
                     };
                     for (x = 0; x < guildData_1.defaultRoleIDs.length; x += 1) {

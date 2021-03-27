@@ -41,7 +41,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
            await message.delete();
        }
        return new Promise((resolve, reject) => {
-        resolve(command.name as string);
+        resolve(command.name);
        });
    } catch (error) {
        return new Promise((resolve, reject) => {
@@ -49,7 +49,5 @@ export async function execute(message: Discord.Message, args: string[], discordU
        });
    }
 }
-
 command.function = execute;
-
 export default command as DiscordStuff.BotCommand;

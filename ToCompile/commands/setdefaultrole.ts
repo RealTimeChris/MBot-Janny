@@ -66,14 +66,17 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 }
                 return isItFound;
             });
-
+            let isItFoundFinal = false
             for (let y = 0; y < isItFoundReal.length; y += 1){
-                if (isItFoundReal[y] === false) {
-                    console.log('Removing a missing guild role from the list of defaults.');
-                    guildData.defaultRoleIDs.splice(x, 1);
-                    discordUser.updateGuildDataInDB(guildData);
+                if (isItFoundReal[y] === true) {
+                    isItFoundFinal = true;
                 }
-            }            
+            }
+            if (isItFoundFinal === false){
+                console.log('Removing a missing guild role from the list of defaults.');
+                guildData.defaultRoleIDs.splice(x, 1);
+                discordUser.updateGuildDataInDB(guildData);
+            }
         }
 
         if (whatAreWeDoing === 'view') {

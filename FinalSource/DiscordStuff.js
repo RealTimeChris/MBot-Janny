@@ -47,7 +47,9 @@ exports.DiscordUser = exports.recurseThroughServerRecords = exports.sendTimedMes
 var Discord = require("discord.js");
 var level_ts_1 = __importDefault(require("level-ts"));
 var config = require("./config.json");
-// Class representing permission overwrites for Discord.
+/**
+ * Class representing permission overwrites for Discord.
+ */
 var PermissionOverwrites = /** @class */ (function () {
     /**
     * @param {Discord.Guild} guild
@@ -55,14 +57,16 @@ var PermissionOverwrites = /** @class */ (function () {
     function PermissionOverwrites(guild) {
         this.deny = [];
         this.allow = [];
-        this.id = null;
-        this.type = null;
+        this.id = '';
+        this.type = '';
         this.channel = new Discord.GuildChannel(guild, {});
     }
     return PermissionOverwrites;
 }());
 exports.PermissionOverwrites = PermissionOverwrites;
-// Class representing some info about a given user.
+/**
+ * Class representing some info about a given user.
+ */
 var UserRecord = /** @class */ (function () {
     function UserRecord() {
         this.userID = '';
@@ -72,7 +76,9 @@ var UserRecord = /** @class */ (function () {
     return UserRecord;
 }());
 exports.UserRecord = UserRecord;
-// Class representing some info about a given server.
+/**
+ * Class representing some info about a given server.
+ */
 var ServerRecord = /** @class */ (function () {
     function ServerRecord() {
         this.replacementServerInvite = '';
@@ -83,7 +89,9 @@ var ServerRecord = /** @class */ (function () {
     return ServerRecord;
 }());
 exports.ServerRecord = ServerRecord;
-// Class representing a single guild/server member.
+/**
+ * Class representing a single guild/server member.
+ */
 var GuildMemberData = /** @class */ (function () {
     function GuildMemberData() {
         this.previousRoleIDs = [];
@@ -95,31 +103,37 @@ var GuildMemberData = /** @class */ (function () {
     return GuildMemberData;
 }());
 exports.GuildMemberData = GuildMemberData;
-// Class representing an actively-being-pruned channel.
+/**
+ * Class representing an actively-being-pruned channel.
+ */
 var DeletionChannel = /** @class */ (function () {
     function DeletionChannel() {
         this.channelID = '';
-        this.numberOfMessagesToSave = Number(0);
+        this.numberOfMessagesToSave = 0;
         this.timeOfLastPurge = Number();
-        this.currentlyBeingDeleted = Boolean();
+        this.currentlyBeingDeleted = false;
         this.deletionMessageID = '';
     }
     return DeletionChannel;
 }());
 exports.DeletionChannel = DeletionChannel;
-// Class representing a timed message to be sent out.
+/**
+ * Class representing a timed message to be sent out.
+ */
 var TimedMessage = /** @class */ (function () {
     function TimedMessage() {
         this.textChannelID = '';
-        this.messageContent = String(0);
-        this.msBetweenSends = Number(0);
-        this.timeOfLastSend = Number(0);
+        this.messageContent = '';
+        this.msBetweenSends = 0;
+        this.timeOfLastSend = 0;
         this.name = '';
     }
     return TimedMessage;
 }());
 exports.TimedMessage = TimedMessage;
-// Class representing a "server-joining verification" system.
+/**
+ * Class representing a "server-joining verification" system.
+ */
 var VerificationSystem = /** @class */ (function () {
     function VerificationSystem() {
         this.channelID = '';
@@ -129,26 +143,30 @@ var VerificationSystem = /** @class */ (function () {
     return VerificationSystem;
 }());
 exports.VerificationSystem = VerificationSystem;
-// Class representing a single log for something on a server.
+/**
+ * Class representing a single log for something on a server.
+ */
 var Log = /** @class */ (function () {
     function Log() {
         this.name = '';
         this.nameSmall = '';
-        this.enabled = Boolean(false);
+        this.enabled = false;
         this.loggingChannelID = '';
         this.loggingChannelName = '';
     }
     return Log;
 }());
 exports.Log = Log;
-// Class representing a single guild/server.
+/**
+ * Class representing a single guild/server. *
+ */
 var GuildData = /** @class */ (function () {
     function GuildData() {
         this.ghostedRoleID = '';
         this.timedMessages = [];
         this.guildID = '';
         this.guildName = '';
-        this.guildMemberCount = Number(0);
+        this.guildMemberCount = 0;
         this.logs = [];
         this.verificationSystem = new VerificationSystem();
         this.deletionChannels = [];
@@ -196,23 +214,25 @@ var GuildData = /** @class */ (function () {
     return GuildData;
 }());
 exports.GuildData = GuildData;
-// Class representing a single instance of "Discord".
+/**
+ * Class representing a single instance of "Discord".
+ */
 var DiscordUserData = /** @class */ (function () {
     function DiscordUserData() {
         this.userID = '';
         this.userName = '';
-        this.guildCount = Number(0);
-        this.msBetweenCacheBackup = Number(0);
+        this.guildCount = 0;
+        this.msBetweenCacheBackup = 0;
         this.currencyName = '';
-        this.timeOfLastUpdateAndSave = Number(0);
+        this.timeOfLastUpdateAndSave = 0;
         this.prefix = '';
         this.dataBaseFilePath = '';
-        this.msBetweenRecordUpdates = Number(0);
-        this.timeOfLastRecordUpdate = Number(0);
-        this.msBetweenInvites = Number(0);
-        this.timeOfLastInvite = Number(0);
-        this.msBetweenMessageDeletion = Number(0);
-        this.startupCall = Boolean(true);
+        this.msBetweenRecordUpdates = 0;
+        this.timeOfLastRecordUpdate = 0;
+        this.msBetweenInvites = 0;
+        this.timeOfLastInvite = 0;
+        this.msBetweenMessageDeletion = 0;
+        this.startupCall = true;
         this.activeInviteGuilds = [];
         this.botCommanders = [];
         this.trackingGuildIDs = [];
@@ -223,21 +243,20 @@ var DiscordUserData = /** @class */ (function () {
     return DiscordUserData;
 }());
 exports.DiscordUserData = DiscordUserData;
-// Class representing a function/command.
+/**
+ * Class representing a function/command.
+ */
 var BotCommand = /** @class */ (function () {
     function BotCommand() {
         this.name = '';
-        this.description = null;
-        this.function = Function();
+        this.description = '';
+        this.function = new Function();
     }
     return BotCommand;
 }());
 exports.BotCommand = BotCommand;
 /**
  * Returns that last text channel from a given guild.
- * @param   {Discord.Client}        client
- * @param   {Discord.Guild}         guild
- * @returns {Discord.TextChannel}
  */
 function getLastTextChannelInGuild(client, guild, showInfoInConsole) {
     if (showInfoInConsole === void 0) { showInfoInConsole = false; }
@@ -259,9 +278,6 @@ function getLastTextChannelInGuild(client, guild, showInfoInConsole) {
 exports.getLastTextChannelInGuild = getLastTextChannelInGuild;
 /**
  * Checks a user ID against an array of user IDs to see if it is present.
- * @param   {String}    userID
- * @param   {String[]}  commanderIDs
- * @returns {boolean}
  */
 function checkForBotCommanderStatus(userID, commanderIDs) {
     var isCommander = false;
@@ -276,12 +292,6 @@ function checkForBotCommanderStatus(userID, commanderIDs) {
 exports.checkForBotCommanderStatus = checkForBotCommanderStatus;
 /**
  * Recurses through a succession of messages.
- * @param   {String}                    userID
- * @param   {Discord.Message}           message
- * @param   {Number}                    currentPageIndex
- * @param   {Discord.MessageEmbed[]}    messageEmbeds
- * @param   {Boolean}                   deleteAfter
- * @returns {Promise<void>}
  */
 function recurseThroughMessagePages(userID, message, currentPageIndex, messageEmbeds, deleteAfter) {
     return __awaiter(this, void 0, void 0, function () {
@@ -377,9 +387,6 @@ function recurseThroughMessagePages(userID, message, currentPageIndex, messageEm
 exports.recurseThroughMessagePages = recurseThroughMessagePages;
 /**
  * Checks if we have admin permissions in the current channel.
- * @param   {Discord.Message}   message
- * @param   {DiscordUser}       discordUser
- * @returns {Promise<boolean>}
  */
 function doWeHaveAdminPermission(message, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
@@ -416,9 +423,7 @@ function doWeHaveAdminPermission(message, discordUser) {
 }
 exports.doWeHaveAdminPermission = doWeHaveAdminPermission;
 /**
- * Checks to see if we're in a DM channel, and sends a warning message if so. *
- * @param   {Discord.Message} message
- * @returns {Promise<boolean>}
+ * Checks to see if we're in a DM channel, and sends a warning message if so.
  */
 function areWeInADM(message) {
     return __awaiter(this, void 0, void 0, function () {
@@ -451,9 +456,6 @@ function areWeInADM(message) {
 exports.areWeInADM = areWeInADM;
 /**
 * Applies default roles to a new guild member.
-* @param   {GuildData}             guildData
-* @param   {Discord.GuildMember}   guildMember
-* @returns {Promise<void>}
 */
 function applyDefaultRoles(guildData, guildMember) {
     return __awaiter(this, void 0, void 0, function () {
@@ -497,9 +499,6 @@ function applyDefaultRoles(guildData, guildMember) {
 exports.applyDefaultRoles = applyDefaultRoles;
 /**
 * Sends out the timed messages within each server, if enough time has passed.
-* @param   {Discord.Client}    client
-* @param   {DiscordUser}    discordUser
-* @returns {Promise<void>}
 */
 function sendTimedMessagesIfTimeHasPassed(client, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
@@ -561,11 +560,6 @@ function sendTimedMessagesIfTimeHasPassed(client, discordUser) {
 exports.sendTimedMessagesIfTimeHasPassed = sendTimedMessagesIfTimeHasPassed;
 /**
 * Takes a server record and a live guild object and either updates or adds it to the records.
-* @param   {Object}            dataBase
-* @param   {Discord.Guild[]}   liveGuildArray
-* @param   {String[]}          keyNames
-* @param   {Number}            y
-* @returns {Promise<void>}
 */
 function recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y) {
     if (y === void 0) { y = 0; }
@@ -584,7 +578,14 @@ function recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y) {
                     return [4 /*yield*/, dataBase.get(keyNames[0])];
                 case 1:
                     fileString = _a.sent();
-                    fileObject = JSON.parse(fileString);
+                    fileObject = void 0;
+                    try {
+                        fileObject = JSON.parse(fileString);
+                    }
+                    catch (_b) {
+                        dataBase.del(keyNames[0]);
+                        return [2 /*return*/];
+                    }
                     keyNames.splice(0, 1);
                     fileObject.serverName = liveGuildArray[y].name;
                     fileObject.serverID = liveGuildArray[y].id;
@@ -664,7 +665,9 @@ function recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y) {
     });
 }
 exports.recurseThroughServerRecords = recurseThroughServerRecords;
-// Class representing an entire instance of Discord, from the perspective of a given bot.
+/**
+ *  Class representing an entire instance of Discord, from the perspective of a given bot.
+ */
 var DiscordUser = /** @class */ (function () {
     function DiscordUser() {
         this.userData = new DiscordUserData();
@@ -672,10 +675,8 @@ var DiscordUser = /** @class */ (function () {
         this.guildMembersData = new Map();
     }
     /**
-* Initializes the instance of Discord, within the DiscordUser class.
-* @param   {Discord.Client} client
-* @returns {Promise<void>}
-*/
+    * Initializes the instance of Discord, within the DiscordUser class.
+    */
     DiscordUser.prototype.initializeInstance = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var dataBaseFilePath, _a, error_5;
@@ -715,10 +716,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Collects user data from the database, or alternatively, from the live objects.
-* @param   {Discord.Client}    client
-* @returns {Promise<DiscordUserData>}
-*/
+    * Collects user data from the database, or alternatively, from the live objects.
+    */
     DiscordUser.prototype.getUserDataFromDB = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var userDataString, userData_1, error_6, userData_2;
@@ -771,10 +770,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Updates the user data within the database.
-* @param   {DiscordUserData}           newUserData
-* @returns {Promise<void>}
-*/
+    * Updates the user data within the database.
+    */
     DiscordUser.prototype.updateUserDataInDB = function (newUserData) {
         return __awaiter(this, void 0, void 0, function () {
             var userDataString, error_7;
@@ -806,10 +803,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* * Updates the cache of user data.
-* @param   {Discord.Client}    client
-* @returns {Promise<void>}
-*/
+    * * Updates the cache of user data.
+    */
     DiscordUser.prototype.updateUserData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var userData, error_8;
@@ -855,10 +850,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Collects the data for a single guild, from the database.
-* @param   {Discord.Guild}             guild
-* @returns {Promise<GuildData>}
-*/
+    * Collects the data for a single guild, from the database.
+    */
     DiscordUser.prototype.getGuildDataFromDB = function (guild) {
         return __awaiter(this, void 0, void 0, function () {
             var guildDataString, guildData_1, error_9, guildData_2;
@@ -902,10 +895,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Updates a given guild's data in the database.
-* @param   {GuildData}       guildData
-* @returns {Promise<void>}
-*/
+    * Updates a given guild's data in the database.
+    */
     DiscordUser.prototype.updateGuildDataInDB = function (guildData) {
         return __awaiter(this, void 0, void 0, function () {
             var guildDataString, error_10;
@@ -937,10 +928,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Updates the cache of guild data.
-* @param   {Discord.Client}    client
-* @returns {Promise<void>}
-*/
+    * Updates the cache of guild data.
+    */
     DiscordUser.prototype.updateGuildsData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var liveDataGuildArray, x, guildData, y, error_11;
@@ -992,10 +981,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Retrieves a guild member's data from the database, or returnds fresh data.
-* @param   {Discord.GuildMember}   guildMember
-* @returns {Promise<GuildMemberData>}
-*/
+    * Retrieves a guild member's data from the database, or returnds fresh data.
+    */
     DiscordUser.prototype.getGuildMemberDataFromDB = function (guildMember) {
         return __awaiter(this, void 0, void 0, function () {
             var guildMemberData, guildMemberDataNew_1, error_12, guildMemberData_1;
@@ -1017,6 +1004,7 @@ var DiscordUser = /** @class */ (function () {
                         guildMemberData_1.displayName = guildMember.displayName;
                         guildMemberData_1.userID = guildMember.id;
                         guildMemberData_1.userName = guildMember.user.username;
+                        console.log(error_12);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(guildMemberData_1);
                             })];
@@ -1026,11 +1014,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Updates a given guild member's data in the database.
-* @param   {GuildMemberData}   guildMemberData
-* @param   {String}            guildID
-* @returns {Promise<void>}
-*/
+    * Updates a given guild member's data in the database.
+    */
     DiscordUser.prototype.updateGuildMemberDataInDB = function (guildMemberData, guildID) {
         return __awaiter(this, void 0, void 0, function () {
             var guildMemberDataString, error_13;
@@ -1057,10 +1042,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Function for updating all of the guild member's data caches,
-* @param   {Discord.Client} client
-* @returns {Promise<void>}
-*/
+    * Function for updating all of the guild member's data caches,
+    */
     DiscordUser.prototype.updateGuildMembersData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var liveDataGuildArray, x, liveDataGuildMemberArray, y, guildMemberData, userData, error_14;
@@ -1121,11 +1104,9 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Updates the current data cache from live objects,
-* and the,JSON data file, and saves it to the JSON file.
-* @param   {Discord.Client}    client
-* @returns {Promise<void>}
-*/
+    * Updates the current data cache from live objects,
+    * and the,JSON data file, and saves it to the JSON file.
+    */
     DiscordUser.prototype.updateDataCacheAndSaveToFile = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var error_15;
@@ -1156,11 +1137,9 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Function that updates the data cache and saves it to disk,
-* if a certain amount of time has passed since it was last done.
-* @param   {Discord.Client}    client
-* @returns {Promise<void>}
-*/
+    * Function that updates the data cache and saves it to disk,
+    * if a certain amount of time has passed since it was last done.
+    */
     DiscordUser.prototype.saveCacheIfTimeHasPassed = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var currentTime, msPassed, timeLeft, error_16;
@@ -1193,10 +1172,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Updates and saves the Discord record, which contains user information.
-* @param   {Discord.Client} client
-* @returns {Promise<void>}
-*/
+    * Updates and saves the Discord record, which contains user information.
+    */
     DiscordUser.prototype.updateAndSaveDiscordRecordIfTimeHasPassed = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var currentTime, timeDifference, liveGuildArray, keyNames, x, keyname, error_17;
@@ -1238,11 +1215,9 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Sends out an invite to a user from a selected list of users,
-* if the server has been nuked/deleted.
-* @param   {Discord.Client}    client
-* @returns {Promise<void>}
-*/
+    * Sends out an invite to a user from a selected list of users,
+    * if the server has been nuked/deleted.
+    */
     DiscordUser.prototype.sendInviteIfTimeHasPassedAndGuildIsActive = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var currentTime, timeDifference, timeRemaining, x, fileKey, currentFileString, error_18, currentFileObject, userID, guildName, inviteLink, inviteString, currentUser, wereTheyAvailable, dmChannel, error_19, savedUser, availableFileKey, availableFileString, availableFileObject, error_20, serverRecord, deletedUser, notAvailableFileKey, notAvailableFileString, notAvailableFileObject, error_21, serverRecord, error_22;
@@ -1426,20 +1401,16 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Purges all of the selected messages within the given channels,
-* of each of the instance's guilds.
-* @param   {Discord.Client}    client
-* @param   {GuildData}         guild
-* @param   {String}            channelIndex
-* @returns {Promise<void>
-*/
+    * Purges all of the selected messages within the given channels,
+    * of each of the instance's guilds.
+    */
     DiscordUser.prototype.deleteMessagesIfTimeHasPassed = function (client, guild, channelIndex) {
         return __awaiter(this, void 0, void 0, function () {
-            var numberOfMessagesToSave, channelID, newGuild, currentChannel, error_23, currentTime, timeDifference, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_24, newGuild;
+            var numberOfMessagesToSave, channelID, newGuild, currentChannel, error_23, currentTime, timeDifference, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_24;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 41, , 44]);
+                        _a.trys.push([0, 41, , 42]);
                         numberOfMessagesToSave = guild.deletionChannels[channelIndex].numberOfMessagesToSave;
                         channelID = guild.deletionChannels[channelIndex].channelID;
                         newGuild = guild;
@@ -1460,7 +1431,7 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, this.updateGuildDataInDB(newGuild)];
                     case 4:
                         _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
+                        return [2 /*return*/, new Promise(function (resolve) {
                                 resolve();
                             })];
                     case 5: return [3 /*break*/, 6];
@@ -1469,20 +1440,20 @@ var DiscordUser = /** @class */ (function () {
                         timeDifference = currentTime - newGuild.deletionChannels[channelIndex].timeOfLastPurge;
                         if (newGuild.deletionChannels[channelIndex].currentlyBeingDeleted === true) {
                             console.log("Nope! Still being deleted! Channel: " + currentChannel.name);
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
+                            return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
                         }
                         if (timeDifference < this.userData.msBetweenMessageDeletion) {
                             console.log("Nope! Still " + (this.userData.msBetweenMessageDeletion - timeDifference) + "ms left until we can purge! Channel: " + currentChannel.name);
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
+                            return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
                         }
                         console.log("Checking for messages to delete in channel: " + currentChannel.name);
                         newGuild.deletionChannels[channelIndex].currentlyBeingDeleted = true;
                         if (!(numberOfMessagesToSave > 0)) return [3 /*break*/, 27];
-                        startingMessage = new Discord.Message(client, {}, currentChannel);
+                        startingMessage = void 0;
                         x_1 = (Math.trunc(numberOfMessagesToSave / 100));
                         _a.label = 7;
                     case 7:
@@ -1524,7 +1495,7 @@ var DiscordUser = /** @class */ (function () {
                         startingMessage = arrayOfMessagesToSave[arrayOfMessagesToSave.length - 1];
                         return [3 /*break*/, 16];
                     case 14: return [4 /*yield*/, currentChannel.messages
-                            .fetch({ limit: currentMessageLimit, before: startingMessage.id })];
+                            .fetch({ limit: currentMessageLimit })];
                     case 15:
                         arrayOfMessagesToSave = (_a.sent()).array();
                         arrayOfMessagesToSave.splice(arrayOfMessagesToSave.length - 1, 1);
@@ -1571,7 +1542,7 @@ var DiscordUser = /** @class */ (function () {
                         console.log("Total of " + totalMessageCount + " in channel: " + currentChannel.name);
                         if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
                             newGuild.deletionChannels[channelIndex].currentlyBeingDeleted = false;
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
+                            return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
                         }
@@ -1584,7 +1555,7 @@ var DiscordUser = /** @class */ (function () {
                     case 22:
                         if (!(z >= 0)) return [3 /*break*/, 25];
                         if (newGuild.deletionChannels[channelIndex].currentlyBeingDeleted === false) {
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
+                            return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
                         }
@@ -1647,7 +1618,7 @@ var DiscordUser = /** @class */ (function () {
                         console.log("Total of " + totalMessageCount + " in channel: " + currentChannel.name);
                         if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
                             newGuild.deletionChannels[channelIndex].currentlyBeingDeleted = false;
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
+                            return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
                         }
@@ -1660,7 +1631,7 @@ var DiscordUser = /** @class */ (function () {
                     case 35:
                         if (!(z >= 0)) return [3 /*break*/, 38];
                         if (newGuild.deletionChannels[channelIndex].currentlyBeingDeleted === false) {
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
+                            return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
                         }
@@ -1682,32 +1653,22 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, this.updateGuildDataInDB(newGuild)];
                     case 40:
                         _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
+                        return [2 /*return*/, new Promise(function (resolve) {
                                 resolve();
                             })];
                     case 41:
                         error_24 = _a.sent();
-                        return [4 /*yield*/, this.getGuildDataFromDB(client.guilds.resolve(guild.guildID))];
-                    case 42:
-                        newGuild = _a.sent();
-                        newGuild.deletionChannels[channelIndex].timeOfLastPurge = 0;
-                        newGuild.deletionChannels[channelIndex].currentlyBeingDeleted = false;
-                        return [4 /*yield*/, this.updateGuildDataInDB(newGuild)];
-                    case 43:
-                        _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_24);
                             })];
-                    case 44: return [2 /*return*/];
+                    case 42: return [2 /*return*/];
                 }
             });
         });
     };
     /**
-* Purges the actively-being-purged text channels, if enough time has passed.
-* @param   {Discord.Client} client
-* @returns {Promise<void>}
-*/
+    * Purges the actively-being-purged text channels, if enough time has passed.
+    */
     DiscordUser.prototype.purgeMessageChannelsIfTimeHasPassed = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -1740,10 +1701,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-* Caches messages for each of the guilds that have an active "verification" system.
-* @param   {Discord.Client}    client
-* @returns {Promise<void>}
-*/
+    * Caches messages for each of the guilds that have an active "verification" system.
+    */
     DiscordUser.prototype.cacheMessagesForVerification = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -1756,55 +1715,62 @@ var DiscordUser = /** @class */ (function () {
                                 newGuildData = guildData;
                                 _a.label = 1;
                             case 1:
-                                _a.trys.push([1, 9, , 11]);
-                                if (!(newGuildData.verificationSystem.channelID != null)) return [3 /*break*/, 8];
+                                _a.trys.push([1, 11, , 13]);
+                                if (!(newGuildData.verificationSystem.channelID != '')) return [3 /*break*/, 10];
                                 return [4 /*yield*/, client.guilds.fetch(newGuildData.guildID)];
                             case 2:
                                 currentGuild = _a.sent();
                                 currentChannel = currentGuild.channels
                                     .resolve(newGuildData.verificationSystem.channelID);
-                                if (currentChannel === null) {
-                                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                                            reject();
-                                        })];
-                                }
-                                msgManager = new Discord.MessageManager(currentChannel);
-                                return [4 /*yield*/, msgManager
-                                        .fetch(newGuildData.verificationSystem.messageID)];
-                            case 3:
-                                oldVerificationMessage = _a.sent();
-                                newMsgEmbed = oldVerificationMessage.embeds[0];
-                                return [4 /*yield*/, currentChannel.send(newMsgEmbed)];
-                            case 4:
-                                newVerificationMessage = _a.sent();
-                                newGuildData.verificationSystem.messageID = newVerificationMessage.id;
+                                if (!(currentChannel === null)) return [3 /*break*/, 4];
+                                console.log('null Channel! Purging from the values! For Guild: ' + newGuildData.guildName);
+                                newGuildData.verificationSystem.channelID = '';
+                                newGuildData.verificationSystem.messageID = '';
+                                newGuildData.verificationSystem.emoji = '';
                                 return [4 /*yield*/, this.updateGuildDataInDB(newGuildData)];
-                            case 5:
-                                _a.sent();
-                                return [4 /*yield*/, newVerificationMessage
-                                        .react(oldVerificationMessage.reactions.cache.first().emoji.name)];
-                            case 6:
-                                _a.sent();
-                                return [4 /*yield*/, oldVerificationMessage.delete()];
-                            case 7:
+                            case 3:
                                 _a.sent();
                                 return [2 /*return*/, new Promise(function (resolve, reject) {
                                         resolve();
                                     })];
-                            case 8: return [2 /*return*/, this.userData.userID];
+                            case 4:
+                                msgManager = new Discord.MessageManager(currentChannel);
+                                return [4 /*yield*/, msgManager
+                                        .fetch(newGuildData.verificationSystem.messageID)];
+                            case 5:
+                                oldVerificationMessage = _a.sent();
+                                newMsgEmbed = oldVerificationMessage.embeds[0];
+                                return [4 /*yield*/, currentChannel.send(newMsgEmbed)];
+                            case 6:
+                                newVerificationMessage = _a.sent();
+                                newGuildData.verificationSystem.messageID = newVerificationMessage.id;
+                                return [4 /*yield*/, this.updateGuildDataInDB(newGuildData)];
+                            case 7:
+                                _a.sent();
+                                return [4 /*yield*/, newVerificationMessage
+                                        .react(oldVerificationMessage.reactions.cache.first().emoji.name)];
+                            case 8:
+                                _a.sent();
+                                return [4 /*yield*/, oldVerificationMessage.delete()];
                             case 9:
+                                _a.sent();
+                                return [2 /*return*/, new Promise(function (resolve, reject) {
+                                        resolve();
+                                    })];
+                            case 10: return [2 /*return*/, this.userData.userID];
+                            case 11:
                                 error_25 = _a.sent();
                                 console.log('Looks like the channel or the message no longer exists! Purging the verification system values!');
                                 newGuildData.verificationSystem.channelID = '';
                                 newGuildData.verificationSystem.messageID = '';
                                 newGuildData.verificationSystem.emoji = '';
                                 return [4 /*yield*/, this.updateGuildDataInDB(newGuildData)];
-                            case 10:
+                            case 12:
                                 _a.sent();
                                 return [2 /*return*/, new Promise(function (resolve, reject) {
                                         reject(error_25);
                                     })];
-                            case 11: return [2 /*return*/];
+                            case 13: return [2 /*return*/];
                         }
                     });
                 }); });
