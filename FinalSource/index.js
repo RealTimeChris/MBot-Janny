@@ -117,7 +117,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
             case 5:
                 _c.sent();
-                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client, discordUser)];
+                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
             case 6:
                 _c.sent();
                 discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {
@@ -153,7 +153,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
             case 14:
                 _c.sent();
-                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client, discordUser)];
+                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
             case 15:
                 _c.sent();
                 discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {

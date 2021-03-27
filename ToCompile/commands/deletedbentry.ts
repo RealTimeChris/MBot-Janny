@@ -75,7 +75,7 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 			return command.name;
 		}
 
-		const areWeACommander = await DiscordStuff.doWeHaveAdminPermission(message, discordUser);
+		const areWeACommander = await discordUser.doWeHaveAdminPermission(message);
 
 		if (!areWeACommander) {
 			return command.name;

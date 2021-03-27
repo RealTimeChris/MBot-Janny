@@ -40,8 +40,10 @@ command.description = "It's an automatic one!";
         msgString += `__**User ID:**__ ${oldGuildMember.id}\n`;
 
         const msgEmbed = new Discord.MessageEmbed();
-        msgEmbed.setColor(newGuildMember.displayColor)
-            .setDescription(msgString).setThumbnail((newGuildMember.user as Discord.User).avatarURL() as string)
+        msgEmbed
+            .setColor(newGuildMember.displayColor)
+            .setDescription(msgString)
+            .setThumbnail((newGuildMember.user as Discord.User).avatarURL() as string)
             .setTimestamp((Date() as unknown) as Date)
             .setTitle('__**New Displayname:**__');
 

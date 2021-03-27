@@ -38,7 +38,11 @@ export async function execute(client: Discord.Client, invite: Discord.Invite,
         msgString += `__**URL:**__ ${invite.url}\n`;
         msgString += `__**Created By User:**__ <@!${(invite.inviter as Discord.User).id}> (${(invite.inviter as Discord.User).tag})`;
 
-        msgEmbed.setTitle('__**New Invite:**__').setTimestamp((Date() as unknown) as Date).setDescription(msgString).setColor([0, 0, 255]);
+        msgEmbed
+            .setTitle('__**New Invite:**__')
+            .setTimestamp((Date() as unknown) as Date)
+            .setDescription(msgString)
+            .setColor([0, 0, 255]);
         await textChannel.send(msgEmbed);
         return command.name;
     } catch (error) {

@@ -59,8 +59,7 @@ function execute(message, args, discordUser) {
                     if (areWeInADM === true) {
                         return [2 /*return*/, command.name];
                     }
-                    return [4 /*yield*/, DiscordStuff
-                            .doWeHaveAdminPermission(message, discordUser)];
+                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(message)];
                 case 2:
                     doWeHaveAdminPermission = _a.sent();
                     if (doWeHaveAdminPermission === false) {

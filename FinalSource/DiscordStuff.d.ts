@@ -137,10 +137,6 @@ export declare function checkForBotCommanderStatus(userID: string, commanderIDs:
  */
 export declare function recurseThroughMessagePages(userID: string, message: Discord.Message, currentPageIndex: number, messageEmbeds: Discord.MessageEmbed[], deleteAfter: boolean): Promise<void>;
 /**
- * Checks if we have admin permissions in the current channel.
- */
-export declare function doWeHaveAdminPermission(message: Discord.Message, discordUser: DiscordUser): Promise<boolean>;
-/**
  * Checks to see if we're in a DM channel, and sends a warning message if so.
  */
 export declare function areWeInADM(message: Discord.Message): Promise<boolean>;
@@ -211,6 +207,10 @@ export declare class DiscordUser {
     */
     saveCacheIfTimeHasPassed(client: Discord.Client): Promise<void>;
     /**
+     * Checks if we have admin permissions in the current channel.
+     */
+    doWeHaveAdminPermission(message: Discord.Message): Promise<boolean>;
+    /**
     * Updates and saves the Discord record, which contains user information.
     */
     updateAndSaveDiscordRecordIfTimeHasPassed(client: Discord.Client): Promise<void>;
@@ -231,7 +231,7 @@ export declare class DiscordUser {
     /**
     * Sends out the timed messages within each server, if enough time has passed.
     */
-    sendTimedMessagesIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
+    sendTimedMessagesIfTimeHasPassed(client: Discord.Client): Promise<void>;
     /**
     * Caches messages for each of the guilds that have an active "verification" system.
     */

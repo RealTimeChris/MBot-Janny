@@ -36,7 +36,11 @@ export async function execute(client: Discord.Client, message: Discord.Message, 
         msgString += `__**Message ID:**__ ${message.id}\n`;
         msgString += `__**Content:**__ ${message.content}`;
 
-        msgEmbed.setTitle('__**Message Deleted:**__').setTimestamp((Date() as unknown) as Date).setDescription(msgString).setColor([0, 0, 255]);
+        msgEmbed
+            .setTitle('__**Message Deleted:**__')
+            .setTimestamp((Date() as unknown) as Date)
+            .setDescription(msgString)
+            .setColor([0, 0, 255]);
         await textChannel.send(msgEmbed);
 
         for (let x = 0; x < message.embeds.length; x += 1) {

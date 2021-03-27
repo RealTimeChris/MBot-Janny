@@ -20,7 +20,7 @@ command.description = '!jannyoptions, to display a list of options for this bot!
 			return command.name;
 		}
 
-		const doWeHaveAdminPerms = await DiscordStuff.doWeHaveAdminPermission(message, discordUser);
+		const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(message);
 
 		if (doWeHaveAdminPerms === false) {
 			return command.name;

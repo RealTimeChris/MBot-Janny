@@ -71,14 +71,17 @@ export async function execute(message: Discord.Message, args: string[]): Promise
         let msgString = String();
         for (let x = 0; x < permissionsArray.length; x += 1) {
             if ((permissionsArray[x] as Discord.PermissionString).split('_')[2] !== undefined) {
-                msgString += `${((permissionsArray[x] as string ).split('_')[0] as string).substr(0, 1)}${((permissionsArray[x] as string).split('_')[0] as string).substr(1).toLowerCase()} ${((permissionsArray[x] as string)
+                msgString += `${((permissionsArray[x] as string ).split('_')[0] as string).substr(0, 1)}${((permissionsArray[x] as string)
+                    .split('_')[0] as string).substr(1).toLowerCase()} ${((permissionsArray[x] as string)
                     .split('_')[1] as string).substr(0, 1)}${((permissionsArray[x]as string).split('_')[1] as string).substr(1).toLowerCase()} ${((permissionsArray[x] as string).split('_')[2] as string)
                     .substr(0, 1)}${((permissionsArray[x] as string).split('_')[2] as string).substr(1).toLowerCase()}`;
             } else if ((permissionsArray[x] as string).split('_')[1] !== undefined) {
-                msgString += `${((permissionsArray[x] as string).split('_')[0] as string).substr(0, 1)}${((permissionsArray[x] as string).split('_')[0] as string).substr(1).toLowerCase()}	${((permissionsArray[x] as string)
+                msgString += `${((permissionsArray[x] as string).split('_')[0] as string).substr(0, 1)}${((permissionsArray[x] as string).split('_')[0] as string)
+                    .substr(1).toLowerCase()}	${((permissionsArray[x] as string)
                     .split('_')[1] as string).substr(0, 1)}${((permissionsArray[x] as string).split('_')[1] as string).substr(1).toLowerCase()}`;
             } else {
-                msgString += `${((permissionsArray[x] as string).split('_')[0] as string).substr(0, 1)}${((permissionsArray[x] as string).split('_')[0] as string).substr(1).toLowerCase()}`;
+                msgString += `${((permissionsArray[x] as string).split('_')[0] as string).substr(0, 1)}${((permissionsArray[x] as string)
+                    .split('_')[0] as string).substr(1).toLowerCase()}`;
             }
             if (x < permissionsArray.length - 1) {
                 msgString += ', ';

@@ -20,8 +20,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
             return command.name;
         }
 
-        const doWeHaveAdminPermission = await DiscordStuff
-            .doWeHaveAdminPermission(message, discordUser);
+        const doWeHaveAdminPermission = await discordUser.doWeHaveAdminPermission(message);
 
         if (doWeHaveAdminPermission === false) {
             return command.name;

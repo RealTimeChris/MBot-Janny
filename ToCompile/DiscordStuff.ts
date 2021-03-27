@@ -284,38 +284,6 @@ export async function recurseThroughMessagePages(userID: string, message: Discor
 }
 
 /**
- * Checks if we have admin permissions in the current channel.
- */
-export async function doWeHaveAdminPermission(message: Discord.Message, discordUser: DiscordUser): Promise<boolean> {
-	try {
-		const currentChannelPermissions = (message.member as Discord.GuildMember).permissionsIn(message.channel);
-
-		const permissionStrings = ['ADMINISTRATOR'] as Discord.PermissionString[];
-
-		const areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
-
-		const areTheyACommander = checkForBotCommanderStatus(message.author.id,
-			discordUser.userData.botCommanders);
-
-		if (areTheyAnAdmin === true || areTheyACommander === true) {
-			return new Promise((resolve, reject) => {
-				resolve(true);
-			});
-		}
-
-		await message.reply("Sorry, but you don't have the permissions required for that!");
-		message.delete();
-		return new Promise((resolve, reject) => {
-			resolve(false);
-		});
-	} catch (error) {
-		return new Promise((resolve, reject) => {
-			reject(error);
-		});
-	}
-}
-
-/**
  * Checks to see if we're in a DM channel, and sends a warning message if so.
  */
 export async function areWeInADM(message: Discord.Message): Promise<boolean> {
@@ -807,6 +775,37 @@ export class DiscordUser {
 	}
 
 	/**
+	 * Checks if we have admin permissions in the current channel.
+	 */
+	async doWeHaveAdminPermission(message: Discord.Message): Promise<boolean> {
+		try {
+			const currentChannelPermissions = (message.member as Discord.GuildMember).permissionsIn(message.channel);
+
+			const permissionStrings = ['ADMINISTRATOR'] as Discord.PermissionString[];
+
+			const areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
+
+			const areTheyACommander = checkForBotCommanderStatus(message.author.id,
+				this.userData.botCommanders);
+
+			if (areTheyAnAdmin === true || areTheyACommander === true) {
+				return new Promise((resolve, reject) => {
+					resolve(true);
+				});
+			}
+
+			await message.reply("Sorry, but you don't have the permissions required for that!");
+			message.delete();
+			return new Promise((resolve, reject) => {
+				resolve(false);
+			});
+		} catch (error) {
+			return new Promise((resolve, reject) => {
+				reject(error);
+			});
+		}
+	}
+	/**
 	* Updates and saves the Discord record, which contains user information.
 	*/
 	async updateAndSaveDiscordRecordIfTimeHasPassed(client: Discord.Client): Promise<void> {
@@ -1222,9 +1221,9 @@ export class DiscordUser {
 	/**
 	* Sends out the timed messages within each server, if enough time has passed.
 	*/
-	async sendTimedMessagesIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
+	async sendTimedMessagesIfTimeHasPassed(client: Discord.Client): Promise<void> {
 		try {
-			discordUser.guildsData.forEach(async guildData => {
+			this.guildsData.forEach(async guildData => {
 				for (let y = 0; y < guildData.timedMessages.length; y += 1) {
 					const newGuildData = guildData;
 					const currentTime = new Date().getTime();
@@ -1235,7 +1234,7 @@ export class DiscordUser {
 						textChannel = await client.channels.fetch((newGuildData.timedMessages[y] as TimedMessage).textChannelID) as Discord.TextChannel;
 						await textChannel.send((newGuildData.timedMessages[y] as TimedMessage).messageContent);
 						(newGuildData.timedMessages[y] as TimedMessage).timeOfLastSend = new Date().getTime();
-						await discordUser.updateGuildDataInDB(newGuildData);
+						await this.updateGuildDataInDB(newGuildData);
 						break;
 					} else {
 						const timeDifference = currentTime - (newGuildData.timedMessages[y] as TimedMessage).timeOfLastSend;

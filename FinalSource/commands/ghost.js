@@ -54,7 +54,7 @@ function execute(message, args, discordUser) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 82, , 87]);
-                    return [4 /*yield*/, DiscordStuff.doWeHaveAdminPermission(message, discordUser)];
+                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(message)];
                 case 1:
                     doWeHaveAdminPerms = _a.sent();
                     if (!doWeHaveAdminPerms) {

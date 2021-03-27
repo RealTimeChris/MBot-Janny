@@ -46,8 +46,11 @@ export async function execute(client: Discord.Client, guild: Discord.Guild, user
 
         const msgEmbed = new Discord.MessageEmbed();
 
-        msgEmbed.setColor([0, 255, 0]).setThumbnail(user.avatarURL() as string)
-        .setTimestamp((Date() as unknown) as Date).setTitle('__**User Unbanned:**__')
+        msgEmbed
+            .setColor([0, 255, 0])
+            .setThumbnail(user.avatarURL() as string)
+            .setTimestamp((Date() as unknown) as Date)
+            .setTitle('__**User Unbanned:**__')
             .setDescription(msgString);
 
         await textChannel.send(msgEmbed);

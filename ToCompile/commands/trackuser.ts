@@ -23,8 +23,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
             return command.name;
         }
 
-        const doWeHaveAdminPermission = await DiscordStuff
-            .doWeHaveAdminPermission(message, discordUser);
+        const doWeHaveAdminPermission = await discordUser.doWeHaveAdminPermission(message);
 
         if (doWeHaveAdminPermission === false) {
             return command.name;
@@ -205,7 +204,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 msgString += 'Noone is being tracked, currently!';
             }
 
-            const messageEmbed = new Discord.MessageEmbed().setTitle('__**Tracked Users:**__').setTimestamp((Date() as unknown) as Date)
+            const messageEmbed = new Discord.MessageEmbed()
+                .setTitle('__**Tracked Users:**__')
+                .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString)
                 .setAuthor(message.author.username, message.author.avatarURL() as string)
                 .setColor([254, 254, 254]);

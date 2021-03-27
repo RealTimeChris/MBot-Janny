@@ -21,7 +21,7 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             return command.name;
         }
 
-        const doWeHaveAdminPerms = await DiscordStuff.doWeHaveAdminPermission(message, discordUser);
+        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(message);
 
         if (doWeHaveAdminPerms === false) {
             return command.name;

@@ -62,8 +62,7 @@ function execute(message, args, discordUser) {
                     if (areWeInADM === true) {
                         return [2 /*return*/, command.name];
                     }
-                    return [4 /*yield*/, DiscordStuff
-                            .doWeHaveAdminPermission(message, discordUser)];
+                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(message)];
                 case 2:
                     doWeHaveAdminPermission = _a.sent();
                     if (doWeHaveAdminPermission === false) {
@@ -272,7 +271,9 @@ function execute(message, args, discordUser) {
                     else {
                         msgString += 'Noone is being tracked, currently!';
                     }
-                    messageEmbed = new Discord.MessageEmbed().setTitle('__**Tracked Users:**__').setTimestamp(Date())
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setTitle('__**Tracked Users:**__')
+                        .setTimestamp(Date())
                         .setDescription(msgString)
                         .setAuthor(message.author.username, message.author.avatarURL())
                         .setColor([254, 254, 254]);

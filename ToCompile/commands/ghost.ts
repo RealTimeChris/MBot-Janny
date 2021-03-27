@@ -15,7 +15,7 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
     export async function  execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
-        const doWeHaveAdminPerms = await DiscordStuff.doWeHaveAdminPermission(message, discordUser);
+        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(message);
 
         if (!doWeHaveAdminPerms) {
             return command.name;
