@@ -39,22 +39,28 @@ export async function execute(message: Discord.Message, args: string[], discordU
                     const field = { name: `__**${(guildData.logs[x] as DiscordStuff.Log).name}**__`, value: '__Enabled:__ ❌', inline: true };
                     fields.push(field);
                 } else if ((guildData.logs[x] as DiscordStuff.Log).enabled === true) {
-                    const field = { name: `__**${(guildData.logs[x] as DiscordStuff.Log).name}**__`, value: `__Enabled:__ ✅\n__Logging Channel:__ <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>`, inline: true };
+                    const field = { name: `__**${(guildData.logs[x] as DiscordStuff.Log).name}**__`, value: `__Enabled:__ ✅
+                        \n__Logging Channel:__ <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>`, inline: true };
                     fields.push(field);
                 }
             }
 
             const msgEmbed = new Discord.MessageEmbed();
             let msgString = String('');
-            msgString = "**To enable/disable a given log, enter within the text channel where you would like it to be logged: !managelogs = <enable/disable>, <logname>\nFor example, '!managelogs = enable, guildbanadd'.**";
-            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL() as string)
-                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+            msgString = `**To enable/disable a given log, enter within the text channel where you would like it to be logged: !managelogs = 
+                <enable/disable>, <logname>\nFor example, '!managelogs = enable, guildbanadd'.**'`;
+            msgEmbed
+                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setDescription(msgString)
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Manage Logs:**__').fields = fields;
 
             await message.channel.send(msgEmbed);
             await message.delete();
         } else if (args[0].toLowerCase() !== 'enable' && args[0].toLowerCase() !== 'disable') {
-            await message.reply('Please, enter enable or disable for the second argument of this command! (!managelogs = <enable/disable>, <logname>)');
+            await message.reply(`Please, enter enable or disable for the second argument of this command! 
+            (!managelogs = <enable/disable>, <logname>)`);
             await message.delete();
             return command.name;
         } else {
@@ -68,9 +74,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -105,9 +115,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -142,9 +156,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -179,9 +197,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                            in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -216,9 +238,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -253,9 +279,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -290,9 +320,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                            .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -327,9 +361,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -364,9 +402,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -401,9 +443,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -438,9 +484,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -475,9 +525,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -512,9 +566,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -549,9 +607,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            const msgString = `Nicely done! You've enabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}', 
+                                in channel <#${(guildData.logs[x] as DiscordStuff.Log).loggingChannelID}>.`;
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();

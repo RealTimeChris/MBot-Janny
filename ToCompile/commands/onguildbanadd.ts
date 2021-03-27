@@ -37,7 +37,8 @@ export async function execute(client: Discord.Client, guild: Discord.Guild, user
                 .find((entry) => Date.now() - entry.createdTimestamp < 5000);
 
             let msgString = String('');
-            msgString += `__**Banned By:**__ <@!${(auditLogEntry as Discord.GuildAuditLogsEntry).executor.id}> (${(auditLogEntry as Discord.GuildAuditLogsEntry).executor.tag})\n`;
+            msgString += `__**Banned By:**__ <@!${(auditLogEntry as Discord.GuildAuditLogsEntry).executor.id}> 
+                (${(auditLogEntry as Discord.GuildAuditLogsEntry).executor.tag})\n`;
             msgString += `__**Reason:**__ ${(auditLogEntry as Discord.GuildAuditLogsEntry).reason}\n`;
             msgString += `__**Time of Ban:**__ ${Date()}\n`;
             msgString += `__**User:**__ <@!${user.id}>\n`;
@@ -47,7 +48,11 @@ export async function execute(client: Discord.Client, guild: Discord.Guild, user
 
             const msgEmbed = new Discord.MessageEmbed();
 
-            msgEmbed.setColor([255, 0, 0]).setThumbnail((user.avatarURL() as string)).setTimestamp((Date() as unknown) as Date).setTitle('__**User Banned:**__')
+            msgEmbed
+                .setColor([255, 0, 0])
+                .setThumbnail((user.avatarURL() as string))
+                .setTimestamp((Date() as unknown) as Date)
+                .setTitle('__**User Banned:**__')
                 .setDescription(msgString);
 
             await textChannel.send(msgEmbed);

@@ -105,7 +105,7 @@ function execute(message, args, discordUser) {
                     replacementServerInviteField = { name: '__**Replacement Server Invite:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setreplacementinvite'", inline: true };
                     fields.push(replacementServerInviteField);
                     resultIcon = '❌';
-                    if (guildData.verificationSystem.channelID != null) {
+                    if (guildData.verificationSystem.channelID != '') {
                         resultIcon = '✅';
                     }
                     requireServerVerificationField = { name: '__**Require Server Verification:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setverificationsystem'", inline: true };

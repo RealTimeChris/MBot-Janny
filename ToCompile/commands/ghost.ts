@@ -261,7 +261,8 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
                 if ((memberRoleManager.cache.array()[x] as Discord.Role).id === memberRoleManager.highest.id) {
                     continue;
                 }
-                if ((memberRoleManager.cache.array()[x] as Discord.Role).name !== '@everyone' && (memberRoleManager.cache.array()[x] as Discord.Role).id !== memberRoleManager.highest.id) {
+                if ((memberRoleManager.cache.array()[x] as Discord.Role).name !== '@everyone'
+                    && (memberRoleManager.cache.array()[x] as Discord.Role).id !== memberRoleManager.highest.id) {
                     guildMemberData.previousRoleIDs.push((memberRoleManager.cache.array()[x] as Discord.Role).id as string);
                 }
             }

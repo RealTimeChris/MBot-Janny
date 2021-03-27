@@ -58,7 +58,8 @@ async function onData(dbKey: string, discordUser: DiscordStuff.DiscordUser, dele
 
 const command = new DiscordStuff.BotCommand();
 command.name = 'deletedbentry';
-command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a bot's name and DBENTRYKEY is the key to a database entry that is stored within the bot!";
+command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a bot's name and DBENTRYKEY is the key" +
+"to a database entry that is stored within the bot!";
 
 /**
 	 * @param 	{Discord.Message} 			message

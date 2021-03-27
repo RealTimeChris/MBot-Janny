@@ -43,8 +43,11 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
             });
 
             const messageEmbed = new Discord.MessageEmbed();
-            messageEmbed.setImage(((message.client.user as Discord.User).avatarURL() as string).toString()).setTimestamp((Date() as unknown) as Date)
-                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL() as string).setTitle(`__**${(message.client.user as Discord.User).username} Help:**__`)
+            messageEmbed
+                .setImage(((message.client.user as Discord.User).avatarURL() as string).toString())
+                .setTimestamp((Date() as unknown) as Date)
+                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL() as string)
+                .setTitle(`__**${(message.client.user as Discord.User).username} Help:**__`)
                 .setDescription(msgString)
                 .setColor([254, 254, 254]);
 
@@ -84,14 +87,19 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
         }
 
         if (((commandDescription as unknown) as Discord.MessageEmbed) instanceof Discord.MessageEmbed) {
-            ((commandDescription as unknown) as Discord.MessageEmbed).setAuthor(message.author.username,
-                (message.author as Discord.User).avatarURL() as string).setColor([254, 254, 254])
-                .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`).setTimestamp((Date() as unknown) as Date);
+            ((commandDescription as unknown) as Discord.MessageEmbed)
+                .setAuthor(message.author.username,
+                (message.author as Discord.User).avatarURL() as string)
+                .setColor([254, 254, 254])
+                .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
+                .setTimestamp((Date() as unknown) as Date);
             await message.channel.send((commandDescription as unknown) as Discord.MessageEmbed);
         } else {
             const messageEmbed = new Discord.MessageEmbed();
-            messageEmbed.setDescription(commandDescription)
-                .setTimestamp((Date() as unknown) as Date).setAuthor(message.author.username, (message.author as Discord.User).avatarURL() as string)
+            messageEmbed
+                .setDescription(commandDescription)
+                .setTimestamp((Date() as unknown) as Date)
+                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL() as string)
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setColor([254, 254, 254]);
 

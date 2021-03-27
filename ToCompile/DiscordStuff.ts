@@ -62,7 +62,7 @@ export class GuildMemberData {
 export class DeletionChannel {
 	channelID: string = '';
 	numberOfMessagesToSave: number = 0;
-	timeOfLastPurge: number = Number();
+	timeOfLastPurge: number = 0;
 	currentlyBeingDeleted: boolean = false;
 	deletionMessageID: string = '';
 }
@@ -1047,14 +1047,12 @@ private async deleteMessagesIfTimeHasPassed(client: Discord.Client, guild: Guild
 		try {
 			currentChannel = await client.channels.fetch(channelID) as Discord.TextChannel;
 		} catch (error) {
-			if (error.message === 'Unknown Channel') {
-				newGuild.deletionChannels.splice(channelIndex, 1);
-				console.log('Removing an "unknown channel" from list of deletion channels!');
-				await this.updateGuildDataInDB(newGuild);
-				return new Promise(resolve => {
-					resolve();
-				});
-			}
+			newGuild.deletionChannels.splice(channelIndex, 1);
+			console.log('Removing an "unknown channel" from list of deletion channels!');
+			await this.updateGuildDataInDB(newGuild);
+			return new Promise(resolve => {
+				resolve();
+			});
 		}
 
 		const currentTime = new Date().getTime();
