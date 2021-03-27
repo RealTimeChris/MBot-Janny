@@ -46,12 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'oninvitecreate';
 command.description = "It's an automatic one!";
-/**
- * @param {Discord.Client}              client
- * @param {Discord.Invite}              invite
- * @param {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
 function execute(client, invite, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, textChannel, msgEmbed, msgString, error_1;

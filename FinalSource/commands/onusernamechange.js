@@ -46,14 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onusernamechange';
 command.description = "It's an automatic one!";
-/**
- * @param {Discord.Client}              client
- * @param {Discord.User}                oldUser
- * @param {Discord.User}                newUser
- * @param {Discord.Guild}               guild
- * @param {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
 function execute(client, oldUser, newUser, guild, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, textChannel, msgString, msgEmbed, error_1;

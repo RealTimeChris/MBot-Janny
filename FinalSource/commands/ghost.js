@@ -47,12 +47,6 @@ var command = new DiscordStuff.BotCommand;
 command.name = 'ghost';
 command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS THE SERVER!\n!ghost to display a list of all currently ghosted users.\n!ghost = add, REASON, '
     + '@USERMENTION to ghost a new user.\n!ghost = remove, @USERMENTION to unghost a user.';
-/**
- * @param {Discord.Message} 			message
- * @param {String[]} 					args
- * @param {DiscordStuff.DiscordUser}	discordUser
- * @returns {Prmoise<string>}
- */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var doWeHaveAdminPerms, whatAreWeDoing, userIDRegExp, ghostReason, userID, argOne, argTwo, userIDRaw, argOne, userIDRaw, guildData, currentGuildMember, guildMemberData, channelsArray, roleManager, ghostedRole, memberRoleManager, memberRoleManagerBot, x, voicePermissionOptions, textPermissionOptions, currentChannel, isItFound, currentChannelPerms, y, currentOverwritesArray, currentChannel, isItFound1, isItFound2, currentChannelPerms, y, argOne, currentOverwritesArray, ghostedUserArray, x, msgString, x, msgEmbed, x, x, x, error_1, x, currentChannel, currentChannelOverwritesArray, y, permOWs, msgString, msgEmbed, dmChannel, msgString2, msgEmbed2, isItFound, x, x, error_2, x, currentChannel, currentChannelOverwritesArray, z, msgString, msgEmbed, dmChannel, msgString2, msgEmbed2, error_3;

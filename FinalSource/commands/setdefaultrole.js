@@ -47,12 +47,6 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'setdefaultrole';
 command.description = 'Just enter !setdefaultrole to view the current list of default roles!\nEnter !setdefaultrole = ADD, ROLENAME, to add a '
     + 'role as a default for when someone new joins the server.\n!setdefaultrole = REMOVE, ROLENAME to remove a role from the list.';
-/**
- * @param   {Discord.Message}           message
- * @param   {String[]}                  args
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
- */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var areWeInADM, doWeHaveAdminPerms, whatAreWeDoing, roleName_1, guildData_1, roleArray_1, _loop_1, x, msgString_1, messageEmbed, currentRole_1, isItFound_1, x, msgString, messageEmbed, x, msgString, messageEmbed, error_1;

@@ -13,12 +13,8 @@ command.name = 'userinfo';
 command.description = '!userinfo to display your own info!\nOr !userinfo = @USERMENTION, to display the info of another user!';
 
 /**
-	 * Displays info about a selected user.
-	 * @param   {Discord.Message}           message
-	 * @param   {String[]}                  args
-	 * @param   {DiscordStuff.DiscordUser}  discordUser
-	 * @returns {Promise<string>}
-	 */
+ * Displays info about a selected user.
+ */
 export async function execute(message: Discord.Message, args: string[]): Promise<string> {
     try {
         const areWeInADM = await DiscordStuff.areWeInADM(message);

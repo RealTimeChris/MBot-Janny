@@ -12,11 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name ='onguilddelete';
 command.description = "It's an automatic one!";
 
-/**
- * @param   {Discord.Guild}             guild
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
- */
 export async function execute(guild: Discord.Guild, 
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {

@@ -12,13 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onnicknamechange';
 command.description = "It's an automatic one!";
 
-/**
-     * @param {Discord.Client}          client
-     * @param {Discord.GuildMember}     oldGuildMember
-     * @param {Discord.GuildMember}     newGuildMember
-     * @param {DiscordStuff.DiscordUser}discordUser
-     * @returns {Promise<string>}
-     */
  export async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMember, newGuildMember: Discord.GuildMember,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {

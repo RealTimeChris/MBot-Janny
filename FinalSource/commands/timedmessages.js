@@ -47,12 +47,6 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'timedmessages';
 command.description = "__**Timed Messages Usage:**__ !timedmessages to view the server's current timed messages.\n"
     + '!timedmessages = ADD, MESSAGENAME, MSBETWEENSENDS, MESSAGECONTENT to add a new message.\nAnd !timedmessages = REMOVE, MESSAGENAME, to remove a timed message!';
-/**
-     * @param {Discord.Message}             message
-     * @param {String[]}                    args
-     * @param {DiscordStuff.DiscordUser}    discordUser
-     * @returns {Promise<string>}
-     */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var areWeInADM, doWeHaveAdminPerms, guildData, whatAreWeDoing, messageName, msBetweenSends, messageContent, argOne, argThreee, argOne, embedFields, x, msPerSecond, secondPerMinute, msPerMinute, minutePerHour, msPerHour, timeRemaining, hoursRemaining, minutesRemaining, secondsRemaining, currentField, currentField, msgEmbed, newTimedMessage, msgEmbed, msgString, isItFound, currentTimedMessageName, x, msgEmbed, msgString, error_1;

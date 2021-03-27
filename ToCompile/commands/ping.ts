@@ -13,12 +13,8 @@ command.name = 'ping';
 command.description = 'Simply enter !ping';
 
 /**
-     * A testing function for the early implementation of the command handler.
-     * @param   {Discord.Message}             message
-     * @param   {String[]}                    args
-     * @param   {DiscordStuff.DiscordUser}    discordUser
-     * @returns {Promise<string>}
-     */
+ * A testing function for the early implementation of the command handler.
+ */
  export async function execute(message: Discord.Message): Promise<string> {
     try {
         await message.reply('Pong!');

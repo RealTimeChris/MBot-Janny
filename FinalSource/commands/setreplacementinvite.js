@@ -46,12 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'setreplacementinvite';
 command.description = '!setreplacementinvite = REPLACEMENTINVITELINK\nBe sure to call this from within the chosen server, before it gets nuked!';
-/**
- * @param   {Discord.Message}           message
- * @param   {String[]}                  args
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
- */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var areWeInADM, doWeHaveAdminPerms, inviteRegExp, whatAreWeDoing, inviteLink, serverRecordKey, serverRecordString, serverRecordObject, inviteLink2, msgString, messageEmbed, serverRecordKey, serverRecordString, serverRecordObject, msgString, messageEmbed, error_1;

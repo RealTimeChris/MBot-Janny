@@ -52,12 +52,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'listdbguilds';
 command.description = '!listdbguilds, to list guilds that this bot is no longer in!';
-/**
- * @param   {Discord.Message}           message
- * @param   {String[]}                  args
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
- */
 function execute(message, args, discordUser) {
     var e_1, _a;
     return __awaiter(this, void 0, void 0, function () {

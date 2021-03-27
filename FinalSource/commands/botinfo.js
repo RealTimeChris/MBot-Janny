@@ -46,12 +46,9 @@ var DiscordStuff = require("../DiscordStuff.js");
 var command = new DiscordStuff.BotCommand();
 command.name = 'botinfo';
 command.description = '!botinfo to display info about this bot in chat!';
-/*** Displays the data about the currend user.
-* @param   {Discord.Message}             message
-* @param   {String[]}                    args
-* @param   {DiscordStuff.DiscordUser}    discordUser
-* @returns {Promise<string>}
-*/
+/**
+ * Displays the data about the currend user
+ *  */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var fields, field1, field2, field3, field4, messageEmbed, error_1;

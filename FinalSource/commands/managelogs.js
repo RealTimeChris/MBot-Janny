@@ -46,12 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'managelogs';
 command.description = '!managelogs, to view an enabled/disabled list of possible logs!';
-/**
- * @param {Discord.Message}         message
- * @param {String[]}                args
- * @param {DiscordStuff.DiscordUser}discordUser
- * @returns {Promise<string}
- */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var areWeInADM, areWeAnAdmin, guildData, fields, x, field, field, msgEmbed, msgString, _a, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, error_1;

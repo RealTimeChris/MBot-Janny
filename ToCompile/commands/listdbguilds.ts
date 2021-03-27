@@ -12,12 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'listdbguilds';
 command.description = '!listdbguilds, to list guilds that this bot is no longer in!';
 
-/**
- * @param   {Discord.Message}           message
- * @param   {String[]}                  args
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
- */
 export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
         const areWeInADM = await DiscordStuff.areWeInADM(message);

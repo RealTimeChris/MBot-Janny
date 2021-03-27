@@ -11,13 +11,6 @@ import DiscordStuff = require('../DiscordStuff');
 const command = new DiscordStuff.BotCommand();
 command.name = 'managelogs';
 command.description = '!managelogs, to view an enabled/disabled list of possible logs!';
-
-/**
- * @param {Discord.Message}         message
- * @param {String[]}                args
- * @param {DiscordStuff.DiscordUser}discordUser
- * @returns {Promise<string}
- */
 export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         const areWeInADM = await DiscordStuff.areWeInADM(message);

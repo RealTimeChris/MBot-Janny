@@ -46,15 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onroleaddorremove';
 command.description = "It's an automatic one!";
-/**
-     * @param   {Discord.Client}                    client
-     * @param   {Discord.GuildMemberRoleManager}    oldGuildMemberRoleManager
-     * @param   {Discord.GuildMemberRoleManager}    newGuildMemberRoleManager
-     * @param   {Discord.GuildMember}               newGuildMember
-     * @param   {Number}                            collectionSizeDifference
-     * @param   {DiscordStuff.DiscordUser}          discordUser
-     * @returns {Promise<string>}
-     */
 function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, newRoleCollection, newRole, textChannel, auditLogs, auditLogEntry, finalString, messageEmbed, finalString, messageEmbed, error_1;

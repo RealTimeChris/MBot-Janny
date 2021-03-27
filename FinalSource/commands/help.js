@@ -49,10 +49,6 @@ command.name = 'help';
 command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to get help with a specific COMMAND.';
 /**
  * Returns a menu of helping information for the various commands I have.
- * @param   {Discord.Message}             message
- * @param   {String[]}                    args
- * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
  */
 function execute(message, args) {
     return __awaiter(this, void 0, void 0, function () {

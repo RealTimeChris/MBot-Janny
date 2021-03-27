@@ -46,13 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onmessageupdate';
 command.description = "It's an automatic one!";
-/**
- * @param {Discord.Client}              client
- * @param {Discord.Message}             oldMessage
- * @param {Discord.Message}             newMessage
- * @param {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
 function execute(client, oldMessage, newMessage, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, textChannel, msgEmbed, msgString, x, msgEmbed2, error_1;

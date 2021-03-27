@@ -48,10 +48,6 @@ command.name = 'trackuser';
 command.description = '!trackuser = ADD, @USERMENTION to track the user within the current text channel.\n\t!trackuser = REMOVE, @USERMENTION to stop tracking the user\n\t!trackuser to display all of the currently tracked users.';
 /**
  * Deals with the setting of a user's tracking status.
- * @param   {Discord.Message}           message
- * @param   {String[]}                  args
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
  */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {

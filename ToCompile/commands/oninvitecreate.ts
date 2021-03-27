@@ -12,12 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'oninvitecreate';
 command.description = "It's an automatic one!";
 
-/**
- * @param {Discord.Client}              client
- * @param {Discord.Invite}              invite
- * @param {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
 export async function execute(client: Discord.Client, invite: Discord.Invite,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {

@@ -47,12 +47,8 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'userinfo';
 command.description = '!userinfo to display your own info!\nOr !userinfo = @USERMENTION, to display the info of another user!';
 /**
-     * Displays info about a selected user.
-     * @param   {Discord.Message}           message
-     * @param   {String[]}                  args
-     * @param   {DiscordStuff.DiscordUser}  discordUser
-     * @returns {Promise<string>}
-     */
+ * Displays info about a selected user.
+ */
 function execute(message, args) {
     return __awaiter(this, void 0, void 0, function () {
         var areWeInADM, userID, userMentionRegExp, userIDRegExp, argZero, userIDOne, guildMemberManager, guildMember, error_1, fields, field, field1, field2, field3, field4, field5, permissionsArray, msgString, x, field6, field7, messageEmbed, error_2;

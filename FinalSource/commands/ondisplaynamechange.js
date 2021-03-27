@@ -46,13 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'ondisplaynamechange';
 command.description = "It's an automatic one!";
-/**
- * @param {Discord.Client}          client
- * @param {Discord.GuildMember}     oldGuildMember
- * @param {Discord.GuildMember}     newGuildMember
- * @param {DiscordStuff.DiscordUser}discordUser
- * @returns {Promise<string>}
- */
 function execute(client, oldGuildMember, newGuildMember, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, textChannel, msgString, msgEmbed, error_1;

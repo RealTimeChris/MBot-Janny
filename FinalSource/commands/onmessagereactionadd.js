@@ -46,13 +46,6 @@ var DiscordStuff = require("../DiscordStuff.js");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onmessagereactionadd';
 command.description = "It's an automatic one!";
-/**
- * @param   {Discord.MessageReaction}       messageReaction
- * @param   {String[]}                      args
- * @param   {Discord.Client}                client
- * @param   {DiscordStuff.DiscordUser}      discordUser
- * @returns {Promise<string>}
- */
 function execute(messageReaction, client, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, userID, x, currentGuild, currentGuildMember, currentGuildMemberRoleManager, y, error_1;

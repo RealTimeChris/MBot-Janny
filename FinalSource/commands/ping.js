@@ -46,12 +46,8 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'ping';
 command.description = 'Simply enter !ping';
 /**
-     * A testing function for the early implementation of the command handler.
-     * @param   {Discord.Message}             message
-     * @param   {String[]}                    args
-     * @param   {DiscordStuff.DiscordUser}    discordUser
-     * @returns {Promise<string>}
-     */
+ * A testing function for the early implementation of the command handler.
+ */
 function execute(message) {
     return __awaiter(this, void 0, void 0, function () {
         var error_1;

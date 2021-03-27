@@ -46,12 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onmessagedelete';
 command.description = "It's an automatic one!";
-/**
- * @param {Discord.Client}              client
- * @param {Discord.Message}             message
- * @param {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
 function execute(client, message, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, textChannel, msgEmbed, msgString, x, msgEmbed2, error_1;

@@ -48,10 +48,6 @@ command.name = 'serverinfo';
 command.description = '!serverinfo to get info about the current server!\n!serverinfo = SERVERID to display info about that server!';
 /**
  * Displays the info of a chosen server.
- * @param {Discord.Message}             message
- * @param {String[]}                    args
- * @param {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
  */
 function execute(message, args) {
     return __awaiter(this, void 0, void 0, function () {

@@ -12,12 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
 
-/**
- * @param   {Discord.Message}             message
- * @param   {String[]}                    args
- * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
  export async function execute(message: Discord.Message): Promise<string> {
     try {
         if (message.deletable) {

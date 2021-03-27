@@ -46,12 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onrolecreate';
 command.description = "It's an automatic one!";
-/**
- * @param {Discord.Client}              client
- * @param {Discord.Role}                role
- * @param {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
 function execute(client, role, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, textChannel, auditLogs, auditLogEntry, currentGuild, msgEmbed, msgString, error_1;

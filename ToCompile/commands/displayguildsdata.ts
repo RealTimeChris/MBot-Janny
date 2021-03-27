@@ -13,12 +13,8 @@ command.name = 'displayguildsdata';
 command.description = '!displayguildsdata to display the guild info of the bots in chat!';
 
 /**
-     * Displays all of the data for all of the guilds, either in console or in chat.
-     * @param   {Discord.Message}             message
-     * @param   {String[]}                    args
-     * @param   {DiscordStuff.DiscordUser}    discordUser
-     * @returns {Promise<string>}
-     */
+ * Displays all of the data for all of the guilds, either in console or in chat.
+ */
  export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
 		let currentCount = 0;

@@ -46,13 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onguildbanremove';
 command.description = "It's an automatic one!";
-/**
- * @param   {Discord.Client}            client
- * @param   {Discord.Guild}             guild
- * @param   {Discord.User}              user
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
- */
 function execute(client, guild, user, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, textChannel, auditLogs, auditLogEntry, msgString, msgEmbed, error_1;

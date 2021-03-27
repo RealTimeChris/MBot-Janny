@@ -12,13 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onguildbanremove';
 command.description = "It's an automatic one!";
 
-/**
- * @param   {Discord.Client}            client
- * @param   {Discord.Guild}             guild
- * @param   {Discord.User}              user
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
- */
 export async function execute(client: Discord.Client, guild: Discord.Guild, user: Discord.User,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {

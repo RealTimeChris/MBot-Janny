@@ -45,12 +45,6 @@ var DiscordStuff = require("../DiscordStuff.js");
 var command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
-/**
- * @param   {Discord.Message}             message
- * @param   {String[]}                    args
- * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
 function execute(message) {
     return __awaiter(this, void 0, void 0, function () {
         var error_1;

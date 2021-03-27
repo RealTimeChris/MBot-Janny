@@ -12,12 +12,9 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'botinfo';
 command.description = '!botinfo to display info about this bot in chat!';
 
- /*** Displays the data about the currend user.
-* @param   {Discord.Message}             message
-* @param   {String[]}                    args
-* @param   {DiscordStuff.DiscordUser}    discordUser
-* @returns {Promise<string>}
-*/
+ /**
+  * Displays the data about the currend user
+  *  */ 
 export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
    try {
        const fields: Discord.EmbedField[] = [];

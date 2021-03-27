@@ -12,14 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onusernamechange';
 command.description = "It's an automatic one!";
 
-/**
- * @param {Discord.Client}              client
- * @param {Discord.User}                oldUser
- * @param {Discord.User}                newUser
- * @param {Discord.Guild}               guild
- * @param {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
 export async function execute(client: Discord.Client, oldUser: Discord.User, newUser: Discord.User, guild: Discord.Guild,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {

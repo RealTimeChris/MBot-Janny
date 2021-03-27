@@ -46,12 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onmessagedeletebulk';
 command.description = "It's an automatic one!";
-/**
- * @param {Discord.Client}                              client
- * @param {Discord.Collection<String, Discord.Message>} collection
- * @param {DiscordStuff.DiscordUser}                    discordUser
- * @returns {Promise<string>}
- */
 function execute(client, collection, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, textChannel, msgEmbed, msgString, keyArray, x, currentMessage, msgString2, msgEmbed2, error_1;

@@ -46,12 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'jannyoptions';
 command.description = '!jannyoptions, to display a list of options for this bot!';
-/**
- * @param   {Discord.Message}           message
- * @param   {String[]}                  args
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Prmise<string>}
- */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var areWeInADM, doWeHaveAdminPerms, guildData, msgEmbed, fields, resultIcon, x, logsField, defaultRolesField, deletionChannelsField, serverRecordKey, serverRecordString, serverRecordObject, replacementServerInviteField, requireServerVerificationField, timedMessagesField, userData, x, trackUsersField, error_1;

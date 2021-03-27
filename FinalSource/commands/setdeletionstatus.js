@@ -47,12 +47,6 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'setdeletionstatus';
 command.description = 'Use this to enable/disable message deletion/pruning in a given channel.\nIn the desired channel, type !setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE,'
     + ' enter nothing for AMOUNTOFMESSAGESTOSAVE to save none!\nAlso simply enter !setdeletionstatus to view the current list of channels being purged on the current server!';
-/**
- * @param   {Discord.Message}           message
- * @param   {String[]}                  args
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
- */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var areWeInADM, doWeHaveAdminPerms, whatAreWeDoing, messageCountRegExp, howManyBack, guildData, currentDeletionChannel, isItFound, x, msgString, x, msgEmbed, x, previousMessage, error_1, msgString, messageEmbed, pinMessage, deletionChannelIndex, x, msgString, messageEmbed, error_2;

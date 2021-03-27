@@ -12,12 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onguildmemberadd';
 command.description =" It's an automatic one!";
 
-/**
-     * @param {Discord.Client}          client
-     * @param {Discord.GuildMember}     guildMember
-     * @param {DiscordStuff.DiscordUser}discordUser
-     * @returns {Promise<string>}
-     */
  export async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {

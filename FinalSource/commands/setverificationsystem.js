@@ -46,12 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'setverificationsystem';
 command.description = '!setverificationsystem = ENABLE, VERIFICATIONMESSAGE, REACTIONEMOJI, in the channel you would like to use for your verification channel!\nAlso, !setverificationsystem = DISABLE.';
-/**
- * @param   {Discord.Message}             message
- * @param   {String[]}                    args
- * @param   {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
- */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var areWeInADM, doWeHaveAdminPermission, guildData, whatAreWeDoing, emojiRegExp, msgString, newMessage, msgEmbed, currentChannel, messageManager, msgEmbed, msgEmbed2, newMessage, argTwo, msgEmbed, error_1;

@@ -14,10 +14,6 @@ command.description = '!serverinfo to get info about the current server!\n!serve
 
 /**
  * Displays the info of a chosen server.
- * @param {Discord.Message}             message
- * @param {String[]}                    args
- * @param {DiscordStuff.DiscordUser}    discordUser
- * @returns {Promise<string>}
  */
 export async function execute(message: Discord.Message, args: string[]): Promise<string> {
     try {

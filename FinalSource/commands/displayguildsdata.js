@@ -47,12 +47,8 @@ var command = new DiscordStuff.BotCommand;
 command.name = 'displayguildsdata';
 command.description = '!displayguildsdata to display the guild info of the bots in chat!';
 /**
-     * Displays all of the data for all of the guilds, either in console or in chat.
-     * @param   {Discord.Message}             message
-     * @param   {String[]}                    args
-     * @param   {DiscordStuff.DiscordUser}    discordUser
-     * @returns {Promise<string>}
-     */
+ * Displays all of the data for all of the guilds, either in console or in chat.
+ */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var currentCount_1, error_1;

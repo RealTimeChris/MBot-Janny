@@ -14,10 +14,6 @@ command.description = '!trackuser = ADD, @USERMENTION to track the user within t
 
 /**
  * Deals with the setting of a user's tracking status.
- * @param   {Discord.Message}           message
- * @param   {String[]}                  args
- * @param   {DiscordStuff.DiscordUser}  discordUser
- * @returns {Promise<string>}
  */
 export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {

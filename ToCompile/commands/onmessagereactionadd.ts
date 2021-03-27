@@ -12,13 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onmessagereactionadd';
 command.description = "It's an automatic one!";
 
-/**
- * @param   {Discord.MessageReaction}       messageReaction
- * @param   {String[]}                      args
- * @param   {Discord.Client}                client
- * @param   {DiscordStuff.DiscordUser}      discordUser
- * @returns {Promise<string>}
- */
 export async function execute(messageReaction: Discord.MessageReaction, client: Discord.Client, args: string[],
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {

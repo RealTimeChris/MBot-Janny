@@ -46,12 +46,6 @@ var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onguildmemberremove';
 command.description = "It's an automatic one!";
-/**
- * @param {Discord.Client}          client
- * @param {Discord.GuildMember}     guildMember
- * @param {DiscordStuff.DiscordUser}discordUser
- * @returns {Promise<string>}
- */
 function execute(client, guildMember, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var guildData, logs, x, textChannel, currentGuild, auditLog, augitLogEntry, msgEmbed, msgString, msgString, error_1;

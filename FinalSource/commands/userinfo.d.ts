@@ -1,12 +1,8 @@
 import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff');
 /**
-     * Displays info about a selected user.
-     * @param   {Discord.Message}           message
-     * @param   {String[]}                  args
-     * @param   {DiscordStuff.DiscordUser}  discordUser
-     * @returns {Promise<string>}
-     */
+ * Displays info about a selected user.
+ */
 export declare function execute(message: Discord.Message, args: string[]): Promise<string>;
 declare const _default: DiscordStuff.BotCommand;
 export default _default;

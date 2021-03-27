@@ -12,12 +12,6 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onmessagedeletebulk';
 command.description = "It's an automatic one!";
 
-/**
- * @param {Discord.Client}                              client
- * @param {Discord.Collection<String, Discord.Message>} collection
- * @param {DiscordStuff.DiscordUser}                    discordUser
- * @returns {Promise<string>}
- */
 export async function execute(client: Discord.Client, collection: Discord.Collection<string, Discord.Message>,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
