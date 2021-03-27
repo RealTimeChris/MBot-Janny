@@ -1303,4 +1303,4 @@ private async deleteMessagesIfTimeHasPassed(client: Discord.Client, guild: Guild
 		});
 	}
 }
-module.filename = 'DiscordStuff.js';
+

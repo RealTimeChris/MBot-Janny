@@ -1781,4 +1781,3 @@ var DiscordUser = /** @class */ (function () {
     return DiscordUser;
 }());
 exports.DiscordUser = DiscordUser;
-module.filename = 'DiscordStuff.js';
