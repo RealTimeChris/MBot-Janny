@@ -11,15 +11,14 @@
   "author": "Chris M.",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^14.14.35",
     "bufferutil": "^4.0.3",
     "discord.js": "^12.5.1",
-    "express": "^4.16.4",
     "implement-js": "^0.0.31",
     "level-ts": "^2.0.6",
     "utf-8-validate": "^5.0.4"
   },
   "devDependencies": {
+    "@types/node": "^14.14.35",
     "@types/express": "^4.16.1",
     "@types/ws": "^7.4.0",
     "tslint": "^5.20.1",
