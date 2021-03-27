@@ -160,7 +160,7 @@ function execute(message, args, discordUser) {
                     _c.label = 9;
                 case 9: return [2 /*return*/, command.name];
                 case 10:
-                    if (args[0].toLowerCase() !== 'gamehouse') {
+                    if (args[0].toLowerCase() !== 'janny') {
                         return [2 /*return*/, command.name];
                     }
                     if (!(args[1] === undefined)) return [3 /*break*/, 14];

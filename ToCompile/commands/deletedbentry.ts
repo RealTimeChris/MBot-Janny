@@ -94,7 +94,7 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 			}
 			return command.name;
 		}
-		if (args[0].toLowerCase() !== 'gamehouse') {
+		if (args[0].toLowerCase() !== 'janny') {
 			return command.name;
 		}
 		if (args[1] === undefined) {
