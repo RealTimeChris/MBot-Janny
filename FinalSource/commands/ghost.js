@@ -312,7 +312,8 @@ function execute(message, args, discordUser) {
                     }
                     msgString += '\n------';
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.author.username, message.author.avatarURL())
+                    msgEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
                         .setColor([0, 0, 255])
                         .setDescription(msgString)
                         .setTimestamp(Date())
@@ -349,7 +350,8 @@ function execute(message, args, discordUser) {
                         if (memberRoleManager.cache.array()[x].id === memberRoleManager.highest.id) {
                             continue;
                         }
-                        if (memberRoleManager.cache.array()[x].name !== '@everyone' && memberRoleManager.cache.array()[x].id !== memberRoleManager.highest.id) {
+                        if (memberRoleManager.cache.array()[x].name !== '@everyone'
+                            && memberRoleManager.cache.array()[x].id !== memberRoleManager.highest.id) {
                             guildMemberData.previousRoleIDs.push(memberRoleManager.cache.array()[x].id);
                         }
                     }
@@ -420,7 +422,8 @@ function execute(message, args, discordUser) {
                     _a.sent();
                     msgString = "------\n**Hello! You've been REDACTED, on the server " + message.guild.name + ",\n            for the following reason(s):\t" + ghostReason + "\n Please, contact a moderator or admin to clear this issue up! Thanks!**\n------";
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.client.user.username, message.client.user.avatarURL())
+                    msgEmbed
+                        .setAuthor(message.client.user.username, message.client.user.avatarURL())
                         .setColor([0, 0, 255])
                         .setDescription(msgString)
                         .setTimestamp(Date())
@@ -431,7 +434,8 @@ function execute(message, args, discordUser) {
                     dmChannel.send(msgEmbed);
                     msgString2 = "------\n__Hello! You've ghosted the following member__: <@!" + guildMemberData.userID + "> (" + guildMemberData.userName + ")\n------";
                     msgEmbed2 = new Discord.MessageEmbed();
-                    msgEmbed2.setAuthor(message.client.user.username, message.client.user.avatarURL())
+                    msgEmbed2
+                        .setAuthor(message.client.user.username, message.client.user.avatarURL())
                         .setColor([0, 0, 255])
                         .setDescription(msgString2)
                         .setTimestamp(Date())
@@ -513,7 +517,8 @@ function execute(message, args, discordUser) {
                     _a.sent();
                     msgString = '------\n**Hello! You\'ve had your redacted status removed! Have a great day!**\n------';
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.client.user.username, message.client.user.avatarURL())
+                    msgEmbed
+                        .setAuthor(message.client.user.username, message.client.user.avatarURL())
                         .setColor([0, 0, 255])
                         .setDescription(msgString)
                         .setTimestamp(Date())
@@ -524,7 +529,8 @@ function execute(message, args, discordUser) {
                     dmChannel.send(msgEmbed);
                     msgString2 = "------\n__Hello! You've un-ghosted the following member__: <@!" + guildMemberData.userID + "> (" + guildMemberData.userName + ")\n------";
                     msgEmbed2 = new Discord.MessageEmbed();
-                    msgEmbed2.setAuthor(message.client.user.username, message.client.user.avatarURL())
+                    msgEmbed2
+                        .setAuthor(message.client.user.username, message.client.user.avatarURL())
                         .setColor([0, 0, 255])
                         .setDescription(msgString2)
                         .setTimestamp(Date())

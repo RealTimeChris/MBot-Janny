@@ -75,7 +75,11 @@ function execute(client, oldMessage, newMessage, discordUser) {
                     msgString += "__**Message ID:**__ " + newMessage.id + "\n";
                     msgString += "__**Old Content:**__ \n" + oldMessage.content + "\n";
                     msgString += "__**New Content:**__ " + newMessage.content;
-                    msgEmbed.setTitle('__**Message Updated:**__').setTimestamp(Date()).setDescription(msgString).setColor([0, 0, 255]);
+                    msgEmbed
+                        .setTitle('__**Message Updated:**__')
+                        .setTimestamp(Date())
+                        .setDescription(msgString)
+                        .setColor([0, 0, 255]);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();

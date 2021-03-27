@@ -94,7 +94,10 @@ export async function execute(message: Discord.Message, args: string[], discordU
             }
 
             const messageEmbed = new Discord.MessageEmbed();
-            messageEmbed.setAuthor(message.author.username, message.author.avatarURL() as string).setColor([0, 0, 255]).setTitle('__**Default Roles:**__')
+            messageEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTitle('__**Default Roles:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
             await message.reply(messageEmbed);
@@ -140,7 +143,10 @@ export async function execute(message: Discord.Message, args: string[], discordU
             const msgString = `\n------\n__**Role:**__ <@&${currentRole.id}>\n------`;
 
             const messageEmbed = new Discord.MessageEmbed();
-            messageEmbed.setAuthor(message.author.username, message.author.avatarURL() as string).setColor([0, 0, 255]).setTitle('__**New Default Role Added:**__')
+            messageEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTitle('__**New Default Role Added:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
             await message.reply(messageEmbed);
@@ -170,7 +176,10 @@ export async function execute(message: Discord.Message, args: string[], discordU
             const msgString = `${'\n------\n__**Role**__: <@&'}${currentRole.id}>\n------`;
 
             const messageEmbed = new Discord.MessageEmbed();
-            messageEmbed.setAuthor(message.author.username, message.author.avatarURL() as string).setColor([0, 0, 255]).setTitle('__**Default Role Removed:**__')
+            messageEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTitle('__**Default Role Removed:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
             await message.reply(messageEmbed);

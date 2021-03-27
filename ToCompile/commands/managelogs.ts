@@ -96,8 +96,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -137,8 +140,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -178,8 +184,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -219,8 +228,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -260,8 +272,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                            .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -301,8 +316,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                            .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -342,8 +360,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -383,8 +404,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -424,8 +448,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -465,8 +492,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -506,8 +536,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -547,8 +580,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -588,8 +624,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();
@@ -629,8 +668,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
                             const msgString = `Nicely done! You've disabled logging for '${(guildData.logs[x] as DiscordStuff.Log).name}.`;
-                            msgEmbed.setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
-                            .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+                            msgEmbed
+                                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL()as string)
+                                .setColor([0, 0, 255])
+                                .setDescription(msgString)
+                                .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
                             await message.delete();

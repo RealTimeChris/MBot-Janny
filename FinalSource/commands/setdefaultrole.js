@@ -145,7 +145,10 @@ function execute(message, args, discordUser) {
                         msgString_1 = "------\n__You don't have any default roles!__\n------";
                     }
                     messageEmbed = new Discord.MessageEmbed();
-                    messageEmbed.setAuthor(message.author.username, message.author.avatarURL()).setColor([0, 0, 255]).setTitle('__**Default Roles:**__')
+                    messageEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTitle('__**Default Roles:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString_1);
                     return [4 /*yield*/, message.reply(messageEmbed)];
@@ -203,7 +206,10 @@ function execute(message, args, discordUser) {
                     _a.sent();
                     msgString = "\n------\n__**Role:**__ <@&" + currentRole_1.id + ">\n------";
                     messageEmbed = new Discord.MessageEmbed();
-                    messageEmbed.setAuthor(message.author.username, message.author.avatarURL()).setColor([0, 0, 255]).setTitle('__**New Default Role Added:**__')
+                    messageEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTitle('__**New Default Role Added:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString);
                     return [4 /*yield*/, message.reply(messageEmbed)];
@@ -246,7 +252,10 @@ function execute(message, args, discordUser) {
                 case 38:
                     msgString = "" + '\n------\n__**Role**__: <@&' + currentRole_1.id + ">\n------";
                     messageEmbed = new Discord.MessageEmbed();
-                    messageEmbed.setAuthor(message.author.username, message.author.avatarURL()).setColor([0, 0, 255]).setTitle('__**Default Role Removed:**__')
+                    messageEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTitle('__**Default Role Removed:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString);
                     return [4 /*yield*/, message.reply(messageEmbed)];

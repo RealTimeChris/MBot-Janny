@@ -161,7 +161,9 @@ function execute(message, args, discordUser) {
                     userData.trackingGuildIDs[userData.trackingGuildIDs.length - 1] = message.guild.id;
                     discordUser.updateUserDataInDB(userData);
                     msgString = "" + 'User <@!' + currentGuildMember.id.toString() + "> is now being tracked, in channel " + currentTextChannel.name.toString() + ".";
-                    messageEmbed = new Discord.MessageEmbed().setTimestamp(Date()).setTitle('__**New Tracked User:**__')
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setTimestamp(Date())
+                        .setTitle('__**New Tracked User:**__')
                         .setDescription(msgString)
                         .setAuthor(message.author.username, message.author.avatarURL())
                         .setThumbnail(currentGuildMember.user.avatarURL())
@@ -211,7 +213,9 @@ function execute(message, args, discordUser) {
                     if (userData.trackedUserIDs.length === 0) {
                         msgString += '------\nNo more users are being tracked!\n';
                     }
-                    messageEmbed = new Discord.MessageEmbed().setTimestamp(Date()).setTitle('__**Removed Tracked User:**__')
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setTimestamp(Date())
+                        .setTitle('__**Removed Tracked User:**__')
                         .setDescription(msgString)
                         .setAuthor(message.author.username, message.author.avatarURL())
                         .setColor([254, 254, 254]);
@@ -229,7 +233,9 @@ function execute(message, args, discordUser) {
                 case 31:
                     if (!(args[0].toLowerCase() === 'remove' && userData.trackedUserIDs.length === 0)) return [3 /*break*/, 33];
                     msgString = 'There is noone to remove from the tracked users!';
-                    messageEmbed = new Discord.MessageEmbed().setTimestamp(Date()).setTitle('__**No Tracked Users:**__')
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setTimestamp(Date())
+                        .setTitle('__**No Tracked Users:**__')
                         .setDescription(msgString)
                         .setAuthor(message.author.username, message.author.avatarURL())
                         .setColor([254, 254, 254]);

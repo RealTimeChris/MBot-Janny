@@ -71,7 +71,8 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
                 const secondsRemaining = Math.trunc(((timeRemaining % msPerHour)
                 % msPerMinute) / msPerSecond);
 
-                const currentField = { name: `__**${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).name}:**__`, value: `__**ms Between Sends:**__ ${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).msBetweenSends}\n`, inline: true };
+                const currentField = { name: `__**${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).name}:**__`, value: `__**ms Between Sends:**__ 
+                    ${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).msBetweenSends}\n`, inline: true };
                 currentField.value += `__**In Channel:**__ <#${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).textChannelID}>\n`;
                 currentField.value += `__**Content:**__ ${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).messageContent}\n`;
                 currentField.value += `__**Time Until Next Send:**__ ${hoursRemaining} Hours, ${minutesRemaining} Minutes, and ${secondsRemaining} Seconds.`;
@@ -84,8 +85,11 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             }
 
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor(message.author.username, message.author.avatarURL() as string).setColor([0, 0, 255])
-            .setTimestamp((Date() as unknown) as Date).setTitle('__**Timed Messages:**__');
+            msgEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTimestamp((Date() as unknown) as Date)
+                .setTitle('__**Timed Messages:**__');
             msgEmbed.fields = embedFields;
 
             await message.channel.send(msgEmbed);
@@ -110,8 +114,11 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             msgString += `__**ms Between Sends:**__ ${newTimedMessage.msBetweenSends}\n`;
             msgString += `__**In Channel:**__ <#${newTimedMessage.textChannelID}>\n`;
             msgString += `__**Content:**__ ${newTimedMessage.messageContent}\n------`;
-            msgEmbed.setAuthor(message.author.username, message.author.avatarURL() as string).setColor([0, 0, 255])
-            .setTimestamp((Date() as unknown) as Date).setTitle('__**Timed Message Added:**__')
+            msgEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTimestamp((Date() as unknown) as Date)
+                .setTitle('__**Timed Message Added:**__')
                 .setDescription(msgString);
 
             await message.channel.send(msgEmbed);
@@ -140,8 +147,11 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             const msgEmbed = new Discord.MessageEmbed();
             let msgString = String('');
             msgString = `You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ ${currentTimedMessageName}\n------`;
-            msgEmbed.setAuthor(message.author.username, message.author.avatarURL() as string).setColor([0, 0, 255])
-            .setTimestamp((Date() as unknown) as Date).setTitle('__**Timed Message Removed:**__')
+            msgEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTimestamp((Date() as unknown) as Date)
+                .setTitle('__**Timed Message Removed:**__')
                 .setDescription(msgString);
 
             await message.channel.send(msgEmbed);

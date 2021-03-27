@@ -43,7 +43,11 @@ export async function execute(client: Discord.Client, role: Discord.Role,
         msgString += `__**Deleted By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
         msgString += `__**Role Count:**__ ${currentGuild.roles.cache.size}`;
 
-        msgEmbed.setTitle('__**Role Deleted:**__').setTimestamp((Date() as unknown) as Date).setDescription(msgString).setColor(role.color);
+        msgEmbed
+            .setTitle('__**Role Deleted:**__')
+            .setTimestamp((Date() as unknown) as Date)
+            .setDescription(msgString)
+            .setColor(role.color);
         await textChannel.send(msgEmbed);
 
         return command.name;

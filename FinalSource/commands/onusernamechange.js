@@ -77,7 +77,10 @@ function execute(client, oldUser, newUser, guild, discordUser) {
                     msgString += "__**Username:**__ " + newUser.username + "\n";
                     msgString += "__**User ID:**__ " + newUser.id + "\n";
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setColor([0, 0, 255]).setDescription(msgString).setThumbnail(newUser.avatarURL())
+                    msgEmbed
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setThumbnail(newUser.avatarURL())
                         .setTimestamp(Date())
                         .setTitle('__**New Username:**__');
                     return [4 /*yield*/, textChannel.send(msgEmbed)];

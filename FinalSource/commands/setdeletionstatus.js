@@ -133,8 +133,11 @@ function execute(message, args, discordUser) {
                     }
                     msgString += '------';
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.author.username, message.author.avatarURL())
-                        .setColor([0, 0, 255]).setDescription(msgString).setTimestamp(Date())
+                    msgEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
                         .setTitle('__**Current Deletion Channels:**__');
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
                 case 12:
@@ -187,8 +190,11 @@ function execute(message, args, discordUser) {
                 case 25:
                     msgString = "__**Messages beyond message number " + currentDeletionChannel.numberOfMessagesToSave + " are being purged, in this channel.**__";
                     messageEmbed = new Discord.MessageEmbed();
-                    messageEmbed.setAuthor(message.author.username, message.author.avatarURL())
-                        .setColor([0, 0, 255]).setDescription(msgString).setTimestamp(Date())
+                    messageEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
                         .setTitle('__**Enabled Channel Purging:**__');
                     return [4 /*yield*/, message.channel.send(messageEmbed)];
                 case 26:
@@ -235,8 +241,11 @@ function execute(message, args, discordUser) {
                     discordUser.updateGuildDataInDB(guildData);
                     msgString = "" + '\n------\n__**Channel Name:**__ <#' + currentDeletionChannel.channelID + ">\n------";
                     messageEmbed = new Discord.MessageEmbed();
-                    messageEmbed.setAuthor(message.author.username, message.author.avatarURL())
-                        .setColor([0, 0, 255]).setDescription(msgString).setTimestamp(Date())
+                    messageEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
                         .setTitle('__**Disabled Channel Purging:**__');
                     return [4 /*yield*/, message.channel.send(messageEmbed)];
                 case 36:

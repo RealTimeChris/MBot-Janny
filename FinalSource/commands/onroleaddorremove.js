@@ -82,7 +82,10 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                     finalString += "__**User Tag:**__ " + newGuildMember.user.tag + "\n";
                     finalString += "__**Username:**__ " + newGuildMember.user.username + "\n";
                     finalString += "__**User ID:**__ " + newGuildMember.id + "\n";
-                    messageEmbed = new Discord.MessageEmbed().setColor(newGuildMember.displayColor).setTitle('__**Lost Role:**__').setTimestamp(Date())
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setColor(newGuildMember.displayColor)
+                        .setTitle('__**Lost Role:**__')
+                        .setTimestamp(Date())
                         .setThumbnail(newGuildMember.user.avatarURL())
                         .setDescription(finalString);
                     return [4 /*yield*/, textChannel.send(messageEmbed)];
@@ -97,7 +100,10 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                     finalString += "__**User Tag:**__ " + newGuildMember.user.tag + "\n";
                     finalString += "__**Username:**__ " + newGuildMember.user.username + "\n";
                     finalString += "__**User ID:**__ " + newGuildMember.id + "\n";
-                    messageEmbed = new Discord.MessageEmbed().setColor(newGuildMember.displayColor).setTitle('__**New Role:**__').setTimestamp(Date())
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setColor(newGuildMember.displayColor)
+                        .setTitle('__**New Role:**__')
+                        .setTimestamp(Date())
                         .setThumbnail(newGuildMember.user.avatarURL())
                         .setDescription(finalString);
                     return [4 /*yield*/, textChannel.send(messageEmbed)];

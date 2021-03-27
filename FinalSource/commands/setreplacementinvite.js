@@ -97,7 +97,10 @@ function execute(message, args, discordUser) {
                     else {
                         msgString += "__**Link:**__ " + inviteLink2 + "\n------";
                     }
-                    messageEmbed = new Discord.MessageEmbed().setAuthor(message.author.username, message.author.avatarURL()).setColor([0, 0, 255]).setTimestamp(Date())
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTimestamp(Date())
                         .setTitle('__**Replacement Invite Link:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(messageEmbed)];
@@ -122,7 +125,10 @@ function execute(message, args, discordUser) {
                     _a.sent();
                     msgString = "Great! You've updated the guild " + serverRecordObject.serverName + "'s replacement invite link!"
                         + ("\n------\n__**Link:**__ " + serverRecordObject.replacementServerInvite + "\n------");
-                    messageEmbed = new Discord.MessageEmbed().setAuthor(message.author.username, message.author.avatarURL()).setColor([0, 0, 254]).setTimestamp(Date())
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 254])
+                        .setTimestamp(Date())
                         .setTitle('__**Replacement Invite Link Updated:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(messageEmbed)];

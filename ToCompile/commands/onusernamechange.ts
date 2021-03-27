@@ -40,7 +40,10 @@ export async function execute(client: Discord.Client, oldUser: Discord.User, new
         msgString += `__**User ID:**__ ${newUser.id}\n`;
 
         const msgEmbed = new Discord.MessageEmbed();
-        msgEmbed.setColor([0, 0, 255]).setDescription(msgString).setThumbnail(newUser.avatarURL() as string)
+        msgEmbed
+            .setColor([0, 0, 255])
+            .setDescription(msgString)
+            .setThumbnail(newUser.avatarURL() as string)
             .setTimestamp((Date() as unknown) as Date)
             .setTitle('__**New Username:**__');
 

@@ -63,8 +63,10 @@ export async function execute(message: Discord.Message, args: string[], discordU
             }
 
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor(message.author.username, message.author
-                .avatarURL() as string).setColor([0, 0, 255]).setTimestamp((Date() as unknown) as Date)
+            msgEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Verification System:**__')
                 .setDescription(msgString);
             await message.channel.send(msgEmbed);
@@ -88,8 +90,10 @@ export async function execute(message: Discord.Message, args: string[], discordU
 
             msgString = "__**Nicely done! You've disabled the verification system for this server!**__";
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor(message.author.username, message.author
-                .avatarURL() as string).setColor([0, 0, 255]).setTimestamp((Date() as unknown) as Date)
+            msgEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Set Verification System:**__')
                 .setDescription(msgString);
             await message.channel.send(msgEmbed);
@@ -104,7 +108,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
             }
 
             const msgEmbed2 = new Discord.MessageEmbed()
-                .setColor([0, 0, 255]).setDescription(args[1]).setTimestamp((Date() as unknown) as Date);
+                .setColor([0, 0, 255])
+                .setDescription(args[1])
+                .setTimestamp((Date() as unknown) as Date);
             const newMessage = await message.channel.send(msgEmbed2);
             await newMessage.react(args[2] as string);
 
@@ -116,8 +122,10 @@ export async function execute(message: Discord.Message, args: string[], discordU
 
             msgString = "__**Nicely done! You've enabled the verification system for this server!**__";
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor(message.author.username, message.author
-                .avatarURL() as string).setColor([0, 0, 255]).setTimestamp((Date() as unknown) as Date)
+            msgEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Set Verification System:**__')
                 .setDescription(msgString);
             await message.channel.send(msgEmbed);

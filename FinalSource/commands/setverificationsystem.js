@@ -124,8 +124,10 @@ function execute(message, args, discordUser) {
                     _a.label = 17;
                 case 17:
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.author.username, message.author
-                        .avatarURL()).setColor([0, 0, 255]).setTimestamp(Date())
+                    msgEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTimestamp(Date())
                         .setTitle('__**Verification System:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
@@ -156,8 +158,10 @@ function execute(message, args, discordUser) {
                     guildData.verificationSystem.messageID = '';
                     msgString = "__**Nicely done! You've disabled the verification system for this server!**__";
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.author.username, message.author
-                        .avatarURL()).setColor([0, 0, 255]).setTimestamp(Date())
+                    msgEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTimestamp(Date())
                         .setTitle('__**Set Verification System:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
@@ -179,7 +183,9 @@ function execute(message, args, discordUser) {
                     return [2 /*return*/, command.name];
                 case 30:
                     msgEmbed2 = new Discord.MessageEmbed()
-                        .setColor([0, 0, 255]).setDescription(args[1]).setTimestamp(Date());
+                        .setColor([0, 0, 255])
+                        .setDescription(args[1])
+                        .setTimestamp(Date());
                     return [4 /*yield*/, message.channel.send(msgEmbed2)];
                 case 31:
                     newMessage = _a.sent();
@@ -193,8 +199,10 @@ function execute(message, args, discordUser) {
                     discordUser.updateGuildDataInDB(guildData);
                     msgString = "__**Nicely done! You've enabled the verification system for this server!**__";
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.author.username, message.author
-                        .avatarURL()).setColor([0, 0, 255]).setTimestamp(Date())
+                    msgEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTimestamp(Date())
                         .setTitle('__**Set Verification System:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(msgEmbed)];

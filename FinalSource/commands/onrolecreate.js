@@ -82,7 +82,11 @@ function execute(client, role, discordUser) {
                     msgString = "__**New Role:**__ <@&" + role.id + "> (" + role.name + ")\n";
                     msgString += "__**Created By:**__ <@!" + auditLogEntry.executor.id + "> (" + auditLogEntry.executor.tag + ")\n";
                     msgString += "__**Role Count:**__ " + currentGuild.roles.cache.size;
-                    msgEmbed.setTitle('__**Role Created:**__').setTimestamp(Date()).setDescription(msgString).setColor(role.color);
+                    msgEmbed
+                        .setTitle('__**Role Created:**__')
+                        .setTimestamp(Date())
+                        .setDescription(msgString)
+                        .setColor(role.color);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 5:
                     _a.sent();

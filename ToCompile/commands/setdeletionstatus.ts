@@ -82,8 +82,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
             msgString += '------';
 
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor(message.author.username, message.author.avatarURL() as string)
-                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+            msgEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setDescription(msgString)
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Current Deletion Channels:**__');
 
             await message.channel.send(msgEmbed);
@@ -118,8 +121,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
 
             const msgString = `__**Messages beyond message number ${currentDeletionChannel.numberOfMessagesToSave} are being purged, in this channel.**__`;
             const messageEmbed = new Discord.MessageEmbed();
-            messageEmbed.setAuthor(message.author.username, message.author.avatarURL() as string)
-                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+            messageEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setDescription(msgString)
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Enabled Channel Purging:**__');
             const pinMessage = await message.channel.send(messageEmbed);
             await pinMessage.pin();
@@ -155,8 +161,11 @@ export async function execute(message: Discord.Message, args: string[], discordU
 
             const msgString = `${'\n------\n__**Channel Name:**__ <#'}${currentDeletionChannel.channelID}>\n------`;
             const messageEmbed = new Discord.MessageEmbed();
-            messageEmbed.setAuthor(message.author.username, message.author.avatarURL() as string)
-                .setColor([0, 0, 255]).setDescription(msgString).setTimestamp((Date() as unknown) as Date)
+            messageEmbed
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setDescription(msgString)
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Disabled Channel Purging:**__');
             await message.channel.send(messageEmbed);
             if (message.deletable) {

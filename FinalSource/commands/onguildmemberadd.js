@@ -99,8 +99,10 @@ function execute(client, guildMember, discordUser) {
                     msgString += "__**User Tag:**__ " + guildMember.user.tag + "\n";
                     msgString += "__**Username:**__ " + guildMember.user.username + "\n";
                     msgString += "__**User ID:**__ " + guildMember.id + "\n";
-                    msgEmbed.setColor(guildMember.displayColor)
-                        .setDescription(msgString).setThumbnail(guildMember.user.avatarURL())
+                    msgEmbed
+                        .setColor(guildMember.displayColor)
+                        .setDescription(msgString)
+                        .setThumbnail(guildMember.user.avatarURL())
                         .setTimestamp(Date())
                         .setTitle('__**New Guild Member:**__');
                     return [4 /*yield*/, textChannel.send(msgEmbed)];

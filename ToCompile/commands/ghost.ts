@@ -236,7 +236,8 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             msgString += '\n------';
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor(message.author.username, (message.author.avatarURL() as string))
+            msgEmbed
+                .setAuthor(message.author.username, (message.author.avatarURL() as string))
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
                 .setTimestamp((Date() as unknown) as Date)
@@ -314,7 +315,8 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
             const msgString = `------\n**Hello! You've been REDACTED, on the server ${(message.guild as Discord.Guild).name},
             for the following reason(s):	${ghostReason}\n Please, contact a moderator or admin to clear this issue up! Thanks!**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
+            msgEmbed
+                .setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
                 .setTimestamp((Date() as unknown) as Date)
@@ -325,7 +327,8 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             const msgString2 = `------\n__Hello! You've ghosted the following member__: <@!${guildMemberData.userID}> (${guildMemberData.userName})\n------`;
             const msgEmbed2 = new Discord.MessageEmbed();
-            msgEmbed2.setAuthor((message.client.user as Discord.User).username, (message.client.user as Discord.User).avatarURL() as string)
+            msgEmbed2
+                .setAuthor((message.client.user as Discord.User).username, (message.client.user as Discord.User).avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setDescription(msgString2)
                 .setTimestamp((Date() as unknown ) as Date)
@@ -384,7 +387,8 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             const msgString = '------\n**Hello! You\'ve had your redacted status removed! Have a great day!**\n------';
             const msgEmbed = new Discord.MessageEmbed();
-            msgEmbed.setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
+            msgEmbed
+                .setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
                 .setTimestamp((Date() as unknown) as Date)
@@ -395,7 +399,8 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
             const msgString2 = `------\n__Hello! You've un-ghosted the following member__: <@!${guildMemberData.userID}> (${guildMemberData.userName})\n------`;
             const msgEmbed2 = new Discord.MessageEmbed();
-            msgEmbed2.setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
+            msgEmbed2
+                .setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
                 .setColor([0, 0, 255])
                 .setDescription(msgString2)
                 .setTimestamp((Date() as unknown) as Date)

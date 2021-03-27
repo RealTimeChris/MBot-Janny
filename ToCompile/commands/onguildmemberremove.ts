@@ -45,8 +45,9 @@ command.description = "It's an automatic one!";
             msgString += `__**Username:**__ ${guildMember.user.username}\n`;
             msgString += `__**User ID:**__ ${guildMember.id}\n`;
 
-            msgEmbed.setAuthor(guildMember.user.username, (guildMember.user as Discord.User)
-                .avatarURL() as string).setColor(guildMember.displayColor).setDescription(msgString)
+            msgEmbed
+                .setColor(guildMember.displayColor)
+                .setDescription(msgString)
                 .setThumbnail((guildMember.user as Discord.User).avatarURL() as string)
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Guild Member Kicked:**__');
@@ -59,7 +60,8 @@ command.description = "It's an automatic one!";
             msgString += `__**Username:**__ ${guildMember.user.username}\n`;
             msgString += `__**User ID:**__ ${guildMember.id}\n`
 
-            msgEmbed.setColor(guildMember.displayColor)
+            msgEmbed
+                .setColor(guildMember.displayColor)
                 .setDescription(msgString)
                 .setThumbnail((guildMember.user as Discord.User).avatarURL() as string)
                 .setTimestamp((Date() as unknown) as Date)

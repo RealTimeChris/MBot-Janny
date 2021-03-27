@@ -113,7 +113,7 @@ function execute(message, args, discordUser) {
                         minutesRemaining = Math.trunc((timeRemaining % msPerHour) / msPerMinute);
                         secondsRemaining = Math.trunc(((timeRemaining % msPerHour)
                             % msPerMinute) / msPerSecond);
-                        currentField = { name: "__**" + guildData.timedMessages[x].name + ":**__", value: "__**ms Between Sends:**__ " + guildData.timedMessages[x].msBetweenSends + "\n", inline: true };
+                        currentField = { name: "__**" + guildData.timedMessages[x].name + ":**__", value: "__**ms Between Sends:**__ \n                    " + guildData.timedMessages[x].msBetweenSends + "\n", inline: true };
                         currentField.value += "__**In Channel:**__ <#" + guildData.timedMessages[x].textChannelID + ">\n";
                         currentField.value += "__**Content:**__ " + guildData.timedMessages[x].messageContent + "\n";
                         currentField.value += "__**Time Until Next Send:**__ " + hoursRemaining + " Hours, " + minutesRemaining + " Minutes, and " + secondsRemaining + " Seconds.";
@@ -124,8 +124,11 @@ function execute(message, args, discordUser) {
                         embedFields.push(currentField);
                     }
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.author.username, message.author.avatarURL()).setColor([0, 0, 255])
-                        .setTimestamp(Date()).setTitle('__**Timed Messages:**__');
+                    msgEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTimestamp(Date())
+                        .setTitle('__**Timed Messages:**__');
                     msgEmbed.fields = embedFields;
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
                 case 10:
@@ -153,8 +156,11 @@ function execute(message, args, discordUser) {
                     msgString += "__**ms Between Sends:**__ " + newTimedMessage.msBetweenSends + "\n";
                     msgString += "__**In Channel:**__ <#" + newTimedMessage.textChannelID + ">\n";
                     msgString += "__**Content:**__ " + newTimedMessage.messageContent + "\n------";
-                    msgEmbed.setAuthor(message.author.username, message.author.avatarURL()).setColor([0, 0, 255])
-                        .setTimestamp(Date()).setTitle('__**Timed Message Added:**__')
+                    msgEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTimestamp(Date())
+                        .setTitle('__**Timed Message Added:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
                 case 14:
@@ -195,8 +201,11 @@ function execute(message, args, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = String('');
                     msgString = "You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ " + currentTimedMessageName + "\n------";
-                    msgEmbed.setAuthor(message.author.username, message.author.avatarURL()).setColor([0, 0, 255])
-                        .setTimestamp(Date()).setTitle('__**Timed Message Removed:**__')
+                    msgEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTimestamp(Date())
+                        .setTitle('__**Timed Message Removed:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
                 case 24:

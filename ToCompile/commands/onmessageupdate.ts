@@ -38,7 +38,11 @@ export async function execute(client: Discord.Client, oldMessage: Discord.Messag
         msgString += `__**Old Content:**__ \n${oldMessage.content}\n`;
         msgString += `__**New Content:**__ ${newMessage.content}`;
 
-        msgEmbed.setTitle('__**Message Updated:**__').setTimestamp((Date() as unknown) as Date).setDescription(msgString).setColor([0, 0, 255]);
+        msgEmbed
+            .setTitle('__**Message Updated:**__')
+            .setTimestamp((Date() as unknown) as Date)
+            .setDescription(msgString)
+            .setColor([0, 0, 255]);
         await textChannel.send(msgEmbed);
 
         for (let x = 0; x < newMessage.embeds.length; x += 1) {

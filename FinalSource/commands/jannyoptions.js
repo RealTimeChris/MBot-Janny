@@ -69,7 +69,11 @@ function execute(message, args, discordUser) {
                 case 3:
                     guildData = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.client.user.username, message.client.user.avatarURL()).setTimestamp(Date()).setTitle('__**Janny Options:**__').setColor([0, 0, 255])
+                    msgEmbed
+                        .setAuthor(message.client.user.username, message.client.user.avatarURL())
+                        .setTimestamp(Date())
+                        .setTitle('__**Janny Options:**__')
+                        .setColor([0, 0, 255])
                         .setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
                     fields = [];
                     resultIcon = '❌';
@@ -79,19 +83,19 @@ function execute(message, args, discordUser) {
                             break;
                         }
                     }
-                    logsField = { name: '__**Logs:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!managelogs'", inline: true };
+                    logsField = { name: '__**Logs:**__', value: "__Active:__ " + resultIcon + "\n__\n\t\t\tCommand(s):__ '!managelogs'", inline: true };
                     fields.push(logsField);
                     resultIcon = '❌';
                     if (guildData.defaultRoleIDs.length > 0) {
                         resultIcon = '✅';
                     }
-                    defaultRolesField = { name: '__**Default Roles:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setdefaultrole'", inline: true };
+                    defaultRolesField = { name: '__**Default Roles:**__', value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!setdefaultrole'", inline: true };
                     fields.push(defaultRolesField);
                     resultIcon = '❌';
                     if (guildData.deletionChannels.length > 0) {
                         resultIcon = '✅';
                     }
-                    deletionChannelsField = { name: '__**Delete Messages From Channels:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setdeletionstatus'", inline: true };
+                    deletionChannelsField = { name: '__**Delete Messages From Channels:**__', value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!setdeletionstatus'", inline: true };
                     fields.push(deletionChannelsField);
                     resultIcon = '❌';
                     serverRecordKey = message.guild.id + " + Record";
@@ -102,19 +106,19 @@ function execute(message, args, discordUser) {
                     if (serverRecordObject.replacementServerInvite !== '') {
                         resultIcon = '✅';
                     }
-                    replacementServerInviteField = { name: '__**Replacement Server Invite:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setreplacementinvite'", inline: true };
+                    replacementServerInviteField = { name: '__**Replacement Server Invite:**__', value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!setreplacementinvite'", inline: true };
                     fields.push(replacementServerInviteField);
                     resultIcon = '❌';
                     if (guildData.verificationSystem.channelID != '') {
                         resultIcon = '✅';
                     }
-                    requireServerVerificationField = { name: '__**Require Server Verification:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!setverificationsystem'", inline: true };
+                    requireServerVerificationField = { name: '__**Require Server Verification:**__', value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!setverificationsystem'", inline: true };
                     fields.push(requireServerVerificationField);
                     resultIcon = '❌';
                     if (guildData.timedMessages.length > 0) {
                         resultIcon = '✅';
                     }
-                    timedMessagesField = { name: '__**Send Out Timed Messages:**__', value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!timedmessages'", inline: true };
+                    timedMessagesField = { name: '__**Send Out Timed Messages:**__', value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!timedmessages'", inline: true };
                     fields.push(timedMessagesField);
                     return [4 /*yield*/, discordUser.getUserDataFromDB(message.client)];
                 case 5:
@@ -125,7 +129,7 @@ function execute(message, args, discordUser) {
                             resultIcon = '✅';
                         }
                     }
-                    trackUsersField = { name: "__**Track User's Messages:**__", value: "__Active:__ " + resultIcon + "\n__Command(s):__ '!trackuser'", inline: true };
+                    trackUsersField = { name: "__**Track User's Messages:**__", value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!trackuser'", inline: true };
                     fields.push(trackUsersField);
                     msgEmbed.fields = fields;
                     return [4 /*yield*/, message.channel.send(msgEmbed)];

@@ -56,8 +56,10 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 msgString += `__**Link:**__ ${inviteLink2}\n------`;
             }
 
-            const messageEmbed = new Discord.MessageEmbed().setAuthor(message.author.username,
-                message.author.avatarURL() as string).setColor([0, 0, 255]).setTimestamp((Date() as unknown) as Date)
+            const messageEmbed = new Discord.MessageEmbed()
+                .setAuthor(message.author.username,message.author.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Replacement Invite Link:**__')
                 .setDescription(msgString);
 
@@ -81,8 +83,10 @@ export async function execute(message: Discord.Message, args: string[], discordU
             const msgString = `Great! You've updated the guild ${serverRecordObject.serverName}'s replacement invite link!`
                                 + `\n------\n__**Link:**__ ${serverRecordObject.replacementServerInvite}\n------`;
 
-            const messageEmbed = new Discord.MessageEmbed().setAuthor(message.author.username,
-                message.author.avatarURL() as string).setColor([0, 0, 254]).setTimestamp((Date() as unknown) as Date)
+            const messageEmbed = new Discord.MessageEmbed()
+                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setColor([0, 0, 254])
+                .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Replacement Invite Link Updated:**__')
                 .setDescription(msgString);
 

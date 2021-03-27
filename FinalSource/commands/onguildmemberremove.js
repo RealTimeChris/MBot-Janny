@@ -85,8 +85,9 @@ function execute(client, guildMember, discordUser) {
                     msgString += "__**User Tag:**__ " + guildMember.user.tag + "\n";
                     msgString += "__**Username:**__ " + guildMember.user.username + "\n";
                     msgString += "__**User ID:**__ " + guildMember.id + "\n";
-                    msgEmbed.setAuthor(guildMember.user.username, guildMember.user
-                        .avatarURL()).setColor(guildMember.displayColor).setDescription(msgString)
+                    msgEmbed
+                        .setColor(guildMember.displayColor)
+                        .setDescription(msgString)
                         .setThumbnail(guildMember.user.avatarURL())
                         .setTimestamp(Date())
                         .setTitle('__**Guild Member Kicked:**__');
@@ -100,7 +101,8 @@ function execute(client, guildMember, discordUser) {
                     msgString += "__**User Tag:**__ " + guildMember.user.tag + "\n";
                     msgString += "__**Username:**__ " + guildMember.user.username + "\n";
                     msgString += "__**User ID:**__ " + guildMember.id + "\n";
-                    msgEmbed.setColor(guildMember.displayColor)
+                    msgEmbed
+                        .setColor(guildMember.displayColor)
                         .setDescription(msgString)
                         .setThumbnail(guildMember.user.avatarURL())
                         .setTimestamp(Date())

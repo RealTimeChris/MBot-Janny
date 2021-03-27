@@ -72,7 +72,11 @@ function execute(client, collection, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = String('');
                     msgString = "__**Number of Messages:**__ " + collection.size + "\n";
-                    msgEmbed.setTitle('__**Messages Bulk Deleted:**__').setTimestamp(Date()).setDescription(msgString).setColor([0, 0, 255]);
+                    msgEmbed
+                        .setTitle('__**Messages Bulk Deleted:**__')
+                        .setTimestamp(Date())
+                        .setDescription(msgString)
+                        .setColor([0, 0, 255]);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();
@@ -86,7 +90,11 @@ function execute(client, collection, discordUser) {
                     msgString2 = "__**Message Author:**__ <@!" + currentMessage.author.id + "> (" + currentMessage.author.tag + ")\n";
                     msgString2 += "__**Message Id:**__ " + currentMessage.id + "\n";
                     msgString2 += "__**Message Content:**__ " + currentMessage.content;
-                    msgEmbed.setTitle("__**Deleted Message: " + (x + 1) + " of " + keyArray.length + "**__").setTimestamp(Date()).setDescription(msgString2).setColor([0, 0, 255]);
+                    msgEmbed
+                        .setTitle("__**Deleted Message: " + (x + 1) + " of " + keyArray.length + "**__")
+                        .setTimestamp(Date())
+                        .setDescription(msgString2)
+                        .setColor([0, 0, 255]);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 5:
                     _a.sent();

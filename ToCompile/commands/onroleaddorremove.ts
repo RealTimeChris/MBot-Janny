@@ -48,7 +48,10 @@ export async function execute(client: Discord.Client, oldGuildMemberRoleManager:
             finalString += `__**Username:**__ ${newGuildMember.user.username}\n`;
             finalString += `__**User ID:**__ ${newGuildMember.id}\n`;
 
-            const messageEmbed = new Discord.MessageEmbed().setColor(newGuildMember.displayColor).setTitle('__**Lost Role:**__').setTimestamp((Date() as unknown) as Date)
+            const messageEmbed = new Discord.MessageEmbed()
+                .setColor(newGuildMember.displayColor)
+                .setTitle('__**Lost Role:**__')
+                .setTimestamp((Date() as unknown) as Date)
                 .setThumbnail((newGuildMember.user as Discord.User).avatarURL() as string)
                 .setDescription(finalString);
             await (textChannel as Discord.TextChannel).send(messageEmbed);
@@ -62,7 +65,10 @@ export async function execute(client: Discord.Client, oldGuildMemberRoleManager:
             finalString += `__**Username:**__ ${newGuildMember.user.username}\n`;
             finalString += `__**User ID:**__ ${newGuildMember.id}\n`;
 
-            const messageEmbed = new Discord.MessageEmbed().setColor(newGuildMember.displayColor).setTitle('__**New Role:**__').setTimestamp((Date() as unknown) as Date)
+            const messageEmbed = new Discord.MessageEmbed()
+                .setColor(newGuildMember.displayColor)
+                .setTitle('__**New Role:**__')
+                .setTimestamp((Date() as unknown) as Date)
                 .setThumbnail((newGuildMember.user as Discord.User).avatarURL() as string)
                 .setDescription(finalString);
             await (textChannel as Discord.TextChannel).send(messageEmbed);

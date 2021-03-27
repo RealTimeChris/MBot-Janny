@@ -76,8 +76,11 @@ function execute(message, args) {
                         return commandNames_1;
                     });
                     messageEmbed = new Discord.MessageEmbed();
-                    messageEmbed.setImage(message.client.user.avatarURL().toString()).setTimestamp(Date())
-                        .setAuthor(message.author.username, message.author.avatarURL()).setTitle("__**" + message.client.user.username + " Help:**__")
+                    messageEmbed
+                        .setImage(message.client.user.avatarURL().toString())
+                        .setTimestamp(Date())
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setTitle("__**" + message.client.user.username + " Help:**__")
                         .setDescription(msgString_1)
                         .setColor([254, 254, 254]);
                     if (!(message.author.dmChannel == null)) return [3 /*break*/, 3];
@@ -123,16 +126,21 @@ function execute(message, args) {
                     return [2 /*return*/, command.name];
                 case 12:
                     if (!(commandDescription_1 instanceof Discord.MessageEmbed)) return [3 /*break*/, 14];
-                    commandDescription_1.setAuthor(message.author.username, message.author.avatarURL()).setColor([254, 254, 254])
-                        .setTitle("__**" + (commandName_1.charAt(0).toUpperCase() + commandName_1.slice(1)) + " Help:**__").setTimestamp(Date());
+                    commandDescription_1
+                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setColor([254, 254, 254])
+                        .setTitle("__**" + (commandName_1.charAt(0).toUpperCase() + commandName_1.slice(1)) + " Help:**__")
+                        .setTimestamp(Date());
                     return [4 /*yield*/, message.channel.send(commandDescription_1)];
                 case 13:
                     _a.sent();
                     return [3 /*break*/, 16];
                 case 14:
                     messageEmbed = new Discord.MessageEmbed();
-                    messageEmbed.setDescription(commandDescription_1)
-                        .setTimestamp(Date()).setAuthor(message.author.username, message.author.avatarURL())
+                    messageEmbed
+                        .setDescription(commandDescription_1)
+                        .setTimestamp(Date())
+                        .setAuthor(message.author.username, message.author.avatarURL())
                         .setTitle("__**" + (commandName_1.charAt(0).toUpperCase() + commandName_1.slice(1)) + " Help:**__")
                         .setColor([254, 254, 254]);
                     return [4 /*yield*/, message.channel.send(messageEmbed)];
