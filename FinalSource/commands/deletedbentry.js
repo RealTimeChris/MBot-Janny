@@ -190,7 +190,7 @@ function execute(message, args, discordUser) {
                 case 17:
                     if (!(iterator_1_1 = _c.sent(), !iterator_1_1.done)) return [3 /*break*/, 20];
                     _b = iterator_1_1.value, key = _b.key, value = _b.value;
-                    console.log(value);
+                    console.log(key + ' = ' + value);
                     if (!key.includes(dbKey)) return [3 /*break*/, 19];
                     deletedCounter.setData(key, value);
                     return [4 /*yield*/, onData(dbKey, discordUser, deletedCounter)];

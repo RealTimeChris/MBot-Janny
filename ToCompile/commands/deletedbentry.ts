@@ -114,7 +114,7 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 		const deletedCounter = new DeletedCounter();
 		const iterator = discordUser.dataBase.iterate({});
 		for await (const {key, value} of iterator){
-			console.log(value);
+			console.log(key + ' = ' + value);
             if (key.includes(dbKey)){
 				deletedCounter.setData(key, value);
 				await onData(dbKey, discordUser, deletedCounter)
