@@ -12,7 +12,7 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onmessagedelete';
 command.description = "It's an automatic one!";
 
-async function execute(client: Discord.Client, message: Discord.Message, discordUser: DiscordStuff.DiscordUser): Promise<string> {
+export async function execute(client: Discord.Client, message: Discord.Message, discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         if (!(message.deleted)) {
             return command.name;

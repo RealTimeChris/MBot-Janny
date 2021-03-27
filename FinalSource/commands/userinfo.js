@@ -40,6 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
 var Discord = require("discord.js");
 var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
@@ -50,7 +51,7 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
  */
 function execute(message, args) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, userID, userMentionRegExp, userIDRegExp, argZero, userIDOne, guildMemberManager, guildMember, error_1, fields, field, field1, field2, field3, field4, field5, permissionsArray, msgString, x, field6, field7, messageEmbed, error_2;
+        var areWeInADM, userID, userMentionRegExp, userIDRegExp, argZero, userIDOne, guildMemberManager, guildMember, error_1, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -120,6 +121,8 @@ function execute(message, args) {
                     fields.push(field4);
                     field5 = { name: '__Joined:__', value: guildMember.joinedAt, inline: true };
                     fields.push(field5);
+                    field6 = { name: '__Created At:__', value: guildMember.user.createdAt, inline: true };
+                    fields.push(field6);
                     permissionsArray = guildMember.permissions.toArray();
                     msgString = String();
                     for (x = 0; x < permissionsArray.length; x += 1) {
@@ -139,10 +142,10 @@ function execute(message, args) {
                             msgString += ', ';
                         }
                     }
-                    field6 = { name: '__Roles:__', value: "" + guildMember.roles.cache.array(), inline: false };
-                    fields.push(field6);
-                    field7 = { name: '__Permissions:__', value: msgString, inline: false };
+                    field7 = { name: '__Roles:__', value: "" + guildMember.roles.cache.array(), inline: false };
                     fields.push(field7);
+                    field8 = { name: '__Permissions:__', value: msgString, inline: false };
+                    fields.push(field8);
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setColor(guildMember.displayColor)
@@ -168,5 +171,6 @@ function execute(message, args) {
         });
     });
 }
+exports.execute = execute;
 command.function = execute;
 exports.default = command;

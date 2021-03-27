@@ -15,7 +15,7 @@ command.description = '!purge = AMOUNTTODELETE, between 1 and 100 messages!';
 /**
  * Purges up to 100 messages from a given channel at a time.
  */
-async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
 		const areWeInADM = await DiscordStuff.areWeInADM(message);
 

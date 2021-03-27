@@ -47,6 +47,7 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = void 0;
 var Discord = require("discord.js");
 var DiscordStuff = require("../DiscordStuff");
 var Data = /** @class */ (function () {
@@ -159,7 +160,7 @@ function execute(message, args, discordUser) {
                     _c.label = 9;
                 case 9: return [2 /*return*/, command.name];
                 case 10:
-                    if (args[0].toLowerCase() !== 'janny') {
+                    if (args[0].toLowerCase() !== 'gamehouse') {
                         return [2 /*return*/, command.name];
                     }
                     if (!(args[1] === undefined)) return [3 /*break*/, 14];
@@ -247,5 +248,6 @@ function execute(message, args, discordUser) {
         });
     });
 }
+exports.execute = execute;
 command.function = execute;
 exports.default = command;

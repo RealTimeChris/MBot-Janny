@@ -15,7 +15,7 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
 /**
  * Displays info about a selected user.
  */
-async function execute(message: Discord.Message, args: string[]): Promise<string> {
+export async function execute(message: Discord.Message, args: string[]): Promise<string> {
     try {
         const areWeInADM = await DiscordStuff.areWeInADM(message);
 
@@ -65,6 +65,8 @@ async function execute(message: Discord.Message, args: string[]): Promise<string
         fields.push(field4);
         const field5 = { name: '__Joined:__', value: guildMember.joinedAt, inline: true };
         fields.push(field5);
+        const field6 = {name: '__Created At:__', value: guildMember.user.createdAt, inline: true}
+        fields.push(field6);
         const permissionsArray = guildMember.permissions.toArray();
         let msgString = String();
         for (let x = 0; x < permissionsArray.length; x += 1) {
@@ -82,10 +84,10 @@ async function execute(message: Discord.Message, args: string[]): Promise<string
                 msgString += ', ';
             }
         }
-        const field6 = { name: '__Roles:__', value: `${guildMember.roles.cache.array()}`, inline: false };
-        fields.push(field6);
-        const field7 = { name: '__Permissions:__', value: msgString, inline: false };
+        const field7 = { name: '__Roles:__', value: `${guildMember.roles.cache.array()}`, inline: false };
         fields.push(field7);
+        const field8 = { name: '__Permissions:__', value: msgString, inline: false };
+        fields.push(field8);
 
         const messageEmbed = new Discord.MessageEmbed();
         messageEmbed

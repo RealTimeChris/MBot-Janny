@@ -1,4 +1,4 @@
-// onmessagereactionadd.ts - Module for my "on message reaction add" command.
+// onmessagereactionadd.js - Module for my "on message reaction add" command.
 // Feb 28, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -12,7 +12,7 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onmessagereactionadd';
 command.description = "It's an automatic one!";
 
-async function execute(messageReaction: Discord.MessageReaction, client: Discord.Client, args: string[],
+export async function execute(messageReaction: Discord.MessageReaction, client: Discord.Client, args: string[],
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
 		const guildData = await discordUser.getGuildDataFromDB(messageReaction.message.guild as Discord.Guild);

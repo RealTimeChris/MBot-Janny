@@ -15,7 +15,7 @@ command.description = '!trackuser = ADD, @USERMENTION to track the user within t
 /**
  * Deals with the setting of a user's tracking status.
  */
-async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         const areWeInADM = await DiscordStuff.areWeInADM(message);
 
