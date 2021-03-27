@@ -12,7 +12,7 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
 
- export async function execute(message: Discord.Message): Promise<string> {
+async function execute(message: Discord.Message): Promise<string> {
     try {
         if (message.deletable) {
             await message.delete();

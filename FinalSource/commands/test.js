@@ -40,7 +40,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.execute = void 0;
 var DiscordStuff = require("../DiscordStuff.js");
 var command = new DiscordStuff.BotCommand();
 command.name = 'test';
@@ -68,6 +67,5 @@ function execute(message) {
         });
     });
 }
-exports.execute = execute;
 command.function = execute;
 exports.default = command;

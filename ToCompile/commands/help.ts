@@ -17,7 +17,7 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
 /**
  * Returns a menu of helping information for the various commands I have.
  */
-    export async function execute(message: Discord.Message, args: string[]): Promise<string> {
+async function execute(message: Discord.Message, args: string[]): Promise<string> {
     try {
         const commandFiles = commandIndex.default.commands;
 

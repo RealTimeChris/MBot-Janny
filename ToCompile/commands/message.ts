@@ -13,14 +13,10 @@ command.name = 'message';
 command.description = 'Command executes automatically upon receiving certain messages!.';
 
 /**
-   * Selects a chosen chat message and sends it via the appropriate channel,
-	 * upon recieving a trigger phrase or word.
-   * @param   {Discord.Message}           message
-   * @param   {String[]}                  args
-   * @param   {DiscordStuff.discordUser}  discordUser
-   * @returns {Promise<string>}
-   */
- export async function execute(message: Discord.Message): Promise<string> {
+* Selects a chosen chat message and sends it via the appropriate channel,
+* upon recieving a trigger phrase or word.
+*/
+async function execute(message: Discord.Message): Promise<string> {
     try {
         const number = Math.random() * 100;
         if (message.content != null && message.content !== undefined) {

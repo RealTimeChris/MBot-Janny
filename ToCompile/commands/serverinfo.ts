@@ -15,7 +15,7 @@ command.description = '!serverinfo to get info about the current server!\n!serve
 /**
  * Displays the info of a chosen server.
  */
-export async function execute(message: Discord.Message, args: string[]): Promise<string> {
+async function execute(message: Discord.Message, args: string[]): Promise<string> {
     try {
         const idRegExp = /\d{18}/;
 

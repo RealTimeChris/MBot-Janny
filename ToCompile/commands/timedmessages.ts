@@ -13,7 +13,7 @@ command.name = 'timedmessages';
 command.description = "__**Timed Messages Usage:**__ !timedmessages to view the server's current timed messages.\n"
 + '!timedmessages = ADD, MESSAGENAME, MSBETWEENSENDS, MESSAGECONTENT to add a new message.\nAnd !timedmessages = REMOVE, MESSAGENAME, to remove a timed message!';
 
- export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         const areWeInADM = await DiscordStuff.areWeInADM(message);
 

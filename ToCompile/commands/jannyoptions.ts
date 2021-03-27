@@ -12,7 +12,7 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'jannyoptions';
 command.description = '!jannyoptions, to display a list of options for this bot!';
 
-	export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
 		const areWeInADM = await DiscordStuff.areWeInADM(message);
 

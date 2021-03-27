@@ -40,19 +40,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.execute = void 0;
 var DiscordStuff = require("../DiscordStuff.js");
 var command = new DiscordStuff.BotCommand();
 command.name = 'message';
 command.description = 'Command executes automatically upon receiving certain messages!.';
 /**
-   * Selects a chosen chat message and sends it via the appropriate channel,
-     * upon recieving a trigger phrase or word.
-   * @param   {Discord.Message}           message
-   * @param   {String[]}                  args
-   * @param   {DiscordStuff.discordUser}  discordUser
-   * @returns {Promise<string>}
-   */
+* Selects a chosen chat message and sends it via the appropriate channel,
+* upon recieving a trigger phrase or word.
+*/
 function execute(message) {
     return __awaiter(this, void 0, void 0, function () {
         var number, error_1;
@@ -78,6 +73,5 @@ function execute(message) {
         });
     });
 }
-exports.execute = execute;
 command.function = execute;
 exports.default = command;

@@ -15,7 +15,7 @@ command.description = 'Simply enter !ping';
 /**
  * A testing function for the early implementation of the command handler.
  */
- export async function execute(message: Discord.Message): Promise<string> {
+async function execute(message: Discord.Message): Promise<string> {
     try {
         await message.reply('Pong!');
         if (message.channel.type !== 'dm') {

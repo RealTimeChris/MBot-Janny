@@ -1,4 +1,4 @@
-// onmessagereactionadd.js - Module for my "on message reaction add" command.
+// onmessagereactionadd.ts - Module for my "on message reaction add" command.
 // Feb 28, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -40,7 +40,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.execute = void 0;
 var Discord = require("discord.js");
 var DiscordStuff = require("../DiscordStuff.js");
 var command = new DiscordStuff.BotCommand();
@@ -126,6 +125,5 @@ function execute(messageReaction, client, args, discordUser) {
         });
     });
 }
-exports.execute = execute;
 command.function = execute;
 exports.default = command;
