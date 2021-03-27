@@ -1,4 +1,4 @@
-// DiscordStuffIndex.js - Implementation for my Discord bots.
+// DiscordStuff.js - Implementation for my Discord bots.
 // Jan 28, 2021
 // Chris M.
 // https://github.com/RealTimeChris
