@@ -149,10 +149,6 @@ export declare function areWeInADM(message: Discord.Message): Promise<boolean>;
 */
 export declare function applyDefaultRoles(guildData: GuildData, guildMember: Discord.GuildMember): Promise<void>;
 /**
-* Sends out the timed messages within each server, if enough time has passed.
-*/
-export declare function sendTimedMessagesIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
-/**
 * Takes a server record and a live guild object and either updates or adds it to the records.
 */
 export declare function recurseThroughServerRecords(dataBase: Level, liveGuildArray: Discord.Guild[], keyNames: string[], y?: number): Promise<void>;
@@ -232,6 +228,10 @@ export declare class DiscordUser {
     * Purges the actively-being-purged text channels, if enough time has passed.
     */
     purgeMessageChannelsIfTimeHasPassed(client: Discord.Client): Promise<void>;
+    /**
+    * Sends out the timed messages within each server, if enough time has passed.
+    */
+    sendTimedMessagesIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
     /**
     * Caches messages for each of the guilds that have an active "verification" system.
     */

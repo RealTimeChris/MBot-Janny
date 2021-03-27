@@ -43,7 +43,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DiscordUser = exports.recurseThroughServerRecords = exports.sendTimedMessagesIfTimeHasPassed = exports.applyDefaultRoles = exports.areWeInADM = exports.doWeHaveAdminPermission = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = exports.getLastTextChannelInGuild = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = void 0;
+exports.DiscordUser = exports.recurseThroughServerRecords = exports.applyDefaultRoles = exports.areWeInADM = exports.doWeHaveAdminPermission = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = exports.getLastTextChannelInGuild = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = void 0;
 var Discord = require("discord.js");
 var level_ts_1 = __importDefault(require("level-ts"));
 var config = require("./config.json");
@@ -494,66 +494,6 @@ function applyDefaultRoles(guildData, guildMember) {
     });
 }
 exports.applyDefaultRoles = applyDefaultRoles;
-/**
-* Sends out the timed messages within each server, if enough time has passed.
-*/
-function sendTimedMessagesIfTimeHasPassed(client, discordUser) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _this = this;
-        return __generator(this, function (_a) {
-            try {
-                discordUser.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {
-                    var y, newGuildData, currentTime, guild, textChannel, timeDifference, timeRemaining;
-                    return __generator(this, function (_a) {
-                        switch (_a.label) {
-                            case 0:
-                                y = 0;
-                                _a.label = 1;
-                            case 1:
-                                if (!(y < guildData.timedMessages.length)) return [3 /*break*/, 7];
-                                newGuildData = guildData;
-                                currentTime = new Date().getTime();
-                                if (!((currentTime - newGuildData.timedMessages[y].timeOfLastSend)
-                                    > newGuildData.timedMessages[y].msBetweenSends)) return [3 /*break*/, 5];
-                                guild = client.guilds.resolve(newGuildData.guildID);
-                                textChannel = new Discord.TextChannel(guild, {});
-                                return [4 /*yield*/, client.channels.fetch(newGuildData.timedMessages[y].textChannelID)];
-                            case 2:
-                                textChannel = (_a.sent());
-                                return [4 /*yield*/, textChannel.send(newGuildData.timedMessages[y].messageContent)];
-                            case 3:
-                                _a.sent();
-                                newGuildData.timedMessages[y].timeOfLastSend = new Date().getTime();
-                                return [4 /*yield*/, discordUser.updateGuildDataInDB(newGuildData)];
-                            case 4:
-                                _a.sent();
-                                return [3 /*break*/, 7];
-                            case 5:
-                                timeDifference = currentTime - newGuildData.timedMessages[y].timeOfLastSend;
-                                timeRemaining = newGuildData.timedMessages[y].msBetweenSends - timeDifference;
-                                console.log(newGuildData.timedMessages[y].name + " has " + timeRemaining + "ms left until it can be sent!");
-                                _a.label = 6;
-                            case 6:
-                                y += 1;
-                                return [3 /*break*/, 1];
-                            case 7: return [2 /*return*/];
-                        }
-                    });
-                }); });
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        resolve();
-                    })];
-            }
-            catch (error) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        reject(error);
-                    })];
-            }
-            return [2 /*return*/];
-        });
-    });
-}
-exports.sendTimedMessagesIfTimeHasPassed = sendTimedMessagesIfTimeHasPassed;
 /**
 * Takes a server record and a live guild object and either updates or adds it to the records.
 */
@@ -1684,6 +1624,65 @@ var DiscordUser = /** @class */ (function () {
                                 }
                             }
                             return [2 /*return*/];
+                        });
+                    }); });
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            resolve();
+                        })];
+                }
+                catch (error) {
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error);
+                        })];
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
+    /**
+    * Sends out the timed messages within each server, if enough time has passed.
+    */
+    DiscordUser.prototype.sendTimedMessagesIfTimeHasPassed = function (client, discordUser) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                try {
+                    discordUser.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {
+                        var y, newGuildData, currentTime, guild, textChannel, timeDifference, timeRemaining;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    y = 0;
+                                    _a.label = 1;
+                                case 1:
+                                    if (!(y < guildData.timedMessages.length)) return [3 /*break*/, 7];
+                                    newGuildData = guildData;
+                                    currentTime = new Date().getTime();
+                                    if (!((currentTime - newGuildData.timedMessages[y].timeOfLastSend)
+                                        > newGuildData.timedMessages[y].msBetweenSends)) return [3 /*break*/, 5];
+                                    guild = client.guilds.resolve(newGuildData.guildID);
+                                    textChannel = new Discord.TextChannel(guild, {});
+                                    return [4 /*yield*/, client.channels.fetch(newGuildData.timedMessages[y].textChannelID)];
+                                case 2:
+                                    textChannel = (_a.sent());
+                                    return [4 /*yield*/, textChannel.send(newGuildData.timedMessages[y].messageContent)];
+                                case 3:
+                                    _a.sent();
+                                    newGuildData.timedMessages[y].timeOfLastSend = new Date().getTime();
+                                    return [4 /*yield*/, discordUser.updateGuildDataInDB(newGuildData)];
+                                case 4:
+                                    _a.sent();
+                                    return [3 /*break*/, 7];
+                                case 5:
+                                    timeDifference = currentTime - newGuildData.timedMessages[y].timeOfLastSend;
+                                    timeRemaining = newGuildData.timedMessages[y].msBetweenSends - timeDifference;
+                                    console.log(newGuildData.timedMessages[y].name + " has " + timeRemaining + "ms left until it can be sent!");
+                                    _a.label = 6;
+                                case 6:
+                                    y += 1;
+                                    return [3 /*break*/, 1];
+                                case 7: return [2 /*return*/];
+                            }
                         });
                     }); });
                     return [2 /*return*/, new Promise(function (resolve, reject) {

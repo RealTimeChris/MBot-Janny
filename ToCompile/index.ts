@@ -56,7 +56,7 @@ client.on('message', async (msg) => {
 			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
 			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
 			await discordUser.saveCacheIfTimeHasPassed(client);
-			await DiscordStuff.sendTimedMessagesIfTimeHasPassed(client, discordUser);
+			await discordUser.sendTimedMessagesIfTimeHasPassed(client, discordUser);
 			discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch((error: Error) => {
 				console.log(error);
 			});
@@ -78,7 +78,7 @@ client.on('message', async (msg) => {
 			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
 			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
 			await discordUser.saveCacheIfTimeHasPassed(client);
-			await DiscordStuff.sendTimedMessagesIfTimeHasPassed(client, discordUser);
+			await discordUser.sendTimedMessagesIfTimeHasPassed(client, discordUser);
 			discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch((error: Error) => {
 				console.log(error);
 			});
