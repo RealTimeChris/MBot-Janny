@@ -1,6 +1,26 @@
 import Discord = require('discord.js');
 import Level from 'level-ts';
 /**
+ * Checks a user ID against an array of user IDs to see if it is present.
+ */
+export declare function checkForBotCommanderStatus(userID: string, commanderIDs: string[]): boolean;
+/**
+ * Recurses through a succession of messages.
+ */
+export declare function recurseThroughMessagePages(userID: string, message: Discord.Message, currentPageIndex: number, messageEmbeds: Discord.MessageEmbed[], deleteAfter: boolean): Promise<void>;
+/**
+ * Checks to see if we're in a DM channel, and sends a warning message if so.
+ */
+export declare function areWeInADM(message: Discord.Message): Promise<boolean>;
+/**
+* Applies default roles to a new guild member.
+*/
+export declare function applyDefaultRoles(guildData: GuildData, guildMember: Discord.GuildMember): Promise<void>;
+/**
+* Takes a server record and a live guild object and either updates or adds it to the records.
+*/
+export declare function recurseThroughServerRecords(dataBase: Level, liveGuildArray: Discord.Guild[], keyNames: string[], y?: number): Promise<void>;
+/**
  * Class representing permission overwrites for Discord.
  */
 export declare class PermissionOverwrites {
@@ -124,30 +144,6 @@ export declare class BotCommand {
     description: string;
     function: Function;
 }
-/**
- * Returns that last text channel from a given guild.
- */
-export declare function getLastTextChannelInGuild(client: Discord.Client, guild: Discord.Guild, showInfoInConsole?: boolean): Discord.TextChannel;
-/**
- * Checks a user ID against an array of user IDs to see if it is present.
- */
-export declare function checkForBotCommanderStatus(userID: string, commanderIDs: string[]): boolean;
-/**
- * Recurses through a succession of messages.
- */
-export declare function recurseThroughMessagePages(userID: string, message: Discord.Message, currentPageIndex: number, messageEmbeds: Discord.MessageEmbed[], deleteAfter: boolean): Promise<void>;
-/**
- * Checks to see if we're in a DM channel, and sends a warning message if so.
- */
-export declare function areWeInADM(message: Discord.Message): Promise<boolean>;
-/**
-* Applies default roles to a new guild member.
-*/
-export declare function applyDefaultRoles(guildData: GuildData, guildMember: Discord.GuildMember): Promise<void>;
-/**
-* Takes a server record and a live guild object and either updates or adds it to the records.
-*/
-export declare function recurseThroughServerRecords(dataBase: Level, liveGuildArray: Discord.Guild[], keyNames: string[], y?: number): Promise<void>;
 /**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */

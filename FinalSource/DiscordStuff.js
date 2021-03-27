@@ -43,236 +43,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DiscordUser = exports.recurseThroughServerRecords = exports.applyDefaultRoles = exports.areWeInADM = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = exports.getLastTextChannelInGuild = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = void 0;
+exports.DiscordUser = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = exports.recurseThroughServerRecords = exports.applyDefaultRoles = exports.areWeInADM = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = void 0;
 var Discord = require("discord.js");
 var level_ts_1 = __importDefault(require("level-ts"));
 var config = require("./config.json");
-/**
- * Class representing permission overwrites for Discord.
- */
-var PermissionOverwrites = /** @class */ (function () {
-    function PermissionOverwrites(guild) {
-        this.deny = [];
-        this.allow = [];
-        this.id = '';
-        this.type = '';
-        this.channel = new Discord.GuildChannel(guild, {});
-    }
-    return PermissionOverwrites;
-}());
-exports.PermissionOverwrites = PermissionOverwrites;
-/**
- * Class representing some info about a given user.
- */
-var UserRecord = /** @class */ (function () {
-    function UserRecord() {
-        this.userID = '';
-        this.lastKnownUsername = '';
-        this.lastKnownUserTag = '';
-    }
-    return UserRecord;
-}());
-exports.UserRecord = UserRecord;
-/**
- * Class representing some info about a given server.
- */
-var ServerRecord = /** @class */ (function () {
-    function ServerRecord() {
-        this.replacementServerInvite = '';
-        this.serverName = '';
-        this.serverID = '';
-        this.userRecords = [];
-    }
-    return ServerRecord;
-}());
-exports.ServerRecord = ServerRecord;
-/**
- * Class representing a single guild/server member.
- */
-var GuildMemberData = /** @class */ (function () {
-    function GuildMemberData() {
-        this.previousRoleIDs = [];
-        this.previousPermissionOverwrites = [];
-        this.userID = '';
-        this.userName = '';
-        this.displayName = '';
-    }
-    return GuildMemberData;
-}());
-exports.GuildMemberData = GuildMemberData;
-/**
- * Class representing an actively-being-pruned channel.
- */
-var DeletionChannel = /** @class */ (function () {
-    function DeletionChannel() {
-        this.channelID = '';
-        this.numberOfMessagesToSave = 0;
-        this.timeOfLastPurge = 0;
-        this.currentlyBeingDeleted = false;
-        this.deletionMessageID = '';
-    }
-    return DeletionChannel;
-}());
-exports.DeletionChannel = DeletionChannel;
-/**
- * Class representing a timed message to be sent out.
- */
-var TimedMessage = /** @class */ (function () {
-    function TimedMessage() {
-        this.textChannelID = '';
-        this.messageContent = '';
-        this.msBetweenSends = 0;
-        this.timeOfLastSend = 0;
-        this.name = '';
-    }
-    return TimedMessage;
-}());
-exports.TimedMessage = TimedMessage;
-/**
- * Class representing a "server-joining verification" system.
- */
-var VerificationSystem = /** @class */ (function () {
-    function VerificationSystem() {
-        this.channelID = '';
-        this.messageID = '';
-        this.emoji = '';
-    }
-    return VerificationSystem;
-}());
-exports.VerificationSystem = VerificationSystem;
-/**
- * Class representing a single log for something on a server.
- */
-var Log = /** @class */ (function () {
-    function Log() {
-        this.name = '';
-        this.nameSmall = '';
-        this.enabled = false;
-        this.loggingChannelID = '';
-        this.loggingChannelName = '';
-    }
-    return Log;
-}());
-exports.Log = Log;
-/**
- * Class representing a single guild/server. *
- */
-var GuildData = /** @class */ (function () {
-    function GuildData() {
-        this.ghostedRoleID = '';
-        this.timedMessages = [];
-        this.guildID = '';
-        this.guildName = '';
-        this.guildMemberCount = 0;
-        this.logs = [];
-        this.verificationSystem = new VerificationSystem();
-        this.deletionChannels = [];
-        this.defaultRoleIDs = [];
-        this.logs[0] = new Log();
-        this.logs[0].name = 'Guild Ban Add';
-        this.logs[0].nameSmall = 'guildbanadd';
-        this.logs[1] = new Log();
-        this.logs[1].name = 'Guild Ban Remove';
-        this.logs[1].nameSmall = 'guildbanremove';
-        this.logs[2] = new Log();
-        this.logs[2].name = 'Guild Member Add';
-        this.logs[2].nameSmall = 'guildmemberadd';
-        this.logs[3] = new Log();
-        this.logs[3].name = 'Guild Member Remove';
-        this.logs[3].nameSmall = 'guildmemberremove';
-        this.logs[4] = new Log();
-        this.logs[4].name = 'Display Name Change';
-        this.logs[4].nameSmall = 'displaynamechange';
-        this.logs[5] = new Log();
-        this.logs[5].name = 'Nickname Change';
-        this.logs[5].nameSmall = 'nicknamechange';
-        this.logs[6] = new Log();
-        this.logs[6].name = 'Role Add Or Remove';
-        this.logs[6].nameSmall = 'roleaddorremove';
-        this.logs[7] = new Log();
-        this.logs[7].name = 'Invite Create';
-        this.logs[7].nameSmall = 'invitecreate';
-        this.logs[8] = new Log();
-        this.logs[8].name = 'Message Delete';
-        this.logs[8].nameSmall = 'messagedelete';
-        this.logs[9] = new Log();
-        this.logs[9].name = 'Message Delete Bulk';
-        this.logs[9].nameSmall = 'messagedeletebulk';
-        this.logs[10] = new Log();
-        this.logs[10].name = 'Role Create';
-        this.logs[10].nameSmall = 'rolecreate';
-        this.logs[11] = new Log();
-        this.logs[11].name = 'Role Delete';
-        this.logs[11].nameSmall = 'roledelete';
-        this.logs[12] = new Log();
-        this.logs[12].name = 'Username Change';
-        this.logs[12].nameSmall = 'usernamechange';
-    }
-    return GuildData;
-}());
-exports.GuildData = GuildData;
-/**
- * Class representing a single instance of "Discord".
- */
-var DiscordUserData = /** @class */ (function () {
-    function DiscordUserData() {
-        this.userID = '';
-        this.userName = '';
-        this.guildCount = 0;
-        this.msBetweenCacheBackup = 0;
-        this.currencyName = '';
-        this.timeOfLastUpdateAndSave = 0;
-        this.prefix = '';
-        this.dataBaseFilePath = '';
-        this.msBetweenRecordUpdates = 0;
-        this.timeOfLastRecordUpdate = 0;
-        this.msBetweenInvites = 0;
-        this.timeOfLastInvite = 0;
-        this.msBetweenMessageDeletion = 0;
-        this.startupCall = true;
-        this.activeInviteGuilds = [];
-        this.botCommanders = [];
-        this.trackingGuildIDs = [];
-        this.trackingChannelIDs = [];
-        this.trackedUserIDs = [];
-        this.trackedUserNames = [];
-    }
-    return DiscordUserData;
-}());
-exports.DiscordUserData = DiscordUserData;
-/**
- * Class representing a function/command.
- */
-var BotCommand = /** @class */ (function () {
-    function BotCommand() {
-        this.name = '';
-        this.description = '';
-        this.function = new Function();
-    }
-    return BotCommand;
-}());
-exports.BotCommand = BotCommand;
-/**
- * Returns that last text channel from a given guild.
- */
-function getLastTextChannelInGuild(client, guild, showInfoInConsole) {
-    if (showInfoInConsole === void 0) { showInfoInConsole = false; }
-    var currentGuildID = guild.id;
-    var channelArray = client.channels.cache.array().sort();
-    var currentChannel = new Discord.TextChannel(guild, {});
-    var channelsCurrentGuild = guild;
-    for (var x = 0; x < channelArray.length; x += 1) {
-        if ((channelArray[x].type === 'text') && channelArray[x].isText() && (channelsCurrentGuild.id === currentGuildID)) {
-            currentChannel = client.channels.resolve(channelArray[x]);
-            if (showInfoInConsole === true) {
-                console.log("ID of channel " + x.toString() + ": " + channelArray[x].id.toString());
-                console.log(currentChannel);
-            }
-        }
-    }
-    return currentChannel;
-}
-exports.getLastTextChannelInGuild = getLastTextChannelInGuild;
 /**
  * Checks a user ID against an array of user IDs to see if it is present.
  */
@@ -565,6 +339,211 @@ function recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y) {
 }
 exports.recurseThroughServerRecords = recurseThroughServerRecords;
 /**
+ * Class representing permission overwrites for Discord.
+ */
+var PermissionOverwrites = /** @class */ (function () {
+    function PermissionOverwrites(guild) {
+        this.deny = [];
+        this.allow = [];
+        this.id = '';
+        this.type = '';
+        this.channel = new Discord.GuildChannel(guild, {});
+    }
+    return PermissionOverwrites;
+}());
+exports.PermissionOverwrites = PermissionOverwrites;
+/**
+ * Class representing some info about a given user.
+ */
+var UserRecord = /** @class */ (function () {
+    function UserRecord() {
+        this.userID = '';
+        this.lastKnownUsername = '';
+        this.lastKnownUserTag = '';
+    }
+    return UserRecord;
+}());
+exports.UserRecord = UserRecord;
+/**
+ * Class representing some info about a given server.
+ */
+var ServerRecord = /** @class */ (function () {
+    function ServerRecord() {
+        this.replacementServerInvite = '';
+        this.serverName = '';
+        this.serverID = '';
+        this.userRecords = [];
+    }
+    return ServerRecord;
+}());
+exports.ServerRecord = ServerRecord;
+/**
+ * Class representing a single guild/server member.
+ */
+var GuildMemberData = /** @class */ (function () {
+    function GuildMemberData() {
+        this.previousRoleIDs = [];
+        this.previousPermissionOverwrites = [];
+        this.userID = '';
+        this.userName = '';
+        this.displayName = '';
+    }
+    return GuildMemberData;
+}());
+exports.GuildMemberData = GuildMemberData;
+/**
+ * Class representing an actively-being-pruned channel.
+ */
+var DeletionChannel = /** @class */ (function () {
+    function DeletionChannel() {
+        this.channelID = '';
+        this.numberOfMessagesToSave = 0;
+        this.timeOfLastPurge = 0;
+        this.currentlyBeingDeleted = false;
+        this.deletionMessageID = '';
+    }
+    return DeletionChannel;
+}());
+exports.DeletionChannel = DeletionChannel;
+/**
+ * Class representing a timed message to be sent out.
+ */
+var TimedMessage = /** @class */ (function () {
+    function TimedMessage() {
+        this.textChannelID = '';
+        this.messageContent = '';
+        this.msBetweenSends = 0;
+        this.timeOfLastSend = 0;
+        this.name = '';
+    }
+    return TimedMessage;
+}());
+exports.TimedMessage = TimedMessage;
+/**
+ * Class representing a "server-joining verification" system.
+ */
+var VerificationSystem = /** @class */ (function () {
+    function VerificationSystem() {
+        this.channelID = '';
+        this.messageID = '';
+        this.emoji = '';
+    }
+    return VerificationSystem;
+}());
+exports.VerificationSystem = VerificationSystem;
+/**
+ * Class representing a single log for something on a server.
+ */
+var Log = /** @class */ (function () {
+    function Log() {
+        this.name = '';
+        this.nameSmall = '';
+        this.enabled = false;
+        this.loggingChannelID = '';
+        this.loggingChannelName = '';
+    }
+    return Log;
+}());
+exports.Log = Log;
+/**
+ * Class representing a single guild/server. *
+ */
+var GuildData = /** @class */ (function () {
+    function GuildData() {
+        this.ghostedRoleID = '';
+        this.timedMessages = [];
+        this.guildID = '';
+        this.guildName = '';
+        this.guildMemberCount = 0;
+        this.logs = [];
+        this.verificationSystem = new VerificationSystem();
+        this.deletionChannels = [];
+        this.defaultRoleIDs = [];
+        this.logs[0] = new Log();
+        this.logs[0].name = 'Guild Ban Add';
+        this.logs[0].nameSmall = 'guildbanadd';
+        this.logs[1] = new Log();
+        this.logs[1].name = 'Guild Ban Remove';
+        this.logs[1].nameSmall = 'guildbanremove';
+        this.logs[2] = new Log();
+        this.logs[2].name = 'Guild Member Add';
+        this.logs[2].nameSmall = 'guildmemberadd';
+        this.logs[3] = new Log();
+        this.logs[3].name = 'Guild Member Remove';
+        this.logs[3].nameSmall = 'guildmemberremove';
+        this.logs[4] = new Log();
+        this.logs[4].name = 'Display Name Change';
+        this.logs[4].nameSmall = 'displaynamechange';
+        this.logs[5] = new Log();
+        this.logs[5].name = 'Nickname Change';
+        this.logs[5].nameSmall = 'nicknamechange';
+        this.logs[6] = new Log();
+        this.logs[6].name = 'Role Add Or Remove';
+        this.logs[6].nameSmall = 'roleaddorremove';
+        this.logs[7] = new Log();
+        this.logs[7].name = 'Invite Create';
+        this.logs[7].nameSmall = 'invitecreate';
+        this.logs[8] = new Log();
+        this.logs[8].name = 'Message Delete';
+        this.logs[8].nameSmall = 'messagedelete';
+        this.logs[9] = new Log();
+        this.logs[9].name = 'Message Delete Bulk';
+        this.logs[9].nameSmall = 'messagedeletebulk';
+        this.logs[10] = new Log();
+        this.logs[10].name = 'Role Create';
+        this.logs[10].nameSmall = 'rolecreate';
+        this.logs[11] = new Log();
+        this.logs[11].name = 'Role Delete';
+        this.logs[11].nameSmall = 'roledelete';
+        this.logs[12] = new Log();
+        this.logs[12].name = 'Username Change';
+        this.logs[12].nameSmall = 'usernamechange';
+    }
+    return GuildData;
+}());
+exports.GuildData = GuildData;
+/**
+ * Class representing a single instance of "Discord".
+ */
+var DiscordUserData = /** @class */ (function () {
+    function DiscordUserData() {
+        this.userID = '';
+        this.userName = '';
+        this.guildCount = 0;
+        this.msBetweenCacheBackup = 0;
+        this.currencyName = '';
+        this.timeOfLastUpdateAndSave = 0;
+        this.prefix = '';
+        this.dataBaseFilePath = '';
+        this.msBetweenRecordUpdates = 0;
+        this.timeOfLastRecordUpdate = 0;
+        this.msBetweenInvites = 0;
+        this.timeOfLastInvite = 0;
+        this.msBetweenMessageDeletion = 0;
+        this.startupCall = true;
+        this.activeInviteGuilds = [];
+        this.botCommanders = [];
+        this.trackingGuildIDs = [];
+        this.trackingChannelIDs = [];
+        this.trackedUserIDs = [];
+        this.trackedUserNames = [];
+    }
+    return DiscordUserData;
+}());
+exports.DiscordUserData = DiscordUserData;
+/**
+ * Class representing a function/command.
+ */
+var BotCommand = /** @class */ (function () {
+    function BotCommand() {
+        this.name = '';
+        this.description = '';
+        this.function = new Function();
+    }
+    return BotCommand;
+}());
+exports.BotCommand = BotCommand;
+/**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
 var DiscordUser = /** @class */ (function () {
@@ -619,22 +598,21 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getUserDataFromDB = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var userDataString, userData_1, error_5, userData_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var userData_1, _a, _b, error_5, userData_2;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        _c.trys.push([0, 2, , 3]);
                         console.log('Loading user data from the database!');
-                        userDataString = String();
+                        _b = (_a = JSON).parse;
                         return [4 /*yield*/, this.dataBase.get(client.user.id)];
                     case 1:
-                        userDataString = _a.sent();
-                        userData_1 = JSON.parse(userDataString);
+                        userData_1 = _b.apply(_a, [_c.sent()]);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(userData_1);
                             })];
                     case 2:
-                        error_5 = _a.sent();
+                        error_5 = _c.sent();
                         if (error_5.type === 'NotFoundError') {
                             console.log("Adding new entry for the current user's data!");
                             userData_2 = new DiscordUserData();
@@ -753,23 +731,21 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getGuildDataFromDB = function (guild) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildDataString, guildData_1, error_8, guildData_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var guildData_1, _a, _b, error_8, guildData_2;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        _c.trys.push([0, 2, , 3]);
                         console.log('Loading guild data from the database!');
-                        guildDataString = String();
+                        _b = (_a = JSON).parse;
                         return [4 /*yield*/, this.dataBase.get(guild.id)];
                     case 1:
-                        guildDataString = _a.sent();
-                        guildData_1 = new GuildData();
-                        guildData_1 = JSON.parse(guildDataString);
+                        guildData_1 = _b.apply(_a, [_c.sent()]);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(guildData_1);
                             })];
                     case 2:
-                        error_8 = _a.sent();
+                        error_8 = _c.sent();
                         if (error_8.type === 'NotFoundError') {
                             console.log("Adding new entry for guild data! For guild: " + guild.name);
                             guildData_2 = new GuildData();
@@ -884,29 +860,29 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getGuildMemberDataFromDB = function (guildMember) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildMemberData, guildMemberDataNew_1, error_11, guildMemberData_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var guildMemberData_1, _a, _b, error_11, guildMemberData_2;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        _c.trys.push([0, 2, , 3]);
+                        _b = (_a = JSON).parse;
                         return [4 /*yield*/, this.dataBase.get(guildMember.guild.id + " + " + guildMember.id)];
                     case 1:
-                        guildMemberData = _a.sent();
-                        guildMemberDataNew_1 = JSON.parse(guildMemberData);
+                        guildMemberData_1 = _b.apply(_a, [_c.sent()]);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(guildMemberDataNew_1);
+                                resolve(guildMemberData_1);
                             })];
                     case 2:
-                        error_11 = _a.sent();
+                        error_11 = _c.sent();
                         if (error_11.type === 'NotFoundError') {
                             console.log("Adding new entry for guild member data! For member: " + guildMember.user.username);
-                            guildMemberData_1 = new GuildMemberData();
-                            guildMemberData_1.displayName = guildMember.displayName;
-                            guildMemberData_1.userID = guildMember.id;
-                            guildMemberData_1.userName = guildMember.user.username;
+                            guildMemberData_2 = new GuildMemberData();
+                            guildMemberData_2.displayName = guildMember.displayName;
+                            guildMemberData_2.userID = guildMember.id;
+                            guildMemberData_2.userName = guildMember.user.username;
                             console.log(error_11);
                             return [2 /*return*/, new Promise(function (resolve, reject) {
-                                    resolve(guildMemberData_1);
+                                    resolve(guildMemberData_2);
                                 })];
                         }
                         return [2 /*return*/, new Promise(function (resolve, reject) {

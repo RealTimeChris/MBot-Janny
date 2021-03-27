@@ -74,7 +74,7 @@ function execute(message, args, discordUser) {
                     return [4 /*yield*/, message.channel.send(messageEmbed)];
                 case 1:
                     _a.sent();
-                    if (!(message.channel.type !== 'dm')) return [3 /*break*/, 3];
+                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 3];
                     return [4 /*yield*/, message.delete()];
                 case 2:
                     _a.sent();

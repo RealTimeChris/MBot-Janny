@@ -7,211 +7,7 @@
 
 import Discord = require('discord.js');
 import Level from 'level-ts';
-import { rejects } from 'node:assert';
 import config = require('./config.json');
-
-/**
- * Class representing permission overwrites for Discord.
- */
-export class PermissionOverwrites {
-	deny: string[] = [];
-	allow: string[] = [];
-	id: string = '';
-	channel: Discord.GuildChannel | null;
-	type: string = '';
-	constructor(guild: Discord.Guild) {
-		this.channel = new Discord.GuildChannel(guild, {});
-	}
-}
-
-/**
- * Class representing some info about a given user.
- */
-export class UserRecord {
-	userID: string = '';
-	lastKnownUsername: string = '';
-	lastKnownUserTag: string = '';
-}
-
-/**
- * Class representing some info about a given server.
- */
-export class ServerRecord {
-	replacementServerInvite: string = '';
-	serverName: string = '';
-	serverID: string = '';
-	userRecords: UserRecord[] = [];
-}
-
-/**
- * Class representing a single guild/server member.
- */
-export class GuildMemberData {
-	previousRoleIDs: string[] = [];
-	previousPermissionOverwrites: PermissionOverwrites[] = [];
-	userID: string = '';
-	userName: string = '';
-	displayName: string = '';
-}
-
-/**
- * Class representing an actively-being-pruned channel.
- */
-export class DeletionChannel {
-	channelID: string = '';
-	numberOfMessagesToSave: number = 0;
-	timeOfLastPurge: number = 0;
-	currentlyBeingDeleted: boolean = false;
-	deletionMessageID: string = '';
-}
-
-/**
- * Class representing a timed message to be sent out.
- */
-export class TimedMessage {
-	textChannelID: string = '';
-	messageContent: string = '';
-	msBetweenSends: number = 0;
-	timeOfLastSend: number = 0;
-	name: string = '';
-}
-
-/**
- * Class representing a "server-joining verification" system.
- */
-export class VerificationSystem {
-	channelID: string = '';
-	messageID: string = '';
-	emoji: string = '';
-}
-
-/**
- * Class representing a single log for something on a server.
- */
-export class Log {
-	name: string = '';
-	nameSmall: string  = '';
-	enabled: boolean = false;
-	loggingChannelID: string = '';
-	loggingChannelName: string = '';
-}
-
-/**
- * Class representing a single guild/server. * 
- */
-export class GuildData {
-	ghostedRoleID: string = '';
-	timedMessages: TimedMessage[] = [];
-	guildID: string = '';
-	guildName: string = '';
-	guildMemberCount: number = 0;
-	logs: Log[] = [];
-	verificationSystem: VerificationSystem = new VerificationSystem();
-	deletionChannels: DeletionChannel[] = [];
-	defaultRoleIDs: string[] = [];
-
-	constructor() {
-		this.logs[0] = new Log();
-		this.logs[0].name = 'Guild Ban Add';
-		this.logs[0].nameSmall = 'guildbanadd';
-		this.logs[1] = new Log();
-		this.logs[1].name = 'Guild Ban Remove';
-		this.logs[1].nameSmall = 'guildbanremove';
-		this.logs[2] = new Log();
-		this.logs[2].name = 'Guild Member Add';
-		this.logs[2].nameSmall = 'guildmemberadd';
-		this.logs[3] = new Log();
-		this.logs[3].name = 'Guild Member Remove';
-		this.logs[3].nameSmall = 'guildmemberremove';
-		this.logs[4] = new Log();
-		this.logs[4].name = 'Display Name Change';
-		this.logs[4].nameSmall = 'displaynamechange';
-		this.logs[5] = new Log();
-		this.logs[5].name = 'Nickname Change';
-		this.logs[5].nameSmall = 'nicknamechange';
-		this.logs[6] = new Log();
-		this.logs[6].name = 'Role Add Or Remove';
-		this.logs[6].nameSmall = 'roleaddorremove';
-		this.logs[7] = new Log();
-		this.logs[7].name = 'Invite Create';
-		this.logs[7].nameSmall = 'invitecreate';
-		this.logs[8] = new Log();
-		this.logs[8].name = 'Message Delete';
-		this.logs[8].nameSmall = 'messagedelete';
-		this.logs[9] = new Log();
-		this.logs[9].name = 'Message Delete Bulk';
-		this.logs[9].nameSmall = 'messagedeletebulk';
-		this.logs[10] = new Log();
-		this.logs[10].name = 'Role Create';
-		this.logs[10].nameSmall = 'rolecreate';
-		this.logs[11] = new Log();
-		this.logs[11].name = 'Role Delete';
-		this.logs[11].nameSmall = 'roledelete';
-		this.logs[12] = new Log();
-		this.logs[12].name = 'Username Change';
-		this.logs[12].nameSmall = 'usernamechange';
-	}
-}
-
-/**
- * Class representing a single instance of "Discord".
- */
-export class DiscordUserData {
-	userID: string = '';
-	userName: string = '';
-	guildCount: number = 0;
-	msBetweenCacheBackup: number = 0;
-	currencyName: string = '';
-	timeOfLastUpdateAndSave: number = 0;
-	prefix: string = '';
-	dataBaseFilePath: string = '';
-	msBetweenRecordUpdates: number = 0;
-	timeOfLastRecordUpdate: number = 0;
-	msBetweenInvites: number = 0;
-	timeOfLastInvite: number = 0;
-	msBetweenMessageDeletion: number = 0;
-	startupCall: boolean = true;
-	activeInviteGuilds: string[] = [];
-	botCommanders: string[] = [];
-	trackingGuildIDs: string[] = [];
-	trackingChannelIDs: string[] = [];
-	trackedUserIDs: string[] = [];
-	trackedUserNames: string[] = [];
-}
-
-/**
- * Class representing a function/command.
- */
-export class BotCommand {
-	name: string = '';
-	description: string = '';
-	function: Function = new Function();
-}
-
-/**
- * Returns that last text channel from a given guild.
- */
-export function getLastTextChannelInGuild(client: Discord.Client, guild: Discord.Guild, showInfoInConsole = false): Discord.TextChannel {
-	const currentGuildID = guild.id;
-
-	const channelArray = client.channels.cache.array().sort();
-
-	let currentChannel = new Discord.TextChannel(guild, {});
-
-	const channelsCurrentGuild = guild;
-
-	for (let x = 0; x < channelArray.length; x += 1) {
-		if (((channelArray[x] as Discord.Channel).type === 'text') && (channelArray[x] as Discord.Channel).isText() && (channelsCurrentGuild.id === currentGuildID)) {
-			currentChannel = client.channels.resolve((channelArray[x] as Discord.Channel)) as Discord.TextChannel;
-
-			if (showInfoInConsole === true) {
-				console.log(`ID of channel ${x.toString()}: ${(channelArray[x] as Discord.TextChannel).id.toString()}`);
-				console.log(currentChannel);
-			}
-		}
-	}
-	return currentChannel;
-}
 
 /**
  * Checks a user ID against an array of user IDs to see if it is present.
@@ -427,6 +223,184 @@ export async function recurseThroughServerRecords(dataBase: Level, liveGuildArra
 }
 
 /**
+ * Class representing permission overwrites for Discord.
+ */
+export class PermissionOverwrites {
+	deny: string[] = [];
+	allow: string[] = [];
+	id: string = '';
+	channel: Discord.GuildChannel | null;
+	type: string = '';
+	constructor(guild: Discord.Guild) {
+		this.channel = new Discord.GuildChannel(guild, {});
+	}
+}
+
+/**
+ * Class representing some info about a given user.
+ */
+export class UserRecord {
+	userID: string = '';
+	lastKnownUsername: string = '';
+	lastKnownUserTag: string = '';
+}
+
+/**
+ * Class representing some info about a given server.
+ */
+export class ServerRecord {
+	replacementServerInvite: string = '';
+	serverName: string = '';
+	serverID: string = '';
+	userRecords: UserRecord[] = [];
+}
+
+/**
+ * Class representing a single guild/server member.
+ */
+export class GuildMemberData {
+	previousRoleIDs: string[] = [];
+	previousPermissionOverwrites: PermissionOverwrites[] = [];
+	userID: string = '';
+	userName: string = '';
+	displayName: string = '';
+}
+
+/**
+ * Class representing an actively-being-pruned channel.
+ */
+export class DeletionChannel {
+	channelID: string = '';
+	numberOfMessagesToSave: number = 0;
+	timeOfLastPurge: number = 0;
+	currentlyBeingDeleted: boolean = false;
+	deletionMessageID: string = '';
+}
+
+/**
+ * Class representing a timed message to be sent out.
+ */
+export class TimedMessage {
+	textChannelID: string = '';
+	messageContent: string = '';
+	msBetweenSends: number = 0;
+	timeOfLastSend: number = 0;
+	name: string = '';
+}
+
+/**
+ * Class representing a "server-joining verification" system.
+ */
+export class VerificationSystem {
+	channelID: string = '';
+	messageID: string = '';
+	emoji: string = '';
+}
+
+/**
+ * Class representing a single log for something on a server.
+ */
+export class Log {
+	name: string = '';
+	nameSmall: string  = '';
+	enabled: boolean = false;
+	loggingChannelID: string = '';
+	loggingChannelName: string = '';
+}
+
+/**
+ * Class representing a single guild/server. * 
+ */
+export class GuildData {
+	ghostedRoleID: string = '';
+	timedMessages: TimedMessage[] = [];
+	guildID: string = '';
+	guildName: string = '';
+	guildMemberCount: number = 0;
+	logs: Log[] = [];
+	verificationSystem: VerificationSystem = new VerificationSystem();
+	deletionChannels: DeletionChannel[] = [];
+	defaultRoleIDs: string[] = [];
+
+	constructor() {
+		this.logs[0] = new Log();
+		this.logs[0].name = 'Guild Ban Add';
+		this.logs[0].nameSmall = 'guildbanadd';
+		this.logs[1] = new Log();
+		this.logs[1].name = 'Guild Ban Remove';
+		this.logs[1].nameSmall = 'guildbanremove';
+		this.logs[2] = new Log();
+		this.logs[2].name = 'Guild Member Add';
+		this.logs[2].nameSmall = 'guildmemberadd';
+		this.logs[3] = new Log();
+		this.logs[3].name = 'Guild Member Remove';
+		this.logs[3].nameSmall = 'guildmemberremove';
+		this.logs[4] = new Log();
+		this.logs[4].name = 'Display Name Change';
+		this.logs[4].nameSmall = 'displaynamechange';
+		this.logs[5] = new Log();
+		this.logs[5].name = 'Nickname Change';
+		this.logs[5].nameSmall = 'nicknamechange';
+		this.logs[6] = new Log();
+		this.logs[6].name = 'Role Add Or Remove';
+		this.logs[6].nameSmall = 'roleaddorremove';
+		this.logs[7] = new Log();
+		this.logs[7].name = 'Invite Create';
+		this.logs[7].nameSmall = 'invitecreate';
+		this.logs[8] = new Log();
+		this.logs[8].name = 'Message Delete';
+		this.logs[8].nameSmall = 'messagedelete';
+		this.logs[9] = new Log();
+		this.logs[9].name = 'Message Delete Bulk';
+		this.logs[9].nameSmall = 'messagedeletebulk';
+		this.logs[10] = new Log();
+		this.logs[10].name = 'Role Create';
+		this.logs[10].nameSmall = 'rolecreate';
+		this.logs[11] = new Log();
+		this.logs[11].name = 'Role Delete';
+		this.logs[11].nameSmall = 'roledelete';
+		this.logs[12] = new Log();
+		this.logs[12].name = 'Username Change';
+		this.logs[12].nameSmall = 'usernamechange';
+	}
+}
+
+/**
+ * Class representing a single instance of "Discord".
+ */
+export class DiscordUserData {
+	userID: string = '';
+	userName: string = '';
+	guildCount: number = 0;
+	msBetweenCacheBackup: number = 0;
+	currencyName: string = '';
+	timeOfLastUpdateAndSave: number = 0;
+	prefix: string = '';
+	dataBaseFilePath: string = '';
+	msBetweenRecordUpdates: number = 0;
+	timeOfLastRecordUpdate: number = 0;
+	msBetweenInvites: number = 0;
+	timeOfLastInvite: number = 0;
+	msBetweenMessageDeletion: number = 0;
+	startupCall: boolean = true;
+	activeInviteGuilds: string[] = [];
+	botCommanders: string[] = [];
+	trackingGuildIDs: string[] = [];
+	trackingChannelIDs: string[] = [];
+	trackedUserIDs: string[] = [];
+	trackedUserNames: string[] = [];
+}
+
+/**
+ * Class representing a function/command.
+ */
+export class BotCommand {
+	name: string = '';
+	description: string = '';
+	function: Function = new Function();
+}
+
+/**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
 export class DiscordUser {
@@ -465,9 +439,7 @@ export class DiscordUser {
 	async getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData> {
 		try {
 			console.log('Loading user data from the database!');
-			let userDataString: string = String();
-			userDataString = await (this.dataBase as Level).get((client.user as Discord.User).id);
-			const userData = JSON.parse(userDataString);
+			const userData = JSON.parse(await this.dataBase.get((client.user as Discord.User).id));
 			return new Promise((resolve, reject) => {
 				resolve(userData);
 			});
@@ -565,10 +537,7 @@ export class DiscordUser {
 	async getGuildDataFromDB(guild: Discord.Guild): Promise<GuildData> {
 		try {
 			console.log('Loading guild data from the database!');
-			let guildDataString: string = String();
-			guildDataString = await (this.dataBase as Level).get(guild.id);
-			let guildData = new GuildData();
-			guildData = JSON.parse(guildDataString);
+			const guildData = JSON.parse(await this.dataBase.get(guild.id));
 			return new Promise((resolve, reject) => {
 				resolve(guildData);
 			});
@@ -656,10 +625,9 @@ export class DiscordUser {
 	*/
 	async getGuildMemberDataFromDB(guildMember: Discord.GuildMember): Promise<GuildMemberData> {
 		try {
-			const guildMemberData = await (this.dataBase as Level).get(`${guildMember.guild.id} + ${guildMember.id}`);
-			const guildMemberDataNew = JSON.parse(guildMemberData) as GuildMemberData;
+			const guildMemberData = JSON.parse(await this.dataBase.get(`${guildMember.guild.id} + ${guildMember.id}`));
 			return new Promise((resolve, reject) => {
-				resolve(guildMemberDataNew);
+				resolve(guildMemberData);
 			});
 		} catch (error) {
 			if (error.type === 'NotFoundError'){

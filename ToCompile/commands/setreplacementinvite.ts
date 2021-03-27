@@ -31,7 +31,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
         let whatAreWeDoing = String('');
         if (args[0] !== undefined && !inviteRegExp.test(args[0])) {
             await message.reply('Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         if (args[0] === undefined) {
@@ -64,7 +66,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 .setDescription(msgString);
 
             await message.channel.send(messageEmbed);
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         if (whatAreWeDoing === 'adding') {
@@ -91,14 +95,18 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 .setDescription(msgString);
 
             await message.channel.send(messageEmbed);
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         return command.name;
     } catch (error) {
         if (error.type === 'NotFoundError') {
             await message.reply('Sorry, but your current guild could not be found!');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         return new Promise((resolve, reject) => {

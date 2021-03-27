@@ -33,11 +33,15 @@ export async function execute(message: Discord.Message, args: string[], discordU
             whatAreWeDoing = 'view';
         } else if (args[0] !== undefined && args[0].toLowerCase() !== 'add' && args[0].toLowerCase() !== 'remove') {
             await message.reply("Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)");
-            await message.delete();
+            if (message.deletable) {
+                await message.delete();
+			}
             return command.name;
         } else if (args[1] === undefined) {
             await message.reply('Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }            
             return command.name;
         } else if (args[0].toLowerCase() === 'add') {
             whatAreWeDoing = 'add';

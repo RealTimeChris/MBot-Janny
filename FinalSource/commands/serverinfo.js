@@ -72,7 +72,7 @@ function execute(message, args) {
                     return [4 /*yield*/, message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)')];
                 case 4:
                     _a.sent();
-                    if (!(message.channel.type !== 'dm')) return [3 /*break*/, 6];
+                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 6];
                     return [4 /*yield*/, message.delete()];
                 case 5:
                     _a.sent();
@@ -94,7 +94,7 @@ function execute(message, args) {
                     return [4 /*yield*/, message.reply('Sorry! No matching servers were found!')];
                 case 9:
                     _a.sent();
-                    if (!(message.channel.type !== 'dm')) return [3 /*break*/, 11];
+                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 11];
                     return [4 /*yield*/, message.delete()];
                 case 10:
                     _a.sent();
@@ -148,7 +148,7 @@ function execute(message, args) {
                     return [4 /*yield*/, message.channel.send(messageEmbed)];
                 case 13:
                     _a.sent();
-                    if (!(message.channel.type !== 'dm')) return [3 /*break*/, 15];
+                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 15];
                     return [4 /*yield*/, message.delete()];
                 case 14:
                     _a.sent();

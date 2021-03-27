@@ -57,11 +57,15 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 .setTitle('__**Manage Logs:**__').fields = fields;
 
             await message.channel.send(msgEmbed);
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
         } else if (args[0].toLowerCase() !== 'enable' && args[0].toLowerCase() !== 'disable') {
             await message.reply(`Please, enter enable or disable for the second argument of this command! 
             (!managelogs = <enable/disable>, <logname>)`);
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
             return command.name;
         } else {
             switch ((args[1] as string).toLowerCase()) {
@@ -83,7 +87,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -103,7 +109,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -127,7 +135,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -147,7 +157,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -171,7 +183,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -191,7 +205,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -215,7 +231,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -235,7 +253,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -259,7 +279,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -279,7 +301,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -303,7 +327,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -323,7 +349,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -347,7 +375,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -367,7 +397,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -391,7 +423,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -411,7 +445,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -435,7 +471,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -455,7 +493,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -479,7 +519,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -499,7 +541,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -523,7 +567,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -543,7 +589,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -567,7 +615,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -587,7 +637,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -611,7 +663,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -631,7 +685,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -655,7 +711,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -675,7 +733,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                                 .setTimestamp((Date() as unknown) as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
                             await message.channel.send(msgEmbed);
-                            await message.delete();
+                            if (message.deletable) {
+				                await message.delete();
+			                }
                             break;
                         }
                     }
@@ -683,7 +743,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 break;
             default:
                 await message.reply('Please enter a proper log name!');
-                await message.delete();
+                if (message.deletable) {
+				    await message.delete();
+			    }
                 return command.name;
             }
         }

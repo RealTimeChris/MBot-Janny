@@ -75,7 +75,11 @@ function execute(client, invite, discordUser) {
                     msgString += "__**Expires At:**__ " + invite.expiresAt + "\n";
                     msgString += "__**URL:**__ " + invite.url + "\n";
                     msgString += "__**Created By User:**__ <@!" + invite.inviter.id + "> (" + invite.inviter.tag + ")";
-                    msgEmbed.setTitle('__**New Invite:**__').setTimestamp(Date()).setDescription(msgString).setColor([0, 0, 255]);
+                    msgEmbed
+                        .setTitle('__**New Invite:**__')
+                        .setTimestamp(Date())
+                        .setDescription(msgString)
+                        .setColor([0, 0, 255]);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();

@@ -34,7 +34,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
 		if (args[0] === undefined || !regExp.test(args[0])
 		|| parseInt(args[0], 10) <= 0 || parseInt(args[0], 10) > 100) {
 			await message.reply('Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)');
-			await message.delete();
+			if (message.deletable) {
+				await message.delete();
+			}
 			return command.name;
 		}
 		const deleteCount = parseInt(((args[0].match(regExp) as string[])[0]as string), 10);

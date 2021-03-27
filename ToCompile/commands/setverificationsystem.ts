@@ -34,15 +34,21 @@ export async function execute(message: Discord.Message, args: string[], discordU
             whatAreWeDoing = 'viewing';
         } else if (args[0].toLowerCase() !== 'enable' && args[0].toLowerCase() !== 'disable') {
             await message.reply("Please enter either 'enable' or 'disable' as the first argument! (!setverificationsystem = ENABLE, VERIFICATIONMESSAGE, REACTIONEMOJI, or !setverificationsystem = DISABLE)");
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         } else if (args[0].toLowerCase() === 'enable' && args[1] === undefined) {
             await message.reply('Please, enter a greeting message for the verification system!');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         } else if (args[0].toLowerCase() === 'enable' && (args[2] === undefined || !emojiRegExp.test(args[2]))) {
             await message.reply('Please, enter a valid emoji for them to react with!');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         } else if (args[0].toLowerCase() === 'enable') {
             whatAreWeDoing = 'enable';
@@ -69,13 +75,17 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 .setTitle('__**Verification System:**__')
                 .setDescription(msgString);
             await message.channel.send(msgEmbed);
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         if (whatAreWeDoing === 'disable') {
             if (guildData.verificationSystem.channelID == null) {
                 await message.reply('Sorry, it looks as though it is already disabled!');
-                await message.delete();
+                if (message.deletable){
+                    await message.delete();
+                }
                 return command.name;
             }
             const currentChannel = message.client.channels
@@ -96,13 +106,17 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 .setTitle('__**Set Verification System:**__')
                 .setDescription(msgString);
             await message.channel.send(msgEmbed);
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         if (whatAreWeDoing === 'enable') {
             if (guildData.defaultRoleIDs.length === 0) {
                 await message.reply('Please, first set a default role to be applied to the new member! Using !setdefaultrole.');
-                await message.delete();
+                if (message.deletable){
+                    await message.delete();
+                }
                 return command.name;
             }
 
@@ -128,7 +142,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 .setTitle('__**Set Verification System:**__')
                 .setDescription(msgString);
             await message.channel.send(msgEmbed);
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         return command.name;

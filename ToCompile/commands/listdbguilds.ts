@@ -64,7 +64,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
         }
         await iterator.end();
         
-		await message.delete();
+		if (message.deletable) {
+			await message.delete();
+		}
 		return command.name;
 	} catch (error) {
 		return new Promise((resolve, reject) => {

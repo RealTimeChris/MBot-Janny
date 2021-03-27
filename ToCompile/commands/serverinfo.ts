@@ -28,7 +28,7 @@ export async function execute(message: Discord.Message, args: string[]): Promise
             return command.name;
         }	else if (!idRegExp.test(args[0] as string)) {
             await message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)');
-            if (message.channel.type !== 'dm') {
+            if (message.channel.type !== 'dm' && message.deletable) {
                 await message.delete();
             }
             return command.name;
@@ -48,7 +48,7 @@ export async function execute(message: Discord.Message, args: string[]): Promise
 
         if (currentServer == null) {
             await message.reply('Sorry! No matching servers were found!');
-            if (message.channel.type !== 'dm') {
+            if (message.channel.type !== 'dm' && message.deletable) {
                 await message.delete();
             }
             return command.name;
@@ -102,7 +102,7 @@ export async function execute(message: Discord.Message, args: string[]): Promise
             .setColor([0, 0, 255]);
         messageEmbed.fields = fields as Discord.EmbedField[];
         await message.channel.send(messageEmbed);
-        if (message.channel.type !== 'dm') {
+        if (message.channel.type !== 'dm' && message.deletable) {
             await message.delete();
         }
         return command.name;

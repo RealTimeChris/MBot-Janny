@@ -35,12 +35,16 @@ export async function execute(message: Discord.Message, args: string[], discordU
         let trackedUserID = String('');
         if (args[0] !== undefined && (args[0].toLowerCase() !== 'add' && args[0].toLowerCase() !== 'remove')) {
             await message.reply('Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         if (args[0] !== undefined && (args[1] === undefined || !userMentionRegExp.test(args[1]))) {
             await message.reply('Please enter a valud usermention! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
 
@@ -134,7 +138,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
             } catch (error) {
                 await message.reply('Sorry, but the specified user could not be found!');
             }
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         if (whatAreWeDoing === 'remove') {
@@ -181,7 +187,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
             } catch (error) {
                 await message.reply('Sorry, but the specified user could not be found!');
             }
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         if (args[0] === undefined) {
@@ -211,7 +219,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 .setAuthor(message.author.username, message.author.avatarURL() as string)
                 .setColor([254, 254, 254]);
             await currentTextChannel.send(messageEmbed);
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         return command.name;

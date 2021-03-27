@@ -31,32 +31,44 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
         } else if (args[0] !== undefined && args[0].toLowerCase() !== 'add' && args[0].toLowerCase() !== 'remove') {
             await message.reply('Please, enter a proper first argument! (!ghost = add, REASON, @USERMENTION to'
         + 'ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
             return command.name;
         }	else if (args[0] !== undefined && args[0].toLowerCase() === 'add' && args[1] === undefined) {
             await message.reply('Please, enter a reason for this ghosting! (!ghost = add, REASON, @USERMENTION to'
         + 'ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
             return command.name;
         } else if (args[0] !== undefined && args[0].toLowerCase() === 'add' && args[2] === undefined) {
             await message.reply('Please, enter a usermention to select the target to ghost! (!ghost = add, REASON,'
         + '@USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
             return command.name;
         }	else if (args[0] !== undefined && args[0].toLowerCase() === 'remove' && args[1] === undefined) {
             await message.reply('Please, enter a usermention to select the target to de-ghost! (!ghost = add, REASON,'
         + '@USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
             return command.name;
         } else if (args[0] !== undefined && args[0].toLowerCase() === 'add' && !userIDRegExp.test((args[2]) as string)) {
             await message.reply('Please, enter a proper usermention to select the target to ghost! (!ghost = add, REASON,'
         + '@USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
             return command.name;
         } else if (args[0] !== undefined && args[0].toLowerCase() === 'remove' && !userIDRegExp.test((args[1]) as string)) {
             await message.reply('Please, enter a proper usermention to select the target to de-ghost! (!ghost = add, REASON,'
         + '@USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
             return command.name;
         } else if (args[0] !== undefined && args[0].toLowerCase() === 'add') {
             whatAreWeDoing = 'add';
@@ -244,18 +256,24 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
                 .setTitle('__**Currently Ghosted Members:**__');
 
             await message.channel.send(msgEmbed);
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
             return command.name;
         } if (whatAreWeDoing === 'add') {
             for (let x = 0; x < ghostedUserArray.length; x += 1) {
                 if (currentGuildMember.id === (ghostedUserArray[x] as Discord.GuildMember).id) {
                     await message.reply('They are already ghosted!');
-                    await message.delete();
+                    if (message.deletable) {
+				        await message.delete();
+			        }
                     return command.name;
                 }
             }
 
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
 
             guildMemberData.previousRoleIDs.push(memberRoleManager.highest.id);
             for (let x = 0; x < memberRoleManager.cache.array().length; x += 1) {
@@ -353,7 +371,9 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
                 return command.name;
             }
 
-            await message.delete();
+            if (message.deletable) {
+				await message.delete();
+			}
 
             for (let x = 0; x < guildMemberData.previousRoleIDs.length; x += 1) {
                 try {

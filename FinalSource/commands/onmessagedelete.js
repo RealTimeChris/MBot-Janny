@@ -74,7 +74,11 @@ function execute(client, message, discordUser) {
                     msgString = "__**Message Author:**__ <@!" + message.author.id + "> (" + message.author.tag + ")\n";
                     msgString += "__**Message ID:**__ " + message.id + "\n";
                     msgString += "__**Content:**__ " + message.content;
-                    msgEmbed.setTitle('__**Message Deleted:**__').setTimestamp(Date()).setDescription(msgString).setColor([0, 0, 255]);
+                    msgEmbed
+                        .setTitle('__**Message Deleted:**__')
+                        .setTimestamp(Date())
+                        .setDescription(msgString)
+                        .setColor([0, 0, 255]);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();

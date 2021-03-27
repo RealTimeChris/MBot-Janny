@@ -52,7 +52,7 @@ function execute(message, args, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 15, , 19]);
+                    _a.trys.push([0, 18, , 23]);
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();
@@ -67,15 +67,17 @@ function execute(message, args, discordUser) {
                     }
                     inviteRegExp = /https:\/\/discord.gg\/\w{1,26}/;
                     whatAreWeDoing = String('');
-                    if (!(args[0] !== undefined && !inviteRegExp.test(args[0]))) return [3 /*break*/, 5];
+                    if (!(args[0] !== undefined && !inviteRegExp.test(args[0]))) return [3 /*break*/, 6];
                     return [4 /*yield*/, message.reply('Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)')];
                 case 3:
                     _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 5];
                     return [4 /*yield*/, message.delete()];
                 case 4:
                     _a.sent();
-                    return [2 /*return*/, command.name];
-                case 5:
+                    _a.label = 5;
+                case 5: return [2 /*return*/, command.name];
+                case 6:
                     if (args[0] === undefined) {
                         whatAreWeDoing = 'viewing';
                     }
@@ -83,10 +85,10 @@ function execute(message, args, discordUser) {
                         whatAreWeDoing = 'adding';
                     }
                     inviteLink = args[0];
-                    if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 9];
+                    if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 11];
                     serverRecordKey = message.guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
-                case 6:
+                case 7:
                     serverRecordString = _a.sent();
                     serverRecordObject = JSON.parse(serverRecordString);
                     inviteLink2 = serverRecordObject.replacementServerInvite;
@@ -104,24 +106,26 @@ function execute(message, args, discordUser) {
                         .setTitle('__**Replacement Invite Link:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(messageEmbed)];
-                case 7:
-                    _a.sent();
-                    return [4 /*yield*/, message.delete()];
                 case 8:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    if (!message.deletable) return [3 /*break*/, 10];
+                    return [4 /*yield*/, message.delete()];
                 case 9:
-                    if (!(whatAreWeDoing === 'adding')) return [3 /*break*/, 14];
+                    _a.sent();
+                    _a.label = 10;
+                case 10: return [2 /*return*/, command.name];
+                case 11:
+                    if (!(whatAreWeDoing === 'adding')) return [3 /*break*/, 17];
                     serverRecordKey = message.guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
-                case 10:
+                case 12:
                     serverRecordString = _a.sent();
                     serverRecordObject = JSON.parse(serverRecordString);
                     serverRecordObject.replacementServerInvite = inviteLink;
                     console.log(serverRecordObject);
                     serverRecordString = JSON.stringify(serverRecordObject);
                     return [4 /*yield*/, discordUser.dataBase.put(serverRecordKey, serverRecordString)];
-                case 11:
+                case 13:
                     _a.sent();
                     msgString = "Great! You've updated the guild " + serverRecordObject.serverName + "'s replacement invite link!"
                         + ("\n------\n__**Link:**__ " + serverRecordObject.replacementServerInvite + "\n------");
@@ -132,27 +136,31 @@ function execute(message, args, discordUser) {
                         .setTitle('__**Replacement Invite Link Updated:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(messageEmbed)];
-                case 12:
+                case 14:
                     _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 16];
                     return [4 /*yield*/, message.delete()];
-                case 13:
-                    _a.sent();
-                    return [2 /*return*/, command.name];
-                case 14: return [2 /*return*/, command.name];
                 case 15:
+                    _a.sent();
+                    _a.label = 16;
+                case 16: return [2 /*return*/, command.name];
+                case 17: return [2 /*return*/, command.name];
+                case 18:
                     error_1 = _a.sent();
-                    if (!(error_1.type === 'NotFoundError')) return [3 /*break*/, 18];
+                    if (!(error_1.type === 'NotFoundError')) return [3 /*break*/, 22];
                     return [4 /*yield*/, message.reply('Sorry, but your current guild could not be found!')];
-                case 16:
+                case 19:
                     _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 21];
                     return [4 /*yield*/, message.delete()];
-                case 17:
+                case 20:
                     _a.sent();
-                    return [2 /*return*/, command.name];
-                case 18: return [2 /*return*/, new Promise(function (resolve, reject) {
+                    _a.label = 21;
+                case 21: return [2 /*return*/, command.name];
+                case 22: return [2 /*return*/, new Promise(function (resolve, reject) {
                         reject(error_1);
                     })];
-                case 19: return [2 /*return*/];
+                case 23: return [2 /*return*/];
             }
         });
     });

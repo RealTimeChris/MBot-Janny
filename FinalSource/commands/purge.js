@@ -54,7 +54,7 @@ function execute(message, args, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 7, , 8]);
+                    _a.trys.push([0, 8, , 9]);
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();
@@ -69,29 +69,31 @@ function execute(message, args, discordUser) {
                     }
                     regExp = new RegExp(/\d{1,3}/);
                     if (!(args[0] === undefined || !regExp.test(args[0])
-                        || parseInt(args[0], 10) <= 0 || parseInt(args[0], 10) > 100)) return [3 /*break*/, 5];
+                        || parseInt(args[0], 10) <= 0 || parseInt(args[0], 10) > 100)) return [3 /*break*/, 6];
                     return [4 /*yield*/, message.reply('Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)')];
                 case 3:
                     _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 5];
                     return [4 /*yield*/, message.delete()];
                 case 4:
                     _a.sent();
-                    return [2 /*return*/, command.name];
-                case 5:
+                    _a.label = 5;
+                case 5: return [2 /*return*/, command.name];
+                case 6:
                     deleteCount = parseInt(args[0].match(regExp)[0], 10);
                     currentChannel = message.channel;
                     currentChannel.bulkDelete(deleteCount, true);
                     return [4 /*yield*/, message.reply("Deleted " + deleteCount.toString() + " messages!")];
-                case 6:
+                case 7:
                     newMessage = _a.sent();
                     newMessage.delete({ timeout: 5000 });
                     return [2 /*return*/, command.name];
-                case 7:
+                case 8:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 8: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });

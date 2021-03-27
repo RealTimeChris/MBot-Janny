@@ -53,7 +53,7 @@ function execute(message, args, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 27, , 28]);
+                    _a.trys.push([0, 32, , 33]);
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();
@@ -75,7 +75,7 @@ function execute(message, args, discordUser) {
                     messageContent = String('');
                     if (!(args[0] === undefined)) return [3 /*break*/, 4];
                     whatAreWeDoing = 'viewing';
-                    return [3 /*break*/, 9];
+                    return [3 /*break*/, 10];
                 case 4:
                     if (!(args[0].toLowerCase() === 'add')) return [3 /*break*/, 5];
                     whatAreWeDoing = 'adding';
@@ -84,22 +84,24 @@ function execute(message, args, discordUser) {
                     msBetweenSends = Math.abs(parseInt(args[2], 10));
                     argThreee = args[3];
                     messageContent = argThreee;
-                    return [3 /*break*/, 9];
+                    return [3 /*break*/, 10];
                 case 5:
                     if (!(args[0].toLowerCase() === 'remove')) return [3 /*break*/, 6];
                     whatAreWeDoing = 'removing';
                     argOne = args[1];
                     messageName = argOne;
-                    return [3 /*break*/, 9];
+                    return [3 /*break*/, 10];
                 case 6: return [4 /*yield*/, message.reply('Please, enter a proper first argument or enter none at all!')];
                 case 7:
                     _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 9];
                     return [4 /*yield*/, message.delete()];
                 case 8:
                     _a.sent();
-                    return [2 /*return*/, command.name];
-                case 9:
-                    if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 12];
+                    _a.label = 9;
+                case 9: return [2 /*return*/, command.name];
+                case 10:
+                    if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 14];
                     embedFields = [];
                     for (x = 0; x < guildData.timedMessages.length; x += 1) {
                         msPerSecond = 1000;
@@ -131,14 +133,16 @@ function execute(message, args, discordUser) {
                         .setTitle('__**Timed Messages:**__');
                     msgEmbed.fields = embedFields;
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
-                case 10:
-                    _a.sent();
-                    return [4 /*yield*/, message.delete()];
                 case 11:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    if (!message.deletable) return [3 /*break*/, 13];
+                    return [4 /*yield*/, message.delete()];
                 case 12:
-                    if (!(whatAreWeDoing === 'adding')) return [3 /*break*/, 16];
+                    _a.sent();
+                    _a.label = 13;
+                case 13: return [2 /*return*/, command.name];
+                case 14:
+                    if (!(whatAreWeDoing === 'adding')) return [3 /*break*/, 19];
                     newTimedMessage = new DiscordStuff.TimedMessage();
                     newTimedMessage.name = messageName;
                     newTimedMessage.msBetweenSends = msBetweenSends;
@@ -147,7 +151,7 @@ function execute(message, args, discordUser) {
                     newTimedMessage.messageContent = messageContent;
                     guildData.timedMessages.push(newTimedMessage);
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 13:
+                case 15:
                     _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = String('');
@@ -163,41 +167,45 @@ function execute(message, args, discordUser) {
                         .setTitle('__**Timed Message Added:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
-                case 14:
-                    _a.sent();
-                    return [4 /*yield*/, message.delete()];
-                case 15:
-                    _a.sent();
-                    return [2 /*return*/, command.name];
                 case 16:
-                    if (!(whatAreWeDoing === 'removing')) return [3 /*break*/, 26];
+                    _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 18];
+                    return [4 /*yield*/, message.delete()];
+                case 17:
+                    _a.sent();
+                    _a.label = 18;
+                case 18: return [2 /*return*/, command.name];
+                case 19:
+                    if (!(whatAreWeDoing === 'removing')) return [3 /*break*/, 31];
                     isItFound = false;
                     currentTimedMessageName = String('');
                     x = 0;
-                    _a.label = 17;
-                case 17:
-                    if (!(x < guildData.timedMessages.length)) return [3 /*break*/, 20];
-                    if (!(messageName === guildData.timedMessages[x].name)) return [3 /*break*/, 19];
+                    _a.label = 20;
+                case 20:
+                    if (!(x < guildData.timedMessages.length)) return [3 /*break*/, 23];
+                    if (!(messageName === guildData.timedMessages[x].name)) return [3 /*break*/, 22];
                     isItFound = true;
                     currentTimedMessageName = guildData.timedMessages[x].name;
                     guildData.timedMessages.splice(x, 1);
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 18:
-                    _a.sent();
-                    return [3 /*break*/, 20];
-                case 19:
-                    x += 1;
-                    return [3 /*break*/, 17];
-                case 20:
-                    if (!(isItFound === false)) return [3 /*break*/, 23];
-                    return [4 /*yield*/, message.reply('Sorry, but the timed message you requested could not be found!')];
                 case 21:
                     _a.sent();
-                    return [4 /*yield*/, message.delete()];
+                    return [3 /*break*/, 23];
                 case 22:
-                    _a.sent();
-                    return [2 /*return*/, command.name];
+                    x += 1;
+                    return [3 /*break*/, 20];
                 case 23:
+                    if (!(isItFound === false)) return [3 /*break*/, 27];
+                    return [4 /*yield*/, message.reply('Sorry, but the timed message you requested could not be found!')];
+                case 24:
+                    _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 26];
+                    return [4 /*yield*/, message.delete()];
+                case 25:
+                    _a.sent();
+                    _a.label = 26;
+                case 26: return [2 /*return*/, command.name];
+                case 27:
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = String('');
                     msgString = "You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ " + currentTimedMessageName + "\n------";
@@ -208,19 +216,21 @@ function execute(message, args, discordUser) {
                         .setTitle('__**Timed Message Removed:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
-                case 24:
+                case 28:
                     _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 30];
                     return [4 /*yield*/, message.delete()];
-                case 25:
+                case 29:
                     _a.sent();
-                    return [2 /*return*/, command.name];
-                case 26: return [2 /*return*/, command.name];
-                case 27:
+                    _a.label = 30;
+                case 30: return [2 /*return*/, command.name];
+                case 31: return [2 /*return*/, command.name];
+                case 32:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 28: return [2 /*return*/];
+                case 33: return [2 /*return*/];
             }
         });
     });

@@ -104,7 +104,9 @@ command.description = '!jannyoptions, to display a list of options for this bot!
 
 		msgEmbed.fields = fields;
 		await message.channel.send(msgEmbed);
-		await message.delete();
+		if (message.deletable) {
+			await message.delete();
+		}
 		return command.name;
 	} catch (error) {
 		return new Promise((resolve, reject) => {

@@ -18,7 +18,7 @@ command.description = 'Simply enter !ping';
  export async function execute(message: Discord.Message): Promise<string> {
     try {
         await message.reply('Pong!');
-        if (message.channel.type !== 'dm') {
+        if (message.channel.type !== 'dm' && message.deletable) {
             await message.delete();
         }
         return command.name;

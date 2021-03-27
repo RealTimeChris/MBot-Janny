@@ -31,7 +31,9 @@ export async function execute(message: Discord.Message, args: string[]): Promise
         } else if ((args[0].match(userIDRegExp) as string[])[0] as string === null
             && (args[0].match(userMentionRegExp) as string[])[0] === null) {
             await message.reply('Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         } else if (args[0].match(userMentionRegExp) != null) {
             userID = args[0].substring(3, args[0].length - 1);
@@ -48,7 +50,9 @@ export async function execute(message: Discord.Message, args: string[]): Promise
             guildMember = await guildMemberManager.fetch(userID);
         } catch (error) {
             await message.reply('Sorry, but that user could not be found!');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
 
@@ -101,7 +105,9 @@ export async function execute(message: Discord.Message, args: string[]): Promise
             .setAuthor(message.author.username, message.author.avatarURL() as string);
         messageEmbed.fields = fields as Discord.EmbedField[];
         await message.channel.send(messageEmbed);
-        await message.delete();
+        if (message.deletable){
+            await message.delete();
+        }
         return command.name;
     } catch (error) {
         return new Promise((resolve, reject) => {

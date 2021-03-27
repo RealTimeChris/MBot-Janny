@@ -80,8 +80,11 @@ function execute(client, guild, user, discordUser) {
                     msgString += "__**Username:**__ " + user.username + "\n";
                     msgString += "__**User ID:**__ " + user.id + "\n";
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setColor([0, 255, 0]).setThumbnail(user.avatarURL())
-                        .setTimestamp(Date()).setTitle('__**User Unbanned:**__')
+                    msgEmbed
+                        .setColor([0, 255, 0])
+                        .setThumbnail(user.avatarURL())
+                        .setTimestamp(Date())
+                        .setTitle('__**User Unbanned:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:

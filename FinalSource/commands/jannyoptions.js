@@ -52,7 +52,7 @@ function execute(message, args, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 8, , 9]);
+                    _a.trys.push([0, 9, , 10]);
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();
@@ -135,16 +135,18 @@ function execute(message, args, discordUser) {
                     return [4 /*yield*/, message.channel.send(msgEmbed)];
                 case 6:
                     _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 8];
                     return [4 /*yield*/, message.delete()];
                 case 7:
                     _a.sent();
-                    return [2 /*return*/, command.name];
-                case 8:
+                    _a.label = 8;
+                case 8: return [2 /*return*/, command.name];
+                case 9:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 9: return [2 /*return*/];
+                case 10: return [2 /*return*/];
             }
         });
     });

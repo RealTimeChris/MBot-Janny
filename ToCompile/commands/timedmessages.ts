@@ -49,7 +49,9 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             messageName = argOne as string;
         } else {
             await message.reply('Please, enter a proper first argument or enter none at all!');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
 
@@ -93,7 +95,9 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             msgEmbed.fields = embedFields;
 
             await message.channel.send(msgEmbed);
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         if (whatAreWeDoing === 'adding') {
@@ -122,7 +126,9 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
                 .setDescription(msgString);
 
             await message.channel.send(msgEmbed);
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
         if (whatAreWeDoing === 'removing') {
@@ -140,7 +146,9 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
 
             if (isItFound === false) {
                 await message.reply('Sorry, but the timed message you requested could not be found!');
-                await message.delete();
+                if (message.deletable){
+                    await message.delete();
+                }
                 return command.name;
             }
 
@@ -155,7 +163,9 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
                 .setDescription(msgString);
 
             await message.channel.send(msgEmbed);
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         }
 

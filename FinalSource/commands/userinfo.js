@@ -55,7 +55,7 @@ function execute(message, args) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 15, , 16]);
+                    _a.trys.push([0, 18, , 19]);
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();
@@ -67,18 +67,20 @@ function execute(message, args) {
                     userIDRegExp = /\d{18}/;
                     if (!(args[0] === undefined)) return [3 /*break*/, 2];
                     userID = message.author.id;
-                    return [3 /*break*/, 6];
+                    return [3 /*break*/, 7];
                 case 2:
                     if (!(args[0].match(userIDRegExp)[0] === null
-                        && args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 5];
+                        && args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 6];
                     return [4 /*yield*/, message.reply('Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)')];
                 case 3:
                     _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 5];
                     return [4 /*yield*/, message.delete()];
                 case 4:
                     _a.sent();
-                    return [2 /*return*/, command.name];
-                case 5:
+                    _a.label = 5;
+                case 5: return [2 /*return*/, command.name];
+                case 6:
                     if (args[0].match(userMentionRegExp) != null) {
                         userID = args[0].substring(3, args[0].length - 1);
                     }
@@ -87,27 +89,29 @@ function execute(message, args) {
                         userIDOne = argZero.match(userIDRegExp)[0];
                         userID = userIDOne;
                     }
-                    _a.label = 6;
-                case 6:
-                    guildMemberManager = new Discord.GuildMemberManager(message.guild);
-                    guildMember = void 0;
                     _a.label = 7;
                 case 7:
-                    _a.trys.push([7, 9, , 12]);
-                    return [4 /*yield*/, guildMemberManager.fetch(userID)];
+                    guildMemberManager = new Discord.GuildMemberManager(message.guild);
+                    guildMember = void 0;
+                    _a.label = 8;
                 case 8:
-                    guildMember = _a.sent();
-                    return [3 /*break*/, 12];
+                    _a.trys.push([8, 10, , 14]);
+                    return [4 /*yield*/, guildMemberManager.fetch(userID)];
                 case 9:
+                    guildMember = _a.sent();
+                    return [3 /*break*/, 14];
+                case 10:
                     error_1 = _a.sent();
                     return [4 /*yield*/, message.reply('Sorry, but that user could not be found!')];
-                case 10:
-                    _a.sent();
-                    return [4 /*yield*/, message.delete()];
                 case 11:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    if (!message.deletable) return [3 /*break*/, 13];
+                    return [4 /*yield*/, message.delete()];
                 case 12:
+                    _a.sent();
+                    _a.label = 13;
+                case 13: return [2 /*return*/, command.name];
+                case 14:
                     fields = [];
                     field = { name: '__User Tag:__', value: guildMember.user.tag, inline: true };
                     fields.push(field);
@@ -127,16 +131,19 @@ function execute(message, args) {
                     msgString = String();
                     for (x = 0; x < permissionsArray.length; x += 1) {
                         if (permissionsArray[x].split('_')[2] !== undefined) {
-                            msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0].substr(1).toLowerCase() + " " + permissionsArray[x]
+                            msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x]
+                                .split('_')[0].substr(1).toLowerCase() + " " + permissionsArray[x]
                                 .split('_')[1].substr(0, 1) + permissionsArray[x].split('_')[1].substr(1).toLowerCase() + " " + permissionsArray[x].split('_')[2]
                                 .substr(0, 1) + permissionsArray[x].split('_')[2].substr(1).toLowerCase();
                         }
                         else if (permissionsArray[x].split('_')[1] !== undefined) {
-                            msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0].substr(1).toLowerCase() + "\t" + permissionsArray[x]
+                            msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0]
+                                .substr(1).toLowerCase() + "\t" + permissionsArray[x]
                                 .split('_')[1].substr(0, 1) + permissionsArray[x].split('_')[1].substr(1).toLowerCase();
                         }
                         else {
-                            msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x].split('_')[0].substr(1).toLowerCase();
+                            msgString += "" + permissionsArray[x].split('_')[0].substr(0, 1) + permissionsArray[x]
+                                .split('_')[0].substr(1).toLowerCase();
                         }
                         if (x < permissionsArray.length - 1) {
                             msgString += ', ';
@@ -155,18 +162,20 @@ function execute(message, args) {
                         .setAuthor(message.author.username, message.author.avatarURL());
                     messageEmbed.fields = fields;
                     return [4 /*yield*/, message.channel.send(messageEmbed)];
-                case 13:
-                    _a.sent();
-                    return [4 /*yield*/, message.delete()];
-                case 14:
-                    _a.sent();
-                    return [2 /*return*/, command.name];
                 case 15:
+                    _a.sent();
+                    if (!message.deletable) return [3 /*break*/, 17];
+                    return [4 /*yield*/, message.delete()];
+                case 16:
+                    _a.sent();
+                    _a.label = 17;
+                case 17: return [2 /*return*/, command.name];
+                case 18:
                     error_2 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
-                case 16: return [2 /*return*/];
+                case 19: return [2 /*return*/];
             }
         });
     });

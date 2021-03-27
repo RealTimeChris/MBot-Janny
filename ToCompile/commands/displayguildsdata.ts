@@ -43,7 +43,7 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 			currentCount += 1;
 		});
 
-		if (message.channel.type !== 'dm') {
+		if (message.channel.type !== 'dm' && message.deletable) {
 			await message.delete();
 		}
 		return command.name;

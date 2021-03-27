@@ -34,7 +34,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
            .setTimestamp((Date() as unknown) as Date);
        messageEmbed.fields = fields;
        await message.channel.send(messageEmbed);
-       if (message.channel.type !== 'dm') {
+       if (message.channel.type !== 'dm' && message.deletable) {
            await message.delete();
        }
        return new Promise((resolve, reject) => {

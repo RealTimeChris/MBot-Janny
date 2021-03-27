@@ -34,11 +34,15 @@ export async function execute(message: Discord.Message, args: string[], discordU
             whatAreWeDoing = 'viewing';
         } else if ((args[0] !== undefined && args[0].toLowerCase() !== 'enable' && args[0].toLowerCase() !== 'disable')) {
             await message.reply("Please enter either 'enable' or 'disable'! (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)");
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         } else if (args[0].toLowerCase() === 'enable' && args[1] !== undefined && (!messageCountRegExp.test(args[1]) || parseInt(args[1], 10) < 0 || parseInt(args[1], 10) > 10000)) {
             await message.reply('Please enter a valid number of messages back to save! (0 to 10000) (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)');
-            await message.delete();
+            if (message.deletable){
+                await message.delete();
+            }
             return command.name;
         } else if (args[1] !== undefined) {
             whatAreWeDoing = args[0].toLowerCase();
