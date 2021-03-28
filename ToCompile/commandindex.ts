@@ -72,6 +72,8 @@ import setreplacementinvite from './commands/setreplacementinvite';
 commands.set(setreplacementinvite.name, setreplacementinvite);
 import setverificationsystem from './commands/setverificationsystem';
 commands.set(setverificationsystem.name, setverificationsystem);
+import slashcommands from './commands/slashcommands';
+commands.set(slashcommands.name, slashcommands);
 import test from './commands/test';
 commands.set(test.name, test);
 import timedmessages from './commands/timedmessages';
