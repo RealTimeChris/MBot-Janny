@@ -42,7 +42,7 @@ async function onData(dbKey: string, discordUser: DiscordStuff.DiscordUser, dele
 	if (deletedCounter.getData() !== undefined && dbKey !== '') {
 		if (deletedCounter.getData().key.includes(dbKey)) {
 			try{
-				console.log(deletedCounter.getData().key, '=', JSON.parse(deletedCounter.getData().value));
+				console.log(deletedCounter.getData().key, '=', deletedCounter.getData().value);
 				await discordUser.dataBase.del(deletedCounter.getData().key);
 				deletedCounter.incrementDeletedCount();
 			}
@@ -95,7 +95,7 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 			}
 			return command.name;
 		}
-		if (args[0].toLowerCase() !== 'gamehouse') {
+		if (args[0].toLowerCase() !== 'janny') {
 			return command.name;
 		}
 		if (args[1] === undefined) {
@@ -124,7 +124,8 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 
 		await iterator.end();
 		const msgEmbed = new Discord.MessageEmbed();
-		msgEmbed.setAuthor(message.author.username, (message.author.avatarURL() as string))
+		msgEmbed
+			.setAuthor(message.author.username, (message.author.avatarURL() as string))
 			.setColor([0, 0, 255])
 			.setDescription(`------\n__**Number of Deleted Entries**__: ${deletedCounter.returnDeletedCount()}\n------`)
 			.setTimestamp(Date.now())

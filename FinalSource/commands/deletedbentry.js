@@ -89,7 +89,7 @@ function onData(dbKey, discordUser, deletedCounter) {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 6]);
-                    console.log(deletedCounter.getData().key, '=', JSON.parse(deletedCounter.getData().value));
+                    console.log(deletedCounter.getData().key, '=', deletedCounter.getData().value);
                     return [4 /*yield*/, discordUser.dataBase.del(deletedCounter.getData().key)];
                 case 2:
                     _a.sent();
@@ -161,7 +161,7 @@ function execute(message, args, discordUser) {
                     _c.label = 9;
                 case 9: return [2 /*return*/, command.name];
                 case 10:
-                    if (args[0].toLowerCase() !== 'gamehouse') {
+                    if (args[0].toLowerCase() !== 'janny') {
                         return [2 /*return*/, command.name];
                     }
                     if (!(args[1] === undefined)) return [3 /*break*/, 14];
@@ -220,7 +220,8 @@ function execute(message, args, discordUser) {
                 case 28:
                     _c.sent();
                     msgEmbed = new Discord.MessageEmbed();
-                    msgEmbed.setAuthor(message.author.username, message.author.avatarURL())
+                    msgEmbed
+                        .setAuthor(message.author.username, message.author.avatarURL())
                         .setColor([0, 0, 255])
                         .setDescription("------\n__**Number of Deleted Entries**__: " + deletedCounter.returnDeletedCount() + "\n------")
                         .setTimestamp(Date.now())

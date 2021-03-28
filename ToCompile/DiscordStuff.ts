@@ -139,15 +139,7 @@ export async function recurseThroughServerRecords(dataBase: Level, liveGuildArra
 			});
 		}
 		let yNew = y;
-		const fileString = await dataBase.get(keyNames[0] as string);
-		let fileObject: ServerRecord;
-		try{
-			fileObject = JSON.parse(fileString);
-		}
-		catch{
-			dataBase.del(keyNames[0] as string);
-			return;
-		}
+		const fileObject = await dataBase.get(keyNames[0] as string) as ServerRecord;
 		
 		keyNames.splice(0, 1);
 
@@ -179,7 +171,7 @@ export async function recurseThroughServerRecords(dataBase: Level, liveGuildArra
 			}
 		}
 		const serverRecordKey = `${(liveGuildArray[y] as Discord.Guild).id} + Record`;
-		dataBase.put(serverRecordKey, JSON.stringify(fileObject));
+		dataBase.put(serverRecordKey, fileObject);
 		console.log(fileObject);
 		yNew += 1;
 		await recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, yNew);
@@ -209,7 +201,7 @@ export async function recurseThroughServerRecords(dataBase: Level, liveGuildArra
 				console.log(`Adding New User Record: ${userRecord.lastKnownUserTag} of server: ${serverRecord.serverName}`);
 			}
 			const serverRecordKey = `${(liveGuildArray[y] as Discord.Guild).id} + Record`;
-			await dataBase.put(serverRecordKey, JSON.stringify(serverRecord));
+			await dataBase.put(serverRecordKey, serverRecord);
 			console.log(serverRecord);
 			await recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y);
 			return new Promise((resolve, reject) => {
@@ -439,7 +431,7 @@ export class DiscordUser {
 	async getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData> {
 		try {
 			console.log('Loading user data from the database!');
-			const userData = JSON.parse(await this.dataBase.get((client.user as Discord.User).id));
+			const userData = await this.dataBase.get((client.user as Discord.User).id);
 			return new Promise((resolve, reject) => {
 				resolve(userData);
 			});
@@ -481,11 +473,10 @@ export class DiscordUser {
 	async updateUserDataInDB(newUserData: DiscordUserData): Promise<void> {
 		try {
 			this.userData = newUserData;
-			let userDataString = JSON.stringify(this.userData);
-			await this.dataBase.put(this.userData.userID, userDataString);
-			userDataString = await this.dataBase.get(this.userData.userID);
+			await this.dataBase.put(this.userData.userID, this.userData);
+			const userData = await this.dataBase.get(this.userData.userID);
 			console.log('New User Cache:');
-			console.log(JSON.parse(userDataString));
+			console.log(userData);
 			return new Promise((resolve, reject) => {
 				resolve();
 			});
@@ -537,7 +528,7 @@ export class DiscordUser {
 	async getGuildDataFromDB(guild: Discord.Guild): Promise<GuildData> {
 		try {
 			console.log('Loading guild data from the database!');
-			const guildData = JSON.parse(await this.dataBase.get(guild.id));
+			const guildData = await this.dataBase.get(guild.id);
 			return new Promise((resolve, reject) => {
 				resolve(guildData);
 			});
@@ -569,11 +560,11 @@ export class DiscordUser {
 	async updateGuildDataInDB(guildData: GuildData): Promise<void> {
 		try {
 			this.guildsData.set((guildData.guildID as string), guildData);
-			let guildDataString = JSON.stringify(this.guildsData.get((guildData.guildID as string)));
-			await this.dataBase.put(guildData.guildID, guildDataString);
-			guildDataString = await this.dataBase.get(guildData.guildID);
+			let newGuildData = this.guildsData.get((guildData.guildID as string))
+			await this.dataBase.put(guildData.guildID, newGuildData);
+			newGuildData = await this.dataBase.get(guildData.guildID);
 			console.log('New Guild Cache:');
-			console.log(JSON.parse(guildDataString));
+			console.log(newGuildData);
 			return new Promise((resolve, reject) => {
 				resolve();
 			});
@@ -625,7 +616,7 @@ export class DiscordUser {
 	*/
 	async getGuildMemberDataFromDB(guildMember: Discord.GuildMember): Promise<GuildMemberData> {
 		try {
-			const guildMemberData = JSON.parse(await this.dataBase.get(`${guildMember.guild.id} + ${guildMember.id}`));
+			const guildMemberData = await this.dataBase.get(`${guildMember.guild.id} + ${guildMember.id}`);
 			return new Promise((resolve, reject) => {
 				resolve(guildMemberData);
 			});
@@ -653,8 +644,8 @@ export class DiscordUser {
 	async updateGuildMemberDataInDB(guildMemberData: GuildMemberData, guildID: string): Promise<void> {
 		try {
 			this.guildMembersData.set(`${guildID} + ${guildMemberData.userID}`, guildMemberData);
-			const guildMemberDataString = JSON.stringify(this.guildMembersData.get(`${guildID} + ${guildMemberData.userID}`));
-			await this.dataBase.put(`${guildID} + ${guildMemberData.userID}`, guildMemberDataString);
+			const guildMemberDataNew = this.guildMembersData.get(`${guildID} + ${guildMemberData.userID}`);
+			await this.dataBase.put(`${guildID} + ${guildMemberData.userID}`, guildMemberDataNew);
 			return new Promise((resolve, reject) => {
 				resolve();
 			});
@@ -836,9 +827,9 @@ export class DiscordUser {
 
 				fileKey = `${this.userData.activeInviteGuilds[x]} + Record`;
 
-				let currentFileString: string = String();
+				let currentFileObject: ServerRecord;
 				try {
-					currentFileString = await this.dataBase.get(fileKey);
+					currentFileObject = await this.dataBase.get(fileKey) as ServerRecord;
 				} catch (error) {
 					if (error.type === 'NotFoundError') {
 						this.userData.activeInviteGuilds.splice(x, 1);
@@ -852,9 +843,7 @@ export class DiscordUser {
 					});
 				}
 
-				const currentFileObject = JSON.parse(currentFileString);
-
-				const { userID } = currentFileObject.userRecords[0];
+				const { userID } = currentFileObject.userRecords[0] as UserRecord;
 				const guildName = currentFileObject.serverName;
 				const inviteLink = currentFileObject.replacementServerInvite;
 				const inviteString = `Hello, it is my understanding that you were a member of ${guildName
@@ -868,30 +857,27 @@ export class DiscordUser {
 					await dmChannel.send(inviteString);
 					wereTheyAvailable = true;
 				} catch (error) {
-					console.log(`Sorry, but the user ${currentFileObject.userRecords[0].lastKnownUsername} could not be found!`);
+					console.log(`Sorry, but the user ${(currentFileObject.userRecords[0] as UserRecord).lastKnownUsername} could not be found!`);
 				}
 
 				if (wereTheyAvailable === true) {
 					const savedUser = new UserRecord();
-					savedUser.userID = currentFileObject.userRecords[0].userID;
-					savedUser.lastKnownUserTag = currentFileObject.userRecords[0].lastKnownUserTag;
-					savedUser.lastKnownUsername = currentFileObject.userRecords[0].lastKnownUsername;
+					savedUser.userID = (currentFileObject.userRecords[0] as UserRecord).userID;
+					savedUser.lastKnownUserTag = (currentFileObject.userRecords[0] as UserRecord).lastKnownUserTag;
+					savedUser.lastKnownUsername = (currentFileObject.userRecords[0] as UserRecord).lastKnownUsername;
 					currentFileObject.userRecords.splice(0, 1);
 
 					if (currentFileObject.userRecords.length === 0) {
 						this.dataBase.del(fileKey);
 					} else {
-						currentFileString = JSON.stringify(currentFileObject);
-
-						await this.dataBase.put(fileKey, currentFileString);
+						await this.dataBase.put(fileKey, currentFileObject);
 					}
 
 					const availableFileKey = `${fileKey} + Available`;
 
 					let availableFileString: string = String();
 					try {
-						availableFileString = await this.dataBase.get(availableFileKey);
-						const availableFileObject = JSON.parse(availableFileString);
+						const availableFileObject = await this.dataBase.get(availableFileKey) as ServerRecord;
 
 						availableFileObject.userRecords.push(savedUser);
 
@@ -914,31 +900,26 @@ export class DiscordUser {
 					}
 				} else {
 					const deletedUser = new UserRecord();
-					deletedUser.userID = currentFileObject.userRecords[0].userID;
-					deletedUser.lastKnownUserTag = currentFileObject.userRecords[0].lastKnownUserTag;
-					deletedUser.lastKnownUsername = currentFileObject.userRecords[0].lastKnownUsername;
+					deletedUser.userID = (currentFileObject.userRecords[0]as UserRecord).userID;
+					deletedUser.lastKnownUserTag = (currentFileObject.userRecords[0] as UserRecord).lastKnownUserTag;
+					deletedUser.lastKnownUsername = (currentFileObject.userRecords[0]as UserRecord).lastKnownUsername;
 					currentFileObject.userRecords.splice(0, 1);
 
 					if (currentFileObject.userRecords.length === 0) {
 						this.dataBase.del(fileKey);
 					} else {
-						currentFileString = JSON.stringify(currentFileObject);
-
-						await this.dataBase.put(fileKey, currentFileString);
+						await this.dataBase.put(fileKey, currentFileObject);
 					}
 
 					const notAvailableFileKey = `${fileKey} +  NotAvailable`;
 
 					let notAvailableFileString: string = String();
 					try {
-						notAvailableFileString = await this.dataBase.get(notAvailableFileKey);
-						const notAvailableFileObject = JSON.parse(notAvailableFileString);
+						const notAvailableFileObject = await this.dataBase.get(notAvailableFileKey);
 
 						notAvailableFileObject.userRecords.push(deletedUser);
 
-						notAvailableFileString = JSON.stringify(notAvailableFileObject);
-
-						await this.dataBase.put(notAvailableFileKey, notAvailableFileString);
+						await this.dataBase.put(notAvailableFileKey, notAvailableFileObject);
 					} catch (error) {
 						const serverRecord = new ServerRecord();
 						serverRecord.replacementServerInvite = currentFileObject.replacementServerInvite;
@@ -946,9 +927,7 @@ export class DiscordUser {
 						serverRecord.serverName = currentFileObject.serverName;
 						serverRecord.userRecords.push(deletedUser);
 
-						notAvailableFileString = JSON.stringify(serverRecord);
-
-						this.dataBase.put(notAvailableFileKey, notAvailableFileString);
+						this.dataBase.put(notAvailableFileKey, serverRecord);
 						return new Promise((resolve, reject) => {
 							resolve();
 						});

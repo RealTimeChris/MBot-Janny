@@ -237,7 +237,7 @@ exports.applyDefaultRoles = applyDefaultRoles;
 function recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y) {
     if (y === void 0) { y = 0; }
     return __awaiter(this, void 0, void 0, function () {
-        var yNew, fileString, fileObject, guildMembersCollection, membersArray, z, areTheyFoundInFile, w, userRecord, serverRecordKey, error_3, serverRecord, guildMembersCollection, membersArray, z, userRecord, serverRecordKey;
+        var yNew, fileObject, guildMembersCollection, membersArray, z, areTheyFoundInFile, w, userRecord, serverRecordKey, error_3, serverRecord, guildMembersCollection, membersArray, z, userRecord, serverRecordKey;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -250,15 +250,7 @@ function recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y) {
                     yNew = y;
                     return [4 /*yield*/, dataBase.get(keyNames[0])];
                 case 1:
-                    fileString = _a.sent();
-                    fileObject = void 0;
-                    try {
-                        fileObject = JSON.parse(fileString);
-                    }
-                    catch (_b) {
-                        dataBase.del(keyNames[0]);
-                        return [2 /*return*/];
-                    }
+                    fileObject = _a.sent();
                     keyNames.splice(0, 1);
                     fileObject.serverName = liveGuildArray[y].name;
                     fileObject.serverID = liveGuildArray[y].id;
@@ -287,7 +279,7 @@ function recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y) {
                         }
                     }
                     serverRecordKey = liveGuildArray[y].id + " + Record";
-                    dataBase.put(serverRecordKey, JSON.stringify(fileObject));
+                    dataBase.put(serverRecordKey, fileObject);
                     console.log(fileObject);
                     yNew += 1;
                     return [4 /*yield*/, recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, yNew)];
@@ -319,7 +311,7 @@ function recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y) {
                         console.log("Adding New User Record: " + userRecord.lastKnownUserTag + " of server: " + serverRecord.serverName);
                     }
                     serverRecordKey = liveGuildArray[y].id + " + Record";
-                    return [4 /*yield*/, dataBase.put(serverRecordKey, JSON.stringify(serverRecord))];
+                    return [4 /*yield*/, dataBase.put(serverRecordKey, serverRecord)];
                 case 6:
                     _a.sent();
                     console.log(serverRecord);
@@ -598,21 +590,20 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getUserDataFromDB = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var userData_1, _a, _b, error_5, userData_2;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            var userData_1, error_5, userData_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _c.trys.push([0, 2, , 3]);
+                        _a.trys.push([0, 2, , 3]);
                         console.log('Loading user data from the database!');
-                        _b = (_a = JSON).parse;
                         return [4 /*yield*/, this.dataBase.get(client.user.id)];
                     case 1:
-                        userData_1 = _b.apply(_a, [_c.sent()]);
+                        userData_1 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(userData_1);
                             })];
                     case 2:
-                        error_5 = _c.sent();
+                        error_5 = _a.sent();
                         if (error_5.type === 'NotFoundError') {
                             console.log("Adding new entry for the current user's data!");
                             userData_2 = new DiscordUserData();
@@ -651,21 +642,20 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateUserDataInDB = function (newUserData) {
         return __awaiter(this, void 0, void 0, function () {
-            var userDataString, error_6;
+            var userData, error_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         this.userData = newUserData;
-                        userDataString = JSON.stringify(this.userData);
-                        return [4 /*yield*/, this.dataBase.put(this.userData.userID, userDataString)];
+                        return [4 /*yield*/, this.dataBase.put(this.userData.userID, this.userData)];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, this.dataBase.get(this.userData.userID)];
                     case 2:
-                        userDataString = _a.sent();
+                        userData = _a.sent();
                         console.log('New User Cache:');
-                        console.log(JSON.parse(userDataString));
+                        console.log(userData);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve();
                             })];
@@ -731,21 +721,20 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getGuildDataFromDB = function (guild) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildData_1, _a, _b, error_8, guildData_2;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            var guildData_1, error_8, guildData_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _c.trys.push([0, 2, , 3]);
+                        _a.trys.push([0, 2, , 3]);
                         console.log('Loading guild data from the database!');
-                        _b = (_a = JSON).parse;
                         return [4 /*yield*/, this.dataBase.get(guild.id)];
                     case 1:
-                        guildData_1 = _b.apply(_a, [_c.sent()]);
+                        guildData_1 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(guildData_1);
                             })];
                     case 2:
-                        error_8 = _c.sent();
+                        error_8 = _a.sent();
                         if (error_8.type === 'NotFoundError') {
                             console.log("Adding new entry for guild data! For guild: " + guild.name);
                             guildData_2 = new GuildData();
@@ -774,21 +763,21 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateGuildDataInDB = function (guildData) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildDataString, error_9;
+            var newGuildData, error_9;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         this.guildsData.set(guildData.guildID, guildData);
-                        guildDataString = JSON.stringify(this.guildsData.get(guildData.guildID));
-                        return [4 /*yield*/, this.dataBase.put(guildData.guildID, guildDataString)];
+                        newGuildData = this.guildsData.get(guildData.guildID);
+                        return [4 /*yield*/, this.dataBase.put(guildData.guildID, newGuildData)];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, this.dataBase.get(guildData.guildID)];
                     case 2:
-                        guildDataString = _a.sent();
+                        newGuildData = _a.sent();
                         console.log('New Guild Cache:');
-                        console.log(JSON.parse(guildDataString));
+                        console.log(newGuildData);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve();
                             })];
@@ -860,20 +849,19 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getGuildMemberDataFromDB = function (guildMember) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildMemberData_1, _a, _b, error_11, guildMemberData_2;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            var guildMemberData_1, error_11, guildMemberData_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _c.trys.push([0, 2, , 3]);
-                        _b = (_a = JSON).parse;
+                        _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.dataBase.get(guildMember.guild.id + " + " + guildMember.id)];
                     case 1:
-                        guildMemberData_1 = _b.apply(_a, [_c.sent()]);
+                        guildMemberData_1 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(guildMemberData_1);
                             })];
                     case 2:
-                        error_11 = _c.sent();
+                        error_11 = _a.sent();
                         if (error_11.type === 'NotFoundError') {
                             console.log("Adding new entry for guild member data! For member: " + guildMember.user.username);
                             guildMemberData_2 = new GuildMemberData();
@@ -898,14 +886,14 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateGuildMemberDataInDB = function (guildMemberData, guildID) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildMemberDataString, error_12;
+            var guildMemberDataNew, error_12;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         this.guildMembersData.set(guildID + " + " + guildMemberData.userID, guildMemberData);
-                        guildMemberDataString = JSON.stringify(this.guildMembersData.get(guildID + " + " + guildMemberData.userID));
-                        return [4 /*yield*/, this.dataBase.put(guildID + " + " + guildMemberData.userID, guildMemberDataString)];
+                        guildMemberDataNew = this.guildMembersData.get(guildID + " + " + guildMemberData.userID);
+                        return [4 /*yield*/, this.dataBase.put(guildID + " + " + guildMemberData.userID, guildMemberDataNew)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -1136,7 +1124,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.sendInviteIfTimeHasPassedAndGuildIsActive = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, timeDifference, timeRemaining, x, fileKey, currentFileString, error_18, currentFileObject, userID, guildName, inviteLink, inviteString, currentUser, wereTheyAvailable, dmChannel, error_19, savedUser, availableFileKey, availableFileString, availableFileObject, error_20, serverRecord, deletedUser, notAvailableFileKey, notAvailableFileString, notAvailableFileObject, error_21, serverRecord, error_22;
+            var currentTime, timeDifference, timeRemaining, x, fileKey, currentFileObject, error_18, userID, guildName, inviteLink, inviteString, currentUser, wereTheyAvailable, dmChannel, error_19, savedUser, availableFileKey, availableFileString, availableFileObject, error_20, serverRecord, deletedUser, notAvailableFileKey, notAvailableFileString, notAvailableFileObject, error_21, serverRecord, error_22;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1161,13 +1149,13 @@ var DiscordUser = /** @class */ (function () {
                         if (!(x < this.userData.activeInviteGuilds.length)) return [3 /*break*/, 31];
                         fileKey = String();
                         fileKey = this.userData.activeInviteGuilds[x] + " + Record";
-                        currentFileString = String();
+                        currentFileObject = void 0;
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 4, , 5]);
                         return [4 /*yield*/, this.dataBase.get(fileKey)];
                     case 3:
-                        currentFileString = _a.sent();
+                        currentFileObject = (_a.sent());
                         return [3 /*break*/, 5];
                     case 4:
                         error_18 = _a.sent();
@@ -1182,7 +1170,6 @@ var DiscordUser = /** @class */ (function () {
                                 reject(error_18);
                             })];
                     case 5:
-                        currentFileObject = JSON.parse(currentFileString);
                         userID = currentFileObject.userRecords[0].userID;
                         guildName = currentFileObject.serverName;
                         inviteLink = currentFileObject.replacementServerInvite;
@@ -1214,9 +1201,7 @@ var DiscordUser = /** @class */ (function () {
                         if (!(currentFileObject.userRecords.length === 0)) return [3 /*break*/, 11];
                         this.dataBase.del(fileKey);
                         return [3 /*break*/, 13];
-                    case 11:
-                        currentFileString = JSON.stringify(currentFileObject);
-                        return [4 /*yield*/, this.dataBase.put(fileKey, currentFileString)];
+                    case 11: return [4 /*yield*/, this.dataBase.put(fileKey, currentFileObject)];
                     case 12:
                         _a.sent();
                         _a.label = 13;
@@ -1228,8 +1213,7 @@ var DiscordUser = /** @class */ (function () {
                         _a.trys.push([14, 17, , 19]);
                         return [4 /*yield*/, this.dataBase.get(availableFileKey)];
                     case 15:
-                        availableFileString = _a.sent();
-                        availableFileObject = JSON.parse(availableFileString);
+                        availableFileObject = _a.sent();
                         availableFileObject.userRecords.push(savedUser);
                         availableFileString = JSON.stringify(availableFileObject);
                         return [4 /*yield*/, this.dataBase.put(availableFileKey, availableFileString)];
@@ -1260,9 +1244,7 @@ var DiscordUser = /** @class */ (function () {
                         if (!(currentFileObject.userRecords.length === 0)) return [3 /*break*/, 21];
                         this.dataBase.del(fileKey);
                         return [3 /*break*/, 23];
-                    case 21:
-                        currentFileString = JSON.stringify(currentFileObject);
-                        return [4 /*yield*/, this.dataBase.put(fileKey, currentFileString)];
+                    case 21: return [4 /*yield*/, this.dataBase.put(fileKey, currentFileObject)];
                     case 22:
                         _a.sent();
                         _a.label = 23;
@@ -1274,11 +1256,9 @@ var DiscordUser = /** @class */ (function () {
                         _a.trys.push([24, 27, , 28]);
                         return [4 /*yield*/, this.dataBase.get(notAvailableFileKey)];
                     case 25:
-                        notAvailableFileString = _a.sent();
-                        notAvailableFileObject = JSON.parse(notAvailableFileString);
+                        notAvailableFileObject = _a.sent();
                         notAvailableFileObject.userRecords.push(deletedUser);
-                        notAvailableFileString = JSON.stringify(notAvailableFileObject);
-                        return [4 /*yield*/, this.dataBase.put(notAvailableFileKey, notAvailableFileString)];
+                        return [4 /*yield*/, this.dataBase.put(notAvailableFileKey, notAvailableFileObject)];
                     case 26:
                         _a.sent();
                         return [3 /*break*/, 28];
@@ -1289,8 +1269,7 @@ var DiscordUser = /** @class */ (function () {
                         serverRecord.serverID = currentFileObject.serverID;
                         serverRecord.serverName = currentFileObject.serverName;
                         serverRecord.userRecords.push(deletedUser);
-                        notAvailableFileString = JSON.stringify(serverRecord);
-                        this.dataBase.put(notAvailableFileKey, notAvailableFileString);
+                        this.dataBase.put(notAvailableFileKey, serverRecord);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve();
                             })];

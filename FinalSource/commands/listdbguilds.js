@@ -115,7 +115,7 @@ function execute(message, args, discordUser) {
                                 isItFound = true;
                             }
                         }
-                        newValue = JSON.parse(value);
+                        newValue = value;
                         if (isItFound === false) {
                             message.reply("Guild Name: " + newValue.guildName + "\nGuild ID: " + newValue.guildID);
                         }
