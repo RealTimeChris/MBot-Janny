@@ -3,7 +3,7 @@
 // Chris M.
 // https://github.com/RealTimeChris
 
-'use strict'
+'use strict';
 
 import DiscordStuff = require('./DiscordStuff');
 
@@ -72,13 +72,13 @@ import setreplacementinvite from './commands/setreplacementinvite';
 commands.set(setreplacementinvite.name, setreplacementinvite);
 import setverificationsystem from './commands/setverificationsystem';
 commands.set(setverificationsystem.name, setverificationsystem);
-import test from './commands/test'
+import test from './commands/test';
 commands.set(test.name, test);
 import timedmessages from './commands/timedmessages';
 commands.set(timedmessages.name, timedmessages);
-import trackuser from './commands/trackuser'
+import trackuser from './commands/trackuser';
 commands.set(trackuser.name, trackuser);
-import userinfo from './commands/userinfo'
+import userinfo from './commands/userinfo';
 commands.set(userinfo.name, userinfo);
 
 export default {commands};

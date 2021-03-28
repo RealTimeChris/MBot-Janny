@@ -27,7 +27,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
             return command.name;
         }
 
-        let whatAreWeDoing = String('');
+        let whatAreWeDoing = '';
 
         if (args[0] === undefined) {
             whatAreWeDoing = 'view';
@@ -78,7 +78,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
         }
 
         if (whatAreWeDoing === 'view') {
-            let msgString = String('');
+            let msgString = '';
 
             if (guildData.defaultRoleIDs.length > 0) {
                 msgString = '\n------\n';

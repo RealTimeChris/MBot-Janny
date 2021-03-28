@@ -31,7 +31,7 @@ export async function execute(client: Discord.Client, oldUser: Discord.User, new
 
         const textChannel = await client.channels.fetch(logs.loggingChannelID) as Discord.TextChannel;
 
-        let msgString = String('');
+        let msgString = '';
         msgString = `__**New Username:**__ ${newUser.username}\n`;
         msgString += `__**Old Username:**__ ${oldUser.username}\n`;
         msgString += `__**User:**__ <@!${newUser.id}>\n`;

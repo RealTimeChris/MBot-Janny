@@ -31,7 +31,7 @@ command.description = "It's an automatic one!";
 
         const textChannel = await client.channels.fetch(logs.loggingChannelID) as Discord.TextChannel;
 
-        let msgString = String('');
+        let msgString = '';
         msgString = `__**New Nickname:**__ ${newGuildMember.displayName}\n`;
         msgString += `__**Old Nickname:**__ ${oldGuildMember.displayName}\n`;
         msgString += `__**User:**__ <@!${newGuildMember.id}>\n`;

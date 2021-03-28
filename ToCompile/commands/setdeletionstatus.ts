@@ -27,9 +27,9 @@ export async function execute(message: Discord.Message, args: string[], discordU
             return command.name;
         }
 
-        let whatAreWeDoing = String('');
+        let whatAreWeDoing = '';
         const messageCountRegExp = /\d{1,18}/;
-        let howManyBack = Number('');
+        let howManyBack = 0;
         if (args[0] === undefined) {
             whatAreWeDoing = 'viewing';
         } else if ((args[0] !== undefined && args[0].toLowerCase() !== 'enable' && args[0].toLowerCase() !== 'disable')) {
@@ -73,7 +73,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
         }
 
         if (whatAreWeDoing === 'viewing') {
-            let msgString = String('');
+            let msgString = '';
             msgString = '\n------\n';
             if (guildData.deletionChannels.length > 0) {
                 for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
@@ -145,7 +145,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
         }
         if (whatAreWeDoing === 'disable') {
             isItFound = false;
-            let deletionChannelIndex = Number();
+            let deletionChannelIndex = 0;
             for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
                 if ((guildData.deletionChannels[x] as DiscordStuff.DeletionChannel).channelID === currentDeletionChannel.channelID) {
                     isItFound = true;

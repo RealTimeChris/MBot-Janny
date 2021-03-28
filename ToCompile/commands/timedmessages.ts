@@ -29,10 +29,10 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
 
         const guildData = await discordUser.getGuildDataFromDB(message.guild as Discord.Guild);
 
-        let whatAreWeDoing = String('');
-        let messageName = String('');
-        let msBetweenSends = Number();
-        let messageContent = String('');
+        let whatAreWeDoing = '';
+        let messageName = '';
+        let msBetweenSends = 0;
+        let messageContent = '';
 
         if (args[0] === undefined) {
             whatAreWeDoing = 'viewing';
@@ -112,7 +112,7 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             await discordUser.updateGuildDataInDB(guildData);
 
             const msgEmbed = new Discord.MessageEmbed();
-            let msgString = String('');
+            let msgString = '';
             msgString = "Congrats, you've just added a new timed message to your server! It is as follows:\n------\n";
             msgString += `__**Name:**__ ${newTimedMessage.name}\n`;
             msgString += `__**ms Between Sends:**__ ${newTimedMessage.msBetweenSends}\n`;
@@ -133,7 +133,7 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
         }
         if (whatAreWeDoing === 'removing') {
             let isItFound = false;
-            let currentTimedMessageName = String('');
+            let currentTimedMessageName = '';
             for (let x = 0; x < guildData.timedMessages.length; x += 1) {
                 if (messageName === (guildData.timedMessages[x] as DiscordStuff.TimedMessage).name) {
                     isItFound = true;
@@ -153,7 +153,7 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             }
 
             const msgEmbed = new Discord.MessageEmbed();
-            let msgString = String('');
+            let msgString = '';
             msgString = `You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ ${currentTimedMessageName}\n------`;
             msgEmbed
                 .setAuthor(message.author.username, message.author.avatarURL() as string)

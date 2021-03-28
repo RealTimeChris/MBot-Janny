@@ -38,7 +38,7 @@ export async function execute(client: Discord.Client, role: Discord.Role,
         const currentGuild = await client.guilds.fetch(role.guild.id);
 
         const msgEmbed = new Discord.MessageEmbed();
-        let msgString = String('');
+        let msgString = '';
         msgString = `__**Role Deleted:**__ ${role.name}\n`;
         msgString += `__**Deleted By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
         msgString += `__**Role Count:**__ ${currentGuild.roles.cache.size}`;

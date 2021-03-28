@@ -22,17 +22,17 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
         const commandFiles = commandIndex.default.commands;
 
         if (args[0] === undefined) {
-            const commandNames = [String('')];
+            const commandNames: string[] = [];
 
             commandFiles.forEach((value: any, key: string, map) => {
                 commandNames[key as any] = value.name;
                 return commandNames;
             });
 
-            let msgString = String('');
+            let msgString = '';
             msgString += '!help = COMMANDNAMEHERE\n\n__**List of command names:**__ ';
 
-            let currentIndex = Number(0);
+            let currentIndex = 0;
             commandFiles.forEach((value, key, map) => {
                 msgString += commandNames[key as any];
                 currentIndex += 1;
@@ -66,7 +66,7 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
 
         let isFound = false;
         let commandDescription;
-        let commandName = String('');
+        let commandName = '';
 
         commandFiles.forEach((value, key, map) => {
             const command = value;

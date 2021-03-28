@@ -56,7 +56,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
             whatAreWeDoing = 'disable';
         }
 
-        let msgString = String('');
+        let msgString = '';
         if (whatAreWeDoing === 'viewing') {
             if (guildData.verificationSystem.channelID === '') {
                 msgString = '------\n__The verification system is currently disabled.__\n------\n';

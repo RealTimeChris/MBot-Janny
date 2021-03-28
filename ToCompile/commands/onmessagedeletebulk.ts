@@ -32,7 +32,7 @@ export async function execute(client: Discord.Client, collection: Discord.Collec
         const textChannel = await client.channels.fetch(logs.loggingChannelID) as Discord.TextChannel;
 
         const msgEmbed = new Discord.MessageEmbed();
-        let msgString = String('');
+        let msgString = '';
         msgString = `__**Number of Messages:**__ ${collection.size}\n`;
 
         msgEmbed

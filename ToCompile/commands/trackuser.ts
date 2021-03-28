@@ -31,8 +31,8 @@ export async function execute(message: Discord.Message, args: string[], discordU
 
         const userMentionRegExp = /.{2,3}\d{18}>/;
         const idRegExp = /\d{18}/;
-        let whatAreWeDoing = String('');
-        let trackedUserID = String('');
+        let whatAreWeDoing = '';
+        let trackedUserID = '';
         if (args[0] !== undefined && (args[0].toLowerCase() !== 'add' && args[0].toLowerCase() !== 'remove')) {
             await message.reply('Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)');
             if (message.deletable){
@@ -86,10 +86,8 @@ export async function execute(message: Discord.Message, args: string[], discordU
             }
         }
 
-        const guildData = {};
         const currentGuild = message.guild as Discord.Guild;
 
-        const currentTextChannelData = {};
         const currentTextChannel = message.channel as Discord.TextChannel;
 
         if (whatAreWeDoing === 'add') {
@@ -193,7 +191,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
             return command.name;
         }
         if (args[0] === undefined) {
-            let msgString = String('');
+            let msgString = '';
 
             if (userData.trackedUserIDs.length > 0) {
                 for (let x = 0; x < userData.trackedUserIDs.length; x += 1) {

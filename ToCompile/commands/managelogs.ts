@@ -46,7 +46,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
             }
 
             const msgEmbed = new Discord.MessageEmbed();
-            let msgString = String('');
+            let msgString = '';
             msgString = `**To enable/disable a given log, enter within the text channel where you would like it to be logged: !managelogs = 
                 <enable/disable>, <logname>\nFor example, '!managelogs = enable, guildbanadd'.**'`;
             msgEmbed

@@ -106,7 +106,7 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 			return command.name;
 		}
 
-		let dbKey = String('');
+		let dbKey = '';
 		if (args[1] !== undefined) {
 			const argZero = args[1].toString();
 			dbKey = argZero;

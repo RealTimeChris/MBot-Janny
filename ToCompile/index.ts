@@ -34,7 +34,7 @@ client.on('message', async (msg) => {
 		return;
 	}
 	 if (msg.content.startsWith(discordUser.userData.prefix)) {
-		let command = String('');
+		let command = '';
 		let args: string[] = [];
 		if (msg.content.indexOf(' =') === -1) {
 			command = (msg.content.slice(discordUser.userData.prefix.length).split(/ +/, 3)[0] as string).trim().toLowerCase();

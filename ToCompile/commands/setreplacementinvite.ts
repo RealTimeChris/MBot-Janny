@@ -28,7 +28,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
 
         const inviteRegExp = /https:\/\/discord.gg\/\w{1,26}/;
 
-        let whatAreWeDoing = String('');
+        let whatAreWeDoing = '';
         if (args[0] !== undefined && !inviteRegExp.test(args[0])) {
             await message.reply('Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)');
             if (message.deletable){

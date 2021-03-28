@@ -32,7 +32,7 @@ export async function execute(client: Discord.Client, oldMessage: Discord.Messag
         const textChannel = await client.channels.fetch(logs.loggingChannelID) as Discord.TextChannel;
 
         const msgEmbed = new Discord.MessageEmbed();
-        let msgString = String('');
+        let msgString = '';
         msgString = `__**Message Author:**__ <@!${newMessage.author.id}> (${newMessage.author.tag})\n`;
         msgString += `__**Message ID:**__ ${newMessage.id}\n`;
         msgString += `__**Old Content:**__ \n${oldMessage.content}\n`;

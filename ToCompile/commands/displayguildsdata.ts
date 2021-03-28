@@ -19,7 +19,7 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 	try {
 		let currentCount = 0;
 		discordUser.guildsData.forEach(guild => {
-			let msgString = String('');
+			let msgString = '';
 			msgString += `__Guild Name:__ ${guild.guildName}\n`;
 			msgString += `__Guild ID:__ ${guild.guildID}\n`;
 			msgString += `__Member Count:__ ${guild.guildMemberCount}\n`;

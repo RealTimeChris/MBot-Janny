@@ -23,7 +23,7 @@ export async function execute(message: Discord.Message, args: string[]): Promise
             return command.name;
         }
 
-        let userID = String('');
+        let userID = '';
         const userMentionRegExp = /.{2,3}\d{18}>/;
         const userIDRegExp = /\d{18}/;
         if (args[0] === undefined) {

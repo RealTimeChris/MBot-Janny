@@ -995,7 +995,7 @@ export class DiscordUser {
 			if (numberOfMessagesToSave > 0) {
 				let startingMessage;
 				for (let x = (Math.trunc(numberOfMessagesToSave / 100)); x >= 0; x -= 1) {
-					let currentMessageLimit = Number();
+					let currentMessageLimit = 0;
 					if (x > 0) {
 						currentMessageLimit = 100;
 						if (x === (Math.trunc(numberOfMessagesToSave / 100))) {
@@ -1047,7 +1047,7 @@ export class DiscordUser {
 						break;
 					}
 				}
-				let totalMessageCount = Number();
+				let totalMessageCount = 0;
 				for (let y = 0; y < arrayOfMessageArrays.length; y += 1) {
 					for (let z = 0; z < (arrayOfMessageArrays[y] as Discord.Message[]).length; z += 1) {
 						if (((arrayOfMessageArrays[y] as Discord.Message[])[z] as Discord.Message).pinned === true
@@ -1101,7 +1101,7 @@ export class DiscordUser {
 						break;
 					}
 				}
-				let totalMessageCount = Number();
+				let totalMessageCount = 0;
 				for (let w = 0; w < arrayOfMessageArrays.length; w += 1) {
 					for (let z = 0; z < (arrayOfMessageArrays[w] as Discord.Message[]).length; z += 1) {
 						if (((arrayOfMessageArrays[w] as Discord.Message[])[z] as Discord.Message).pinned === true

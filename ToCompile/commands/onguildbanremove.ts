@@ -35,7 +35,7 @@ export async function execute(client: Discord.Client, guild: Discord.Guild, user
         const auditLogEntry = auditLogs.entries
             .find(entry => Date.now() - entry.createdTimestamp < 5000);
 
-        let msgString = String('');
+        let msgString = '';
         msgString += `__**Unbanned By:**__ <@!${(auditLogEntry as Discord.GuildAuditLogsEntry).executor.id}> 
         (${(auditLogEntry as Discord.GuildAuditLogsEntry).executor.tag})\n`;
         msgString += `__**Time of Unban:**__ ${Date()}\n`;
