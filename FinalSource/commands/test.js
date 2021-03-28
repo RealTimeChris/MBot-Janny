@@ -48,78 +48,64 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
 function execute(message, args, discordUser) {
-    var _a, _b, _c;
+    var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var interaction, slashCommand, commands, x, newInteraction_1, newInteraction, globalCommands, error_1;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var interaction, appCommands, x, isItDeleted, ghostCommand, ghostCommandResult, error_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    _d.trys.push([0, 8, , 9]);
+                    _b.trys.push([0, 7, , 8]);
                     if (message.deletable) {
-                        //await message.delete();
                     }
-                    interaction = new slash_commands_1.DiscordInteractions({ applicationId: "814635740469919764",
-                        publicKey: "ea9a5395682ad831e63f8d3b60547cd7f7c98625d62484d04f3e0c7c44432606",
-                        authToken: "ODE0NjM1NzQwNDY5OTE5NzY0.YDgupw.pJ4IL3EseMEu9wS0l3RzlnwxlMQ" });
-                    slashCommand = {
-                        "name": "ghost",
-                        "description": "Ghost or unghost a server member.",
-                        "options": [
-                            { "name": "ghost",
-                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                                "description": "Applies the ghost status to a member.",
-                                "options": [{
-                                        "name": "user",
-                                        "type": SlashCommands.ApplicationCommandOptionType.CHANNEL,
-                                        "description": "The server member to ghost.",
-                                        "required": true
-                                    }
-                                ] },
-                            { "name": "unghost",
-                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                                "description": "Removes the ghost status from a member.",
-                                "options": [{
-                                        "name": "user",
-                                        "type": SlashCommands.ApplicationCommandOptionType.CHANNEL,
-                                        "description": "The server member to unghost.",
-                                        "required": true
-                                    }]
-                            }
-                        ]
-                    };
+                    interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID, authToken: discordUser.userData.botToken, publicKey: discordUser.userData.publicKey, });
                     return [4 /*yield*/, interaction.getApplicationCommands()];
                 case 1:
-                    commands = _d.sent();
+                    appCommands = _b.sent();
                     x = 0;
-                    _d.label = 2;
+                    _b.label = 2;
                 case 2:
-                    if (!(x < commands.length)) return [3 /*break*/, 5];
-                    return [4 /*yield*/, interaction.deleteApplicationCommand((_a = commands[x]) === null || _a === void 0 ? void 0 : _a.id)];
+                    if (!(x < appCommands.length)) return [3 /*break*/, 5];
+                    return [4 /*yield*/, interaction.deleteApplicationCommand((_a = appCommands[x]) === null || _a === void 0 ? void 0 : _a.id)];
                 case 3:
-                    newInteraction_1 = _d.sent();
-                    console.log(newInteraction_1);
-                    _d.label = 4;
+                    isItDeleted = _b.sent();
+                    console.log(isItDeleted);
+                    _b.label = 4;
                 case 4:
                     x += 1;
                     return [3 /*break*/, 2];
-                case 5: return [4 /*yield*/, interaction
-                        .createApplicationCommand(slashCommand).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
+                case 5:
+                    ghostCommand = {
+                        "name": "ghost",
+                        "desctription": "Mutes and silences the user across the entire server.",
+                        "options": [
+                            {
+                                "name": "user",
+                                "description": "The user to ghost",
+                                "type": SlashCommands.ApplicationCommandOptionType.USER,
+                                "required": true
+                            },
+                            {
+                                "name": "user",
+                                "description": "The user to unghost",
+                                "type": SlashCommands.ApplicationCommandOptionType.USER,
+                                "required": true
+                            }
+                        ]
+                    };
+                    return [4 /*yield*/, interaction.createApplicationCommand(ghostCommand).catch(function (error) {
+                            console.log(error);
+                        })];
                 case 6:
-                    newInteraction = _d.sent();
-                    return [4 /*yield*/, interaction
-                            .getApplicationCommands()];
-                case 7:
-                    globalCommands = _d.sent();
-                    console.log(globalCommands.length);
-                    console.log((_b = globalCommands[0]) === null || _b === void 0 ? void 0 : _b.description);
-                    console.log((_c = globalCommands[0]) === null || _c === void 0 ? void 0 : _c.options);
+                    ghostCommandResult = _b.sent();
+                    console.log(ghostCommandResult.name);
+                    console.log(ghostCommandResult.description);
                     return [2 /*return*/, command.name];
-                case 8:
-                    error_1 = _d.sent();
+                case 7:
+                    error_1 = _b.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 9: return [2 /*return*/];
+                case 8: return [2 /*return*/];
             }
         });
     });

@@ -115,10 +115,12 @@ export declare class GuildData {
  * Class representing a single instance of "Discord".
  */
 export declare class DiscordUserData {
-    botToken: string;
     userID: string;
     userName: string;
+    publicKey: string;
+    clientID: string;
     guildCount: number;
+    botToken: string;
     msBetweenCacheBackup: number;
     currencyName: string;
     timeOfLastUpdateAndSave: number;

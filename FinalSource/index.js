@@ -49,6 +49,24 @@ var config = require("../ToCompile/config.json");
 var commandindex_1 = __importDefault(require("./commandindex"));
 var discordUser = new DiscordStuff.DiscordUser();
 var client = new Discord.Client();
+client.ws.on('INTERACTION_CREATE', function (interaction) {
+    var _a = interaction.data, name = _a.name, options = _a.options;
+    for (var _i = 0, options_1 = options; _i < options_1.length; _i++) {
+        var option = options_1[_i];
+        var name_1 = option.name, value = option.value;
+        console.log(name_1, value);
+    }
+    console.log(interaction);
+    console.log(options);
+    if (name === 'ghost') {
+        client.api.interactions(interaction.id, interaction.token).callback().post({
+            data: { type: 4,
+                data: { content: 'HEY!'
+                }
+            }
+        });
+    }
+});
 client.once('ready', function () { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {

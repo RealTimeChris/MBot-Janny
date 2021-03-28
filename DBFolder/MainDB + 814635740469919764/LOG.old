@@ -1,5 +1,5 @@
-2021/03/28-09:16:22.371 5cac Recovering log #144
-2021/03/28-09:16:22.374 5cac Level-0 table #147: started
-2021/03/28-09:16:22.380 5cac Level-0 table #147: 166888 bytes OK
-2021/03/28-09:16:22.385 5cac Delete type=0 #144
-2021/03/28-09:16:22.385 5cac Delete type=3 #142
+2021/03/28-13:19:36.811 91e4 Recovering log #210
+2021/03/28-13:19:36.813 91e4 Level-0 table #212: started
+2021/03/28-13:19:36.820 91e4 Level-0 table #212: 167338 bytes OK
+2021/03/28-13:19:36.824 91e4 Delete type=0 #210
+2021/03/28-13:19:36.824 91e4 Delete type=3 #208

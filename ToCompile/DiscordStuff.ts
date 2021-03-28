@@ -364,10 +364,12 @@ export class GuildData {
  * Class representing a single instance of "Discord".
  */
 export class DiscordUserData {
-	botToken: string = '';
 	userID: string = '';
 	userName: string = '';
+	publicKey: string = '';
+	clientID: string = '';
 	guildCount: number = 0;
+	botToken: string = '';
 	msBetweenCacheBackup: number = 0;
 	currencyName: string = '';
 	timeOfLastUpdateAndSave: number = 0;
@@ -449,6 +451,8 @@ export class DiscordUser {
 				userData.msBetweenInvites = config.msBetweenInvites;
 				userData.msBetweenMessageDeletion = config.msBetweenMessageDeletion;
 				userData.currencyName = config.currencyName;
+				userData.publicKey = config.publicKey;
+				userData.clientID = config.clientID;
 				userData.timeOfLastInvite = 0;
 				userData.activeInviteGuilds = [];
 				userData.timeOfLastRecordUpdate = 0;
@@ -505,6 +509,8 @@ export class DiscordUser {
 			userData.msBetweenInvites = config.msBetweenInvites;
 			userData.msBetweenMessageDeletion = config.msBetweenMessageDeletion;
 			userData.currencyName = config.currencyName;
+			userData.publicKey = config.publicKey;
+			userData.clientID = config.clientID;
 			userData.guildCount = client.guilds.cache.array().length;
 			userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
 			userData.prefix = config.prefix;

@@ -32,7 +32,7 @@ export async function execute(client: Discord.Client, invite: Discord.Invite,
         const textChannel = await client.channels.fetch(logs.loggingChannelID) as Discord.TextChannel;
 
         const msgEmbed = new Discord.MessageEmbed();
-        let msgString = '';
+        let msgString = String('');
         msgString = `__**Max Uses:**__ ${invite.maxUses}\n`;
         msgString += `__**Expires At:**__ ${invite.expiresAt}\n`;
         msgString += `__**URL:**__ ${invite.url}\n`;

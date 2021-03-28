@@ -31,7 +31,7 @@ export async function execute(client: Discord.Client, message: Discord.Message, 
         const textChannel = await client.channels.fetch(logs.loggingChannelID) as Discord.TextChannel;
 
         const msgEmbed = new Discord.MessageEmbed();
-        let msgString = '';
+        let msgString = String('');
         msgString = `__**Message Author:**__ <@!${message.author.id}> (${message.author.tag})\n`;
         msgString += `__**Message ID:**__ ${message.id}\n`;
         msgString += `__**Content:**__ ${message.content}`;

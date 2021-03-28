@@ -11,11 +11,28 @@ import config = require('../ToCompile/config.json');
 import botCommands from './commandindex';
 
 const discordUser = new DiscordStuff.DiscordUser();
-const client = new Discord.Client();
+const client = new Discord.Client() as any;
+client.ws.on('INTERACTION_CREATE', (interaction: any) => {
+	const {name, options} = interaction.data;
+
+	for (const option of options){
+		const {name, value} = option;
+		console.log(name, value);
+	}
+	console.log(interaction);
+	console.log(options);
+	if (name === 'ghost'){
+		client.api.interactions(interaction.id, interaction.token).callback().post({
+			data: {type: 4,
+			data:{content: 'HEY!'
+				}
+			}
+		})
+	}
+})
 
 client.once('ready', async () => {
 	try {
-		
 		await discordUser.initializeInstance(client);
 		await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
 		return;
@@ -24,7 +41,7 @@ client.once('ready', async () => {
 	}
 });
 
-client.on('message', async (msg) => {
+client.on('message', async (msg: Discord.Message) => {
 	if (msg.member == null && !(msg.channel.type === 'dm')) {
 		console.log('HMMM!? NULL MEMBER?! GTFO!');
 		return;
@@ -91,7 +108,7 @@ client.on('message', async (msg) => {
 	}
 });
 
-client.on('messageReactionAdd', async (messageReaction, user) => {
+client.on('messageReactionAdd', async (messageReaction: Discord.MessageReaction, user: Discord.User) => {
 	const command = 'onmessagereactionadd';
 
 	if (!botCommands.commands.has(command)) {
@@ -107,7 +124,7 @@ client.on('messageReactionAdd', async (messageReaction, user) => {
 	}
 });
 
-client.on('guildDelete', async guild => {
+client.on('guildDelete', async (guild: Discord.Guild) => {
 	const command = 'onguilddelete';
 
 	if (!botCommands.commands.has(command)) {
@@ -123,7 +140,7 @@ client.on('guildDelete', async guild => {
 	}
 });
 
-client.on('guildBanAdd', async (guild, user) => {
+client.on('guildBanAdd', async (guild: Discord.Guild, user: Discord.User) => {
 	const guildData = await discordUser.getGuildDataFromDB(guild) as DiscordStuff.GuildData;
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'guildbanadd') {
@@ -147,7 +164,7 @@ client.on('guildBanAdd', async (guild, user) => {
 	}
 });
 
-client.on('guildBanRemove', async (guild, user) => {
+client.on('guildBanRemove', async (guild: Discord.Guild, user: Discord.User) => {
 	const guildData = await discordUser.getGuildDataFromDB(guild) as DiscordStuff.GuildData;
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'guildbanremove') {
@@ -171,7 +188,7 @@ client.on('guildBanRemove', async (guild, user) => {
 	}
 });
 
-client.on('guildMemberAdd', async member => {
+client.on('guildMemberAdd', async (member: Discord.GuildMember) => {
 	const guildData = await discordUser.getGuildDataFromDB(member.guild) as DiscordStuff.GuildData;
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'guildmemberadd') {
@@ -195,7 +212,7 @@ client.on('guildMemberAdd', async member => {
 	}
 });
 
-client.on('guildMemberRemove', async member => {
+client.on('guildMemberRemove', async (member: Discord.GuildMember) => {
 	const guildData = await discordUser.getGuildDataFromDB(member.guild) as DiscordStuff.GuildData;
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'guildmemberremove') {
@@ -218,7 +235,7 @@ client.on('guildMemberRemove', async member => {
 	}
 });
 
-client.on('guildMemberUpdate', async (oldGuildMember, newGuildMember) => {
+client.on('guildMemberUpdate', async (oldGuildMember: Discord.GuildMember, newGuildMember: Discord.GuildMember) => {
 	if (oldGuildMember.displayName !== newGuildMember.displayName) {
 		const guildData = await discordUser.getGuildDataFromDB(oldGuildMember.guild) as DiscordStuff.GuildData;
 		for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -300,7 +317,7 @@ client.on('guildMemberUpdate', async (oldGuildMember, newGuildMember) => {
 	}
 });
 
-client.on('inviteCreate', async (invite) => {
+client.on('inviteCreate', async (invite: Discord.Invite) => {
 	const guildData = await discordUser.getGuildDataFromDB((invite.guild as Discord.Guild)) as DiscordStuff.GuildData;
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'invitecreate') {
@@ -324,7 +341,7 @@ client.on('inviteCreate', async (invite) => {
 	}
 });
 
-client.on('messageDelete', async (message) => {
+client.on('messageDelete', async (message: Discord.Message) => {
 	const guildData = await discordUser.getGuildDataFromDB((message.guild as Discord.Guild)) as DiscordStuff.GuildData;
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'messagedelete') {
@@ -348,7 +365,7 @@ client.on('messageDelete', async (message) => {
 	}
 });
 
-client.on('messageDeleteBulk', async (collection) => {
+client.on('messageDeleteBulk', async (collection: Discord.Collection<string, Discord.Message>) => {
 	const guildData = await discordUser.getGuildDataFromDB(((collection.first() as Discord.Message).guild as Discord.Guild)) as DiscordStuff.GuildData;
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'messagedeletebulk') {
@@ -372,7 +389,7 @@ client.on('messageDeleteBulk', async (collection) => {
 	}
 });
 
-client.on('roleCreate', async (role) => {
+client.on('roleCreate', async (role: Discord.Role) => {
 	const guildData = await discordUser.getGuildDataFromDB(role.guild) as DiscordStuff.GuildData;
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'rolecreate') {
@@ -396,7 +413,7 @@ client.on('roleCreate', async (role) => {
 	}
 });
 
-client.on('roleDelete', async (role) => {
+client.on('roleDelete', async (role: Discord.Role) => {
 	const guildData = await discordUser.getGuildDataFromDB(role.guild) as DiscordStuff.GuildData;
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'roledelete') {
@@ -420,7 +437,7 @@ client.on('roleDelete', async (role) => {
 	}
 });
 
-client.on('userUpdate', async (oldUser, newUser) => {
+client.on('userUpdate', async (oldUser: Discord.User, newUser: Discord.User) => {
 	if (oldUser.username !== newUser.username) {
 		const guildArray = client.guilds.cache.array();
 		for (let x = 0; x < guildArray.length; x += 1) {
