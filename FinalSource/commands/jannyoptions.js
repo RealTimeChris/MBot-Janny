@@ -48,7 +48,7 @@ command.name = 'jannyoptions';
 command.description = '!jannyoptions, to display a list of options for this bot!';
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, doWeHaveAdminPerms, guildData, msgEmbed, fields, resultIcon, x, logsField, defaultRolesField, deletionChannelsField, serverRecordKey, serverRecordString, serverRecordObject, replacementServerInviteField, requireServerVerificationField, timedMessagesField, userData, x, trackUsersField, error_1;
+        var areWeInADM, doWeHaveAdminPerms, guildData, msgEmbed, fields, resultIcon, x, logsField, defaultRolesField, deletionChannelsField, serverRecordKey, serverRecordObject, replacementServerInviteField, requireServerVerificationField, timedMessagesField, userData, x, trackUsersField, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -101,8 +101,7 @@ function execute(message, args, discordUser) {
                     serverRecordKey = message.guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
                 case 4:
-                    serverRecordString = _a.sent();
-                    serverRecordObject = JSON.parse(serverRecordString);
+                    serverRecordObject = _a.sent();
                     if (serverRecordObject.replacementServerInvite !== '') {
                         resultIcon = '✅';
                     }

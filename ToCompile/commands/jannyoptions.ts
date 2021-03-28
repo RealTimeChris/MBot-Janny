@@ -66,8 +66,7 @@ command.description = '!jannyoptions, to display a list of options for this bot!
 
 		resultIcon = '❌';
 		const serverRecordKey = `${(message.guild as Discord.Guild).id} + Record`;
-		const serverRecordString = await discordUser.dataBase.get(serverRecordKey);
-		const serverRecordObject = JSON.parse(serverRecordString);
+		const serverRecordObject = await discordUser.dataBase.get(serverRecordKey);
 		if (serverRecordObject.replacementServerInvite !== '') {
 			resultIcon = '✅';
 		}
