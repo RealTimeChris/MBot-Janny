@@ -15,6 +15,7 @@ const client = new Discord.Client();
 
 client.once('ready', async () => {
 	try {
+		
 		await discordUser.initializeInstance(client);
 		await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
 		return;

@@ -364,6 +364,7 @@ export class GuildData {
  * Class representing a single instance of "Discord".
  */
 export class DiscordUserData {
+	botToken: string = '';
 	userID: string = '';
 	userName: string = '';
 	guildCount: number = 0;
@@ -442,6 +443,7 @@ export class DiscordUser {
 			if (error.type === 'NotFoundError'){
 				console.log("Adding new entry for the current user's data!");
 				const userData = new DiscordUserData();
+				userData.botToken = config.botToken;
 				userData.botCommanders = config.botCommanders;
 				userData.msBetweenRecordUpdates = config.msBetweenRecordUpdates;
 				userData.msBetweenInvites = config.msBetweenInvites;
@@ -497,6 +499,7 @@ export class DiscordUser {
 		try {
 			const userData = await this.getUserDataFromDB(client);
 			console.log('Updating the user data!');
+			userData.botToken = config.botToken;
 			userData.botCommanders = config.botCommanders;
 			userData.msBetweenRecordUpdates = config.msBetweenRecordUpdates;
 			userData.msBetweenInvites = config.msBetweenInvites;

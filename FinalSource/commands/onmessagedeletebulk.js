@@ -70,7 +70,7 @@ function execute(client, collection, discordUser) {
                 case 2:
                     textChannel = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
-                    msgString = String('');
+                    msgString = '';
                     msgString = "__**Number of Messages:**__ " + collection.size + "\n";
                     msgEmbed
                         .setTitle('__**Messages Bulk Deleted:**__')

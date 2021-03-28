@@ -86,7 +86,7 @@ function execute(message, args, discordUser) {
                         }
                     }
                     msgEmbed = new Discord.MessageEmbed();
-                    msgString = String('');
+                    msgString = '';
                     msgString = "**To enable/disable a given log, enter within the text channel where you would like it to be logged: !managelogs = \n                <enable/disable>, <logname>\nFor example, '!managelogs = enable, guildbanadd'.**'";
                     msgEmbed
                         .setAuthor(message.author.username, message.author.avatarURL())

@@ -51,7 +51,7 @@ command.description = '!trackuser = ADD, @USERMENTION to track the user within t
  */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, doWeHaveAdminPermission, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, argOne, trackedUserIDOne, userData, x, isUserFound, y, currentGuild_1, z, currentUser, guildData, currentGuild, currentTextChannelData, currentTextChannel, currentGuildMember, msgString, messageEmbed, currentIndex, error_1, currentGuildMember, currentIndex, msgString, messageEmbed, msgString, messageEmbed, error_2, msgString, x, trackedGuildName, trackedChannelName, messageEmbed, error_3;
+        var areWeInADM, doWeHaveAdminPermission, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, argOne, trackedUserIDOne, userData, x, isUserFound, y, currentGuild_1, z, currentUser, currentGuild, currentTextChannel, currentGuildMember, msgString, messageEmbed, currentIndex, error_1, currentGuildMember, currentIndex, msgString, messageEmbed, msgString, messageEmbed, error_2, msgString, x, trackedGuildName, trackedChannelName, messageEmbed, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -70,8 +70,8 @@ function execute(message, args, discordUser) {
                     }
                     userMentionRegExp = /.{2,3}\d{18}>/;
                     idRegExp = /\d{18}/;
-                    whatAreWeDoing = String('');
-                    trackedUserID = String('');
+                    whatAreWeDoing = '';
+                    trackedUserID = '';
                     if (!(args[0] !== undefined && (args[0].toLowerCase() !== 'add' && args[0].toLowerCase() !== 'remove'))) return [3 /*break*/, 6];
                     return [4 /*yield*/, message.reply('Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)')];
                 case 3:
@@ -139,9 +139,7 @@ function execute(message, args, discordUser) {
                     x += 1;
                     return [3 /*break*/, 12];
                 case 15:
-                    guildData = {};
                     currentGuild = message.guild;
-                    currentTextChannelData = {};
                     currentTextChannel = message.channel;
                     if (!(whatAreWeDoing === 'add')) return [3 /*break*/, 27];
                     _a.label = 16;
@@ -265,7 +263,7 @@ function execute(message, args, discordUser) {
                 case 41: return [2 /*return*/, command.name];
                 case 42:
                     if (!(args[0] === undefined)) return [3 /*break*/, 46];
-                    msgString = String('');
+                    msgString = '';
                     if (userData.trackedUserIDs.length > 0) {
                         for (x = 0; x < userData.trackedUserIDs.length; x += 1) {
                             if (userData.trackingGuildIDs[x] === message.guild.id) {

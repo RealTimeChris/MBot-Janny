@@ -70,7 +70,7 @@ function execute(client, message, discordUser) {
                 case 2:
                     textChannel = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
-                    msgString = String('');
+                    msgString = '';
                     msgString = "__**Message Author:**__ <@!" + message.author.id + "> (" + message.author.tag + ")\n";
                     msgString += "__**Message ID:**__ " + message.id + "\n";
                     msgString += "__**Content:**__ " + message.content;

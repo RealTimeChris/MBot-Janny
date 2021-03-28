@@ -175,7 +175,7 @@ function execute(message, args, discordUser) {
                     _c.label = 13;
                 case 13: return [2 /*return*/, command.name];
                 case 14:
-                    dbKey = String('');
+                    dbKey = '';
                     if (args[1] !== undefined) {
                         argZero = args[1].toString();
                         dbKey = argZero;

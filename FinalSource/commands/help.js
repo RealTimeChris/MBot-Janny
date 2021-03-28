@@ -59,14 +59,14 @@ function execute(message, args) {
                     _a.trys.push([0, 19, , 20]);
                     commandFiles_1 = commandIndex.default.commands;
                     if (!(args[0] === undefined)) return [3 /*break*/, 8];
-                    commandNames_1 = [String('')];
+                    commandNames_1 = [];
                     commandFiles_1.forEach(function (value, key, map) {
                         commandNames_1[key] = value.name;
                         return commandNames_1;
                     });
-                    msgString_1 = String('');
+                    msgString_1 = '';
                     msgString_1 += '!help = COMMANDNAMEHERE\n\n__**List of command names:**__ ';
-                    currentIndex_1 = Number(0);
+                    currentIndex_1 = 0;
                     commandFiles_1.forEach(function (value, key, map) {
                         msgString_1 += commandNames_1[key];
                         currentIndex_1 += 1;
@@ -104,7 +104,7 @@ function execute(message, args) {
                 case 7: return [2 /*return*/, command.name];
                 case 8:
                     isFound_1 = false;
-                    commandName_1 = String('');
+                    commandName_1 = '';
                     commandFiles_1.forEach(function (value, key, map) {
                         var command = value;
                         if (args[0] === command.name) {

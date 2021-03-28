@@ -66,7 +66,7 @@ function execute(message, args, discordUser) {
                         return [2 /*return*/, command.name];
                     }
                     inviteRegExp = /https:\/\/discord.gg\/\w{1,26}/;
-                    whatAreWeDoing = String('');
+                    whatAreWeDoing = '';
                     if (!(args[0] !== undefined && !inviteRegExp.test(args[0]))) return [3 /*break*/, 6];
                     return [4 /*yield*/, message.reply('Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)')];
                 case 3:

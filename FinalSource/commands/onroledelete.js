@@ -78,7 +78,7 @@ function execute(client, role, discordUser) {
                 case 4:
                     currentGuild = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
-                    msgString = String('');
+                    msgString = '';
                     msgString = "__**Role Deleted:**__ " + role.name + "\n";
                     msgString += "__**Deleted By:**__ <@!" + auditLogEntry.executor.id + "> (" + auditLogEntry.executor.tag + ")\n";
                     msgString += "__**Role Count:**__ " + currentGuild.roles.cache.size;

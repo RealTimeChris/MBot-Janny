@@ -66,9 +66,9 @@ function execute(message, args, discordUser) {
                     if (doWeHaveAdminPerms === false) {
                         return [2 /*return*/, command.name];
                     }
-                    whatAreWeDoing = String('');
+                    whatAreWeDoing = '';
                     messageCountRegExp = /\d{1,18}/;
-                    howManyBack = Number('');
+                    howManyBack = 0;
                     if (!(args[0] === undefined)) return [3 /*break*/, 3];
                     whatAreWeDoing = 'viewing';
                     return [3 /*break*/, 12];
@@ -125,7 +125,7 @@ function execute(message, args, discordUser) {
                         currentDeletionChannel.numberOfMessagesToSave = howManyBack;
                     }
                     if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 17];
-                    msgString = String('');
+                    msgString = '';
                     msgString = '\n------\n';
                     if (guildData.deletionChannels.length > 0) {
                         for (x = 0; x < guildData.deletionChannels.length; x += 1) {
@@ -222,7 +222,7 @@ function execute(message, args, discordUser) {
                 case 33:
                     if (!(whatAreWeDoing === 'disable')) return [3 /*break*/, 40];
                     isItFound = false;
-                    deletionChannelIndex = Number();
+                    deletionChannelIndex = 0;
                     for (x = 0; x < guildData.deletionChannels.length; x += 1) {
                         if (guildData.deletionChannels[x].channelID === currentDeletionChannel.channelID) {
                             isItFound = true;

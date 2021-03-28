@@ -115,6 +115,7 @@ export declare class GuildData {
  * Class representing a single instance of "Discord".
  */
 export declare class DiscordUserData {
+    botToken: string;
     userID: string;
     userName: string;
     guildCount: number;

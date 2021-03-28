@@ -78,7 +78,7 @@ function execute(client, role, discordUser) {
                 case 4:
                     currentGuild = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
-                    msgString = String('');
+                    msgString = '';
                     msgString = "__**New Role:**__ <@&" + role.id + "> (" + role.name + ")\n";
                     msgString += "__**Created By:**__ <@!" + auditLogEntry.executor.id + "> (" + auditLogEntry.executor.tag + ")\n";
                     msgString += "__**Role Count:**__ " + currentGuild.roles.cache.size;

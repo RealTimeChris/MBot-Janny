@@ -115,7 +115,7 @@ function execute(message, args, discordUser) {
                     }
                     _a.label = 17;
                 case 17:
-                    msgString = String('');
+                    msgString = '';
                     if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 24];
                     if (!(guildData.verificationSystem.channelID === '')) return [3 /*break*/, 18];
                     msgString = '------\n__The verification system is currently disabled.__\n------\n';

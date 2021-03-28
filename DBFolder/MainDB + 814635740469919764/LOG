@@ -1,14 +1,5 @@
-2021/03/27-21:53:19.187 146c Recovering log #37
-2021/03/27-21:53:19.203 146c Level-0 table #39: started
-2021/03/27-21:53:19.266 146c Level-0 table #39: 488544 bytes OK
-2021/03/27-21:53:19.276 146c Delete type=0 #37
-2021/03/27-21:53:19.277 146c Delete type=3 #35
-2021/03/27-21:53:19.305 d78 Compacting 4@0 + 1@1 files
-2021/03/27-21:53:19.379 d78 Generated table #41@0: 1550 keys, 166725 bytes
-2021/03/27-21:53:19.379 d78 Compacted 4@0 + 1@1 files => 166725 bytes
-2021/03/27-21:53:19.381 d78 compacted to: files[ 0 1 0 0 0 0 0 ]
-2021/03/27-21:53:19.381 d78 Delete type=2 #28
-2021/03/27-21:53:19.382 d78 Delete type=2 #30
-2021/03/27-21:53:19.382 d78 Delete type=2 #33
-2021/03/27-21:53:19.382 d78 Delete type=2 #36
-2021/03/27-21:53:19.382 d78 Delete type=2 #39
+2021/03/28-09:17:04.600 a3a4 Recovering log #148
+2021/03/28-09:17:04.602 a3a4 Level-0 table #150: started
+2021/03/28-09:17:04.607 a3a4 Level-0 table #150: 100995 bytes OK
+2021/03/28-09:17:04.614 a3a4 Delete type=0 #148
+2021/03/28-09:17:04.614 a3a4 Delete type=3 #146

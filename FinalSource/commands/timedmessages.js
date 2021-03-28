@@ -69,10 +69,10 @@ function execute(message, args, discordUser) {
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(message.guild)];
                 case 3:
                     guildData = _a.sent();
-                    whatAreWeDoing = String('');
-                    messageName = String('');
-                    msBetweenSends = Number();
-                    messageContent = String('');
+                    whatAreWeDoing = '';
+                    messageName = '';
+                    msBetweenSends = 0;
+                    messageContent = '';
                     if (!(args[0] === undefined)) return [3 /*break*/, 4];
                     whatAreWeDoing = 'viewing';
                     return [3 /*break*/, 10];
@@ -154,7 +154,7 @@ function execute(message, args, discordUser) {
                 case 15:
                     _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
-                    msgString = String('');
+                    msgString = '';
                     msgString = "Congrats, you've just added a new timed message to your server! It is as follows:\n------\n";
                     msgString += "__**Name:**__ " + newTimedMessage.name + "\n";
                     msgString += "__**ms Between Sends:**__ " + newTimedMessage.msBetweenSends + "\n";
@@ -178,7 +178,7 @@ function execute(message, args, discordUser) {
                 case 19:
                     if (!(whatAreWeDoing === 'removing')) return [3 /*break*/, 31];
                     isItFound = false;
-                    currentTimedMessageName = String('');
+                    currentTimedMessageName = '';
                     x = 0;
                     _a.label = 20;
                 case 20:
@@ -207,7 +207,7 @@ function execute(message, args, discordUser) {
                 case 26: return [2 /*return*/, command.name];
                 case 27:
                     msgEmbed = new Discord.MessageEmbed();
-                    msgString = String('');
+                    msgString = '';
                     msgString = "You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ " + currentTimedMessageName + "\n------";
                     msgEmbed
                         .setAuthor(message.author.username, message.author.avatarURL())

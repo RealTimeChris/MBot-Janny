@@ -72,7 +72,7 @@ function execute(client, guild, user, discordUser) {
                     auditLogs = _a.sent();
                     auditLogEntry = auditLogs.entries
                         .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
-                    msgString = String('');
+                    msgString = '';
                     msgString += "__**Unbanned By:**__ <@!" + auditLogEntry.executor.id + "> \n        (" + auditLogEntry.executor.tag + ")\n";
                     msgString += "__**Time of Unban:**__ " + Date() + "\n";
                     msgString += "__**User:**__ <@!" + user.id + ">\n";

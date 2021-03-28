@@ -69,7 +69,7 @@ function execute(client, oldUser, newUser, guild, discordUser) {
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
                 case 2:
                     textChannel = _a.sent();
-                    msgString = String('');
+                    msgString = '';
                     msgString = "__**New Username:**__ " + newUser.username + "\n";
                     msgString += "__**Old Username:**__ " + oldUser.username + "\n";
                     msgString += "__**User:**__ <@!" + newUser.id + ">\n";

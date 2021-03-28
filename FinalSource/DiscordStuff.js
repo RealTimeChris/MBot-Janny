@@ -504,6 +504,7 @@ exports.GuildData = GuildData;
  */
 var DiscordUserData = /** @class */ (function () {
     function DiscordUserData() {
+        this.botToken = '';
         this.userID = '';
         this.userName = '';
         this.guildCount = 0;
@@ -612,6 +613,7 @@ var DiscordUser = /** @class */ (function () {
                         if (error_5.type === 'NotFoundError') {
                             console.log("Adding new entry for the current user's data!");
                             userData_2 = new DiscordUserData();
+                            userData_2.botToken = config.botToken;
                             userData_2.botCommanders = config.botCommanders;
                             userData_2.msBetweenRecordUpdates = config.msBetweenRecordUpdates;
                             userData_2.msBetweenInvites = config.msBetweenInvites;
@@ -688,6 +690,7 @@ var DiscordUser = /** @class */ (function () {
                     case 1:
                         userData = _a.sent();
                         console.log('Updating the user data!');
+                        userData.botToken = config.botToken;
                         userData.botCommanders = config.botCommanders;
                         userData.msBetweenRecordUpdates = config.msBetweenRecordUpdates;
                         userData.msBetweenInvites = config.msBetweenInvites;
@@ -1360,7 +1363,7 @@ var DiscordUser = /** @class */ (function () {
                         _a.label = 6;
                     case 6:
                         if (!(x_1 >= 0)) return [3 /*break*/, 16];
-                        currentMessageLimit = Number();
+                        currentMessageLimit = 0;
                         if (!(x_1 > 0)) return [3 /*break*/, 11];
                         currentMessageLimit = 100;
                         if (!(x_1 === (Math.trunc(numberOfMessagesToSave / 100)))) return [3 /*break*/, 8];
@@ -1429,7 +1432,7 @@ var DiscordUser = /** @class */ (function () {
                         }
                         return [3 /*break*/, 17];
                     case 19:
-                        totalMessageCount = Number();
+                        totalMessageCount = 0;
                         for (y = 0; y < arrayOfMessageArrays.length; y += 1) {
                             for (z = 0; z < arrayOfMessageArrays[y].length; z += 1) {
                                 if (arrayOfMessageArrays[y][z].pinned === true
@@ -1505,7 +1508,7 @@ var DiscordUser = /** @class */ (function () {
                         }
                         return [3 /*break*/, 27];
                     case 32:
-                        totalMessageCount = Number();
+                        totalMessageCount = 0;
                         for (w = 0; w < arrayOfMessageArrays.length; w += 1) {
                             for (z = 0; z < arrayOfMessageArrays[w].length; z += 1) {
                                 if (arrayOfMessageArrays[w][z].pinned === true

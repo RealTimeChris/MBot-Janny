@@ -66,7 +66,7 @@ function execute(message, args, discordUser) {
                     if (doWeHaveAdminPerms === false) {
                         return [2 /*return*/, command.name];
                     }
-                    whatAreWeDoing = String('');
+                    whatAreWeDoing = '';
                     if (!(args[0] === undefined)) return [3 /*break*/, 3];
                     whatAreWeDoing = 'view';
                     return [3 /*break*/, 12];
@@ -131,7 +131,7 @@ function execute(message, args, discordUser) {
                         _loop_1(x);
                     }
                     if (!(whatAreWeDoing === 'view')) return [3 /*break*/, 17];
-                    msgString_1 = String('');
+                    msgString_1 = '';
                     if (guildData_1.defaultRoleIDs.length > 0) {
                         msgString_1 = '\n------\n';
                         guildData_1.defaultRoleIDs.map(function (roleID) {

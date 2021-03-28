@@ -58,7 +58,7 @@ function execute(message, args, discordUser) {
                     _a.trys.push([0, 3, , 4]);
                     currentCount_1 = 0;
                     discordUser.guildsData.forEach(function (guild) {
-                        var msgString = String('');
+                        var msgString = '';
                         msgString += "__Guild Name:__ " + guild.guildName + "\n";
                         msgString += "__Guild ID:__ " + guild.guildID + "\n";
                         msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";

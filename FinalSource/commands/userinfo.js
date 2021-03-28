@@ -62,7 +62,7 @@ function execute(message, args) {
                     if (areWeInADM === true) {
                         return [2 /*return*/, command.name];
                     }
-                    userID = String('');
+                    userID = '';
                     userMentionRegExp = /.{2,3}\d{18}>/;
                     userIDRegExp = /\d{18}/;
                     if (!(args[0] === undefined)) return [3 /*break*/, 2];

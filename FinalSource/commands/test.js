@@ -42,28 +42,84 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = void 0;
 var DiscordStuff = require("../DiscordStuff.js");
+var slash_commands_1 = require("slash-commands");
+var SlashCommands = require("slash-commands");
 var command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
-function execute(message) {
+function execute(message, args, discordUser) {
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function () {
-        var error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var interaction, slashCommand, commands, x, newInteraction_1, newInteraction, globalCommands, error_1;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
-                    if (!message.deletable) return [3 /*break*/, 2];
-                    return [4 /*yield*/, message.delete()];
+                    _d.trys.push([0, 8, , 9]);
+                    if (message.deletable) {
+                        //await message.delete();
+                    }
+                    interaction = new slash_commands_1.DiscordInteractions({ applicationId: "814635740469919764",
+                        publicKey: "ea9a5395682ad831e63f8d3b60547cd7f7c98625d62484d04f3e0c7c44432606",
+                        authToken: "ODE0NjM1NzQwNDY5OTE5NzY0.YDgupw.pJ4IL3EseMEu9wS0l3RzlnwxlMQ" });
+                    slashCommand = {
+                        "name": "ghost",
+                        "description": "Ghost or unghost a server member.",
+                        "options": [
+                            { "name": "ghost",
+                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "description": "Applies the ghost status to a member.",
+                                "options": [{
+                                        "name": "user",
+                                        "type": SlashCommands.ApplicationCommandOptionType.CHANNEL,
+                                        "description": "The server member to ghost.",
+                                        "required": true
+                                    }
+                                ] },
+                            { "name": "unghost",
+                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "description": "Removes the ghost status from a member.",
+                                "options": [{
+                                        "name": "user",
+                                        "type": SlashCommands.ApplicationCommandOptionType.CHANNEL,
+                                        "description": "The server member to unghost.",
+                                        "required": true
+                                    }]
+                            }
+                        ]
+                    };
+                    return [4 /*yield*/, interaction.getApplicationCommands()];
                 case 1:
-                    _a.sent();
-                    _a.label = 2;
-                case 2: return [2 /*return*/, command.name];
+                    commands = _d.sent();
+                    x = 0;
+                    _d.label = 2;
+                case 2:
+                    if (!(x < commands.length)) return [3 /*break*/, 5];
+                    return [4 /*yield*/, interaction.deleteApplicationCommand((_a = commands[x]) === null || _a === void 0 ? void 0 : _a.id)];
                 case 3:
-                    error_1 = _a.sent();
+                    newInteraction_1 = _d.sent();
+                    console.log(newInteraction_1);
+                    _d.label = 4;
+                case 4:
+                    x += 1;
+                    return [3 /*break*/, 2];
+                case 5: return [4 /*yield*/, interaction
+                        .createApplicationCommand(slashCommand).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
+                case 6:
+                    newInteraction = _d.sent();
+                    return [4 /*yield*/, interaction
+                            .getApplicationCommands()];
+                case 7:
+                    globalCommands = _d.sent();
+                    console.log(globalCommands.length);
+                    console.log((_b = globalCommands[0]) === null || _b === void 0 ? void 0 : _b.description);
+                    console.log((_c = globalCommands[0]) === null || _c === void 0 ? void 0 : _c.options);
+                    return [2 /*return*/, command.name];
+                case 8:
+                    error_1 = _d.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 4: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });

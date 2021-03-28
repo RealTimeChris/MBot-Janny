@@ -85,7 +85,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                     return [2 /*return*/];
                 }
                 if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 9];
-                command = String('');
+                command = '';
                 args = [];
                 if (msg.content.indexOf(' =') === -1) {
                     command = msg.content.slice(discordUser.userData.prefix.length).split(/ +/, 3)[0].trim().toLowerCase();

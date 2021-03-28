@@ -78,7 +78,7 @@ function execute(client, guild, user, discordUser) {
                                     auditLogs = _a.sent();
                                     auditLogEntry = auditLogs.entries
                                         .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
-                                    msgString = String('');
+                                    msgString = '';
                                     msgString += "__**Banned By:**__ <@!" + auditLogEntry.executor.id + "> \n                (" + auditLogEntry.executor.tag + ")\n";
                                     msgString += "__**Reason:**__ " + auditLogEntry.reason + "\n";
                                     msgString += "__**Time of Ban:**__ " + Date() + "\n";
