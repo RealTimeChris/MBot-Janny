@@ -21,8 +21,7 @@ export async function execute(guild: Discord.Guild,
 
         const serverRecordKey = `${guild.id} + Record`;
 
-        const serverRecordString = await discordUser.dataBase.get(serverRecordKey);
-        const serverRecordObject = JSON.parse(serverRecordString);
+        const serverRecordObject  = await discordUser.dataBase.get(serverRecordKey);
 
         if (serverRecordObject.replacementServerInvite.length >= 2) {
             discordUser.userData.activeInviteGuilds.push(guild.id);

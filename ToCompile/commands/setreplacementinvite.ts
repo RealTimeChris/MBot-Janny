@@ -46,8 +46,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
 
         if (whatAreWeDoing === 'viewing') {
             const serverRecordKey = `${(message.guild as Discord.Guild).id} + Record`;
-            const serverRecordString = await discordUser.dataBase.get(serverRecordKey);
-            const serverRecordObject = JSON.parse(serverRecordString);
+            const serverRecordObject = await discordUser.dataBase.get(serverRecordKey);
 
             const inviteLink2 = serverRecordObject.replacementServerInvite;
 
@@ -73,16 +72,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
         }
         if (whatAreWeDoing === 'adding') {
             const serverRecordKey = `${(message.guild as Discord.Guild).id} + Record`;
-            let serverRecordString = await discordUser.dataBase.get(serverRecordKey);
-            const serverRecordObject = JSON.parse(serverRecordString);
+            const serverRecordObject = await discordUser.dataBase.get(serverRecordKey);
 
             serverRecordObject.replacementServerInvite = inviteLink;
 
             console.log(serverRecordObject);
 
-            serverRecordString = JSON.stringify(serverRecordObject);
-
-            await discordUser.dataBase.put(serverRecordKey, serverRecordString);
+            await discordUser.dataBase.put(serverRecordKey, serverRecordObject);
 
             const msgString = `Great! You've updated the guild ${serverRecordObject.serverName}'s replacement invite link!`
                                 + `\n------\n__**Link:**__ ${serverRecordObject.replacementServerInvite}\n------`;

@@ -47,7 +47,7 @@ command.name = 'onguilddelete';
 command.description = "It's an automatic one!";
 function execute(guild, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var serverRecordKey, serverRecordString, serverRecordObject, error_1;
+        var serverRecordKey, serverRecordObject, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -58,8 +58,7 @@ function execute(guild, discordUser) {
                     serverRecordKey = guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
                 case 1:
-                    serverRecordString = _a.sent();
-                    serverRecordObject = JSON.parse(serverRecordString);
+                    serverRecordObject = _a.sent();
                     if (serverRecordObject.replacementServerInvite.length >= 2) {
                         discordUser.userData.activeInviteGuilds.push(guild.id);
                         discordUser.updateUserDataInDB(discordUser.userData);

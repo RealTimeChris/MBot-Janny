@@ -48,7 +48,7 @@ command.name = 'setreplacementinvite';
 command.description = '!setreplacementinvite = REPLACEMENTINVITELINK\nBe sure to call this from within the chosen server, before it gets nuked!';
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, doWeHaveAdminPerms, inviteRegExp, whatAreWeDoing, inviteLink, serverRecordKey, serverRecordString, serverRecordObject, inviteLink2, msgString, messageEmbed, serverRecordKey, serverRecordString, serverRecordObject, msgString, messageEmbed, error_1;
+        var areWeInADM, doWeHaveAdminPerms, inviteRegExp, whatAreWeDoing, inviteLink, serverRecordKey, serverRecordObject, inviteLink2, msgString, messageEmbed, serverRecordKey, serverRecordObject, msgString, messageEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -89,8 +89,7 @@ function execute(message, args, discordUser) {
                     serverRecordKey = message.guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
                 case 7:
-                    serverRecordString = _a.sent();
-                    serverRecordObject = JSON.parse(serverRecordString);
+                    serverRecordObject = _a.sent();
                     inviteLink2 = serverRecordObject.replacementServerInvite;
                     msgString = '\n------\n';
                     if (inviteLink === '') {
@@ -119,12 +118,10 @@ function execute(message, args, discordUser) {
                     serverRecordKey = message.guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
                 case 12:
-                    serverRecordString = _a.sent();
-                    serverRecordObject = JSON.parse(serverRecordString);
+                    serverRecordObject = _a.sent();
                     serverRecordObject.replacementServerInvite = inviteLink;
                     console.log(serverRecordObject);
-                    serverRecordString = JSON.stringify(serverRecordObject);
-                    return [4 /*yield*/, discordUser.dataBase.put(serverRecordKey, serverRecordString)];
+                    return [4 /*yield*/, discordUser.dataBase.put(serverRecordKey, serverRecordObject)];
                 case 13:
                     _a.sent();
                     msgString = "Great! You've updated the guild " + serverRecordObject.serverName + "'s replacement invite link!"
