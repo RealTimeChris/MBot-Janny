@@ -13,6 +13,7 @@
   "dependencies": {
     "bufferutil": "^4.0.3",
     "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
     "implement-js": "^0.0.31",
     "level-ts": "^2.0.6",
     "slash-commands": "^1.4.0",
