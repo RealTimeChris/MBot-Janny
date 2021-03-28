@@ -117,7 +117,7 @@ function execute(message, args, discordUser) {
                         }
                         newValue = value;
                         if (isItFound === false) {
-                            message.reply("Guild Name: " + newValue.guildName + "\nGuild ID: " + newValue.guildID);
+                            message.reply("Key: " + key + "\nGuild Name: " + newValue.guildName + "\nGuild ID: " + newValue.guildID);
                         }
                     }
                     _c.label = 14;

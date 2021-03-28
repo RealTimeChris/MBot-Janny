@@ -58,7 +58,7 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 }
 				const newValue = value;
                 if (isItFound === false) {
-                    message.reply(`Guild Name: ${newValue.guildName}\nGuild ID: ${newValue.guildID}`);
+                    message.reply(`Key: ${key}\nGuild Name: ${newValue.guildName}\nGuild ID: ${newValue.guildID}`);
                 }
             }
         }
