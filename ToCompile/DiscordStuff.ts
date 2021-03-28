@@ -64,6 +64,9 @@ export async function recurseThroughMessagePages(userID: string, message: Discor
 
 		reactionCollector.on('end', async () => {
 			if (deleteAfter === true) {
+				if (message.deletable){
+					await message.delete();
+				}
 				await message.delete();
 			} else {
 				await message.reactions.removeAll();
@@ -754,7 +757,9 @@ export class DiscordUser {
 			}
 
 			await message.reply("Sorry, but you don't have the permissions required for that!");
-			message.delete();
+			if (message.deletable){
+				await message.delete();
+			}
 			return new Promise((resolve, reject) => {
 				resolve(false);
 			});

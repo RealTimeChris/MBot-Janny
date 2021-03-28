@@ -13,7 +13,7 @@ command.name = 'ghost';
 command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS THE SERVER!\n!ghost to display a list of all currently ghosted users.\n!ghost = add, REASON, '
 + '@USERMENTION to ghost a new user.\n!ghost = remove, @USERMENTION to unghost a user.';
 
-    export async function  execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+export async function  execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(message);
 

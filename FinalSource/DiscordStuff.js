@@ -129,16 +129,21 @@ function recurseThroughMessagePages(userID, message, currentPageIndex, messageEm
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
-                                if (!(deleteAfter === true)) return [3 /*break*/, 2];
+                                if (!(deleteAfter === true)) return [3 /*break*/, 4];
+                                if (!message.deletable) return [3 /*break*/, 2];
                                 return [4 /*yield*/, message.delete()];
                             case 1:
                                 _a.sent();
-                                return [3 /*break*/, 4];
-                            case 2: return [4 /*yield*/, message.reactions.removeAll()];
+                                _a.label = 2;
+                            case 2: return [4 /*yield*/, message.delete()];
                             case 3:
                                 _a.sent();
-                                _a.label = 4;
-                            case 4: return [2 /*return*/];
+                                return [3 /*break*/, 6];
+                            case 4: return [4 /*yield*/, message.reactions.removeAll()];
+                            case 5:
+                                _a.sent();
+                                _a.label = 6;
+                            case 6: return [2 /*return*/];
                         }
                     });
                 }); });
@@ -1048,7 +1053,7 @@ var DiscordUser = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        _a.trys.push([0, 4, , 5]);
                         currentChannelPermissions = message.member.permissionsIn(message.channel);
                         permissionStrings = ['ADMINISTRATOR'];
                         areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
@@ -1061,16 +1066,20 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, message.reply("Sorry, but you don't have the permissions required for that!")];
                     case 1:
                         _a.sent();
-                        message.delete();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(false);
-                            })];
+                        if (!message.deletable) return [3 /*break*/, 3];
+                        return [4 /*yield*/, message.delete()];
                     case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3: return [2 /*return*/, new Promise(function (resolve, reject) {
+                            resolve(false);
+                        })];
+                    case 4:
                         error_16 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_16);
                             })];
-                    case 3: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
