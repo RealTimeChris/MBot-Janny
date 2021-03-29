@@ -148,6 +148,23 @@ export declare class BotCommand {
     function: Function;
 }
 /**
+ * Class representing the data that goes into a command.
+ */
+export declare class CommandData {
+    guild: Discord.Guild | null;
+    guildMember: Discord.GuildMember | null;
+    textChannel: Discord.TextChannel | null;
+    args: string[];
+    initialize(client: Discord.Client, guildID: string, guildMemberID: string, textChannelID: string): Promise<void>;
+}
+/**
+ * Class representing a command' return values.
+ */
+export declare class CommandReturnData {
+    commandName: string;
+    returnMessage: string | Discord.MessageEmbed;
+}
+/**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
 export declare class DiscordUser {
@@ -208,7 +225,7 @@ export declare class DiscordUser {
     /**
      * Checks if we have admin permissions in the current channel.
      */
-    doWeHaveAdminPermission(message: Discord.Message): Promise<boolean>;
+    doWeHaveAdminPermission(guildMember: Discord.GuildMember, textChannel: Discord.TextChannel): Promise<boolean>;
     /**
     * Updates and saves the Discord record, which contains user information.
     */

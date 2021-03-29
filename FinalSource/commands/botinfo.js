@@ -48,47 +48,39 @@ command.name = 'botinfo';
 command.description = '!botinfo to display info about this bot in chat!';
 /**
  * Displays the data about the currend user
- *  */
-function execute(message, args, discordUser) {
+ * */
+function execute(commandData, discordUser) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var fields, field1, field2, field3, field4, messageEmbed, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 4, , 5]);
-                    fields = [];
-                    field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
-                    fields.push(field1);
-                    field2 = { name: '__Bot ID:__', value: discordUser.userData.userID, inline: true };
-                    fields.push(field2);
-                    field3 = { name: '__Guild Count:__', value: discordUser.userData.guildCount.toString(), inline: true };
-                    fields.push(field3);
-                    field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
-                    fields.push(field4);
-                    messageEmbed = new Discord.MessageEmbed()
-                        .setImage(message.client.user.avatarURL())
-                        .setColor([0, 0, 255])
-                        .setTitle('__**Bot Info:**__')
-                        .setTimestamp(Date());
-                    messageEmbed.fields = fields;
-                    return [4 /*yield*/, message.channel.send(messageEmbed)];
-                case 1:
-                    _a.sent();
-                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 3];
-                    return [4 /*yield*/, message.delete()];
-                case 2:
-                    _a.sent();
-                    _a.label = 3;
-                case 3: return [2 /*return*/, new Promise(function (resolve, reject) {
-                        resolve(command.name);
-                    })];
-                case 4:
-                    error_1 = _a.sent();
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            reject(error_1);
-                        })];
-                case 5: return [2 /*return*/];
+        var commandReturnData, fields, field1, field2, field3, field4, messageEmbed;
+        return __generator(this, function (_c) {
+            try {
+                commandReturnData = new DiscordStuff.CommandReturnData();
+                commandReturnData.commandName = command.name;
+                fields = [];
+                field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
+                fields.push(field1);
+                field2 = { name: '__Bot ID:__', value: discordUser.userData.userID, inline: true };
+                fields.push(field2);
+                field3 = { name: '__Guild Count:__', value: discordUser.userData.guildCount.toString(), inline: true };
+                fields.push(field3);
+                field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
+                fields.push(field4);
+                messageEmbed = new Discord.MessageEmbed()
+                    .setImage((_b = (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.user) === null || _b === void 0 ? void 0 : _b.avatarURL())
+                    .setColor([0, 0, 255])
+                    .setTitle('__**Bot Info:**__')
+                    .setTimestamp(Date());
+                messageEmbed.fields = fields;
+                commandReturnData.returnMessage = messageEmbed;
+                return [2 /*return*/, commandReturnData];
             }
+            catch (error) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        reject(error);
+                    })];
+            }
+            return [2 /*return*/];
         });
     });
 }

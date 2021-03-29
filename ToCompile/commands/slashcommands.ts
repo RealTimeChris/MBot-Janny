@@ -5,7 +5,6 @@
 
 'use strict';
 
-import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff');
 import {DiscordInteractions} from 'slash-commands';
 import SlashCommands = require('slash-commands');
@@ -14,19 +13,36 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'slashcommands';
 command.description = '!slashcommands';
 
-async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     try{
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+        commandReturnData.commandName = command.name;
 
-        const interaction = new DiscordInteractions({applicationId: "814635740469919764",
-            publicKey: "ea9a5395682ad831e63f8d3b60547cd7f7c98625d62484d04f3e0c7c44432606",
-            authToken:"ODE0NjM1NzQwNDY5OTE5NzY0.YDgupw.pJ4IL3EseMEu9wS0l3RzlnwxlMQ"});
+        const interaction = new DiscordInteractions({applicationId: discordUser.userData.clientID,
+            publicKey: discordUser.userData.publicKey,
+            authToken: discordUser.userData.botToken})
 
-         const slashCommand =  {
+        const commands = await interaction.getApplicationCommands();
+        for (let x = 0; x < commands.length; x += 1){
+            const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
+            console.log(newInteraction);
+        }
+
+        const botinfo = {
+            "name": "botinfo",
+            "description": "Displays info about the current bot.",
+            "options":[]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(botinfo).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const ghost =  {
             "name": "ghost",
-            "description": "Ghost or unghost a server member.",
+            "description": "Ghost or unghost a server member - muting and silencing them across the server.",
             "options":[
-
-                {"name": "ghost",
+                {  
+                "name": "add",
                 "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
                 "description": "Applies the ghost status to a member.",
                 "options": [{
@@ -34,10 +50,15 @@ async function execute(message: Discord.Message, args: string[], discordUser: Di
                     "type": SlashCommands.ApplicationCommandOptionType.USER,
                     "description": "The server member to ghost.",
                     "required": true
-                }
-
-                ]},
-                {"name": "unghost",
+                },
+                {
+                    "name": "reason",
+                    "type":SlashCommands.ApplicationCommandOptionType.STRING,
+                    "description": "The reason for the ghosting application.",
+                    "required": true
+                }]},
+                {  
+                "name": "remove",
                 "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
                 "description": "Removes the ghost status from a member.",
                 "options": [{
@@ -45,29 +66,28 @@ async function execute(message: Discord.Message, args: string[], discordUser: Di
                     "type": SlashCommands.ApplicationCommandOptionType.USER,
                     "description": "The server member to unghost.",
                     "required": true
-                }]
+                }]},
+                {
+                    "name": "view",
+                    "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                    "description": "Displays the currently ghosted server members, if applicable.",
+                    "options":[{
+                        "name": "display",
+                        "type": SlashCommands.ApplicationCommandOptionType.BOOLEAN,
+                        "description": "Displays the currently ghosted server members, if applicable.",
+                        "required": true
+                    }]
                 }
             ]
-        }
-
-        const commands = await interaction.getApplicationCommands();
-        for (let x = 0; x < commands.length; x += 1){
-            const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
-            console.log(newInteraction);
-        }
-        
+        }        
 
         // Create Global Command
-        const newInteraction = await interaction
-        .createApplicationCommand(slashCommand).then(error => console.log(error)).catch(error => console.log(error.message));
+        await interaction.createApplicationCommand(ghost).then(error => console.log(error)).catch(error => console.log(error.message));
 
-        const globalCommands = await interaction
-        .getApplicationCommands();
+        const globalCommands = await interaction.getApplicationCommands();
         console.log(globalCommands.length);
-        console.log(globalCommands[0]?.description);
-        console.log(globalCommands[0]?.options);
-        return command.name;
-    }
+        return commandReturnData;
+}
     catch(error){
         return new Promise((resolve, reject) => {
             reject(error);

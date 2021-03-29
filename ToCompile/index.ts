@@ -6,36 +6,57 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require("./DiscordStuff.js");
+import DiscordStuff = require("./DiscordStuff");
 import config = require('../ToCompile/config.json');
 import botCommands from './commandindex';
 
 const discordUser = new DiscordStuff.DiscordUser();
 const client = new Discord.Client() as any;
-client.ws.on('INTERACTION_CREATE', (interaction: any) => {
-	const {name, options} = interaction.data;
 
-	for (const option of options){
-		const {name, value} = option;
-		console.log(name, value);
+client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
+	const {member:{user:{id}}, guild_id, data:{name, options}, channel_id} = interaction;
+	const commandData = new DiscordStuff.CommandData();
+	await commandData.initialize(client, guild_id, id, channel_id);
+	const nameSolid = name;
+	if (name === 'botinfo'){
+
 	}
-	console.log(interaction);
-	console.log(options);
 	if (name === 'ghost'){
-		client.api.interactions(interaction.id, interaction.token).callback().post({
-			data: {type: 4,
-			data:{content: 'HEY!'
-				}
-			}
-		})
+		let userID;
+		let reason;
+		const name = options[0].name;
+		if (name === 'view'){
+			commandData.args[0] = '';
+			commandData.args[1] = '';
+			commandData.args[2] = '';
+		}
+		else if(name === 'ghost'){
+			userID = options[0].options[0].value;
+			reason = options[0].options[1].value;
+			commandData.args[0] = 'add';
+			commandData.args[1] = reason;
+			commandData.args[2] = userID;
+		}
+		else if (name === 'unghost'){
+			userID = options[0].options[0].value;
+			commandData.args[0] = 'remove';
+			commandData.args[1] = userID;
+		}
 	}
+	client.api.interactions(interaction.id, interaction.token).callback.post({
+		data:{
+			type: 5
+	}})
+	console.log(`Command: '${nameSolid}' entered by user: ${(commandData.guildMember as Discord.GuildMember).displayName}`);
+	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser);
+	console.log(`Completed Command: ${returnData.commandName}`);
+	await new Discord.WebhookClient(client.user.id, interaction.token).send(returnData.returnMessage);
 })
 
 client.once('ready', async () => {
 	try {
 		await discordUser.initializeInstance(client);
-		await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
-		return;
+		await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } })
 	} catch (error) {
 		console.log(error);
 	}
@@ -68,9 +89,21 @@ client.on('message', async (msg: Discord.Message) => {
 			return;
 		}
 		try {
+			const commandData = new DiscordStuff.CommandData();
+			await commandData.initialize(client, (msg.guild as Discord.Guild).id, (msg.member as Discord.GuildMember).id, msg.channel.id);
+			commandData.args = args;
+
+			if (msg.deletable){
+				await msg.delete();
+			}
+
+			console.log(commandData.guildMember);
+			console.log(commandData.guild);
+			console.log(commandData.textChannel);
+
 			console.log(`Command: '${command}' entered by user: ${msg.author.username}`);
-			const cmdName = await botCommands.commands.get(command)?.function(msg, args, discordUser);
-			console.log(`Completed Command: ${cmdName}`);
+			const cmdReturnData = await botCommands.commands.get(command)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
+			console.log(`Completed Command: ${cmdReturnData.commandName}`);
 			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
 			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
 			await discordUser.saveCacheIfTimeHasPassed(client);
@@ -78,6 +111,9 @@ client.on('message', async (msg: Discord.Message) => {
 			discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch((error: Error) => {
 				console.log(error);
 			});
+			if (cmdReturnData.returnMessage !== ''){
+				commandData.textChannel?.send(cmdReturnData.returnMessage);
+			}
 			return;
 		} catch (error) {
 			console.log(error);

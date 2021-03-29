@@ -1,4 +1,4 @@
-// slashcommands.ts - Module for registering my slash commands.
+// slashcommands.ts - Module for declaring my slash commands.
 // Mar 28, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -42,40 +42,110 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var DiscordStuff = require("../DiscordStuff");
 var slash_commands_1 = require("slash-commands");
+var SlashCommands = require("slash-commands");
 var command = new DiscordStuff.BotCommand();
 command.name = 'slashcommands';
 command.description = '!slashcommands';
-function execute(message, args, discordUser) {
+function execute(commandData, discordUser) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var currentInteraction, currentAppCommands, x, didItDelete, error_1;
+        var commandReturnData, interaction, commands, x, newInteraction, botinfo, ghost, globalCommands, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    _b.trys.push([0, 6, , 7]);
-                    currentInteraction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID, publicKey: discordUser.userData.publicKey, authToken: discordUser.userData.botToken });
-                    return [4 /*yield*/, currentInteraction.getApplicationCommands()];
+                    _b.trys.push([0, 9, , 10]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
+                    interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID,
+                        publicKey: discordUser.userData.publicKey,
+                        authToken: discordUser.userData.botToken });
+                    return [4 /*yield*/, interaction.getApplicationCommands()];
                 case 1:
-                    currentAppCommands = _b.sent();
+                    commands = _b.sent();
                     x = 0;
                     _b.label = 2;
                 case 2:
-                    if (!(x < currentAppCommands.length)) return [3 /*break*/, 5];
-                    return [4 /*yield*/, currentInteraction.deleteApplicationCommand((_a = currentAppCommands[x]) === null || _a === void 0 ? void 0 : _a.id)];
+                    if (!(x < commands.length)) return [3 /*break*/, 5];
+                    return [4 /*yield*/, interaction.deleteApplicationCommand((_a = commands[x]) === null || _a === void 0 ? void 0 : _a.id)];
                 case 3:
-                    didItDelete = _b.sent();
-                    console.log(didItDelete);
+                    newInteraction = _b.sent();
+                    console.log(newInteraction);
                     _b.label = 4;
                 case 4:
                     x += 1;
                     return [3 /*break*/, 2];
-                case 5: return [2 /*return*/, command.name];
+                case 5:
+                    botinfo = {
+                        "name": "botinfo",
+                        "description": "Displays info about the current bot.",
+                        "options": []
+                    };
+                    // Create Global Command
+                    return [4 /*yield*/, interaction.createApplicationCommand(botinfo).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
                 case 6:
+                    // Create Global Command
+                    _b.sent();
+                    ghost = {
+                        "name": "ghost",
+                        "description": "Ghost or unghost a server member - muting and silencing them across the server.",
+                        "options": [
+                            {
+                                "name": "add",
+                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "description": "Applies the ghost status to a member.",
+                                "options": [{
+                                        "name": "user",
+                                        "type": SlashCommands.ApplicationCommandOptionType.USER,
+                                        "description": "The server member to ghost.",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "reason",
+                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                                        "description": "The reason for the ghosting application.",
+                                        "required": true
+                                    }]
+                            },
+                            {
+                                "name": "remove",
+                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "description": "Removes the ghost status from a member.",
+                                "options": [{
+                                        "name": "user",
+                                        "type": SlashCommands.ApplicationCommandOptionType.USER,
+                                        "description": "The server member to unghost.",
+                                        "required": true
+                                    }]
+                            },
+                            {
+                                "name": "view",
+                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "description": "Displays the currently ghosted server members, if applicable.",
+                                "options": [{
+                                        "name": "display",
+                                        "type": SlashCommands.ApplicationCommandOptionType.BOOLEAN,
+                                        "description": "Displays the currently ghosted server members, if applicable.",
+                                        "required": true
+                                    }]
+                            }
+                        ]
+                    };
+                    // Create Global Command
+                    return [4 /*yield*/, interaction.createApplicationCommand(ghost).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
+                case 7:
+                    // Create Global Command
+                    _b.sent();
+                    return [4 /*yield*/, interaction.getApplicationCommands()];
+                case 8:
+                    globalCommands = _b.sent();
+                    console.log(globalCommands.length);
+                    return [2 /*return*/, commandReturnData];
+                case 9:
                     error_1 = _b.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 7: return [2 /*return*/];
+                case 10: return [2 /*return*/];
             }
         });
     });

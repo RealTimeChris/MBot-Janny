@@ -17,11 +17,13 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
 /**
  * Returns a menu of helping information for the various commands I have.
  */
-    export async function execute(message: Discord.Message, args: string[]): Promise<string> {
+    export async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordStuff.CommandReturnData> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+        commandReturnData.commandName = command.name;
         const commandFiles = commandIndex.default.commands;
 
-        if (args[0] === undefined) {
+        if (commandData.args[0] === undefined) {
             const commandNames: string[] = [];
 
             commandFiles.forEach((value: any, key: string, map) => {
@@ -44,24 +46,21 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setImage(((message.client.user as Discord.User).avatarURL() as string).toString())
+                .setImage(((commandData.guildMember?.user as Discord.User).avatarURL() as string).toString())
                 .setTimestamp((Date() as unknown) as Date)
-                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL() as string)
-                .setTitle(`__**${(message.client.user as Discord.User).username} Help:**__`)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
+                .setTitle(`__**${((commandData.guildMember as Discord.GuildMember).user as Discord.User).username} Help:**__`)
                 .setDescription(msgString)
                 .setColor([254, 254, 254]);
 
-            if (message.author.dmChannel == null) {
-                const dmChannel = await message.author.createDM();
+            if ((commandData.guildMember as Discord.GuildMember).user.dmChannel == null) {
+                const dmChannel = await (commandData.guildMember as Discord.GuildMember).user.createDM();
                 await dmChannel.send(messageEmbed);
             } else {
-                await message.author.dmChannel.send(messageEmbed);
+                await (((commandData.guildMember as Discord.GuildMember).user as Discord.User).dmChannel as Discord.DMChannel).send(messageEmbed);
             }
 
-            if (message.channel.type !== 'dm' && message.deletable) {
-                await message.delete();
-            }
-            return command.name;
+            return commandReturnData;
         }
 
         let isFound = false;
@@ -70,7 +69,7 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
 
         commandFiles.forEach((value, key, map) => {
             const command = value;
-            if (args[0] === command.name) {
+            if (commandData.args[0] === command.name) {
                 isFound = true;
                 commandDescription = command.description;
                 commandName = command.name;
@@ -79,36 +78,30 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
         });
 
         if (isFound === false) {
-            if (message.channel.type !== 'dm' && message.deletable) {
-                await message.delete();
-            }
-            await message.reply('Sorry, but that command was not found!');
-            return command.name;
+            commandReturnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}>Sorry, but that command was not found!`;
+            return commandReturnData;
         }
 
         if (((commandDescription as unknown) as Discord.MessageEmbed) instanceof Discord.MessageEmbed) {
             ((commandDescription as unknown) as Discord.MessageEmbed)
-                .setAuthor(message.author.username,
-                (message.author as Discord.User).avatarURL() as string)
+                .setAuthor(commandData.guildMember?.user.username,
+                (commandData.guildMember?.user as Discord.User).avatarURL() as string)
                 .setColor([254, 254, 254])
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setTimestamp((Date() as unknown) as Date);
-            await message.channel.send((commandDescription as unknown) as Discord.MessageEmbed);
+            await (commandData.textChannel as Discord.TextChannel).send((commandDescription as unknown) as Discord.MessageEmbed);
         } else {
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setDescription(commandDescription)
                 .setTimestamp((Date() as unknown) as Date)
-                .setAuthor(message.author.username, (message.author as Discord.User).avatarURL() as string)
+                .setAuthor(commandData.guildMember?.user.username, (commandData.guildMember?.user as Discord.User).avatarURL() as string)
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setColor([254, 254, 254]);
 
-            await message.channel.send(messageEmbed);
+            commandReturnData.returnMessage = messageEmbed;
         }
-        if (message.channel.type !== 'dm' && message.deletable) {
-            await message.delete();
-        }
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

@@ -42,71 +42,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = void 0;
 var DiscordStuff = require("../DiscordStuff.js");
-var slash_commands_1 = require("slash-commands");
-var SlashCommands = require("slash-commands");
 var command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
 function execute(message, args, discordUser) {
-    var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var interaction, appCommands, x, isItDeleted, ghostCommand, ghostCommandResult, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    _b.trys.push([0, 7, , 8]);
-                    if (message.deletable) {
-                    }
-                    interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID, authToken: discordUser.userData.botToken, publicKey: discordUser.userData.publicKey, });
-                    return [4 /*yield*/, interaction.getApplicationCommands()];
-                case 1:
-                    appCommands = _b.sent();
-                    x = 0;
-                    _b.label = 2;
-                case 2:
-                    if (!(x < appCommands.length)) return [3 /*break*/, 5];
-                    return [4 /*yield*/, interaction.deleteApplicationCommand((_a = appCommands[x]) === null || _a === void 0 ? void 0 : _a.id)];
-                case 3:
-                    isItDeleted = _b.sent();
-                    console.log(isItDeleted);
-                    _b.label = 4;
-                case 4:
-                    x += 1;
-                    return [3 /*break*/, 2];
-                case 5:
-                    ghostCommand = {
-                        "name": "ghost",
-                        "desctription": "Mutes and silences the user across the entire server.",
-                        "options": [
-                            {
-                                "name": "user",
-                                "description": "The user to ghost",
-                                "type": SlashCommands.ApplicationCommandOptionType.USER,
-                                "required": true
-                            },
-                            {
-                                "name": "user",
-                                "description": "The user to unghost",
-                                "type": SlashCommands.ApplicationCommandOptionType.USER,
-                                "required": true
-                            }
-                        ]
-                    };
-                    return [4 /*yield*/, interaction.createApplicationCommand(ghostCommand).catch(function (error) {
-                            console.log(error);
-                        })];
-                case 6:
-                    ghostCommandResult = _b.sent();
-                    console.log(ghostCommandResult.name);
-                    console.log(ghostCommandResult.description);
-                    return [2 /*return*/, command.name];
-                case 7:
-                    error_1 = _b.sent();
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            reject(error_1);
-                        })];
-                case 8: return [2 /*return*/];
+        return __generator(this, function (_a) {
+            try {
+                if (message.deletable) {
+                    //await message.delete();
+                }
+                return [2 /*return*/, command.name];
             }
+            catch (error) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        reject(error);
+                    })];
+            }
+            return [2 /*return*/];
         });
     });
 }

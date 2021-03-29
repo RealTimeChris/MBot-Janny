@@ -43,7 +43,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DiscordUser = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = exports.recurseThroughServerRecords = exports.applyDefaultRoles = exports.areWeInADM = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = void 0;
+exports.DiscordUser = exports.CommandReturnData = exports.CommandData = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = exports.recurseThroughServerRecords = exports.applyDefaultRoles = exports.areWeInADM = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = void 0;
 var Discord = require("discord.js");
 var level_ts_1 = __importDefault(require("level-ts"));
 var config = require("./config.json");
@@ -543,6 +543,53 @@ var BotCommand = /** @class */ (function () {
     return BotCommand;
 }());
 exports.BotCommand = BotCommand;
+/**
+ * Class representing the data that goes into a command.
+ */
+var CommandData = /** @class */ (function () {
+    function CommandData() {
+        this.guild = null;
+        this.guildMember = null;
+        this.textChannel = null;
+        this.args = [];
+    }
+    CommandData.prototype.initialize = function (client, guildID, guildMemberID, textChannelID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, client.guilds.fetch(guildID)];
+                    case 1:
+                        _a.guild = (_d.sent());
+                        _b = this;
+                        return [4 /*yield*/, this.guild.members.fetch(guildMemberID)];
+                    case 2:
+                        _b.guildMember = (_d.sent());
+                        _c = this;
+                        return [4 /*yield*/, client.channels.fetch(textChannelID)];
+                    case 3:
+                        _c.textChannel = (_d.sent());
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return CommandData;
+}());
+exports.CommandData = CommandData;
+/**
+ * Class representing a command' return values.
+ */
+var CommandReturnData = /** @class */ (function () {
+    function CommandReturnData() {
+        this.commandName = '';
+        this.returnMessage = '';
+    }
+    return CommandReturnData;
+}());
+exports.CommandReturnData = CommandReturnData;
 /**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
@@ -1056,39 +1103,34 @@ var DiscordUser = /** @class */ (function () {
     /**
      * Checks if we have admin permissions in the current channel.
      */
-    DiscordUser.prototype.doWeHaveAdminPermission = function (message) {
+    DiscordUser.prototype.doWeHaveAdminPermission = function (guildMember, textChannel) {
         return __awaiter(this, void 0, void 0, function () {
             var currentChannelPermissions, permissionStrings, areTheyAnAdmin, areTheyACommander, error_16;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        currentChannelPermissions = message.member.permissionsIn(message.channel);
+                        _a.trys.push([0, 2, , 3]);
+                        currentChannelPermissions = guildMember.permissionsIn(textChannel);
                         permissionStrings = ['ADMINISTRATOR'];
                         areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
-                        areTheyACommander = checkForBotCommanderStatus(message.author.id, this.userData.botCommanders);
+                        areTheyACommander = checkForBotCommanderStatus(guildMember.id, this.userData.botCommanders);
                         if (areTheyAnAdmin === true || areTheyACommander === true) {
                             return [2 /*return*/, new Promise(function (resolve, reject) {
                                     resolve(true);
                                 })];
                         }
-                        return [4 /*yield*/, message.reply("Sorry, but you don't have the permissions required for that!")];
+                        return [4 /*yield*/, textChannel.send("@<@!" + guildMember.id + "> Sorry, but you don't have the permissions required for that!")];
                     case 1:
                         _a.sent();
-                        if (!message.deletable) return [3 /*break*/, 3];
-                        return [4 /*yield*/, message.delete()];
+                        return [2 /*return*/, new Promise(function (resolve, reject) {
+                                resolve(false);
+                            })];
                     case 2:
-                        _a.sent();
-                        _a.label = 3;
-                    case 3: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve(false);
-                        })];
-                    case 4:
                         error_16 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_16);
                             })];
-                    case 5: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

@@ -67,8 +67,10 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 	 * @param 	{DiscordStuff.DiscordUser}	discordUser
 	 * @returns {Promise<strin>}
 	 */
- export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+ export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
+		const commandReturnData = new DiscordStuff.CommandReturnData;
+		commandReturnData.commandName = command.name;
 		const areWeInADM = await DiscordStuff.areWeInADM(message);
 
 		if (areWeInADM){

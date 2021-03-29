@@ -13,99 +13,94 @@ command.name = 'ghost';
 command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS THE SERVER!\n!ghost to display a list of all currently ghosted users.\n!ghost = add, REASON, '
 + '@USERMENTION to ghost a new user.\n!ghost = remove, @USERMENTION to unghost a user.';
 
-export async function  execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+    const returnData = new DiscordStuff.CommandReturnData();
+        returnData.commandName = command.name;
     try {
-        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(message);
+        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData.guildMember as Discord.GuildMember, commandData.textChannel as Discord.TextChannel);
 
         if (!doWeHaveAdminPerms) {
-            return command.name;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
         }
 
         let whatAreWeDoing;
-        const userIDRegExp = /<@!\d{18}>/;
+        const userMentionRegExp = /<@!\d{18}>/;
+        const userIDRegExp = /\d{18}/;
         let ghostReason;
         let userID;
-        if (args[0] === undefined) {
+        if (commandData.args[0] === '' || commandData.args[0] === undefined) {
             whatAreWeDoing = 'viewing';
-            userID = (message.member as Discord.GuildMember).id;
-        } else if (args[0] !== undefined && args[0].toLowerCase() !== 'add' && args[0].toLowerCase() !== 'remove') {
-            await message.reply('Please, enter a proper first argument! (!ghost = add, REASON, @USERMENTION to'
-        + 'ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            if (message.deletable) {
-				await message.delete();
-			}
-            return command.name;
-        }	else if (args[0] !== undefined && args[0].toLowerCase() === 'add' && args[1] === undefined) {
-            await message.reply('Please, enter a reason for this ghosting! (!ghost = add, REASON, @USERMENTION to'
-        + 'ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            if (message.deletable) {
-				await message.delete();
-			}
-            return command.name;
-        } else if (args[0] !== undefined && args[0].toLowerCase() === 'add' && args[2] === undefined) {
-            await message.reply('Please, enter a usermention to select the target to ghost! (!ghost = add, REASON,'
-        + '@USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            if (message.deletable) {
-				await message.delete();
-			}
-            return command.name;
-        }	else if (args[0] !== undefined && args[0].toLowerCase() === 'remove' && args[1] === undefined) {
-            await message.reply('Please, enter a usermention to select the target to de-ghost! (!ghost = add, REASON,'
-        + '@USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            if (message.deletable) {
-				await message.delete();
-			}
-            return command.name;
-        } else if (args[0] !== undefined && args[0].toLowerCase() === 'add' && !userIDRegExp.test((args[2]) as string)) {
-            await message.reply('Please, enter a proper usermention to select the target to ghost! (!ghost = add, REASON,'
-        + '@USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            if (message.deletable) {
-				await message.delete();
-			}
-            return command.name;
-        } else if (args[0] !== undefined && args[0].toLowerCase() === 'remove' && !userIDRegExp.test((args[1]) as string)) {
-            await message.reply('Please, enter a proper usermention to select the target to de-ghost! (!ghost = add, REASON,'
-        + '@USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)');
-            if (message.deletable) {
-				await message.delete();
-			}
-            return command.name;
-        } else if (args[0] !== undefined && args[0].toLowerCase() === 'add') {
+            userID = (commandData.guildMember as Discord.GuildMember).id;
+        } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() !== 'add' && (commandData.args[0] as string).toString().toLowerCase() !== 'remove') {
+            returnData.returnMessage =  `<@!${(commandData.guildMember as Discord.GuildMember).id}>1 Please, enter a proper first argument! (!ghost = add, REASON, @USERMENTION to 
+                ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
+        }	else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'add' && commandData.args[1] === undefined) {
+            returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 2Please, enter a reason for this ghosting! (!ghost = add, REASON, @USERMENTION to 
+                ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
+        } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'add' && commandData.args[2] === undefined) {
+            returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 3Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
+                @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
+        }	else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'remove' && commandData.args[1] === undefined) {
+            returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 4Please, enter a usermention to select the target to de-ghost! (!ghost = remove, @USERMENTION to unghost a user)`;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
+        } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'add' && !userMentionRegExp.test((commandData.args[2]) as string) && !userIDRegExp.test(commandData.args[2] as string)) {
+            returnData.returnMessage =`<@!${(commandData.guildMember as Discord.GuildMember).id}> 5Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
+                @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
+        } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'remove' && !userMentionRegExp.test((commandData.args[1]) as string) && !userIDRegExp.test(commandData.args[1] as string)) {
+            returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 6Please, enter a proper usermention to select the target to de-ghost! (!ghost = remove, @USERMENTION to unghost a user)`;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
+        } else if (commandData.args[0] !== undefined && commandData.args[0].toString().toLowerCase() === 'add') {
             whatAreWeDoing = 'add';
-            const argOne = args[1];
+            const argOne = commandData.args[1];
             ghostReason = argOne;
-            const argTwo = args[2];
+            const argTwo = commandData.args[2];
             const userIDRaw = ((argTwo as string).match(/\d{18}/) as string[])[0];
             userID = userIDRaw;
-        } else if (args[0] !== undefined && args[0].toLowerCase() === 'remove') {
+        } else if (commandData.args[0] !== undefined && commandData.args[0].toString().toLowerCase() === 'remove') {
             whatAreWeDoing = 'remove';
-            const argOne = args[1];
+            const argOne = commandData.args[1];
             const userIDRaw = ((argOne as string).match(/\d{18}/) as string[])[0];
             userID = userIDRaw;
         }
 
-        const guildData = await discordUser.getGuildDataFromDB((message.guild as Discord.Guild));
+        const guildData = await discordUser.getGuildDataFromDB((commandData.guild as Discord.Guild));
 
-        const currentGuildMember = await (message.guild as Discord.Guild).members.fetch((userID as string));
+        const currentGuildMember = await (commandData.guild as Discord.Guild).members.fetch((userID as string));
 
         const guildMemberData = await discordUser.getGuildMemberDataFromDB(currentGuildMember);
 
-        const channelsArray = (await message.client.guilds.fetch((message.guild as Discord.Guild).id))
-            .channels.cache.array();
+        const channelsArray = (commandData.guild as Discord.Guild).channels.cache.array();
 
-        const roleManager = new Discord.RoleManager((message.guild as Discord.Guild));
+        const roleManager = new Discord.RoleManager((commandData.guild as Discord.Guild));
 
         let ghostedRole = await roleManager.fetch((guildData.ghostedRoleID as string));
 
         const memberRoleManager = new Discord.GuildMemberRoleManager(currentGuildMember);
 
-        const memberRoleManagerBot = new Discord.GuildMemberRoleManager(((message.client
-            .guilds.resolve((guildData.guildID as string)) as Discord.Guild).members.resolve((message.client.user as Discord.User).id) as Discord.GuildMember));
+        const memberRoleManagerBot = new Discord.GuildMemberRoleManager(commandData.guildMember as Discord.GuildMember);
 
         if (!(ghostedRole instanceof Discord.Role)) {
             ghostedRole = await roleManager.create({
                 data: {
-                    position: memberRoleManagerBot.highest.position, color: 'FF3333', mentionable: true, name: 'Ghosted',
+                    position: memberRoleManagerBot.highest.position - 1, color: 'FF3333', mentionable: true, name: 'Ghosted',
                 },
             });
 
@@ -115,8 +110,7 @@ export async function  execute(message: Discord.Message, args: string[], discord
 
         if (whatAreWeDoing === 'add' || whatAreWeDoing === 'remove') {
             for (let x = 0; x < channelsArray.length; x += 1) {
-                const voicePermissionOptions = new DiscordStuff.PermissionOverwrites((message
-                    .client.guilds.resolve((guildData.guildID as string)) as Discord.Guild));
+                const voicePermissionOptions = new DiscordStuff.PermissionOverwrites((commandData.guild as Discord.Guild));
                 voicePermissionOptions.channel = null;
                 voicePermissionOptions.id = (guildData.ghostedRoleID  as string);
                 voicePermissionOptions.type = 'role';
@@ -126,8 +120,7 @@ export async function  execute(message: Discord.Message, args: string[], discord
                     'CONNECT', 'SPEAK', 'MUTE_MEMBERS', 'DEAFEN_MEMBERS', 'MOVE_MEMBERS', 'USE_VAD', 'CHANGE_NICKNAME', 'MANAGE_NICKNAMES',
                     'MANAGE_ROLES', 'MANAGE_WEBHOOKS', 'MANAGE_EMOJIS'];
 
-                const textPermissionOptions = new DiscordStuff.PermissionOverwrites(message
-                    .client.guilds.resolve((guildData.guildID as string)) as Discord.Guild);
+                const textPermissionOptions = new DiscordStuff.PermissionOverwrites(commandData.guild as Discord.Guild);
                 textPermissionOptions.channel = null;
                 textPermissionOptions.id = (guildData.ghostedRoleID as string);
                 textPermissionOptions.type = 'role';
@@ -139,7 +132,7 @@ export async function  execute(message: Discord.Message, args: string[], discord
                     'MANAGE_WEBHOOKS', 'MANAGE_EMOJIS'];
 
                 if ((channelsArray[x] as Discord.Channel).type === 'voice') {
-                    let currentChannel = new Discord.VoiceChannel((message.guild as Discord.Guild), {});
+                    let currentChannel = new Discord.VoiceChannel((commandData.guild as Discord.Guild), {});
                     currentChannel = channelsArray[x] as Discord.VoiceChannel;
 
                     let isItFound = false;
@@ -171,7 +164,7 @@ export async function  execute(message: Discord.Message, args: string[], discord
                     currentOverwritesArray.push((voicePermissionOptions as unknown) as Discord.PermissionOverwrites);
                     await currentChannel.overwritePermissions(currentOverwritesArray);
                 } else {
-                    let currentChannel = new Discord.GuildChannel((message.guild as Discord.Guild), {});
+                    let currentChannel = new Discord.GuildChannel((commandData.guild as Discord.Guild), {});
                     currentChannel = channelsArray[x] as Discord.GuildChannel;
 
                     let isItFound1 = false;
@@ -249,38 +242,32 @@ export async function  execute(message: Discord.Message, args: string[], discord
             msgString += '\n------';
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
-                .setAuthor(message.author.username, (message.author.avatarURL() as string))
+                .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Currently Ghosted Members:**__');
 
-            await message.channel.send(msgEmbed);
-            if (message.deletable) {
-				await message.delete();
-			}
-            return command.name;
+            returnData.returnMessage = msgEmbed;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
         } if (whatAreWeDoing === 'add') {
             for (let x = 0; x < ghostedUserArray.length; x += 1) {
                 if (currentGuildMember.id === (ghostedUserArray[x] as Discord.GuildMember).id) {
-                    await message.reply('They are already ghosted!');
-                    if (message.deletable) {
-				        await message.delete();
-			        }
-                    return command.name;
+                    returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> They are already ghosted!`;
+                    return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
                 }
             }
-
-            if (message.deletable) {
-				await message.delete();
-			}
 
             guildMemberData.previousRoleIDs.push(memberRoleManager.highest.id);
             for (let x = 0; x < memberRoleManager.cache.array().length; x += 1) {
                 if ((memberRoleManager.cache.array()[x] as Discord.Role).id === memberRoleManager.highest.id) {
                     continue;
                 }
-                if ((memberRoleManager.cache.array()[x] as Discord.Role).name !== '@everyone'
+                if ((memberRoleManager.cache.array()[x] as Discord.Role).name !== '@everyone' && (memberRoleManager.cache.array()[x] as Discord.Role).name !== 'general'
                     && (memberRoleManager.cache.array()[x] as Discord.Role).id !== memberRoleManager.highest.id) {
                     guildMemberData.previousRoleIDs.push((memberRoleManager.cache.array()[x] as Discord.Role).id as string);
                 }
@@ -309,7 +296,7 @@ export async function  execute(message: Discord.Message, args: string[], discord
                 for (let y = 0; y < currentChannelOverwritesArray.length; y += 1) {
                     if ((currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).id === currentGuildMember.id) {
                         const permOWs = new DiscordStuff
-                            .PermissionOverwrites(message.client.guilds.resolve((guildData.guildID as string))as Discord.Guild);
+                            .PermissionOverwrites(commandData.guild as Discord.Guild);
                         permOWs.allow = (currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).allow.toArray();
                         permOWs.deny = (currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).deny.toArray();
                         permOWs.id = currentGuildMember.id;
@@ -330,11 +317,11 @@ export async function  execute(message: Discord.Message, args: string[], discord
 
             await memberRoleManager.add(ghostedRole.id);
 
-            const msgString = `------\n**Hello! You've been REDACTED, on the server ${(message.guild as Discord.Guild).name},
+            const msgString = `------\n**Hello! You've been REDACTED, on the server ${(commandData.guild as Discord.Guild).name},
             for the following reason(s):	${ghostReason}\n Please, contact a moderator or admin to clear this issue up! Thanks!**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
-                .setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
+                .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
                 .setTimestamp((Date() as unknown) as Date)
@@ -346,14 +333,17 @@ export async function  execute(message: Discord.Message, args: string[], discord
             const msgString2 = `------\n__Hello! You've ghosted the following member__: <@!${guildMemberData.userID}> (${guildMemberData.userName})\n------`;
             const msgEmbed2 = new Discord.MessageEmbed();
             msgEmbed2
-                .setAuthor((message.client.user as Discord.User).username, (message.client.user as Discord.User).avatarURL() as string)
+                .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setDescription(msgString2)
                 .setTimestamp((Date() as unknown ) as Date)
                 .setTitle('__**New Server Member Ghosted:**__');
 
-            await message.channel.send(msgEmbed2);
-            return command.name;
+            //await (commandData.textChannel as Discord.TextChannel).send(msgEmbed2);
+            returnData.returnMessage = msgEmbed2;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
         } if (whatAreWeDoing === 'remove') {
             let isItFound = false;
             for (let x = 0; x < ghostedUserArray.length; x += 1) {
@@ -364,16 +354,11 @@ export async function  execute(message: Discord.Message, args: string[], discord
             }
 
             if (isItFound === false) {
-                await message.reply('Sorry, but that user is not currently ghosted!');
-                if (message.deletable) {
-                    await message.delete();
-                }
-                return command.name;
+                returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but that user is not currently ghosted!`;
+                return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
             }
-
-            if (message.deletable) {
-				await message.delete();
-			}
 
             for (let x = 0; x < guildMemberData.previousRoleIDs.length; x += 1) {
                 try {
@@ -408,7 +393,7 @@ export async function  execute(message: Discord.Message, args: string[], discord
             const msgString = '------\n**Hello! You\'ve had your redacted status removed! Have a great day!**\n------';
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
-                .setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
+                .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
                 .setTimestamp((Date() as unknown) as Date)
@@ -420,24 +405,29 @@ export async function  execute(message: Discord.Message, args: string[], discord
             const msgString2 = `------\n__Hello! You've un-ghosted the following member__: <@!${guildMemberData.userID}> (${guildMemberData.userName})\n------`;
             const msgEmbed2 = new Discord.MessageEmbed();
             msgEmbed2
-                .setAuthor((message.client.user as Discord.User).username, ((message.client.user as Discord.User).avatarURL() as string))
+                .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setDescription(msgString2)
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**New Server Member Un-Ghosted:**__');
 
-            await message.channel.send(msgEmbed2);
-            return command.name;
+            //await (commandData.textChannel as Discord.TextChannel).send(msgEmbed2);
+            returnData.returnMessage =  msgEmbed2;
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
         }
 
-        return command.name;
+        return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
     } catch (error) {
         if (error.message === 'Missing Permissions') {
-            await message.reply('I need more permissions! Please promote my role rank in the server options!');
-            if (message.deletable) {
-                await message.delete();
-            }
-            return command.name;
+            await (commandData.textChannel as Discord.TextChannel).send(`<@!${(commandData.guildMember as Discord.GuildMember).id}> I need more permissions! Please promote my role rank in the server options!`);
+            console.log(error);
+            return new Promise((resolve, reject) => {
+                resolve(returnData);
+            });
         }
         return new Promise((resolve, reject) => {
             reject(error);

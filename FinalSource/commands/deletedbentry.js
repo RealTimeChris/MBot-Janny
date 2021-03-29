@@ -119,14 +119,16 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
      * @param 	{DiscordStuff.DiscordUser}	discordUser
      * @returns {Promise<strin>}
      */
-function execute(message, args, discordUser) {
+function execute(commandData, discordUser) {
     var e_1, _a;
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, areWeACommander, dbKey, argZero, deletedCounter, iterator, iterator_1, iterator_1_1, _b, key, value, e_1_1, msgEmbed, error_2;
+        var commandReturnData, areWeInADM, areWeACommander, dbKey, argZero, deletedCounter, iterator, iterator_1, iterator_1_1, _b, key, value, e_1_1, msgEmbed, error_2;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
                     _c.trys.push([0, 32, , 35]);
+                    commandReturnData = new DiscordStuff.CommandReturnData;
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _c.sent();

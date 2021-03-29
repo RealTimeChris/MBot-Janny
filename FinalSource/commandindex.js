@@ -72,6 +72,8 @@ var setreplacementinvite_1 = __importDefault(require("./commands/setreplacementi
 commands.set(setreplacementinvite_1.default.name, setreplacementinvite_1.default);
 var setverificationsystem_1 = __importDefault(require("./commands/setverificationsystem"));
 commands.set(setverificationsystem_1.default.name, setverificationsystem_1.default);
+var slashcommands_1 = __importDefault(require("./commands/slashcommands"));
+commands.set(slashcommands_1.default.name, slashcommands_1.default);
 var test_1 = __importDefault(require("./commands/test"));
 commands.set(test_1.default.name, test_1.default);
 var timedmessages_1 = __importDefault(require("./commands/timedmessages"));

@@ -399,6 +399,29 @@ export class BotCommand {
 }
 
 /**
+ * Class representing the data that goes into a command.
+ */
+export class CommandData{
+	guild: Discord.Guild | null = null;
+	guildMember: Discord.GuildMember | null = null;
+	textChannel: Discord.TextChannel | null = null;
+	args: string[] = [];
+	async initialize(client: Discord.Client, guildID: string, guildMemberID: string, textChannelID: string): Promise<void>{
+		this.guild  = (await client.guilds.fetch(guildID) as Discord.Guild);
+		this.guildMember = (await this.guild.members.fetch(guildMemberID) as Discord.GuildMember);
+		this.textChannel = (await client.channels.fetch(textChannelID) as Discord.TextChannel);
+	}
+}
+
+/**
+ * Class representing a command' return values.
+ */
+export class CommandReturnData{
+	commandName: string = '';
+	returnMessage: string | Discord.MessageEmbed = '';
+}
+
+/**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
 export class DiscordUser {
@@ -748,15 +771,15 @@ export class DiscordUser {
 	/**
 	 * Checks if we have admin permissions in the current channel.
 	 */
-	async doWeHaveAdminPermission(message: Discord.Message): Promise<boolean> {
+	async doWeHaveAdminPermission(guildMember: Discord.GuildMember, textChannel: Discord.TextChannel): Promise<boolean> {
 		try {
-			const currentChannelPermissions = (message.member as Discord.GuildMember).permissionsIn(message.channel);
+			const currentChannelPermissions = guildMember.permissionsIn(textChannel);
 
 			const permissionStrings = ['ADMINISTRATOR'] as Discord.PermissionString[];
 
 			const areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
 
-			const areTheyACommander = checkForBotCommanderStatus(message.author.id,
+			const areTheyACommander = checkForBotCommanderStatus(guildMember.id,
 				this.userData.botCommanders);
 
 			if (areTheyAnAdmin === true || areTheyACommander === true) {
@@ -765,10 +788,7 @@ export class DiscordUser {
 				});
 			}
 
-			await message.reply("Sorry, but you don't have the permissions required for that!");
-			if (message.deletable){
-				await message.delete();
-			}
+			await textChannel.send(`@<@!${guildMember.id}> Sorry, but you don't have the permissions required for that!`);
 			return new Promise((resolve, reject) => {
 				resolve(false);
 			});

@@ -14,9 +14,11 @@ command.description = '!botinfo to display info about this bot in chat!';
 
  /**
   * Displays the data about the currend user
-  *  */ 
-export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+  * */ 
+export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
    try {
+       const commandReturnData = new DiscordStuff.CommandReturnData();
+       commandReturnData.commandName = command.name;
        const fields: Discord.EmbedField[] = [];
        const field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
        fields.push(field1 as Discord.EmbedField);
@@ -28,18 +30,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
        fields.push(field4 as Discord.EmbedField);
 
        const messageEmbed = new Discord.MessageEmbed()
-           .setImage((message.client.user as Discord.User).avatarURL() as string)
+           .setImage(commandData.guildMember?.client.user?.avatarURL() as string)
            .setColor([0, 0, 255])
            .setTitle('__**Bot Info:**__')
            .setTimestamp((Date() as unknown) as Date);
        messageEmbed.fields = fields;
-       await message.channel.send(messageEmbed);
-       if (message.channel.type !== 'dm' && message.deletable) {
-           await message.delete();
-       }
-       return new Promise((resolve, reject) => {
-        resolve(command.name);
-       });
+       commandReturnData.returnMessage = messageEmbed;
+       return commandReturnData;
    } catch (error) {
        return new Promise((resolve, reject) => {
            reject(error);
