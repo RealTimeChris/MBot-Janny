@@ -67,7 +67,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 		if (!areAnyFound){
 			const msgEmbed = new Discord.MessageEmbed();
 			msgEmbed
-				.setAuthor(commandData.guildMember?.user.username, (commandData.guildMember?.user as Discord.User).avatarURL()as string)
+				.setAuthor((commandData.guildMember as Discord.User).username, ((commandData.guildMember as Discord.User) as Discord.User).avatarURL()as string)
 				.setColor([0, 0, 255])
 				.setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
 				.setTimestamp((Date() as unknown) as Date)

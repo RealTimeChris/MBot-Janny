@@ -15,38 +15,39 @@ command.description = '!purge = AMOUNTTODELETE, between 1 and 100 messages!';
 /**
  * Purges up to 100 messages from a given channel at a time.
  */
-export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
 	try {
 		const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
-		const areWeInADM = await DiscordStuff.areWeInADM(message);
+		const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
 		if (areWeInADM === true) {
-			return command.name;
+			return commandReturnData;
 		}
 
-		const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(message);
+		const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
 
 		if (doWeHaveAdminPerms === false) {
-			return command.name;
+			return commandReturnData;
 		}
 
 		const regExp = new RegExp(/\d{1,3}/);
 
-		if (args[0] === undefined || !regExp.test(args[0])
-		|| parseInt(args[0], 10) <= 0 || parseInt(args[0], 10) > 100) {
-			await message.reply('Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)');
-			if (message.deletable) {
-				await message.delete();
-			}
-			return command.name;
+		if (commandData.args[0] === undefined || !regExp.test(commandData.args[0])
+		|| parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100) {
+			const msgString = 'Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)';
+			DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+			return commandReturnData;
 		}
-		const deleteCount = parseInt(((args[0].match(regExp) as string[])[0]as string), 10);
-        const currentChannel = message.channel as Discord.TextChannel;
-        currentChannel.bulkDelete(deleteCount, true);
-		const newMessage = await message.reply(`Deleted ${deleteCount.toString()} messages!`);
+		const deleteCount = parseInt(((commandData.args[0].toString().match(regExp) as string[])[0]as string), 10);
+        const currentChannel = commandData.textChannel as Discord.TextChannel;
+        if (currentChannel.type === 'text')  {
+			await currentChannel.bulkDelete(deleteCount, true)
+		};
+		const msgString = `I've just deleted ${deleteCount} messages from this channel!`;
+		const newMessage = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
 		newMessage.delete({ timeout: 5000 });
-		return command.name;
+		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {
 			reject(error);

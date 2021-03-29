@@ -14,68 +14,102 @@ const discordUser = new DiscordStuff.DiscordUser();
 const client = new Discord.Client() as any;
 
 client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
-	const {member:{user:{id}}, guild_id, data:{options, name}, channel_id} = interaction;
+	const {channel_id} = interaction;
+	let id_full, guild_id_full, options_full, name_full;
 	const commandData = new DiscordStuff.CommandData();
 	commandData.interaction = interaction;
-	await commandData.initialize(client, guild_id, id, channel_id);
-	const nameSolid = name;
-	if (name === 'botinfo'){
+	if ((await client.channels.fetch(channel_id)).type === 'dm'){
+		console.log("WE'RE HERE ALRIGHT!");
+		let {user:{id}, guild_id, data:{options, name}} = interaction;
+		id_full = id;
+		guild_id_full = guild_id;
+		options_full = options;
+		name_full = name;
+		await commandData.initialize(client, channel_id, id_full);
+	}
+	else {
+		let {member:{user:{id}}, guild_id, data:{options, name}} = interaction;
+		id_full = id;
+		guild_id_full = guild_id;
+		options_full = options;
+		name_full = name;
+		await commandData.initialize(client, channel_id, id_full, guild_id_full);
+	}
+	const nameSolid = name_full;
+	console.log(interaction);
+	if (name_full === 'botinfo'){
 
 	}
-	if (name === "deletedbentry"){
-		const {value:value1} = options[0].options[0];
-		const {value:value2} = options[0].options[1];
+	if (name_full === "deletedbentry"){
+		const {value:value1} = options_full[0].options[0];
+		const {value:value2} = options_full[0].options[1];
 		commandData.args[0] = value1;
 		commandData.args[1] = value2;
 		if (commandData.args[0] !== 'janny') {
 			return;
 		}
 	}
-	if (name === "displayguildsdata"){
+	if (name_full === "displayguildsdata"){
 
 	}
-	if (name === 'ghost'){
+	if (name_full === 'ghost'){
 		let userID;
 		let reason;
-		const name = options[0].name;
-		if (name === 'view'){
-			const viewOrNot = options[0].options[0].value;
+		const name_full = options_full[0].name_full;
+		if (name_full === 'view'){
+			const viewOrNot = options_full[0].options[0].value;
 			commandData.args[1] = '';
 			commandData.args[2] = '';
 			if (!viewOrNot){
 				return;
 			}
 		}
-		else if(name === 'add'){
-			userID = options[0].options[0].value;
-			reason = options[0].options[1].value;
+		else if(name_full === 'add'){
+			userID = options_full[0].options[0].value;
+			reason = options_full[0].options[1].value;
 			commandData.args[0] = 'add';
 			commandData.args[1] = reason;
 			commandData.args[2] = userID;
 		}
-		else if (name === 'remove'){
-			userID = options[0].options[0].value;
+		else if (name_full === 'remove'){
+			userID = options_full[0].options[0].value;
 			commandData.args[0] = 'remove';
 			commandData.args[1] = userID;
 		}
 	}
-	if (name === 'help'){
-		if (options[0].options !==  undefined){
-			const {value} = options[0].options[0];
+	if (name_full === 'help'){
+		if (options_full[0].options !==  undefined){
+			const {value} = options_full[0].options[0];
 			commandData.args[0] = value;
 		}
 	}
-	if (name === 'jannyoptinos'){
+	if (name_full === 'jannyoptinos'){
 
 	}
-	if (name === 'listdbguilds'){
-		const {value:value1} = options[0].options[0];
+	if (name_full === 'listdbguilds'){
+		const {value:value1} = options_full[0].options[0];
 		commandData.args[0] = value1;
 	}
-	if (name === 'ping'){
+	if (name_full === "managelogs"){
+
+	}
+	if (name_full === 'ping'){
 		
 	}
-	if (name === 'test'){
+	if (name_full === 'purge'){
+		const msgCountToPurge = options_full[0].options[0].value;
+		commandData.args[0] = msgCountToPurge;
+	}
+	if (name_full === 'serverinfo'){
+		if (options_full[0].options !== undefined){
+			const {value:value1} = options_full[0].options[0];
+			commandData.args[0] = value1;
+		}		
+	}
+	if (name_full === 'slashcommands'){
+
+	}	
+	if (name_full === 'test'){
 
 	}
 	await client.api.interactions(interaction.id, interaction.token).callback.post({
@@ -125,7 +159,7 @@ client.on('message', async (msg: Discord.Message) => {
 		try {
 			const commandData = new DiscordStuff.CommandData();
 			if (msg.channel.type !== 'dm'){
-				await commandData.initialize(client, (msg.guild as Discord.Guild).id, (msg.member as Discord.GuildMember).id, msg.channel.id, msg.channel.id);
+				await commandData.initialize(client, msg.channel.id, (msg.member as Discord.GuildMember).id, (msg.guild as Discord.Guild).id, msg.channel.id, );
 			}
 			else{
 				await commandData.initialize(client);

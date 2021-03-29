@@ -42,16 +42,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var DiscordStuff = require("../DiscordStuff");
 var slash_commands_1 = require("slash-commands");
+var SlashCommands = require("slash-commands");
 var command = new DiscordStuff.BotCommand();
 command.name = 'slashcommands';
 command.description = '!slashcommands';
 function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, interaction, commands, x, globalCommands, error_1;
+        var commandReturnData, interaction, commands, x, serverinfo, globalCommands, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
+                    _a.trys.push([0, 5, , 6]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID,
@@ -64,17 +65,41 @@ function execute(commandData, discordUser) {
                         //const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
                         //console.log(newInteraction);
                     }
-                    return [4 /*yield*/, interaction.getApplicationCommands()];
+                    serverinfo = {
+                        "name": "serverinfo",
+                        "description": "Displays info about a given server.",
+                        "options": [{
+                                "name": "server",
+                                "description": "Which server shall you list.",
+                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "options": [{
+                                        "name": "serverID",
+                                        "description": "The server ID to examine.",
+                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                                        "required": false,
+                                        "choices": []
+                                    }]
+                            }]
+                    };
+                    // Create Global Command
+                    return [4 /*yield*/, interaction.createApplicationCommand(serverinfo).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
                 case 2:
+                    // Create Global Command
+                    _a.sent();
+                    return [4 /*yield*/, interaction.getApplicationCommands()];
+                case 3:
                     globalCommands = _a.sent();
                     console.log(globalCommands.length);
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, "Yes, IT'S COMPLETED!, You have " + globalCommands.length + " commands registered!")];
+                case 4:
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 3:
+                case 5:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 4: return [2 /*return*/];
+                case 6: return [2 /*return*/];
             }
         });
     });

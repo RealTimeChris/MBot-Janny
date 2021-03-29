@@ -13,49 +13,45 @@ command.name = 'setdefaultrole';
 command.description = 'Just enter !setdefaultrole to view the current list of default roles!\nEnter !setdefaultrole = ADD, ROLENAME, to add a '
 + 'role as a default for when someone new joins the server.\n!setdefaultrole = REMOVE, ROLENAME to remove a role from the list.';
 
-export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
-        const areWeInADM = await DiscordStuff.areWeInADM(message);
+        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
         if (areWeInADM === true) {
-            return command.name;
+            return commandReturnData;
         }
 
-        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(message);
+        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
 
         if (doWeHaveAdminPerms === false) {
-            return command.name;
+            return commandReturnData;
         }
 
         let whatAreWeDoing = '';
 
-        if (args[0] === undefined) {
+        if (commandData.args[0] === undefined) {
             whatAreWeDoing = 'view';
-        } else if (args[0] !== undefined && args[0].toLowerCase() !== 'add' && args[0].toLowerCase() !== 'remove') {
-            await message.reply("Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)");
-            if (message.deletable) {
-                await message.delete();
-			}
-            return command.name;
-        } else if (args[1] === undefined) {
-            await message.reply('Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)');
-            if (message.deletable){
-                await message.delete();
-            }            
-            return command.name;
-        } else if (args[0].toLowerCase() === 'add') {
+        } else if (commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove') {
+            const msgString = "Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)";
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            return commandReturnData;
+        } else if (commandData.args[1] === undefined) {
+            const msgString = 'Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)';
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            return commandReturnData;
+        } else if (commandData.args[0].toLowerCase() === 'add') {
             whatAreWeDoing = 'add';
-        } else if (args[0].toLowerCase() === 'remove') {
+        } else if (commandData.args[0].toLowerCase() === 'remove') {
             whatAreWeDoing = 'remove';
         }
 
-        const roleName = args[1];
+        const roleName = commandData.args[1];
 
-        const guildData = await discordUser.getGuildDataFromDB(message.guild as Discord.Guild);
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
 
-        const roleArray = (message.guild as Discord.Guild).roles.cache.array().sort();
+        const roleArray = (commandData.guild as Discord.Guild).roles.cache.array().sort();
 
         for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
             const isItFoundReal = roleArray.map(role => {
@@ -101,19 +97,16 @@ export async function execute(message: Discord.Message, args: string[], discordU
 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setTitle('__**Default Roles:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
-            await message.reply(messageEmbed);
-            if (message.deletable) {
-                await message.delete();
-            }
-            return command.name;
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)
+            return commandReturnData;
         }
 
-        let currentRole = new Discord.Role(message.client, {}, message.client.guilds.resolve(guildData.guildID) as Discord.Guild);
+        let currentRole = new Discord.Role((commandData.guildMember as Discord.GuildMember).client, {}, (commandData.guildMember as Discord.GuildMember).client.guilds.resolve(guildData.guildID) as Discord.Guild);
 
         let isItFound = false;
         roleArray.map(role => {
@@ -125,21 +118,17 @@ export async function execute(message: Discord.Message, args: string[], discordU
         });
 
         if (isItFound === false) {
-            await message.reply('Sorry, but the role you entered could not be found! Check spelling and case!');
-            if (message.deletable) {
-                await message.delete();
-            }
-            return command.name;
+             const msgString = 'Sorry, but the role you entered could not be found! Check spelling and case!';
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            return commandReturnData;
         }
 
         if (whatAreWeDoing === 'add') {
             for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
                 if (currentRole.id === guildData.defaultRoleIDs[x]) {
-                    await message.reply("Hey! It looks like you've already added that role!");
-                    if (message.deletable) {
-                        await message.delete();
-                    }
-                    return command.name;
+                    const msgString = "Hey! It looks like you've already added that role!";
+                    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                    return commandReturnData;
                 }
             }
 
@@ -150,16 +139,13 @@ export async function execute(message: Discord.Message, args: string[], discordU
 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setTitle('__**New Default Role Added:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
-            await message.reply(messageEmbed);
-            if (message.deletable) {
-                await message.delete();
-            }
-            return command.name;
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)
+            return commandReturnData;
         }
         if (whatAreWeDoing === 'remove') {
             isItFound = false;
@@ -172,29 +158,24 @@ export async function execute(message: Discord.Message, args: string[], discordU
             }
 
             if (isItFound === false) {
-                await message.reply('Sorry, but the role you entered could not be found! Check spelling and case!');
-                if (message.deletable) {
-                    await message.delete();
-                }
-                return command.name;
+                const msgString = 'Sorry, but the role you entered could not be found! Check spelling and case!';
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                return commandReturnData;
             }
 
             const msgString = `${'\n------\n__**Role**__: <@&'}${currentRole.id}>\n------`;
 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setTitle('__**Default Role Removed:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
-            await message.reply(messageEmbed);
-            if (message.deletable) {
-                await message.delete();
-            }
-            return command.name;
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+            return commandReturnData;
         }
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

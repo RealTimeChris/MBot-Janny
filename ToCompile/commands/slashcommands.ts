@@ -270,6 +270,34 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         // Create Global Command
         await interaction.createApplicationCommand(listdbguilds).then(error => console.log(error)).catch(error => console.log(error.message));
 
+        const purge = {
+                "name": "purge",
+                "description": "Bulk deletes up to 100 messages at a time, from a given channel.",
+                "options":[{
+                    "name": "delete",
+                    "description": "Delete the selected number of messages.",
+                    "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                    "options":[{
+                        "name": "messagecount",
+                        "description": "How many message shall we delete?",
+                        "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
+                        "required": true,
+                        "choices": []
+                        }]
+                    }]}
+
+        // Create Global Command
+        await interaction.createApplicationCommand(purge).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const managelogs = {
+            "name": "managelogs",
+            "description": "Lists the status of all of the available logging types.",
+            "options": []
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(managelogs).then(error => console.log(error)).catch(error => console.log(error.message));        
+
         const ping = {
             "name": "ping",
             "description": "A basic ping-pong command!",
@@ -278,18 +306,47 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         
         // Create Global Command
         await interaction.createApplicationCommand(ping).then(error => console.log(error)).catch(error => console.log(error.message));
+        
+        const slashcommands = {
+            "name": "slashcommands",
+            "description": "Declares the slash commands to the Discord servers!",
+            "options": []
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(slashcommands).then(error => console.log(error)).catch(error => console.log(error.message));
 
         const test = {
             "name": "test",
             "description": "Testing module, for experimentation!",
             "options": []
         }
-        
+
         // Create Global Command
         await interaction.createApplicationCommand(test).then(error => console.log(error)).catch(error => console.log(error.message));
-*/        
+*/
+        const serverinfo = {
+            "name": "serverinfo",
+            "description": "Displays info about a given server.",
+            "options":[{
+                "name": "server",
+                "description": "Which server shall you list.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options":[{
+                    "name": "serverID",
+                    "description": "The server ID to examine.",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": false,
+                    "choices": []
+                    }]
+                }]}
+
+        // Create Global Command
+        await interaction.createApplicationCommand(serverinfo).then(error => console.log(error)).catch(error => console.log(error.message));
+
         const globalCommands = await interaction.getApplicationCommands();
         console.log(globalCommands.length);
+        await DiscordStuff.sendMessageWithCorrectChannel(commandData, `Yes, IT'S COMPLETED!, You have ${globalCommands.length} commands registered!`);
         return commandReturnData;
     }
     catch(error){

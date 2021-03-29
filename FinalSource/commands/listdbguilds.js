@@ -55,24 +55,23 @@ command.name = 'listdbguilds';
 command.description = '!listdbguilds, to list guilds that this bot is no longer in!';
 function execute(commandData, discordUser) {
     var e_1, _a;
-    var _b, _c;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, areWeAnAdmin, msgString, msgString, guildsArray, iterator, areAnyFound, iterator_1, iterator_1_1, _d, key, value, isItFound, x, newValue, msgString, e_1_1, msgEmbed, error_1;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
+        var commandReturnData, areWeInADM, areWeAnAdmin, msgString, msgString, guildsArray, iterator, areAnyFound, iterator_1, iterator_1_1, _b, key, value, isItFound, x, newValue, msgString, e_1_1, msgEmbed, error_1;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _e.trys.push([0, 23, , 24]);
+                    _c.trys.push([0, 23, , 24]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _e.sent();
+                    areWeInADM = _c.sent();
                     if (areWeInADM) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 2:
-                    areWeAnAdmin = _e.sent();
+                    areWeAnAdmin = _c.sent();
                     if (!areWeAnAdmin) {
                         return [2 /*return*/, commandReturnData];
                     }
@@ -80,14 +79,14 @@ function execute(commandData, discordUser) {
                     msgString = 'Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)';
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
                 case 3:
-                    _e.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 4:
                     if (!(commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 6];
                     msgString = 'Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)';
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
                 case 5:
-                    _e.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 6:
                     if (commandData.args[0].toLowerCase() !== 'janny') {
@@ -96,15 +95,15 @@ function execute(commandData, discordUser) {
                     guildsArray = commandData.guildMember.client.guilds.cache.array();
                     iterator = discordUser.dataBase.iterate({});
                     areAnyFound = false;
-                    _e.label = 7;
+                    _c.label = 7;
                 case 7:
-                    _e.trys.push([7, 13, 14, 19]);
+                    _c.trys.push([7, 13, 14, 19]);
                     iterator_1 = __asyncValues(iterator);
-                    _e.label = 8;
+                    _c.label = 8;
                 case 8: return [4 /*yield*/, iterator_1.next()];
                 case 9:
-                    if (!(iterator_1_1 = _e.sent(), !iterator_1_1.done)) return [3 /*break*/, 12];
-                    _d = iterator_1_1.value, key = _d.key, value = _d.value;
+                    if (!(iterator_1_1 = _c.sent(), !iterator_1_1.done)) return [3 /*break*/, 12];
+                    _b = iterator_1_1.value, key = _b.key, value = _b.value;
                     if (!(key.length === 18 && key !== discordUser.userData.userID)) return [3 /*break*/, 11];
                     isItFound = false;
                     for (x = 0; x < guildsArray.length; x += 1) {
@@ -118,21 +117,21 @@ function execute(commandData, discordUser) {
                     msgString = "Key: " + key + "\nGuild Name: " + newValue.guildName + "\nGuild ID: " + newValue.guildID;
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
                 case 10:
-                    _e.sent();
-                    _e.label = 11;
+                    _c.sent();
+                    _c.label = 11;
                 case 11: return [3 /*break*/, 8];
                 case 12: return [3 /*break*/, 19];
                 case 13:
-                    e_1_1 = _e.sent();
+                    e_1_1 = _c.sent();
                     e_1 = { error: e_1_1 };
                     return [3 /*break*/, 19];
                 case 14:
-                    _e.trys.push([14, , 17, 18]);
+                    _c.trys.push([14, , 17, 18]);
                     if (!(iterator_1_1 && !iterator_1_1.done && (_a = iterator_1.return))) return [3 /*break*/, 16];
                     return [4 /*yield*/, _a.call(iterator_1)];
                 case 15:
-                    _e.sent();
-                    _e.label = 16;
+                    _c.sent();
+                    _c.label = 16;
                 case 16: return [3 /*break*/, 18];
                 case 17:
                     if (e_1) throw e_1.error;
@@ -140,22 +139,22 @@ function execute(commandData, discordUser) {
                 case 18: return [7 /*endfinally*/];
                 case 19: return [4 /*yield*/, iterator.end()];
                 case 20:
-                    _e.sent();
+                    _c.sent();
                     if (!!areAnyFound) return [3 /*break*/, 22];
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
-                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, ((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user).avatarURL())
+                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
                         .setColor([0, 0, 255])
                         .setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
                         .setTimestamp(Date())
                         .setTitle("__**No Spare Database Entries:**__");
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 21:
-                    _e.sent();
-                    _e.label = 22;
+                    _c.sent();
+                    _c.label = 22;
                 case 22: return [2 /*return*/, commandReturnData];
                 case 23:
-                    error_1 = _e.sent();
+                    error_1 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

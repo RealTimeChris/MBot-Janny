@@ -1,11 +1,5 @@
-2021/03/29-12:41:05.012 aaac Recovering log #434
-2021/03/29-12:41:05.014 aaac Level-0 table #437: started
-2021/03/29-12:41:05.020 aaac Level-0 table #437: 169145 bytes OK
-2021/03/29-12:41:05.024 aaac Delete type=0 #434
-2021/03/29-12:41:05.024 aaac Delete type=3 #432
-2021/03/29-12:41:05.567 74a0 Compacting 1@0 + 1@1 files
-2021/03/29-12:41:05.576 74a0 Generated table #439@0: 1598 keys, 177393 bytes
-2021/03/29-12:41:05.576 74a0 Compacted 1@0 + 1@1 files => 177393 bytes
-2021/03/29-12:41:05.577 74a0 compacted to: files[ 0 1 0 0 0 0 0 ]
-2021/03/29-12:41:05.577 74a0 Delete type=2 #435
-2021/03/29-12:41:05.578 74a0 Delete type=2 #437
+2021/03/29-16:10:54.295 3d54 Recovering log #542
+2021/03/29-16:10:54.297 3d54 Level-0 table #545: started
+2021/03/29-16:10:54.306 3d54 Level-0 table #545: 101870 bytes OK
+2021/03/29-16:10:54.312 3d54 Delete type=0 #542
+2021/03/29-16:10:54.312 3d54 Delete type=3 #540

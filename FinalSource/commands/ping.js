@@ -48,30 +48,25 @@ command.description = 'Simply enter !ping';
 /**
  * A testing function for the early implementation of the command handler.
  */
-function execute(message) {
+function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 4, , 5]);
+                    _a.trys.push([0, 2, , 3]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, message.reply('Pong!')];
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, 'Pong!')];
                 case 1:
                     _a.sent();
-                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 3];
-                    return [4 /*yield*/, message.delete()];
+                    return [2 /*return*/, commandReturnData];
                 case 2:
-                    _a.sent();
-                    _a.label = 3;
-                case 3: return [2 /*return*/, command.name];
-                case 4:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 5: return [2 /*return*/];
+                case 3: return [2 /*return*/];
             }
         });
     });

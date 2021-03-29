@@ -15,7 +15,7 @@ command.description = '!serverinfo to get info about the current server!\n!serve
 /**
  * Displays the info of a chosen server.
  */
-export async function execute(message: Discord.Message, args: string[]): Promise<string> {
+export async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordStuff.CommandReturnData> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
@@ -23,23 +23,20 @@ export async function execute(message: Discord.Message, args: string[]): Promise
 
         let currentServerID;
 
-        if (args[0] === undefined && message.channel.type !== 'dm') {
-            currentServerID = (message.guild as Discord.Guild).id;
-        } else if (args[0] === undefined && message.channel.type === 'dm') {
-            await message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)');
-            return command.name;
-        }	else if (!idRegExp.test(args[0] as string)) {
-            await message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)');
-            if (message.channel.type !== 'dm' && message.deletable) {
-                await message.delete();
-            }
-            return command.name;
+        if (commandData.args[0] === undefined && (commandData.textChannel as Discord.Channel).type !== 'dm') {
+            currentServerID = (commandData.guild as Discord.Guild).id;
+        }   else if (commandData.args[0] === undefined && (commandData.textChannel as Discord.Channel).type === 'dm') {
+            const msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
+            return commandReturnData;
+        }	else if (!idRegExp.test(commandData.args[0] as string)) {
+            const msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            return commandReturnData;
         }	else {
-            const argZero = args[0];
+            const argZero = commandData.args[0];
             currentServerID = argZero;
         }
-
-        const serverArray = message.client.guilds.cache.array().sort();
+        const serverArray = (commandData.guild as Discord.Guild).client.guilds.cache.array().sort();
 
         let currentServer = null;
         for (let x = 0; x < serverArray.length; x += 1) {
@@ -49,11 +46,9 @@ export async function execute(message: Discord.Message, args: string[]): Promise
         }
 
         if (currentServer == null) {
-            await message.reply('Sorry! No matching servers were found!');
-            if (message.channel.type !== 'dm' && message.deletable) {
-                await message.delete();
-            }
-            return command.name;
+            const msgString = 'Sorry! No matching servers were found!';
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            return commandReturnData;
         }
 
         let categoryCount = 0;
@@ -100,14 +95,11 @@ export async function execute(message: Discord.Message, args: string[]): Promise
             .setImage(currentServer.iconURL() as string)
             .setTitle('__**Server Info:**__')
             .setTimestamp((Date() as unknown) as Date)
-            .setAuthor(message.author.username, (message.author.avatarURL() as string))
+            .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, (((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string))
             .setColor([0, 0, 255]);
         messageEmbed.fields = fields as Discord.EmbedField[];
-        await message.channel.send(messageEmbed);
-        if (message.channel.type !== 'dm' && message.deletable) {
-            await message.delete();
-        }
-        return command.name;
+        await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

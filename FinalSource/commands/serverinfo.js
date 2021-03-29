@@ -49,60 +49,50 @@ command.description = '!serverinfo to get info about the current server!\n!serve
 /**
  * Displays the info of a chosen server.
  */
-function execute(message, args) {
+function execute(commandData) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, idRegExp, currentServerID, argZero, serverArray, currentServer, x, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
+        var commandReturnData, idRegExp, currentServerID, msgString, msgString, argZero, serverArray, currentServer, x, msgString, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 16, , 17]);
+                    _a.trys.push([0, 9, , 10]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     idRegExp = /\d{18}/;
                     currentServerID = void 0;
-                    if (!(args[0] === undefined && message.channel.type !== 'dm')) return [3 /*break*/, 1];
-                    currentServerID = message.guild.id;
-                    return [3 /*break*/, 8];
+                    if (!(commandData.args[0] === undefined && commandData.textChannel.type !== 'dm')) return [3 /*break*/, 1];
+                    currentServerID = commandData.guild.id;
+                    return [3 /*break*/, 5];
                 case 1:
-                    if (!(args[0] === undefined && message.channel.type === 'dm')) return [3 /*break*/, 3];
-                    return [4 /*yield*/, message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)')];
+                    if (!(commandData.args[0] === undefined && commandData.textChannel.type === 'dm')) return [3 /*break*/, 2];
+                    msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
+                    return [2 /*return*/, commandReturnData];
                 case 2:
-                    _a.sent();
-                    return [2 /*return*/, command.name];
+                    if (!!idRegExp.test(commandData.args[0])) return [3 /*break*/, 4];
+                    msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
                 case 3:
-                    if (!!idRegExp.test(args[0])) return [3 /*break*/, 7];
-                    return [4 /*yield*/, message.reply('Please enter a valid server ID! (!displayserverinfo = SERVERID)')];
+                    _a.sent();
+                    return [2 /*return*/, commandReturnData];
                 case 4:
-                    _a.sent();
-                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 6];
-                    return [4 /*yield*/, message.delete()];
-                case 5:
-                    _a.sent();
-                    _a.label = 6;
-                case 6: return [2 /*return*/, command.name];
-                case 7:
-                    argZero = args[0];
+                    argZero = commandData.args[0];
                     currentServerID = argZero;
-                    _a.label = 8;
-                case 8:
-                    serverArray = message.client.guilds.cache.array().sort();
+                    _a.label = 5;
+                case 5:
+                    serverArray = commandData.guild.client.guilds.cache.array().sort();
                     currentServer = null;
                     for (x = 0; x < serverArray.length; x += 1) {
                         if (currentServerID === serverArray[x].id) {
                             currentServer = serverArray[x];
                         }
                     }
-                    if (!(currentServer == null)) return [3 /*break*/, 12];
-                    return [4 /*yield*/, message.reply('Sorry! No matching servers were found!')];
-                case 9:
+                    if (!(currentServer == null)) return [3 /*break*/, 7];
+                    msgString = 'Sorry! No matching servers were found!';
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                case 6:
                     _a.sent();
-                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 11];
-                    return [4 /*yield*/, message.delete()];
-                case 10:
-                    _a.sent();
-                    _a.label = 11;
-                case 11: return [2 /*return*/, command.name];
-                case 12:
+                    return [2 /*return*/, commandReturnData];
+                case 7:
                     categoryCount = 0;
                     voiceChannelCount = 0;
                     textChannelCount = 0;
@@ -144,24 +134,19 @@ function execute(message, args) {
                         .setImage(currentServer.iconURL())
                         .setTitle('__**Server Info:**__')
                         .setTimestamp(Date())
-                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor([0, 0, 255]);
                     messageEmbed.fields = fields;
-                    return [4 /*yield*/, message.channel.send(messageEmbed)];
-                case 13:
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                case 8:
                     _a.sent();
-                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 15];
-                    return [4 /*yield*/, message.delete()];
-                case 14:
-                    _a.sent();
-                    _a.label = 15;
-                case 15: return [2 /*return*/, command.name];
-                case 16:
+                    return [2 /*return*/, commandReturnData];
+                case 9:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 17: return [2 /*return*/];
+                case 10: return [2 /*return*/];
             }
         });
     });

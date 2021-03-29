@@ -15,15 +15,13 @@ command.description = 'Simply enter !ping';
 /**
  * A testing function for the early implementation of the command handler.
  */
- export async function execute(message: Discord.Message): Promise<string> {
+ export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
-        await message.reply('Pong!');
-        if (message.channel.type !== 'dm' && message.deletable) {
-            await message.delete();
-        }
-        return command.name;
+        await DiscordStuff.sendMessageWithCorrectChannel(commandData, 'Pong!');
+
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

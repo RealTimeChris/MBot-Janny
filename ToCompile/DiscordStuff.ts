@@ -12,17 +12,18 @@ import config = require('./config.json');
 /**
  * Functino for sending out a message, using the appropriate channel.
  */
-export async function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: string | Discord.MessageEmbed): Promise<void>{
+export async function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: string | Discord.MessageEmbed): Promise<Discord.Message>{
 	try{
+		let returnMessage: Discord.Message;
 		if (commandData.textChannel === null){
-			await new Discord.WebhookClient((commandData.guildMember?.client.user as Discord.User).id, commandData.interaction.token).send(messageContents);
+			returnMessage = await new Discord.WebhookClient((commandData.guildMember?.client.user as Discord.User).id, commandData.interaction.token).send(messageContents);
 		}
 		else{
-			await (commandData.textChannel as Discord.TextChannel).send(messageContents);
+			returnMessage = await (commandData.textChannel as Discord.TextChannel).send(messageContents);
 		}
 
 		return new Promise((resolve, reject) => {
-			resolve();
+			resolve(returnMessage);
 		});
 	}
 	catch(error){
@@ -110,7 +111,7 @@ export async function recurseThroughMessagePages(userID: string, message: Discor
  */
 export async function areWeInADM(commandData: CommandData): Promise<boolean> {
 	try { 
-		const currentChannelType = (commandData.textChannel as Discord.Channel).type;
+		const currentChannelType = (commandData.permsChannel as Discord.Channel).type;
 
 		if (currentChannelType === 'dm') {
 			await (commandData.textChannel as Discord.TextChannel | Discord.WebhookClient).send?(`<@!${commandData.guildMember?.id}> Sorry, but we can't do that in a direct message!`): Discord.Message;
@@ -427,16 +428,19 @@ export class BotCommand {
 export class CommandData{
 	interaction: any;
 	guild: Discord.Guild | null = null;
-	guildMember: Discord.GuildMember | null = null;
+	guildMember: Discord.GuildMember | Discord.User | null = null;
 	textChannel: Discord.TextChannel | Discord.WebhookClient | Discord.DMChannel | null = null;
 	permsChannel: Discord.GuildChannel | null = null;
 	args: string[] = [];
-	async initialize(client: Discord.Client, guildID: string = '', guildMemberID: string = '', permsChannelID: string | null = null, textChannelID: string | null = null): Promise<void>{
+	async initialize(client: Discord.Client, permsChannelID: string | null = null, guildMemberID: string = '', guildID: string = '', textChannelID: string | null = null): Promise<void>{
 		if (guildID !== ''){
 			this.guild  = (await client.guilds.fetch(guildID) as Discord.Guild);
 		}
-		if (guildMemberID !== ''){
+		if (guildMemberID !== ''  && guildID !== ''){
 			this.guildMember = (await (this.guild as Discord.Guild).members.fetch(guildMemberID) as Discord.GuildMember);
+		}
+		else{
+			this.guildMember = await client.users.fetch(guildMemberID);
 		}
 		if (textChannelID === null && this.interaction !== undefined){
 			this.textChannel = new Discord.WebhookClient((client.user as Discord.User).id, this.interaction.token);

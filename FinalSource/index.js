@@ -50,83 +50,119 @@ var commandindex_1 = __importDefault(require("./commandindex"));
 var discordUser = new DiscordStuff.DiscordUser();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, guild_id, _a, options, name, channel_id, commandData, nameSolid, value1, value2, userID, reason, name_1, viewOrNot, value, value1, returnData;
-    var _b;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
+    var channel_id, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, value2, userID, reason, name_full_1, viewOrNot, value, value1, msgCountToPurge, value1, returnData;
+    var _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
             case 0:
-                id = interaction.member.user.id, guild_id = interaction.guild_id, _a = interaction.data, options = _a.options, name = _a.name, channel_id = interaction.channel_id;
+                channel_id = interaction.channel_id;
                 commandData = new DiscordStuff.CommandData();
                 commandData.interaction = interaction;
-                return [4 /*yield*/, commandData.initialize(client, guild_id, id, channel_id)];
+                return [4 /*yield*/, client.channels.fetch(channel_id)];
             case 1:
-                _c.sent();
-                nameSolid = name;
-                if (name === 'botinfo') {
+                if (!((_d.sent()).type === 'dm')) return [3 /*break*/, 3];
+                console.log("WE'RE HERE ALRIGHT!");
+                id = interaction.user.id, guild_id = interaction.guild_id, _a = interaction.data, options = _a.options, name_1 = _a.name;
+                id_full = id;
+                guild_id_full = guild_id;
+                options_full = options;
+                name_full = name_1;
+                return [4 /*yield*/, commandData.initialize(client, channel_id, id_full)];
+            case 2:
+                _d.sent();
+                return [3 /*break*/, 5];
+            case 3:
+                id = interaction.member.user.id, guild_id = interaction.guild_id, _b = interaction.data, options = _b.options, name_2 = _b.name;
+                id_full = id;
+                guild_id_full = guild_id;
+                options_full = options;
+                name_full = name_2;
+                return [4 /*yield*/, commandData.initialize(client, channel_id, id_full, guild_id_full)];
+            case 4:
+                _d.sent();
+                _d.label = 5;
+            case 5:
+                nameSolid = name_full;
+                console.log(interaction);
+                if (name_full === 'botinfo') {
                 }
-                if (name === "deletedbentry") {
-                    value1 = options[0].options[0].value;
-                    value2 = options[0].options[1].value;
+                if (name_full === "deletedbentry") {
+                    value1 = options_full[0].options[0].value;
+                    value2 = options_full[0].options[1].value;
                     commandData.args[0] = value1;
                     commandData.args[1] = value2;
                     if (commandData.args[0] !== 'janny') {
                         return [2 /*return*/];
                     }
                 }
-                if (name === "displayguildsdata") {
+                if (name_full === "displayguildsdata") {
                 }
-                if (name === 'ghost') {
+                if (name_full === 'ghost') {
                     userID = void 0;
                     reason = void 0;
-                    name_1 = options[0].name;
-                    if (name_1 === 'view') {
-                        viewOrNot = options[0].options[0].value;
+                    name_full_1 = options_full[0].name_full;
+                    if (name_full_1 === 'view') {
+                        viewOrNot = options_full[0].options[0].value;
                         commandData.args[1] = '';
                         commandData.args[2] = '';
                         if (!viewOrNot) {
                             return [2 /*return*/];
                         }
                     }
-                    else if (name_1 === 'add') {
-                        userID = options[0].options[0].value;
-                        reason = options[0].options[1].value;
+                    else if (name_full_1 === 'add') {
+                        userID = options_full[0].options[0].value;
+                        reason = options_full[0].options[1].value;
                         commandData.args[0] = 'add';
                         commandData.args[1] = reason;
                         commandData.args[2] = userID;
                     }
-                    else if (name_1 === 'remove') {
-                        userID = options[0].options[0].value;
+                    else if (name_full_1 === 'remove') {
+                        userID = options_full[0].options[0].value;
                         commandData.args[0] = 'remove';
                         commandData.args[1] = userID;
                     }
                 }
-                if (name === 'help') {
-                    if (options[0].options !== undefined) {
-                        value = options[0].options[0].value;
+                if (name_full === 'help') {
+                    if (options_full[0].options !== undefined) {
+                        value = options_full[0].options[0].value;
                         commandData.args[0] = value;
                     }
                 }
-                if (name === 'jannyoptinos') {
+                if (name_full === 'jannyoptinos') {
                 }
-                if (name === 'listdbguilds') {
-                    value1 = options[0].options[0].value;
+                if (name_full === 'listdbguilds') {
+                    value1 = options_full[0].options[0].value;
                     commandData.args[0] = value1;
                 }
-                if (name === 'ping') {
+                if (name_full === "managelogs") {
                 }
-                if (name === 'test') {
+                if (name_full === 'ping') {
+                }
+                if (name_full === 'purge') {
+                    msgCountToPurge = options_full[0].options[0].value;
+                    commandData.args[0] = msgCountToPurge;
+                }
+                if (name_full === 'serverinfo') {
+                    if (options_full[0].options !== undefined) {
+                        value1 = options_full[0].options[0].value;
+                        commandData.args[0] = value1;
+                    }
+                }
+                if (name_full === 'slashcommands') {
+                }
+                if (name_full === 'test') {
                 }
                 return [4 /*yield*/, client.api.interactions(interaction.id, interaction.token).callback.post({
                         data: {
                             type: 5
                         }
                     })];
-            case 2:
-                _c.sent();
+            case 6:
+                _d.sent();
                 console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.displayName);
-                return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(nameSolid)) === null || _b === void 0 ? void 0 : _b.function(commandData, discordUser))];
-            case 3:
-                returnData = _c.sent();
+                return [4 /*yield*/, ((_c = commandindex_1.default.commands.get(nameSolid)) === null || _c === void 0 ? void 0 : _c.function(commandData, discordUser))];
+            case 7:
+                returnData = _d.sent();
                 console.log("Completed Command: " + returnData.commandName);
                 return [2 /*return*/];
         }
@@ -188,7 +224,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.trys.push([1, 13, , 14]);
                 commandData = new DiscordStuff.CommandData();
                 if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 3];
-                return [4 /*yield*/, commandData.initialize(client, msg.guild.id, msg.member.id, msg.channel.id, msg.channel.id)];
+                return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.member.id, msg.guild.id, msg.channel.id)];
             case 2:
                 _c.sent();
                 return [3 /*break*/, 5];

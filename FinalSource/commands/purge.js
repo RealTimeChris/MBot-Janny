@@ -48,54 +48,55 @@ command.description = '!purge = AMOUNTTODELETE, between 1 and 100 messages!';
 /**
  * Purges up to 100 messages from a given channel at a time.
  */
-function execute(message, args, discordUser) {
+function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPerms, regExp, deleteCount, currentChannel, newMessage, error_1;
+        var commandReturnData, areWeInADM, doWeHaveAdminPerms, regExp, msgString_1, deleteCount, currentChannel, msgString, newMessage, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 8, , 9]);
+                    _a.trys.push([0, 6, , 7]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
+                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _a.sent();
                     if (areWeInADM === true) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
-                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(message)];
+                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 2:
                     doWeHaveAdminPerms = _a.sent();
                     if (doWeHaveAdminPerms === false) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     regExp = new RegExp(/\d{1,3}/);
-                    if (!(args[0] === undefined || !regExp.test(args[0])
-                        || parseInt(args[0], 10) <= 0 || parseInt(args[0], 10) > 100)) return [3 /*break*/, 6];
-                    return [4 /*yield*/, message.reply('Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)')];
+                    if (commandData.args[0] === undefined || !regExp.test(commandData.args[0])
+                        || parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100) {
+                        msgString_1 = 'Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)';
+                        DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_1);
+                        return [2 /*return*/, commandReturnData];
+                    }
+                    deleteCount = parseInt(commandData.args[0].toString().match(regExp)[0], 10);
+                    currentChannel = commandData.textChannel;
+                    if (!(currentChannel.type === 'text')) return [3 /*break*/, 4];
+                    return [4 /*yield*/, currentChannel.bulkDelete(deleteCount, true)];
                 case 3:
                     _a.sent();
-                    if (!message.deletable) return [3 /*break*/, 5];
-                    return [4 /*yield*/, message.delete()];
+                    _a.label = 4;
                 case 4:
-                    _a.sent();
-                    _a.label = 5;
-                case 5: return [2 /*return*/, command.name];
-                case 6:
-                    deleteCount = parseInt(args[0].match(regExp)[0], 10);
-                    currentChannel = message.channel;
-                    currentChannel.bulkDelete(deleteCount, true);
-                    return [4 /*yield*/, message.reply("Deleted " + deleteCount.toString() + " messages!")];
-                case 7:
+                    ;
+                    msgString = "I've just deleted " + deleteCount + " messages from this channel!";
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                case 5:
                     newMessage = _a.sent();
                     newMessage.delete({ timeout: 5000 });
-                    return [2 /*return*/, command.name];
-                case 8:
+                    return [2 /*return*/, commandReturnData];
+                case 6:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 9: return [2 /*return*/];
+                case 7: return [2 /*return*/];
             }
         });
     });

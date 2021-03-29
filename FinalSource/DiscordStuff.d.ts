@@ -3,7 +3,7 @@ import Level from 'level-ts';
 /**
  * Functino for sending out a message, using the appropriate channel.
  */
-export declare function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: string | Discord.MessageEmbed): Promise<void>;
+export declare function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: string | Discord.MessageEmbed): Promise<Discord.Message>;
 /**
  * Checks a user ID against an array of user IDs to see if it is present.
  */
@@ -157,11 +157,11 @@ export declare class BotCommand {
 export declare class CommandData {
     interaction: any;
     guild: Discord.Guild | null;
-    guildMember: Discord.GuildMember | null;
+    guildMember: Discord.GuildMember | Discord.User | null;
     textChannel: Discord.TextChannel | Discord.WebhookClient | Discord.DMChannel | null;
     permsChannel: Discord.GuildChannel | null;
     args: string[];
-    initialize(client: Discord.Client, guildID?: string, guildMemberID?: string, permsChannelID?: string | null, textChannelID?: string | null): Promise<void>;
+    initialize(client: Discord.Client, permsChannelID?: string | null, guildMemberID?: string, guildID?: string, textChannelID?: string | null): Promise<void>;
 }
 /**
  * Class representing a command' return values.
