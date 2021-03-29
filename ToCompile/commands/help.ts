@@ -17,7 +17,7 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
 /**
  * Returns a menu of helping information for the various commands I have.
  */
-    export async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordStuff.CommandReturnData> {
+export async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordStuff.CommandReturnData> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();
         commandReturnData.commandName = command.name;

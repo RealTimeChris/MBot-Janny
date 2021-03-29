@@ -85,14 +85,14 @@ export async function recurseThroughMessagePages(userID: string, message: Discor
 /**
  * Checks to see if we're in a DM channel, and sends a warning message if so.
  */
-export async function areWeInADM(message: Discord.Message): Promise<boolean> {
-	try {
-		const currentChannelType = message.channel.type;
+export async function areWeInADM(commandData: CommandData, channel?: Discord.Channel): Promise<boolean> {
+	try { 
+		const currentChannelType = channel?.type;
 
 		if (currentChannelType === 'dm') {
-			await message.reply("Sorry, but we can't do that in a direct message!");
+			commandData.textChannel?.send(`<@!${commandData.guildMember?.id}>Sorry, but we can't do that in a direct message!`);
 			return new Promise((resolve, reject) => {
-				resolve(true);
+				resolve(true)
 			});
 		}
 		return new Promise((resolve, reject) => {
@@ -146,8 +146,8 @@ export async function recurseThroughServerRecords(dataBase: Level, liveGuildArra
 		
 		keyNames.splice(0, 1);
 
-		fileObject.serverName = (liveGuildArray[y] as Discord.Guild).name;
-		fileObject.serverID = (liveGuildArray[y] as Discord.Guild).id;
+		fileObject.serverName = liveGuildArray[y]?.name as string;
+		fileObject.serverID = liveGuildArray[y]?.id as string;
 		console.log(`Updating Server Record Info For Server #${y}: ${fileObject.serverName}`);
 
 		const guildMembersCollection = await (liveGuildArray[y] as Discord.Guild).members.fetch();

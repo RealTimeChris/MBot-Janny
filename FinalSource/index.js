@@ -50,12 +50,12 @@ var commandindex_1 = __importDefault(require("./commandindex"));
 var discordUser = new DiscordStuff.DiscordUser();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, guild_id, _a, name, options, channel_id, commandData, nameSolid, userID, reason, name_1, returnData;
+    var id, guild_id, _a, options, name, channel_id, commandData, nameSolid, userID, reason, name_1, value, returnData;
     var _b;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
-                id = interaction.member.user.id, guild_id = interaction.guild_id, _a = interaction.data, name = _a.name, options = _a.options, channel_id = interaction.channel_id;
+                id = interaction.member.user.id, guild_id = interaction.guild_id, _a = interaction.data, options = _a.options, name = _a.name, channel_id = interaction.channel_id;
                 commandData = new DiscordStuff.CommandData();
                 return [4 /*yield*/, commandData.initialize(client, guild_id, id, channel_id)];
             case 1:
@@ -67,23 +67,28 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                     userID = void 0;
                     reason = void 0;
                     name_1 = options[0].name;
+                    console.log(name_1);
                     if (name_1 === 'view') {
                         commandData.args[0] = '';
                         commandData.args[1] = '';
                         commandData.args[2] = '';
                     }
-                    else if (name_1 === 'ghost') {
+                    else if (name_1 === 'add') {
                         userID = options[0].options[0].value;
                         reason = options[0].options[1].value;
                         commandData.args[0] = 'add';
                         commandData.args[1] = reason;
                         commandData.args[2] = userID;
                     }
-                    else if (name_1 === 'unghost') {
+                    else if (name_1 === 'remove') {
                         userID = options[0].options[0].value;
                         commandData.args[0] = 'remove';
                         commandData.args[1] = userID;
                     }
+                }
+                if (name === 'help') {
+                    value = options[0].options[0].value;
+                    commandData.args[0] = value;
                 }
                 client.api.interactions(interaction.id, interaction.token).callback.post({
                     data: {

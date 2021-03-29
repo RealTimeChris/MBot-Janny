@@ -24,8 +24,8 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         const commands = await interaction.getApplicationCommands();
         for (let x = 0; x < commands.length; x += 1){
-            const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
-            console.log(newInteraction);
+            //const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
+            //console.log(newInteraction);
         }
 
         const botinfo = {
@@ -79,10 +79,166 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     }]
                 }
             ]
-        }        
+        }
 
         // Create Global Command
         await interaction.createApplicationCommand(ghost).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const help = {
+            "name": "help",
+            "description": "Displays help about the bot's various commands.",
+            "options":[
+                {  
+                    "name": "group1",
+                    "description": "The first group of commands.",
+                    "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                    "required": false,
+                    "options":[{
+                        "name": "commandname",
+                        "description": " The name of the command, from group 1.",
+                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                        "required": false,
+                        "choices": [{
+                            "name": "botinfo",
+                            "value": "botinfo"
+                                    },
+                                    {
+                                        "name":"deletedbentry",
+                                        "value":"deletedbentry"
+                                    },
+                                    {
+                                        "name": "displayguildsdata",
+                                        "value": "displayguildsdata"
+                                    },
+                                    {
+                                        "name":"ghost",
+                                        "value": "ghost"
+                                    },
+                                    {
+                                        "name":"help",
+                                        "value":"help"
+                                    },
+                                    {
+                                        "name":"jannyoptions",
+                                        "value":"jannyoptions"
+                                    },
+                                    {
+                                        "name":"listdbguilds",
+                                        "value":"listdbguilds"
+                                    },
+                                    {
+                                        "name":"managelogs",
+                                        "value":"managelogs"
+                                    },
+                                    {
+                                        "name":"ping",
+                                        "value":"ping"
+                                    },
+                                    {
+                                        "name":"purge",
+                                        "value":"purge"
+                                    },
+                                    {
+                                        "name":"serverinfo",
+                                        "value":"serverinfo"
+                                    },
+                                    {
+                                        "name":"setdefaultrole",
+                                        "value":"setdefaultrole"
+                                    },
+                                    {
+                                        "name":"setdeletionstatus",
+                                        "value":"setdeletionstatus"
+                                    },
+                                    {
+                                        "name":"setreplacementinvite",
+                                        "value":"setreplacementinvite"
+                                    },
+                                    {
+                                        "name":"setverificationsystem",
+                                        "value":"setverificationsystem"
+                                    },
+                                    {
+                                        "name":"slashcommands",
+                                        "value":"slashcommands"
+                                    },
+                                    {
+                                        "name":"test",
+                                        "value":"test"
+                                    },
+                                    {
+                                        "name":"timedmessages",
+                                        "value":"timedmessages"
+                                    },
+                                    {
+                                        "name":"trackuser",
+                                        "value":"trackuser"
+                                    },
+                                    {
+                                        "name":"userinfo",
+                                        "value":"userinfo"
+                                    }
+                            ]
+                        }]
+                },
+                {  
+                    "name": "group2",
+                    "description": "The second group of commands.",
+                    "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                    "required": false,
+                    "options":[{
+                        "name": "commandname",
+                        "description": " The name of the command, from group 2.",
+                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                        "required": false,
+                        "choices": [{
+                                        "name":"serverinfo",
+                                        "value":"serverinfo"
+                                    },
+                                    {
+                                        "name":"setdefaultrole",
+                                        "value":"setdefaultrole"
+                                    },
+                                    {
+                                        "name":"setdeletionstatus",
+                                        "value":"setdeletionstatus"
+                                    },
+                                    {
+                                        "name":"setreplacementinvite",
+                                        "value":"setreplacementinvite"
+                                    },
+                                    {
+                                        "name":"setverificationsystem",
+                                        "value":"setverificationsystem"
+                                    },
+                                    {
+                                        "name":"slashcommands",
+                                        "value":"slashcommands"
+                                    },
+                                    {
+                                        "name":"test",
+                                        "value":"test"
+                                    },
+                                    {
+                                        "name":"timedmessages",
+                                        "value":"timedmessages"
+                                    },
+                                    {
+                                        "name":"trackuser",
+                                        "value":"trackuser"
+                                    },
+                                    {
+                                        "name":"userinfo",
+                                        "value":"userinfo"
+                                    }
+                            ]
+                        }]
+                    }
+            ]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(help).then(error => console.log(error)).catch(error => console.log(error.message));
 
         const globalCommands = await interaction.getApplicationCommands();
         console.log(globalCommands.length);

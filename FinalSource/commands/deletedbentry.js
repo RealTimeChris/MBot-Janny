@@ -113,12 +113,6 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'deletedbentry';
 command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a bot's name and DBENTRYKEY is the key" +
     "to a database entry that is stored within the bot!";
-/**
-     * @param 	{Discord.Message} 			message
-     * @param 	{String[]} 					args
-     * @param 	{DiscordStuff.DiscordUser}	discordUser
-     * @returns {Promise<strin>}
-     */
 function execute(commandData, discordUser) {
     var e_1, _a;
     return __awaiter(this, void 0, void 0, function () {
@@ -129,17 +123,17 @@ function execute(commandData, discordUser) {
                     _c.trys.push([0, 32, , 35]);
                     commandReturnData = new DiscordStuff.CommandReturnData;
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
+                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData.textChannel)];
                 case 1:
                     areWeInADM = _c.sent();
                     if (areWeInADM) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
-                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(message)];
+                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData.guildMember, commandData.textChannel)];
                 case 2:
                     areWeACommander = _c.sent();
                     if (!areWeACommander) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     if (!(args[0] === undefined)) return [3 /*break*/, 6];
                     return [4 /*yield*/, message.reply('Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)')];

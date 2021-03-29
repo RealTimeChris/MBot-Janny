@@ -50,15 +50,18 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
 /**
  * Returns a menu of helping information for the various commands I have.
  */
-function execute(message, args) {
+function execute(commandData) {
+    var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function () {
-        var commandFiles_1, commandNames_1, msgString_1, currentIndex_1, messageEmbed, dmChannel, isFound_1, commandDescription_1, commandName_1, messageEmbed, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var commandReturnData, commandFiles_1, commandNames_1, msgString_1, currentIndex_1, messageEmbed, dmChannel, isFound_1, commandDescription_1, commandName_1, messageEmbed, error_1;
+        return __generator(this, function (_f) {
+            switch (_f.label) {
                 case 0:
-                    _a.trys.push([0, 19, , 20]);
+                    _f.trys.push([0, 10, , 11]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     commandFiles_1 = commandIndex.default.commands;
-                    if (!(args[0] === undefined)) return [3 /*break*/, 8];
+                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 6];
                     commandNames_1 = [];
                     commandFiles_1.forEach(function (value, key, map) {
                         commandNames_1[key] = value.name;
@@ -77,89 +80,68 @@ function execute(message, args) {
                     });
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
-                        .setImage(message.client.user.avatarURL().toString())
+                        .setImage(((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user).avatarURL().toString())
                         .setTimestamp(Date())
-                        .setAuthor(message.author.username, message.author.avatarURL())
-                        .setTitle("__**" + message.client.user.username + " Help:**__")
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setTitle("__**" + commandData.guildMember.user.username + " Help:**__")
                         .setDescription(msgString_1)
                         .setColor([254, 254, 254]);
-                    if (!(message.author.dmChannel == null)) return [3 /*break*/, 3];
-                    return [4 /*yield*/, message.author.createDM()];
+                    if (!(commandData.guildMember.user.dmChannel == null)) return [3 /*break*/, 3];
+                    return [4 /*yield*/, commandData.guildMember.user.createDM()];
                 case 1:
-                    dmChannel = _a.sent();
+                    dmChannel = _f.sent();
                     return [4 /*yield*/, dmChannel.send(messageEmbed)];
                 case 2:
-                    _a.sent();
+                    _f.sent();
                     return [3 /*break*/, 5];
-                case 3: return [4 /*yield*/, message.author.dmChannel.send(messageEmbed)];
+                case 3: return [4 /*yield*/, commandData.guildMember.user.dmChannel.send(messageEmbed)];
                 case 4:
-                    _a.sent();
-                    _a.label = 5;
-                case 5:
-                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 7];
-                    return [4 /*yield*/, message.delete()];
+                    _f.sent();
+                    _f.label = 5;
+                case 5: return [2 /*return*/, commandReturnData];
                 case 6:
-                    _a.sent();
-                    _a.label = 7;
-                case 7: return [2 /*return*/, command.name];
-                case 8:
                     isFound_1 = false;
                     commandName_1 = '';
                     commandFiles_1.forEach(function (value, key, map) {
                         var command = value;
-                        if (args[0] === command.name) {
+                        if (commandData.args[0] === command.name) {
                             isFound_1 = true;
                             commandDescription_1 = command.description;
                             commandName_1 = command.name;
                         }
                         return commandName_1;
                     });
-                    if (!(isFound_1 === false)) return [3 /*break*/, 12];
-                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 10];
-                    return [4 /*yield*/, message.delete()];
-                case 9:
-                    _a.sent();
-                    _a.label = 10;
-                case 10: return [4 /*yield*/, message.reply('Sorry, but that command was not found!')];
-                case 11:
-                    _a.sent();
-                    return [2 /*return*/, command.name];
-                case 12:
-                    if (!(commandDescription_1 instanceof Discord.MessageEmbed)) return [3 /*break*/, 14];
+                    if (isFound_1 === false) {
+                        commandReturnData.returnMessage = "<@!" + commandData.guildMember.id + ">Sorry, but that command was not found!";
+                        return [2 /*return*/, commandReturnData];
+                    }
+                    if (!(commandDescription_1 instanceof Discord.MessageEmbed)) return [3 /*break*/, 8];
                     commandDescription_1
-                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, ((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user).avatarURL())
                         .setColor([254, 254, 254])
                         .setTitle("__**" + (commandName_1.charAt(0).toUpperCase() + commandName_1.slice(1)) + " Help:**__")
                         .setTimestamp(Date());
-                    return [4 /*yield*/, message.channel.send(commandDescription_1)];
-                case 13:
-                    _a.sent();
-                    return [3 /*break*/, 16];
-                case 14:
+                    return [4 /*yield*/, commandData.textChannel.send(commandDescription_1)];
+                case 7:
+                    _f.sent();
+                    return [3 /*break*/, 9];
+                case 8:
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setDescription(commandDescription_1)
                         .setTimestamp(Date())
-                        .setAuthor(message.author.username, message.author.avatarURL())
+                        .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, ((_e = commandData.guildMember) === null || _e === void 0 ? void 0 : _e.user).avatarURL())
                         .setTitle("__**" + (commandName_1.charAt(0).toUpperCase() + commandName_1.slice(1)) + " Help:**__")
                         .setColor([254, 254, 254]);
-                    return [4 /*yield*/, message.channel.send(messageEmbed)];
-                case 15:
-                    _a.sent();
-                    _a.label = 16;
-                case 16:
-                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 18];
-                    return [4 /*yield*/, message.delete()];
-                case 17:
-                    _a.sent();
-                    _a.label = 18;
-                case 18: return [2 /*return*/, command.name];
-                case 19:
-                    error_1 = _a.sent();
+                    commandReturnData.returnMessage = messageEmbed;
+                    _f.label = 9;
+                case 9: return [2 /*return*/, commandReturnData];
+                case 10:
+                    error_1 = _f.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 20: return [2 /*return*/];
+                case 11: return [2 /*return*/];
             }
         });
     });

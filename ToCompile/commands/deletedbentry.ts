@@ -61,56 +61,41 @@ command.name = 'deletedbentry';
 command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a bot's name and DBENTRYKEY is the key" +
 "to a database entry that is stored within the bot!";
 
-/**
-	 * @param 	{Discord.Message} 			message
-	 * @param 	{String[]} 					args
-	 * @param 	{DiscordStuff.DiscordUser}	discordUser
-	 * @returns {Promise<strin>}
-	 */
- export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<string> {
+ export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
 	try {
 		const commandReturnData = new DiscordStuff.CommandReturnData;
 		commandReturnData.commandName = command.name;
-		const areWeInADM = await DiscordStuff.areWeInADM(message);
+		const areWeInADM = await DiscordStuff.areWeInADM(commandData.textChannel as Discord.TextChannel);
 
 		if (areWeInADM){
-			return command.name;
+			return commandReturnData;
 		}
 
-		const areWeACommander = await discordUser.doWeHaveAdminPermission(message);
+		const areWeACommander = await discordUser.doWeHaveAdminPermission(commandData.guildMember as Discord.GuildMember, commandData.textChannel as Discord.TextChannel);
 
 		if (!areWeACommander) {
-			return command.name;
+			return commandReturnData;
 		}
 
-		if (args[0] === undefined) {
-			await message.reply('Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)');
-			if (message.deletable) {
-				await message.delete();
-			}
-			return command.name;
+		if (commandData.args[0] === undefined) {
+			commandReturnData.returnMessage = `<@!${commandData.guildMember?.id}> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)`;
+			return commandReturnData;
 		}
-		if (args[0].toLowerCase() !== 'janny' && args[0].toLowerCase() !== 'musichouse' && args[0].toLowerCase() !== 'gamehouse') {
-			await message.reply('Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)');
-			if (message.deletable) {
-				await message.delete();
-			}
-			return command.name;
+		if (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse') {
+			commandReturnData.returnMessage = `<@!${commandData.guildMember?.id}> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)`;
+			return commandReturnData;
 		}
-		if (args[0].toLowerCase() !== 'janny') {
-			return command.name;
+		if (commandData.args[0].toLowerCase() !== 'janny') {
+			return commandReturnData;
 		}
-		if (args[1] === undefined) {
-			await message.reply('Please, enter a DB key to search for!');
-			if (message.deletable) {
-				await message.delete();
-			}
-			return command.name;
+		if (commandData.args[1] === undefined) {
+			commandReturnData.returnMessage = `<@!${commandData.guildMember?.id}> Please, enter a DB key to search for!`;
+			return commandReturnData;
 		}
 
 		let dbKey = '';
-		if (args[1] !== undefined) {
-			const argZero = args[1].toString();
+		if (commandData.args[1] !== undefined) {
+			const argZero = commandData.args[1].toString();
 			dbKey = argZero;
 		}
 
@@ -127,21 +112,15 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 		await iterator.end();
 		const msgEmbed = new Discord.MessageEmbed();
 		msgEmbed
-			.setAuthor(message.author.username, (message.author.avatarURL() as string))
+			.setAuthor(commandData.guildMember?.user.username, (commandData.guildMember?.user.avatarURL() as string))
 			.setColor([0, 0, 255])
 			.setDescription(`------\n__**Number of Deleted Entries**__: ${deletedCounter.returnDeletedCount()}\n------`)
 			.setTimestamp(Date.now())
 			.setTitle('__**Deleted DB Entries:**__');
-		await message.channel.send(msgEmbed);
+		commandReturnData.returnMessage = msgEmbed;
 		
-		if (message.deletable) {
-			await message.delete();
-		}
-		return command.name;
+		return commandReturnData;
 	} catch (error) {
-		if (message.deletable) {
-			await message.delete();
-		}
 		return new Promise((resolve, reject) => {
 			reject(error);
 		});
