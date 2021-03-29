@@ -17,6 +17,8 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
  */
 export async function execute(message: Discord.Message, args: string[]): Promise<string> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
         const areWeInADM = await DiscordStuff.areWeInADM(message);
 
         if (areWeInADM === true) {

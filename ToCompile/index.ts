@@ -16,6 +16,7 @@ const client = new Discord.Client() as any;
 client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	const {member:{user:{id}}, guild_id, data:{options, name}, channel_id} = interaction;
 	const commandData = new DiscordStuff.CommandData();
+	commandData.interaction = interaction;
 	await commandData.initialize(client, guild_id, id, channel_id);
 	const nameSolid = name;
 	if (name === 'botinfo'){
@@ -27,22 +28,23 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		commandData.args[0] = value1;
 		commandData.args[1] = value2;
 		if (commandData.args[0] !== 'janny') {
-			console.log('RETURNING!');
 			return;
 		}
 	}
 	if (name === "displayguildsdata"){
-		
+
 	}
 	if (name === 'ghost'){
 		let userID;
 		let reason;
 		const name = options[0].name;
-		console.log(name);
 		if (name === 'view'){
-			commandData.args[0] = '';
+			const viewOrNot = options[0].options[0].value;
 			commandData.args[1] = '';
 			commandData.args[2] = '';
+			if (!viewOrNot){
+				return;
+			}
 		}
 		else if(name === 'add'){
 			userID = options[0].options[0].value;
@@ -63,6 +65,19 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 			commandData.args[0] = value;
 		}
 	}
+	if (name === 'jannyoptinos'){
+
+	}
+	if (name === 'listdbguilds'){
+		const {value:value1} = options[0].options[0];
+		commandData.args[0] = value1;
+	}
+	if (name === 'ping'){
+		
+	}
+	if (name === 'test'){
+
+	}
 	await client.api.interactions(interaction.id, interaction.token).callback.post({
 		data:{
 			type: 5
@@ -70,27 +85,12 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	console.log(`Command: '${nameSolid}' entered by user: ${(commandData.guildMember as Discord.GuildMember).displayName}`);
 	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
-	if (returnData.returnMessage === ''){
-		let newMessage = await new Discord.WebhookClient(client.user.id, interaction.token).send(`<@!${commandData.guildMember?.id}> Finished with your command ${returnData.commandName}!`) as Discord.Message;
-		await newMessage.delete( {timeout: 5000} );
-	}
-	else{
-		console.log(returnData.returnMessage.length);
-		if (returnData.returnMessage.length > 0){
-			for (let x = 0; x < returnData.returnMessage.length; x += 1){
-				await new Discord.WebhookClient(client.user.id, interaction.token).send((returnData.returnMessage as Discord.MessageEmbed[])[x] as Discord.MessageEmbed);
-			}
-		}
-		else{
-			await new Discord.WebhookClient(client.user.id, interaction.token).send(returnData.returnMessage);
-		}
-	}
 })
 
 client.once('ready', async () => {
 	try {
 		await discordUser.initializeInstance(client);
-		await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } })
+		await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
 	} catch (error) {
 		console.log(error);
 	}
@@ -123,11 +123,14 @@ client.on('message', async (msg: Discord.Message) => {
 			return;
 		}
 		try {
-			console.log((msg.guild as Discord.Guild).id);
-			console.log((msg.member as Discord.GuildMember).id);
-			console.log(msg.channel.id);
 			const commandData = new DiscordStuff.CommandData();
-			await commandData.initialize(client, (msg.guild as Discord.Guild).id, (msg.member as Discord.GuildMember).id, msg.channel.id);
+			if (msg.channel.type !== 'dm'){
+				await commandData.initialize(client, (msg.guild as Discord.Guild).id, (msg.member as Discord.GuildMember).id, msg.channel.id, msg.channel.id);
+			}
+			else{
+				await commandData.initialize(client);
+				commandData.textChannel = msg.channel;
+			}
 			commandData.args = args;
 
 			if (msg.deletable){
@@ -144,9 +147,6 @@ client.on('message', async (msg: Discord.Message) => {
 			discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch((error: Error) => {
 				console.log(error);
 			});
-			if (cmdReturnData.returnMessage !== ''){
-				commandData.textChannel?.send(cmdReturnData.returnMessage);
-			}
 			return;
 		} catch (error) {
 			console.log(error);

@@ -27,7 +27,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             //const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
             //console.log(newInteraction);
         }
-
+/*
         const botinfo = {
             "name": "botinfo",
             "description": "Displays info about the current bot.",
@@ -238,6 +238,56 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         // Create Global Command
         await interaction.createApplicationCommand(help).then(error => console.log(error)).catch(error => console.log(error.message));
 
+        const jannyoptions = {
+            "name": "jannyoptions",
+            "description": "Lists all of the major settings for this bot.",
+            "options": []
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(jannyoptions).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const listdbguilds = {
+            "name": "listdbguilds",
+            "description": "Lists all of the database server entries for which the bot is no longer a member.",
+            "options":[{
+                "name": "list",
+                "description": "List the entries of the depracated servers.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options":[{
+                    "name": "botname",
+                    "description": "Which bot to list the entries from.",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true,
+                    "choices": [
+                        {
+                            "name": "janny",
+                            "value": "janny"
+                        }]                    
+                    }]
+                }]}
+
+        // Create Global Command
+        await interaction.createApplicationCommand(listdbguilds).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const ping = {
+            "name": "ping",
+            "description": "A basic ping-pong command!",
+            "options": []
+        }
+        
+        // Create Global Command
+        await interaction.createApplicationCommand(ping).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const test = {
+            "name": "test",
+            "description": "Testing module, for experimentation!",
+            "options": []
+        }
+        
+        // Create Global Command
+        await interaction.createApplicationCommand(test).then(error => console.log(error)).catch(error => console.log(error.message));
+*/        
         const globalCommands = await interaction.getApplicationCommands();
         console.log(globalCommands.length);
         return commandReturnData;

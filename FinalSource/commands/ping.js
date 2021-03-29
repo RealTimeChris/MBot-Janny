@@ -50,11 +50,13 @@ command.description = 'Simply enter !ping';
  */
 function execute(message) {
     return __awaiter(this, void 0, void 0, function () {
-        var error_1;
+        var commandReturnData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, message.reply('Pong!')];
                 case 1:
                     _a.sent();

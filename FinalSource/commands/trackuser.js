@@ -51,11 +51,13 @@ command.description = '!trackuser = ADD, @USERMENTION to track the user within t
  */
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, doWeHaveAdminPermission, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, argOne, trackedUserIDOne, userData, x, isUserFound, y, currentGuild_1, z, currentUser, currentGuild, currentTextChannel, currentGuildMember, msgString, messageEmbed, currentIndex, error_1, currentGuildMember, currentIndex, msgString, messageEmbed, msgString, messageEmbed, error_2, msgString, x, trackedGuildName, trackedChannelName, messageEmbed, error_3;
+        var commandReturnData, areWeInADM, doWeHaveAdminPermission, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, argOne, trackedUserIDOne, userData, x, isUserFound, y, currentGuild_1, z, currentUser, currentGuild, currentTextChannel, currentGuildMember, msgString, messageEmbed, currentIndex, error_1, currentGuildMember, currentIndex, msgString, messageEmbed, msgString, messageEmbed, error_2, msgString, x, trackedGuildName, trackedChannelName, messageEmbed, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 47, , 48]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();

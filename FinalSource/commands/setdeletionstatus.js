@@ -49,11 +49,13 @@ command.description = 'Use this to enable/disable message deletion/pruning in a 
     + ' enter nothing for AMOUNTOFMESSAGESTOSAVE to save none!\nAlso simply enter !setdeletionstatus to view the current list of channels being purged on the current server!';
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, doWeHaveAdminPerms, whatAreWeDoing, messageCountRegExp, howManyBack, guildData, currentDeletionChannel, isItFound, x, msgString, x, msgEmbed, x, previousMessage, error_1, msgString, messageEmbed, pinMessage, deletionChannelIndex, x, msgString, messageEmbed, error_2;
+        var commandReturnData, areWeInADM, doWeHaveAdminPerms, whatAreWeDoing, messageCountRegExp, howManyBack, guildData, currentDeletionChannel, isItFound, x, msgString, x, msgEmbed, x, previousMessage, error_1, msgString, messageEmbed, pinMessage, deletionChannelIndex, x, msgString, messageEmbed, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 41, , 42]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();

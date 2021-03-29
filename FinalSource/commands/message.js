@@ -55,11 +55,13 @@ command.description = 'Command executes automatically upon receiving certain mes
    */
 function execute(message) {
     return __awaiter(this, void 0, void 0, function () {
-        var number, error_1;
+        var commandReturnData, number, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     number = Math.random() * 100;
                     if (!(message.content != null && message.content !== undefined)) return [3 /*break*/, 2];
                     if (!(message.content.toLowerCase().includes('hey ') && number <= 15)) return [3 /*break*/, 2];

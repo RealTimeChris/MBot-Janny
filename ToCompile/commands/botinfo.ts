@@ -29,14 +29,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
        const field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
        fields.push(field4 as Discord.EmbedField);
 
-       const messageEmbed = new Discord.MessageEmbed()
+        const messageEmbed = new Discord.MessageEmbed()
            .setImage(commandData.guildMember?.client.user?.avatarURL() as string)
            .setColor([0, 0, 255])
            .setTitle('__**Bot Info:**__')
            .setTimestamp((Date() as unknown) as Date);
-       messageEmbed.fields = fields;
-       commandReturnData.returnMessage = messageEmbed;
-       return commandReturnData;
+        messageEmbed.fields = fields;
+        await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+        return commandReturnData;
    } catch (error) {
        return new Promise((resolve, reject) => {
            reject(error);

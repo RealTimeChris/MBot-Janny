@@ -15,6 +15,8 @@ command.description = "It's an automatic one!";
 export async function execute(client: Discord.Client, invite: Discord.Invite,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
         if (!(invite instanceof Discord.Invite)) {
             return command.name;
         }

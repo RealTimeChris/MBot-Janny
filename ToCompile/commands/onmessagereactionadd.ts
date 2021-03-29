@@ -15,6 +15,8 @@ command.description = "It's an automatic one!";
 export async function execute(messageReaction: Discord.MessageReaction, client: Discord.Client, args: string[],
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
+		const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
 		const guildData = await discordUser.getGuildDataFromDB(messageReaction.message.guild as Discord.Guild);
 
 		if (messageReaction instanceof Discord.MessageReaction === false) {

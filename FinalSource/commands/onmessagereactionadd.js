@@ -48,11 +48,13 @@ command.name = 'onmessagereactionadd';
 command.description = "It's an automatic one!";
 function execute(messageReaction, client, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var guildData, userID, x, currentGuild, currentGuildMember, currentGuildMemberRoleManager, y, error_1;
+        var commandReturnData, guildData, userID, x, currentGuild, currentGuildMember, currentGuildMemberRoleManager, y, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 13, , 14]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(messageReaction.message.guild)];
                 case 1:
                     guildData = _a.sent();

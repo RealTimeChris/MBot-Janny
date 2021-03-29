@@ -48,11 +48,13 @@ command.name = 'onguildmemberremove';
 command.description = "It's an automatic one!";
 function execute(client, guildMember, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var guildData, logs, x, textChannel, currentGuild, auditLog, augitLogEntry, msgEmbed, msgString, msgString, error_1;
+        var commandReturnData, guildData, logs, x, textChannel, currentGuild, auditLog, augitLogEntry, msgEmbed, msgString, msgString, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 9, , 10]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     if (!(guildMember instanceof Discord.GuildMember)) {
                         return [2 /*return*/, command.name];
                     }

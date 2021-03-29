@@ -14,6 +14,8 @@ command.description = "It's an automatic one!";
 
 export async function execute(client: Discord.Client, message: Discord.Message, discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
         if (!(message.deleted)) {
             return command.name;
         }

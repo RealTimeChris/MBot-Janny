@@ -7,17 +7,16 @@
 
 import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff.js');
-import { DiscordInteractions } from 'slash-commands';
-import SlashCommands = require('slash-commands');
+
 const command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
 
  export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
-        if (message.deletable) {
-            //await message.delete();
-        }       
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
+
         
         return command.name;
     } catch (error) {

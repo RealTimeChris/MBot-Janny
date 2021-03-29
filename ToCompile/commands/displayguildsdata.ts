@@ -20,14 +20,12 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 		const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
 		let currentCount = 0;
-		const msgEmbedArray: Discord.MessageEmbed[] =  [];
-		discordUser.guildsData.forEach(guild => {
+		discordUser.guildsData.forEach(async guild => {
 			let msgString = '';
 			msgString += `__Guild Name:__ ${guild.guildName}\n`;
 			msgString += `__Guild ID:__ ${guild.guildID}\n`;
 			msgString += `__Member Count:__ ${guild.guildMemberCount}\n`;
 
-			
 			let currentGuild = new Discord.Guild(commandData.guildMember?.client as Discord.Client, {});
 
 			currentGuild = commandData.guild?.client.guilds.resolve(guild.guildID) as Discord.Guild;
@@ -40,11 +38,11 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 				.setTitle(`__**Guild Data ${currentCount + 1} of ${discordUser.guildsData.size}:**__`)
 				.setTimestamp((Date() as unknown) as Date)
 				.setDescription(msgString);
-
-			commandData.textChannel?.send(messageEmbed);
+				
+				await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
 			currentCount += 1;
 		});
-		
+
 		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {

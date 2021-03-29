@@ -47,11 +47,11 @@ command.name = 'test';
 command.description = '!test';
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
+        var commandReturnData;
         return __generator(this, function (_a) {
             try {
-                if (message.deletable) {
-                    //await message.delete();
-                }
+                commandReturnData = new DiscordStuff.CommandReturnData();
+                commandReturnData.commandName = command.name;
                 return [2 /*return*/, command.name];
             }
             catch (error) {

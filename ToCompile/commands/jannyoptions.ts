@@ -12,25 +12,28 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'jannyoptions';
 command.description = '!jannyoptions, to display a list of options for this bot!';
 
-	export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+	export async function execute(commandData: DiscordStuff.CommandData,  discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
-		const areWeInADM = await DiscordStuff.areWeInADM(message);
+		const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
+		const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
 		if (areWeInADM === true) {
 			return command.name;
 		}
 
-		const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(message);
+		const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
 
 		if (doWeHaveAdminPerms === false) {
 			return command.name;
 		}
 
-		const guildData = await discordUser.getGuildDataFromDB(message.guild as Discord.Guild);
+		const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
 
 		const msgEmbed = new Discord.MessageEmbed();
 		msgEmbed
-			.setAuthor((message.client.user as Discord.User).username, (message.client.user as Discord.User).avatarURL() as string)
+			.setAuthor(((commandData.guildMember as Discord.GuildMember).client.user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).client.user as Discord.User)
+			.avatarURL() as string)
 			.setTimestamp((Date() as unknown) as Date)
 			.setTitle('__**Janny Options:**__')
 			.setColor([0, 0, 255])
@@ -65,7 +68,7 @@ command.description = '!jannyoptions, to display a list of options for this bot!
 		fields.push(deletionChannelsField);
 
 		resultIcon = '❌';
-		const serverRecordKey = `${(message.guild as Discord.Guild).id} + Record`;
+		const serverRecordKey = `${(commandData.guild as Discord.Guild).id} + Record`;
 		const serverRecordObject = await discordUser.dataBase.get(serverRecordKey);
 		if (serverRecordObject.replacementServerInvite !== '') {
 			resultIcon = '✅';
@@ -90,10 +93,10 @@ command.description = '!jannyoptions, to display a list of options for this bot!
 			__Command(s):__ '!timedmessages'`, inline: true };
 		fields.push(timedMessagesField);
 
-		const userData = await discordUser.getUserDataFromDB(message.client);
+		const userData = await discordUser.getUserDataFromDB((commandData.guild as Discord.Guild).client);
 		resultIcon = '❌';
 		for (let x = 0; x < userData.trackingGuildIDs.length; x += 1) {
-			if (userData.trackingGuildIDs[x] === (message.guild as Discord.Guild).id) {
+			if (userData.trackingGuildIDs[x] === ((commandData.guild as Discord.Guild) as Discord.Guild).id) {
 				resultIcon = '✅';
 			}
 		}
@@ -102,10 +105,7 @@ command.description = '!jannyoptions, to display a list of options for this bot!
 		fields.push(trackUsersField);
 
 		msgEmbed.fields = fields;
-		await message.channel.send(msgEmbed);
-		if (message.deletable) {
-			await message.delete();
-		}
+		await (commandData.textChannel as Discord.TextChannel).send(msgEmbed);
 		return command.name;
 	} catch (error) {
 		return new Promise((resolve, reject) => {

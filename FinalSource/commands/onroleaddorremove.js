@@ -48,11 +48,13 @@ command.name = 'onroleaddorremove';
 command.description = "It's an automatic one!";
 function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var guildData, logs, x, newRoleCollection, newRole, textChannel, auditLogs, auditLogEntry, finalString, messageEmbed, finalString, messageEmbed, error_1;
+        var commandReturnData, guildData, logs, x, newRoleCollection, newRole, textChannel, auditLogs, auditLogEntry, finalString, messageEmbed, finalString, messageEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 7, , 8]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     if (!(oldGuildMemberRoleManager instanceof Discord.GuildMemberRoleManager)) {
                         return [2 /*return*/, command.name];
                     }

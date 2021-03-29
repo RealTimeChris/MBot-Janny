@@ -48,11 +48,13 @@ command.name = 'managelogs';
 command.description = '!managelogs, to view an enabled/disabled list of possible logs!';
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, areWeAnAdmin, guildData, fields, x, field, field, msgEmbed, msgString, _a, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, error_1;
+        var commandReturnData, areWeInADM, areWeAnAdmin, guildData, fields, x, field, field, msgEmbed, msgString, _a, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, x, msgEmbed, msgString, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 241, , 242]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _b.sent();

@@ -71,25 +71,28 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 			return commandReturnData;
 		}
 
-		const areWeACommander = await discordUser.doWeHaveAdminPermission(commandData.guildMember as Discord.GuildMember, commandData.textChannel as Discord.TextChannel);
+		const areWeACommander = await discordUser.doWeHaveAdminPermission(commandData);
 
 		if (!areWeACommander) {
 			return commandReturnData;
 		}
 
 		if (commandData.args[0] === undefined) {
-			commandReturnData.returnMessage = `<@!${commandData.guildMember?.id}> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)`;
+			const msgString = `<@!${commandData.guildMember?.id}> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)`;
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
 			return commandReturnData;
 		}
 		if (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse') {
-			commandReturnData.returnMessage = `<@!${commandData.guildMember?.id}> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)`;
+			const msgString = `<@!${commandData.guildMember?.id}> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)`;
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
 			return commandReturnData;
 		}
 		if (commandData.args[0].toLowerCase() !== 'janny') {
 			return commandReturnData;
 		}
 		if (commandData.args[1] === undefined) {
-			commandReturnData.returnMessage = `<@!${commandData.guildMember?.id}> Please, enter a DB key to search for!`;
+			const msgString = `<@!${commandData.guildMember?.id}> Please, enter a DB key to search for!`;
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
 			return commandReturnData;
 		}
 
@@ -117,7 +120,7 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 			.setDescription(`------\n__**Number of Deleted Entries**__: ${deletedCounter.returnDeletedCount()}\n------`)
 			.setTimestamp(Date.now())
 			.setTitle('__**Deleted DB Entries:**__');
-		commandReturnData.returnMessage = msgEmbed;
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		
 		return commandReturnData;
 	} catch (error) {

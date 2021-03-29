@@ -13,6 +13,8 @@ command.name = 'managelogs';
 command.description = '!managelogs, to view an enabled/disabled list of possible logs!';
 export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
         const areWeInADM = await DiscordStuff.areWeInADM(message);
 
         if (areWeInADM === true) {

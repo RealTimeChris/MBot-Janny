@@ -12,42 +12,40 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'listdbguilds';
 command.description = '!listdbguilds, to list guilds that this bot is no longer in!';
 
-export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
 	try {
-        const areWeInADM = await DiscordStuff.areWeInADM(message);
+		const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
+        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
         if (areWeInADM){
-            return command.name;
+            return commandReturnData;
         }
 
-		const areWeAnAdmin = await discordUser.doWeHaveAdminPermission(message);
+		const areWeAnAdmin = await discordUser.doWeHaveAdminPermission(commandData);
 
 		if (!areWeAnAdmin) {
-			return command.name;
+			return commandReturnData;
 		}
 
-		if (args[0] === undefined) {
-			await message.reply('Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)');
-			if (message.deletable) {
-				await message.delete();
-			}
-			return command.name;
+		if (commandData.args[0] === undefined) {
+			const msgString = 'Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)';
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+			return commandReturnData;
 		}
-		if (args[0].toLowerCase() !== 'janny' && args[0].toLowerCase() !== 'musichouse' && args[0].toLowerCase() !== 'gamehouse') {
-			await message.reply('Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)');
-			if (message.deletable) {
-				await message.delete();
-			}
-			return command.name;
+		if (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse') {
+			const msgString = 'Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)';
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+			return commandReturnData;
 		}
-		if (args[0].toLowerCase() !== 'janny') {
-			return command.name;
+		if (commandData.args[0].toLowerCase() !== 'janny') {
+			return commandReturnData;
 		}
 
-		const guildsArray = message.client.guilds.cache.array();
+		const guildsArray = (commandData.guildMember as Discord.GuildMember).client.guilds.cache.array();
 
         const iterator = discordUser.dataBase.iterate({});
-
+		let areAnyFound = false;
         for await (const {key, value} of iterator){
             if (key.length === 18 && key !== discordUser.userData.userID) {
                 let isItFound = false;
@@ -58,16 +56,25 @@ export async function execute(message: Discord.Message, args: string[], discordU
                 }
 				const newValue = value;
                 if (isItFound === false) {
-                    message.reply(`Key: ${key}\nGuild Name: ${newValue.guildName}\nGuild ID: ${newValue.guildID}`);
+					areAnyFound = true;
+                    const msgString = `Key: ${key}\nGuild Name: ${newValue.guildName}\nGuild ID: ${newValue.guildID}`;
+					await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
                 }
             }
         }
         await iterator.end();
         
-		if (message.deletable) {
-			await message.delete();
+		if (!areAnyFound){
+			const msgEmbed = new Discord.MessageEmbed();
+			msgEmbed
+				.setAuthor(commandData.guildMember?.user.username, (commandData.guildMember?.user as Discord.User).avatarURL()as string)
+				.setColor([0, 0, 255])
+				.setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
+				.setTimestamp((Date() as unknown) as Date)
+				.setTitle("__**No Spare Database Entries:**__");
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		}
-		return command.name;
+		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {
 			reject(error);

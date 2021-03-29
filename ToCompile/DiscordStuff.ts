@@ -10,6 +10,29 @@ import Level from 'level-ts';
 import config = require('./config.json');
 
 /**
+ * Functino for sending out a message, using the appropriate channel.
+ */
+export async function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: string | Discord.MessageEmbed): Promise<void>{
+	try{
+		if (commandData.textChannel === null){
+			await new Discord.WebhookClient((commandData.guildMember?.client.user as Discord.User).id, commandData.interaction.token).send(messageContents);
+		}
+		else{
+			await (commandData.textChannel as Discord.TextChannel).send(messageContents);
+		}
+
+		return new Promise((resolve, reject) => {
+			resolve();
+		});
+	}
+	catch(error){
+		return new Promise((resolve, reject) => {
+			reject(error);
+		 })
+	}
+}
+
+/**
  * Checks a user ID against an array of user IDs to see if it is present.
  */
 export function checkForBotCommanderStatus(userID: string, commanderIDs: string[]): boolean {
@@ -85,12 +108,12 @@ export async function recurseThroughMessagePages(userID: string, message: Discor
 /**
  * Checks to see if we're in a DM channel, and sends a warning message if so.
  */
-export async function areWeInADM(commandData: CommandData, channel?: Discord.Channel): Promise<boolean> {
+export async function areWeInADM(commandData: CommandData): Promise<boolean> {
 	try { 
-		const currentChannelType = channel?.type;
+		const currentChannelType = (commandData.textChannel as Discord.Channel).type;
 
 		if (currentChannelType === 'dm') {
-			commandData.textChannel?.send(`<@!${commandData.guildMember?.id}> Sorry, but we can't do that in a direct message!`);
+			await (commandData.textChannel as Discord.TextChannel | Discord.WebhookClient).send?(`<@!${commandData.guildMember?.id}> Sorry, but we can't do that in a direct message!`): Discord.Message;
 			return new Promise((resolve, reject) => {
 				resolve(true);
 			});
@@ -402,14 +425,28 @@ export class BotCommand {
  * Class representing the data that goes into a command.
  */
 export class CommandData{
+	interaction: any;
 	guild: Discord.Guild | null = null;
 	guildMember: Discord.GuildMember | null = null;
-	textChannel: Discord.TextChannel | null = null;
+	textChannel: Discord.TextChannel | Discord.WebhookClient | Discord.DMChannel | null = null;
+	permsChannel: Discord.GuildChannel | null = null;
 	args: string[] = [];
-	async initialize(client: Discord.Client, guildID: string, guildMemberID: string, textChannelID: string): Promise<void>{
-		this.guild  = (await client.guilds.fetch(guildID) as Discord.Guild);
-		this.guildMember = (await this.guild.members.fetch(guildMemberID) as Discord.GuildMember);
-		this.textChannel = (await client.channels.fetch(textChannelID) as Discord.TextChannel);
+	async initialize(client: Discord.Client, guildID: string = '', guildMemberID: string = '', permsChannelID: string | null = null, textChannelID: string | null = null): Promise<void>{
+		if (guildID !== ''){
+			this.guild  = (await client.guilds.fetch(guildID) as Discord.Guild);
+		}
+		if (guildMemberID !== ''){
+			this.guildMember = (await (this.guild as Discord.Guild).members.fetch(guildMemberID) as Discord.GuildMember);
+		}
+		if (textChannelID === null && this.interaction !== undefined){
+			this.textChannel = new Discord.WebhookClient((client.user as Discord.User).id, this.interaction.token);
+		}
+		else{
+			this.textChannel = (await client.channels.fetch(textChannelID as string) as Discord.TextChannel);
+		}		
+		if (permsChannelID !== null){
+			this.permsChannel = (await client.channels.fetch(permsChannelID as string) as Discord.GuildChannel);
+		}		
 	}
 }
 
@@ -418,7 +455,6 @@ export class CommandData{
  */
 export class CommandReturnData{
 	commandName: string = '';
-	returnMessage: string | Discord.MessageEmbed = '';
 }
 
 /**
@@ -771,15 +807,15 @@ export class DiscordUser {
 	/**
 	 * Checks if we have admin permissions in the current channel.
 	 */
-	async doWeHaveAdminPermission(guildMember: Discord.GuildMember, textChannel: Discord.TextChannel): Promise<boolean> {
+	async doWeHaveAdminPermission(commandData: CommandData): Promise<boolean> {
 		try {
-			const currentChannelPermissions = guildMember.permissionsIn(textChannel);
+			const currentChannelPermissions = (commandData.guildMember as Discord.GuildMember).permissionsIn(commandData.permsChannel as Discord.GuildChannel);
 
 			const permissionStrings = ['ADMINISTRATOR'] as Discord.PermissionString[];
 
 			const areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
 
-			const areTheyACommander = checkForBotCommanderStatus(guildMember.id,
+			const areTheyACommander = checkForBotCommanderStatus((commandData.guildMember as Discord.GuildMember).id,
 				this.userData.botCommanders);
 
 			if (areTheyAnAdmin === true || areTheyACommander === true) {
@@ -788,7 +824,7 @@ export class DiscordUser {
 				});
 			}
 
-			await textChannel.send(`<@!${guildMember.id}> Sorry, but you don't have the permissions required for that!`);
+			await (commandData.textChannel as Discord.TextChannel).send(`<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but you don't have the permissions required for that!`);
 			return new Promise((resolve, reject) => {
 				resolve(false);
 			});

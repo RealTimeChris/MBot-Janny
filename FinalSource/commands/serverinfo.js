@@ -51,11 +51,13 @@ command.description = '!serverinfo to get info about the current server!\n!serve
  */
 function execute(message, args) {
     return __awaiter(this, void 0, void 0, function () {
-        var idRegExp, currentServerID, argZero, serverArray, currentServer, x, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
+        var commandReturnData, idRegExp, currentServerID, argZero, serverArray, currentServer, x, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 16, , 17]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     idRegExp = /\d{18}/;
                     currentServerID = void 0;
                     if (!(args[0] === undefined && message.channel.type !== 'dm')) return [3 /*break*/, 1];

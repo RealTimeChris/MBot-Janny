@@ -52,35 +52,39 @@ command.description = '!botinfo to display info about this bot in chat!';
 function execute(commandData, discordUser) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, fields, field1, field2, field3, field4, messageEmbed;
+        var commandReturnData, fields, field1, field2, field3, field4, messageEmbed, error_1;
         return __generator(this, function (_c) {
-            try {
-                commandReturnData = new DiscordStuff.CommandReturnData();
-                commandReturnData.commandName = command.name;
-                fields = [];
-                field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
-                fields.push(field1);
-                field2 = { name: '__Bot ID:__', value: discordUser.userData.userID, inline: true };
-                fields.push(field2);
-                field3 = { name: '__Guild Count:__', value: discordUser.userData.guildCount.toString(), inline: true };
-                fields.push(field3);
-                field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
-                fields.push(field4);
-                messageEmbed = new Discord.MessageEmbed()
-                    .setImage((_b = (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.user) === null || _b === void 0 ? void 0 : _b.avatarURL())
-                    .setColor([0, 0, 255])
-                    .setTitle('__**Bot Info:**__')
-                    .setTimestamp(Date());
-                messageEmbed.fields = fields;
-                commandReturnData.returnMessage = messageEmbed;
-                return [2 /*return*/, commandReturnData];
+            switch (_c.label) {
+                case 0:
+                    _c.trys.push([0, 2, , 3]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
+                    fields = [];
+                    field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
+                    fields.push(field1);
+                    field2 = { name: '__Bot ID:__', value: discordUser.userData.userID, inline: true };
+                    fields.push(field2);
+                    field3 = { name: '__Guild Count:__', value: discordUser.userData.guildCount.toString(), inline: true };
+                    fields.push(field3);
+                    field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
+                    fields.push(field4);
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setImage((_b = (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.user) === null || _b === void 0 ? void 0 : _b.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setTitle('__**Bot Info:**__')
+                        .setTimestamp(Date());
+                    messageEmbed.fields = fields;
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                case 1:
+                    _c.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 2:
+                    error_1 = _c.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 3: return [2 /*return*/];
             }
-            catch (error) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        reject(error);
-                    })];
-            }
-            return [2 /*return*/];
         });
     });
 }

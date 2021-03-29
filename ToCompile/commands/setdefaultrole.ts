@@ -15,6 +15,8 @@ command.description = 'Just enter !setdefaultrole to view the current list of de
 
 export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
         const areWeInADM = await DiscordStuff.areWeInADM(message);
 
         if (areWeInADM === true) {

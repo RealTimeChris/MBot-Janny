@@ -56,8 +56,9 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             if ((commandData.guildMember as Discord.GuildMember).user.dmChannel == null) {
                 const dmChannel = await (commandData.guildMember as Discord.GuildMember).user.createDM();
                 await dmChannel.send(messageEmbed);
+                DiscordStuff.sendMessageWithCorrectChannel(commandData, `<@!${commandData.guildMember?.id}> I've messaged you, with help info!`);
             } else {
-                await (((commandData.guildMember as Discord.GuildMember).user as Discord.User).dmChannel as Discord.DMChannel).send(messageEmbed);
+                DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
             }
 
             return commandReturnData;
@@ -78,7 +79,8 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
         });
 
         if (isFound === false) {
-            commandReturnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}>Sorry, but that command was not found!`;
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but that command was not found!`;
+            DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return commandReturnData;
         }
 
@@ -89,7 +91,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
                 .setColor([254, 254, 254])
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setTimestamp((Date() as unknown) as Date);
-            await (commandData.textChannel as Discord.TextChannel).send((commandDescription as unknown) as Discord.MessageEmbed);
+                DiscordStuff.sendMessageWithCorrectChannel(commandData, (commandDescription as unknown) as Discord.MessageEmbed);
         } else {
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
@@ -99,7 +101,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setColor([254, 254, 254]);
 
-            commandReturnData.returnMessage = messageEmbed;
+            DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
         }
         return commandReturnData;
     } catch (error) {

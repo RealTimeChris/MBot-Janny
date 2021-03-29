@@ -48,11 +48,13 @@ command.name = 'setverificationsystem';
 command.description = '!setverificationsystem = ENABLE, VERIFICATIONMESSAGE, REACTIONEMOJI, in the channel you would like to use for your verification channel!\nAlso, !setverificationsystem = DISABLE.';
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, doWeHaveAdminPermission, guildData, whatAreWeDoing, emojiRegExp, msgString, newMessage, msgEmbed, currentChannel, messageManager, msgEmbed, msgEmbed2, newMessage, argTwo, msgEmbed, error_1;
+        var commandReturnData, areWeInADM, doWeHaveAdminPermission, guildData, whatAreWeDoing, emojiRegExp, msgString, newMessage, msgEmbed, currentChannel, messageManager, msgEmbed, msgEmbed2, newMessage, argTwo, msgEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 44, , 45]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();

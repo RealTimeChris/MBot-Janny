@@ -22,6 +22,8 @@ command.description = 'Command executes automatically upon receiving certain mes
    */
  export async function execute(message: Discord.Message): Promise<string> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
         const number = Math.random() * 100;
         if (message.content != null && message.content !== undefined) {
             if (message.content.toLowerCase().includes('hey ') && number <= 15) {

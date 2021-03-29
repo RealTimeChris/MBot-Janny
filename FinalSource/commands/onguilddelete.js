@@ -47,11 +47,13 @@ command.name = 'onguilddelete';
 command.description = "It's an automatic one!";
 function execute(guild, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var serverRecordKey, serverRecordObject, error_1;
+        var commandReturnData, serverRecordKey, serverRecordObject, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     if (!(discordUser instanceof DiscordStuff.DiscordUser)) {
                         return [2 /*return*/, command.name];
                     }

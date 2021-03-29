@@ -50,16 +50,17 @@ var commandindex_1 = __importDefault(require("./commandindex"));
 var discordUser = new DiscordStuff.DiscordUser();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, guild_id, _a, options, name, channel_id, commandData, nameSolid, value1, value2, userID, reason, name_1, value, returnData, newMessage, x;
-    var _b, _c;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+    var id, guild_id, _a, options, name, channel_id, commandData, nameSolid, value1, value2, userID, reason, name_1, viewOrNot, value, value1, returnData;
+    var _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 id = interaction.member.user.id, guild_id = interaction.guild_id, _a = interaction.data, options = _a.options, name = _a.name, channel_id = interaction.channel_id;
                 commandData = new DiscordStuff.CommandData();
+                commandData.interaction = interaction;
                 return [4 /*yield*/, commandData.initialize(client, guild_id, id, channel_id)];
             case 1:
-                _d.sent();
+                _c.sent();
                 nameSolid = name;
                 if (name === 'botinfo') {
                 }
@@ -69,7 +70,6 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                     commandData.args[0] = value1;
                     commandData.args[1] = value2;
                     if (commandData.args[0] !== 'janny') {
-                        console.log('RETURNING!');
                         return [2 /*return*/];
                     }
                 }
@@ -79,11 +79,13 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                     userID = void 0;
                     reason = void 0;
                     name_1 = options[0].name;
-                    console.log(name_1);
                     if (name_1 === 'view') {
-                        commandData.args[0] = '';
+                        viewOrNot = options[0].options[0].value;
                         commandData.args[1] = '';
                         commandData.args[2] = '';
+                        if (!viewOrNot) {
+                            return [2 /*return*/];
+                        }
                     }
                     else if (name_1 === 'add') {
                         userID = options[0].options[0].value;
@@ -104,46 +106,29 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                         commandData.args[0] = value;
                     }
                 }
+                if (name === 'jannyoptinos') {
+                }
+                if (name === 'listdbguilds') {
+                    value1 = options[0].options[0].value;
+                    commandData.args[0] = value1;
+                }
+                if (name === 'ping') {
+                }
+                if (name === 'test') {
+                }
                 return [4 /*yield*/, client.api.interactions(interaction.id, interaction.token).callback.post({
                         data: {
                             type: 5
                         }
                     })];
             case 2:
-                _d.sent();
+                _c.sent();
                 console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.displayName);
                 return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(nameSolid)) === null || _b === void 0 ? void 0 : _b.function(commandData, discordUser))];
             case 3:
-                returnData = _d.sent();
+                returnData = _c.sent();
                 console.log("Completed Command: " + returnData.commandName);
-                if (!(returnData.returnMessage === '')) return [3 /*break*/, 6];
-                return [4 /*yield*/, new Discord.WebhookClient(client.user.id, interaction.token).send("<@!" + ((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.id) + "> Finished with your command " + returnData.commandName + "!")];
-            case 4:
-                newMessage = _d.sent();
-                return [4 /*yield*/, newMessage.delete({ timeout: 5000 })];
-            case 5:
-                _d.sent();
-                return [3 /*break*/, 13];
-            case 6:
-                console.log(returnData.returnMessage.length);
-                if (!(returnData.returnMessage.length > 0)) return [3 /*break*/, 11];
-                x = 0;
-                _d.label = 7;
-            case 7:
-                if (!(x < returnData.returnMessage.length)) return [3 /*break*/, 10];
-                return [4 /*yield*/, new Discord.WebhookClient(client.user.id, interaction.token).send(returnData.returnMessage[x])];
-            case 8:
-                _d.sent();
-                _d.label = 9;
-            case 9:
-                x += 1;
-                return [3 /*break*/, 7];
-            case 10: return [3 /*break*/, 13];
-            case 11: return [4 /*yield*/, new Discord.WebhookClient(client.user.id, interaction.token).send(returnData.returnMessage)];
-            case 12:
-                _d.sent();
-                _d.label = 13;
-            case 13: return [2 /*return*/];
+                return [2 /*return*/];
         }
     });
 }); });
@@ -170,9 +155,9 @@ client.once('ready', function () { return __awaiter(void 0, void 0, void 0, func
 }); });
 client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
     var command, args, x, commandData, cmdReturnData, error_2, command, cmdName, error_3;
-    var _a, _b, _c;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+    var _a, _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 if (msg.member == null && !(msg.channel.type === 'dm')) {
                     console.log('HMMM!? NULL MEMBER?! GTFO!');
@@ -182,7 +167,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                     console.log('Better not track our own messages!');
                     return [2 /*return*/];
                 }
-                if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 12];
+                if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 15];
                 command = '';
                 args = [];
                 if (msg.content.indexOf(' =') === -1) {
@@ -198,89 +183,91 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 if (!commandindex_1.default.commands.has(command)) {
                     return [2 /*return*/];
                 }
-                _d.label = 1;
+                _c.label = 1;
             case 1:
-                _d.trys.push([1, 10, , 11]);
-                console.log(msg.guild.id);
-                console.log(msg.member.id);
-                console.log(msg.channel.id);
+                _c.trys.push([1, 13, , 14]);
                 commandData = new DiscordStuff.CommandData();
-                return [4 /*yield*/, commandData.initialize(client, msg.guild.id, msg.member.id, msg.channel.id)];
+                if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 3];
+                return [4 /*yield*/, commandData.initialize(client, msg.guild.id, msg.member.id, msg.channel.id, msg.channel.id)];
             case 2:
-                _d.sent();
-                commandData.args = args;
-                if (!msg.deletable) return [3 /*break*/, 4];
-                return [4 /*yield*/, msg.delete()];
-            case 3:
-                _d.sent();
-                _d.label = 4;
+                _c.sent();
+                return [3 /*break*/, 5];
+            case 3: return [4 /*yield*/, commandData.initialize(client)];
             case 4:
+                _c.sent();
+                commandData.textChannel = msg.channel;
+                _c.label = 5;
+            case 5:
+                commandData.args = args;
+                if (!msg.deletable) return [3 /*break*/, 7];
+                return [4 /*yield*/, msg.delete()];
+            case 6:
+                _c.sent();
+                _c.label = 7;
+            case 7:
                 console.log("Command: '" + command + "' entered by user: " + msg.author.username);
                 return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(commandData, discordUser))];
-            case 5:
-                cmdReturnData = _d.sent();
+            case 8:
+                cmdReturnData = _c.sent();
                 console.log("Completed Command: " + cmdReturnData.commandName);
                 return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
-            case 6:
-                _d.sent();
-                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
-            case 7:
-                _d.sent();
-                return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
-            case 8:
-                _d.sent();
-                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
             case 9:
-                _d.sent();
+                _c.sent();
+                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
+            case 10:
+                _c.sent();
+                return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
+            case 11:
+                _c.sent();
+                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
+            case 12:
+                _c.sent();
                 discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {
                     console.log(error);
                 });
-                if (cmdReturnData.returnMessage !== '') {
-                    (_b = commandData.textChannel) === null || _b === void 0 ? void 0 : _b.send(cmdReturnData.returnMessage);
-                }
                 return [2 /*return*/];
-            case 10:
-                error_2 = _d.sent();
+            case 13:
+                error_2 = _c.sent();
                 console.log(error_2);
                 msg.reply('There was an error trying to execute that command!');
-                return [3 /*break*/, 11];
-            case 11: return [3 /*break*/, 20];
-            case 12:
-                if (!(msg.author.id !== client.user.id)) return [3 /*break*/, 20];
+                return [3 /*break*/, 14];
+            case 14: return [3 /*break*/, 23];
+            case 15:
+                if (!(msg.author.id !== client.user.id)) return [3 /*break*/, 23];
                 command = 'message';
                 if (!commandindex_1.default.commands.has(command)) {
                     return [2 /*return*/];
                 }
-                _d.label = 13;
-            case 13:
-                _d.trys.push([13, 19, , 20]);
+                _c.label = 16;
+            case 16:
+                _c.trys.push([16, 22, , 23]);
                 console.log("Standard message entered: " + msg.author.username);
-                return [4 /*yield*/, ((_c = commandindex_1.default.commands.get(command)) === null || _c === void 0 ? void 0 : _c.function(msg))];
-            case 14:
-                cmdName = _d.sent();
+                return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(command)) === null || _b === void 0 ? void 0 : _b.function(msg))];
+            case 17:
+                cmdName = _c.sent();
                 console.log("Completed Command: " + cmdName);
                 return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
-            case 15:
-                _d.sent();
-                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
-            case 16:
-                _d.sent();
-                return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
-            case 17:
-                _d.sent();
-                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
             case 18:
-                _d.sent();
+                _c.sent();
+                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
+            case 19:
+                _c.sent();
+                return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
+            case 20:
+                _c.sent();
+                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
+            case 21:
+                _c.sent();
                 discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {
                     console.log(error);
                 });
                 return [2 /*return*/];
-            case 19:
-                error_3 = _d.sent();
+            case 22:
+                error_3 = _c.sent();
                 console.log(error_3);
                 msg.reply('There was an error trying to process that message!');
-                return [3 /*break*/, 20];
-            case 20: return [2 /*return*/];
+                return [3 /*break*/, 23];
+            case 23: return [2 /*return*/];
         }
     });
 }); });

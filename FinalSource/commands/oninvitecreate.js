@@ -48,11 +48,13 @@ command.name = 'oninvitecreate';
 command.description = "It's an automatic one!";
 function execute(client, invite, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var guildData, logs, x, textChannel, msgEmbed, msgString, error_1;
+        var commandReturnData, guildData, logs, x, textChannel, msgEmbed, msgString, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     if (!(invite instanceof Discord.Invite)) {
                         return [2 /*return*/, command.name];
                     }

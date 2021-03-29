@@ -48,11 +48,13 @@ command.name = 'onusernamechange';
 command.description = "It's an automatic one!";
 function execute(client, oldUser, newUser, guild, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var guildData, logs, x, textChannel, msgString, msgEmbed, error_1;
+        var commandReturnData, guildData, logs, x, textChannel, msgString, msgEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     if (!(oldUser instanceof Discord.User)) {
                         return [2 /*return*/, command.name];
                     }

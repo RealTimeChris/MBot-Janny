@@ -15,6 +15,8 @@ command.description = 'Use this to enable/disable message deletion/pruning in a 
 
 export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
         const areWeInADM = await DiscordStuff.areWeInADM(message);
 
         if (areWeInADM === true) {

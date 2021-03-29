@@ -49,11 +49,13 @@ command.description = 'Just enter !setdefaultrole to view the current list of de
     + 'role as a default for when someone new joins the server.\n!setdefaultrole = REMOVE, ROLENAME to remove a role from the list.';
 function execute(message, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, doWeHaveAdminPerms, whatAreWeDoing, roleName_1, guildData_1, roleArray_1, _loop_1, x, msgString_1, messageEmbed, currentRole_1, isItFound_1, x, msgString, messageEmbed, x, msgString, messageEmbed, error_1;
+        var commandReturnData, areWeInADM, doWeHaveAdminPerms, whatAreWeDoing, roleName_1, guildData_1, roleArray_1, _loop_1, x, msgString_1, messageEmbed, currentRole_1, isItFound_1, x, msgString, messageEmbed, x, msgString, messageEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 45, , 46]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();

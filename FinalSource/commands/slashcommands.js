@@ -42,17 +42,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var DiscordStuff = require("../DiscordStuff");
 var slash_commands_1 = require("slash-commands");
-var SlashCommands = require("slash-commands");
 var command = new DiscordStuff.BotCommand();
 command.name = 'slashcommands';
 command.description = '!slashcommands';
 function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, interaction, commands, x, botinfo, deletedbentry, displayguildsdata, ghost, help, globalCommands, error_1;
+        var commandReturnData, interaction, commands, x, globalCommands, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 8, , 9]);
+                    _a.trys.push([0, 3, , 4]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID,
@@ -65,235 +64,17 @@ function execute(commandData, discordUser) {
                         //const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
                         //console.log(newInteraction);
                     }
-                    botinfo = {
-                        "name": "botinfo",
-                        "description": "Displays info about the current bot.",
-                        "options": []
-                    };
-                    // Create Global Command
-                    return [4 /*yield*/, interaction.createApplicationCommand(botinfo).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
-                case 2:
-                    // Create Global Command
-                    _a.sent();
-                    deletedbentry = {
-                        "name": "deletedbentry",
-                        "description": "Used to delete database entries, based on their key.",
-                        "options": [{
-                                "name": "delete",
-                                "description": "Delete the entries with the provided key.",
-                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                                "options": [{
-                                        "name": "botname",
-                                        "description": "Which bot to delete the database entries from.",
-                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                                        "required": true,
-                                        "choices": [
-                                            {
-                                                "name": "janny",
-                                                "value": "janny"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "name": "entrykey",
-                                        "description": "The database key to prune from the database.",
-                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                                        "required": true,
-                                    }]
-                            }]
-                    };
-                    // Create Global Command
-                    return [4 /*yield*/, interaction.createApplicationCommand(deletedbentry).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
-                case 3:
-                    // Create Global Command
-                    _a.sent();
-                    displayguildsdata = {
-                        "name": "displayguildsdata",
-                        "description": "Display info about the servers that the bot is in.",
-                        "options": []
-                    };
-                    // Create Global Command
-                    return [4 /*yield*/, interaction.createApplicationCommand(displayguildsdata).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
-                case 4:
-                    // Create Global Command
-                    _a.sent();
-                    ghost = {
-                        "name": "ghost",
-                        "description": "Ghost or unghost a server member - muting and silencing them across the server.",
-                        "options": [
-                            {
-                                "name": "add",
-                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                                "description": "Applies the ghost status to a member.",
-                                "options": [{
-                                        "name": "user",
-                                        "type": SlashCommands.ApplicationCommandOptionType.USER,
-                                        "description": "The server member to ghost.",
-                                        "required": true
-                                    },
-                                    {
-                                        "name": "reason",
-                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                                        "description": "The reason for the ghosting application.",
-                                        "required": true
-                                    }]
-                            },
-                            {
-                                "name": "remove",
-                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                                "description": "Removes the ghost status from a member.",
-                                "options": [{
-                                        "name": "user",
-                                        "type": SlashCommands.ApplicationCommandOptionType.USER,
-                                        "description": "The server member to unghost.",
-                                        "required": true
-                                    }]
-                            },
-                            {
-                                "name": "view",
-                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                                "description": "Displays the currently ghosted server members, if applicable.",
-                                "options": [{
-                                        "name": "display",
-                                        "type": SlashCommands.ApplicationCommandOptionType.BOOLEAN,
-                                        "description": "Displays the currently ghosted server members, if applicable.",
-                                        "required": true
-                                    }]
-                            }
-                        ]
-                    };
-                    // Create Global Command
-                    return [4 /*yield*/, interaction.createApplicationCommand(ghost).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
-                case 5:
-                    // Create Global Command
-                    _a.sent();
-                    help = {
-                        "name": "help",
-                        "description": "Displays help about the bot's various commands.",
-                        "options": [{
-                                "name": "group1",
-                                "description": "The first group of commands.",
-                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                                "required": false,
-                                "options": [{
-                                        "name": "commandname",
-                                        "description": " The name of the command, from group 1.",
-                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                                        "required": false,
-                                        "choices": [{
-                                                "name": "botinfo",
-                                                "value": "botinfo"
-                                            },
-                                            {
-                                                "name": "deletedbentry",
-                                                "value": "deletedbentry"
-                                            },
-                                            {
-                                                "name": "displayguildsdata",
-                                                "value": "displayguildsdata"
-                                            },
-                                            {
-                                                "name": "ghost",
-                                                "value": "ghost"
-                                            },
-                                            {
-                                                "name": "help",
-                                                "value": "help"
-                                            },
-                                            {
-                                                "name": "jannyoptions",
-                                                "value": "jannyoptions"
-                                            },
-                                            {
-                                                "name": "listdbguilds",
-                                                "value": "listdbguilds"
-                                            },
-                                            {
-                                                "name": "managelogs",
-                                                "value": "managelogs"
-                                            },
-                                            {
-                                                "name": "ping",
-                                                "value": "ping"
-                                            },
-                                            {
-                                                "name": "purge",
-                                                "value": "purge"
-                                            }
-                                        ]
-                                    }]
-                            },
-                            {
-                                "name": "group2",
-                                "description": "The second group of commands.",
-                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                                "required": false,
-                                "options": [{
-                                        "name": "commandname",
-                                        "description": " The name of the command, from group 2.",
-                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                                        "required": false,
-                                        "choices": [{
-                                                "name": "serverinfo",
-                                                "value": "serverinfo"
-                                            },
-                                            {
-                                                "name": "setdefaultrole",
-                                                "value": "setdefaultrole"
-                                            },
-                                            {
-                                                "name": "setdeletionstatus",
-                                                "value": "setdeletionstatus"
-                                            },
-                                            {
-                                                "name": "setreplacementinvite",
-                                                "value": "setreplacementinvite"
-                                            },
-                                            {
-                                                "name": "setverificationsystem",
-                                                "value": "setverificationsystem"
-                                            },
-                                            {
-                                                "name": "slashcommands",
-                                                "value": "slashcommands"
-                                            },
-                                            {
-                                                "name": "test",
-                                                "value": "test"
-                                            },
-                                            {
-                                                "name": "timedmessages",
-                                                "value": "timedmessages"
-                                            },
-                                            {
-                                                "name": "trackuser",
-                                                "value": "trackuser"
-                                            },
-                                            {
-                                                "name": "userinfo",
-                                                "value": "userinfo"
-                                            }
-                                        ]
-                                    }]
-                            }
-                        ]
-                    };
-                    // Create Global Command
-                    return [4 /*yield*/, interaction.createApplicationCommand(help).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
-                case 6:
-                    // Create Global Command
-                    _a.sent();
                     return [4 /*yield*/, interaction.getApplicationCommands()];
-                case 7:
+                case 2:
                     globalCommands = _a.sent();
                     console.log(globalCommands.length);
                     return [2 /*return*/, commandReturnData];
-                case 8:
+                case 3:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 9: return [2 /*return*/];
+                case 4: return [2 /*return*/];
             }
         });
     });

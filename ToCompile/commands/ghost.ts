@@ -17,7 +17,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
     const returnData = new DiscordStuff.CommandReturnData();
         returnData.commandName = command.name;
     try {
-        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData.guildMember as Discord.GuildMember, commandData.textChannel as Discord.TextChannel);
+        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
 
         if (!doWeHaveAdminPerms) {
             return new Promise((resolve, reject) => {
@@ -34,36 +34,44 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             whatAreWeDoing = 'viewing';
             userID = (commandData.guildMember as Discord.GuildMember).id;
         } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() !== 'add' && (commandData.args[0] as string).toString().toLowerCase() !== 'remove') {
-            returnData.returnMessage =  `<@!${(commandData.guildMember as Discord.GuildMember).id}>1 Please, enter a proper first argument! (!ghost = add, REASON, @USERMENTION to 
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}>1 Please, enter a proper first argument! (!ghost = add, REASON, @USERMENTION to 
                 ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         }	else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'add' && commandData.args[1] === undefined) {
-            returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 2Please, enter a reason for this ghosting! (!ghost = add, REASON, @USERMENTION to 
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 2Please, enter a reason for this ghosting! (!ghost = add, REASON, @USERMENTION to 
                 ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'add' && commandData.args[2] === undefined) {
-            returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 3Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 3Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
                 @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         }	else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'remove' && commandData.args[1] === undefined) {
-            returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 4Please, enter a usermention to select the target to de-ghost! (!ghost = remove, @USERMENTION to unghost a user)`;
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 4Please, enter a usermention to select the target to de-ghost!
+                (!ghost = remove, @USERMENTION to unghost a user)`;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'add' && !userMentionRegExp.test((commandData.args[2]) as string) && !userIDRegExp.test(commandData.args[2] as string)) {
-            returnData.returnMessage =`<@!${(commandData.guildMember as Discord.GuildMember).id}> 5Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 5Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
                 @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'remove' && !userMentionRegExp.test((commandData.args[1]) as string) && !userIDRegExp.test(commandData.args[1] as string)) {
-            returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 6Please, enter a proper usermention to select the target to de-ghost! (!ghost = remove, @USERMENTION to unghost a user)`;
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 6Please, enter a proper usermention to select the target to de-ghost! 
+                (!ghost = remove, @USERMENTION to unghost a user)`;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -248,14 +256,15 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Currently Ghosted Members:**__');
 
-            returnData.returnMessage = msgEmbed;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         } if (whatAreWeDoing === 'add') {
             for (let x = 0; x < ghostedUserArray.length; x += 1) {
                 if (currentGuildMember.id === (ghostedUserArray[x] as Discord.GuildMember).id) {
-                    returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> They are already ghosted!`;
+                    const msgString =  `<@!${(commandData.guildMember as Discord.GuildMember).id}> They are already ghosted!`;
+                    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
                     return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -339,8 +348,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setTimestamp((Date() as unknown ) as Date)
                 .setTitle('__**New Server Member Ghosted:**__');
 
-            //await (commandData.textChannel as Discord.TextChannel).send(msgEmbed2);
-            returnData.returnMessage = msgEmbed2;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed2);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -354,7 +362,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             }
 
             if (isItFound === false) {
-                returnData.returnMessage = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but that user is not currently ghosted!`;
+                await (commandData.textChannel as Discord.TextChannel | Discord.WebhookClient).send?(`<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but that user is not currently ghosted!`): Discord.Message;
                 return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -411,8 +419,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**New Server Member Un-Ghosted:**__');
 
-            //await (commandData.textChannel as Discord.TextChannel).send(msgEmbed2);
-            returnData.returnMessage =  msgEmbed2;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed2);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });

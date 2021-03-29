@@ -51,11 +51,13 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
  */
 function execute(message, args) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, userID, userMentionRegExp, userIDRegExp, argZero, userIDOne, guildMemberManager, guildMember, error_1, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
+        var commandReturnData, areWeInADM, userID, userMentionRegExp, userIDRegExp, argZero, userIDOne, guildMemberManager, guildMember, error_1, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 18, , 19]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
                 case 1:
                     areWeInADM = _a.sent();

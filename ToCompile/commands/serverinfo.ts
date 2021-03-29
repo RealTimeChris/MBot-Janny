@@ -17,6 +17,8 @@ command.description = '!serverinfo to get info about the current server!\n!serve
  */
 export async function execute(message: Discord.Message, args: string[]): Promise<string> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
         const idRegExp = /\d{18}/;
 
         let currentServerID;

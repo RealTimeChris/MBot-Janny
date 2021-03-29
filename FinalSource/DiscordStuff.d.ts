@@ -1,6 +1,10 @@
 import Discord = require('discord.js');
 import Level from 'level-ts';
 /**
+ * Functino for sending out a message, using the appropriate channel.
+ */
+export declare function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: string | Discord.MessageEmbed): Promise<void>;
+/**
  * Checks a user ID against an array of user IDs to see if it is present.
  */
 export declare function checkForBotCommanderStatus(userID: string, commanderIDs: string[]): boolean;
@@ -11,7 +15,7 @@ export declare function recurseThroughMessagePages(userID: string, message: Disc
 /**
  * Checks to see if we're in a DM channel, and sends a warning message if so.
  */
-export declare function areWeInADM(commandData: CommandData, channel?: Discord.Channel): Promise<boolean>;
+export declare function areWeInADM(commandData: CommandData): Promise<boolean>;
 /**
 * Applies default roles to a new guild member.
 */
@@ -151,18 +155,19 @@ export declare class BotCommand {
  * Class representing the data that goes into a command.
  */
 export declare class CommandData {
+    interaction: any;
     guild: Discord.Guild | null;
     guildMember: Discord.GuildMember | null;
-    textChannel: Discord.TextChannel | null;
+    textChannel: Discord.TextChannel | Discord.WebhookClient | Discord.DMChannel | null;
+    permsChannel: Discord.GuildChannel | null;
     args: string[];
-    initialize(client: Discord.Client, guildID: string, guildMemberID: string, textChannelID: string): Promise<void>;
+    initialize(client: Discord.Client, guildID?: string, guildMemberID?: string, permsChannelID?: string | null, textChannelID?: string | null): Promise<void>;
 }
 /**
  * Class representing a command' return values.
  */
 export declare class CommandReturnData {
     commandName: string;
-    returnMessage: string | Discord.MessageEmbed;
 }
 /**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
@@ -225,7 +230,7 @@ export declare class DiscordUser {
     /**
      * Checks if we have admin permissions in the current channel.
      */
-    doWeHaveAdminPermission(guildMember: Discord.GuildMember, textChannel: Discord.TextChannel): Promise<boolean>;
+    doWeHaveAdminPermission(commandData: CommandData): Promise<boolean>;
     /**
     * Updates and saves the Discord record, which contains user information.
     */
