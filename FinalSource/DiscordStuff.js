@@ -172,7 +172,7 @@ function areWeInADM(commandData, channel) {
             try {
                 currentChannelType = channel === null || channel === void 0 ? void 0 : channel.type;
                 if (currentChannelType === 'dm') {
-                    (_a = commandData.textChannel) === null || _a === void 0 ? void 0 : _a.send("<@!" + ((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.id) + ">Sorry, but we can't do that in a direct message!");
+                    (_a = commandData.textChannel) === null || _a === void 0 ? void 0 : _a.send("<@!" + ((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.id) + "> Sorry, but we can't do that in a direct message!");
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             resolve(true);
                         })];
@@ -1118,7 +1118,7 @@ var DiscordUser = /** @class */ (function () {
                                     resolve(true);
                                 })];
                         }
-                        return [4 /*yield*/, textChannel.send("@<@!" + guildMember.id + "> Sorry, but you don't have the permissions required for that!")];
+                        return [4 /*yield*/, textChannel.send("<@!" + guildMember.id + "> Sorry, but you don't have the permissions required for that!")];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {

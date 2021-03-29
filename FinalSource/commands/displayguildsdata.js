@@ -51,15 +51,15 @@ command.description = '!displayguildsdata to display the guild info of the bots 
  */
 function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, currentCount_1, msgEmbedArray_1;
+        var commandReturnData, currentCount_1, msgEmbedArray;
         return __generator(this, function (_a) {
             try {
                 commandReturnData = new DiscordStuff.CommandReturnData();
                 commandReturnData.commandName = command.name;
                 currentCount_1 = 0;
-                msgEmbedArray_1 = [];
+                msgEmbedArray = [];
                 discordUser.guildsData.forEach(function (guild) {
-                    var _a, _b;
+                    var _a, _b, _c;
                     var msgString = '';
                     msgString += "__Guild Name:__ " + guild.guildName + "\n";
                     msgString += "__Guild ID:__ " + guild.guildID + "\n";
@@ -68,16 +68,14 @@ function execute(commandData, discordUser) {
                     currentGuild = (_b = commandData.guild) === null || _b === void 0 ? void 0 : _b.client.guilds.resolve(guild.guildID);
                     msgString += "__Created:__ " + currentGuild.createdAt + "\n";
                     msgString += "__Guild Owner:__ <@!" + currentGuild.owner.id + "> (" + currentGuild.owner.user.tag + ")\n";
-                    console.log(msgString);
                     var messageEmbed = new Discord.MessageEmbed()
                         .setThumbnail(currentGuild.iconURL())
                         .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
                         .setTimestamp(Date())
                         .setDescription(msgString);
-                    msgEmbedArray_1.push(messageEmbed);
+                    (_c = commandData.textChannel) === null || _c === void 0 ? void 0 : _c.send(messageEmbed);
                     currentCount_1 += 1;
                 });
-                commandReturnData.returnMessage = msgEmbedArray_1;
                 return [2 /*return*/, commandReturnData];
             }
             catch (error) {

@@ -90,9 +90,9 @@ export async function areWeInADM(commandData: CommandData, channel?: Discord.Cha
 		const currentChannelType = channel?.type;
 
 		if (currentChannelType === 'dm') {
-			commandData.textChannel?.send(`<@!${commandData.guildMember?.id}>Sorry, but we can't do that in a direct message!`);
+			commandData.textChannel?.send(`<@!${commandData.guildMember?.id}> Sorry, but we can't do that in a direct message!`);
 			return new Promise((resolve, reject) => {
-				resolve(true)
+				resolve(true);
 			});
 		}
 		return new Promise((resolve, reject) => {
@@ -788,7 +788,7 @@ export class DiscordUser {
 				});
 			}
 
-			await textChannel.send(`@<@!${guildMember.id}> Sorry, but you don't have the permissions required for that!`);
+			await textChannel.send(`<@!${guildMember.id}> Sorry, but you don't have the permissions required for that!`);
 			return new Promise((resolve, reject) => {
 				resolve(false);
 			});

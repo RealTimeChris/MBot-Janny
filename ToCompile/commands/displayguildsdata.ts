@@ -27,7 +27,7 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 			msgString += `__Guild ID:__ ${guild.guildID}\n`;
 			msgString += `__Member Count:__ ${guild.guildMemberCount}\n`;
 
-
+			
 			let currentGuild = new Discord.Guild(commandData.guildMember?.client as Discord.Client, {});
 
 			currentGuild = commandData.guild?.client.guilds.resolve(guild.guildID) as Discord.Guild;
@@ -41,11 +41,10 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 				.setTimestamp((Date() as unknown) as Date)
 				.setDescription(msgString);
 
-			msgEmbedArray.push(messageEmbed);
+			commandData.textChannel?.send(messageEmbed);
 			currentCount += 1;
 		});
-
-		commandReturnData.returnMessage = msgEmbedArray;
+		
 		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {
