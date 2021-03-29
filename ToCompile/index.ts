@@ -21,6 +21,19 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	if (name === 'botinfo'){
 
 	}
+	if (name === "deletedbentry"){
+		const {value:value1} = options[0].options[0];
+		const {value:value2} = options[0].options[1];
+		commandData.args[0] = value1;
+		commandData.args[1] = value2;
+		if (commandData.args[0] !== 'janny') {
+			console.log('RETURNING!');
+			return;
+		}
+	}
+	if (name === "displayguildsdata"){
+		
+	}
 	if (name === 'ghost'){
 		let userID;
 		let reason;
@@ -45,17 +58,33 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		}
 	}
 	if (name === 'help'){
-		const {value} = options[0].options[0];
-		commandData.args[0] = value;
+		if (options[0].options !==  undefined){
+			const {value} = options[0].options[0];
+			commandData.args[0] = value;
+		}
 	}
-	client.api.interactions(interaction.id, interaction.token).callback.post({
+	await client.api.interactions(interaction.id, interaction.token).callback.post({
 		data:{
 			type: 5
-	}})
+	}});
 	console.log(`Command: '${nameSolid}' entered by user: ${(commandData.guildMember as Discord.GuildMember).displayName}`);
 	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
-	await new Discord.WebhookClient(client.user.id, interaction.token).send(returnData.returnMessage);
+	if (returnData.returnMessage === ''){
+		let newMessage = await new Discord.WebhookClient(client.user.id, interaction.token).send(`<@!${commandData.guildMember?.id}> Finished with your command ${returnData.commandName}!`) as Discord.Message;
+		await newMessage.delete( {timeout: 5000} );
+	}
+	else{
+		console.log(returnData.returnMessage.length);
+		if (returnData.returnMessage.length > 0){
+			for (let x = 0; x < returnData.returnMessage.length; x += 1){
+				await new Discord.WebhookClient(client.user.id, interaction.token).send((returnData.returnMessage as Discord.MessageEmbed[])[x] as Discord.MessageEmbed);
+			}
+		}
+		else{
+			await new Discord.WebhookClient(client.user.id, interaction.token).send(returnData.returnMessage);
+		}
+	}
 })
 
 client.once('ready', async () => {
@@ -94,6 +123,9 @@ client.on('message', async (msg: Discord.Message) => {
 			return;
 		}
 		try {
+			console.log((msg.guild as Discord.Guild).id);
+			console.log((msg.member as Discord.GuildMember).id);
+			console.log(msg.channel.id);
 			const commandData = new DiscordStuff.CommandData();
 			await commandData.initialize(client, (msg.guild as Discord.Guild).id, (msg.member as Discord.GuildMember).id, msg.channel.id);
 			commandData.args = args;
@@ -101,10 +133,6 @@ client.on('message', async (msg: Discord.Message) => {
 			if (msg.deletable){
 				await msg.delete();
 			}
-
-			console.log(commandData.guildMember);
-			console.log(commandData.guild);
-			console.log(commandData.textChannel);
 
 			console.log(`Command: '${command}' entered by user: ${msg.author.username}`);
 			const cmdReturnData = await botCommands.commands.get(command)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;

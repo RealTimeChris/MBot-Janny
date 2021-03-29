@@ -49,46 +49,43 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 /**
  * Displays all of the data for all of the guilds, either in console or in chat.
  */
-function execute(message, args, discordUser) {
+function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var currentCount_1, error_1;
+        var commandReturnData, currentCount_1, msgEmbedArray_1;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 3, , 4]);
-                    currentCount_1 = 0;
-                    discordUser.guildsData.forEach(function (guild) {
-                        var msgString = '';
-                        msgString += "__Guild Name:__ " + guild.guildName + "\n";
-                        msgString += "__Guild ID:__ " + guild.guildID + "\n";
-                        msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";
-                        var guildID = guild.guildID;
-                        var currentGuild = new Discord.Guild(message.client, {});
-                        currentGuild = message.client.guilds.resolve(guildID);
-                        msgString += "__Created:__ " + currentGuild.createdAt + "\n";
-                        msgString += "__Guild Owner:__ <@!" + currentGuild.owner.id + "> (" + currentGuild.owner.user.tag + ")\n";
-                        console.log(msgString);
-                        var messageEmbed = new Discord.MessageEmbed()
-                            .setThumbnail(currentGuild.iconURL())
-                            .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
-                            .setTimestamp(Date())
-                            .setDescription(msgString);
-                        message.channel.send(messageEmbed);
-                        currentCount_1 += 1;
-                    });
-                    if (!(message.channel.type !== 'dm' && message.deletable)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, message.delete()];
-                case 1:
-                    _a.sent();
-                    _a.label = 2;
-                case 2: return [2 /*return*/, command.name];
-                case 3:
-                    error_1 = _a.sent();
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            reject(error_1);
-                        })];
-                case 4: return [2 /*return*/];
+            try {
+                commandReturnData = new DiscordStuff.CommandReturnData();
+                commandReturnData.commandName = command.name;
+                currentCount_1 = 0;
+                msgEmbedArray_1 = [];
+                discordUser.guildsData.forEach(function (guild) {
+                    var _a, _b;
+                    var msgString = '';
+                    msgString += "__Guild Name:__ " + guild.guildName + "\n";
+                    msgString += "__Guild ID:__ " + guild.guildID + "\n";
+                    msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";
+                    var currentGuild = new Discord.Guild((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client, {});
+                    currentGuild = (_b = commandData.guild) === null || _b === void 0 ? void 0 : _b.client.guilds.resolve(guild.guildID);
+                    msgString += "__Created:__ " + currentGuild.createdAt + "\n";
+                    msgString += "__Guild Owner:__ <@!" + currentGuild.owner.id + "> (" + currentGuild.owner.user.tag + ")\n";
+                    console.log(msgString);
+                    var messageEmbed = new Discord.MessageEmbed()
+                        .setThumbnail(currentGuild.iconURL())
+                        .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
+                        .setTimestamp(Date())
+                        .setDescription(msgString);
+                    msgEmbedArray_1.push(messageEmbed);
+                    currentCount_1 += 1;
+                });
+                commandReturnData.returnMessage = msgEmbedArray_1;
+                return [2 /*return*/, commandReturnData];
             }
+            catch (error) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        reject(error);
+                    })];
+            }
+            return [2 /*return*/];
         });
     });
 }

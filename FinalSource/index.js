@@ -50,18 +50,30 @@ var commandindex_1 = __importDefault(require("./commandindex"));
 var discordUser = new DiscordStuff.DiscordUser();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, guild_id, _a, options, name, channel_id, commandData, nameSolid, userID, reason, name_1, value, returnData;
-    var _b;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
+    var id, guild_id, _a, options, name, channel_id, commandData, nameSolid, value1, value2, userID, reason, name_1, value, returnData, newMessage, x;
+    var _b, _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
             case 0:
                 id = interaction.member.user.id, guild_id = interaction.guild_id, _a = interaction.data, options = _a.options, name = _a.name, channel_id = interaction.channel_id;
                 commandData = new DiscordStuff.CommandData();
                 return [4 /*yield*/, commandData.initialize(client, guild_id, id, channel_id)];
             case 1:
-                _c.sent();
+                _d.sent();
                 nameSolid = name;
                 if (name === 'botinfo') {
+                }
+                if (name === "deletedbentry") {
+                    value1 = options[0].options[0].value;
+                    value2 = options[0].options[1].value;
+                    commandData.args[0] = value1;
+                    commandData.args[1] = value2;
+                    if (commandData.args[0] !== 'janny') {
+                        console.log('RETURNING!');
+                        return [2 /*return*/];
+                    }
+                }
+                if (name === "displayguildsdata") {
                 }
                 if (name === 'ghost') {
                     userID = void 0;
@@ -87,23 +99,51 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                     }
                 }
                 if (name === 'help') {
-                    value = options[0].options[0].value;
-                    commandData.args[0] = value;
-                }
-                client.api.interactions(interaction.id, interaction.token).callback.post({
-                    data: {
-                        type: 5
+                    if (options[0].options !== undefined) {
+                        value = options[0].options[0].value;
+                        commandData.args[0] = value;
                     }
-                });
+                }
+                return [4 /*yield*/, client.api.interactions(interaction.id, interaction.token).callback.post({
+                        data: {
+                            type: 5
+                        }
+                    })];
+            case 2:
+                _d.sent();
                 console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.displayName);
                 return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(nameSolid)) === null || _b === void 0 ? void 0 : _b.function(commandData, discordUser))];
-            case 2:
-                returnData = _c.sent();
-                console.log("Completed Command: " + returnData.commandName);
-                return [4 /*yield*/, new Discord.WebhookClient(client.user.id, interaction.token).send(returnData.returnMessage)];
             case 3:
-                _c.sent();
-                return [2 /*return*/];
+                returnData = _d.sent();
+                console.log("Completed Command: " + returnData.commandName);
+                if (!(returnData.returnMessage === '')) return [3 /*break*/, 6];
+                return [4 /*yield*/, new Discord.WebhookClient(client.user.id, interaction.token).send("<@!" + ((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.id) + "> Finished with your command " + returnData.commandName + "!")];
+            case 4:
+                newMessage = _d.sent();
+                return [4 /*yield*/, newMessage.delete({ timeout: 5000 })];
+            case 5:
+                _d.sent();
+                return [3 /*break*/, 13];
+            case 6:
+                console.log(returnData.returnMessage.length);
+                if (!(returnData.returnMessage.length > 0)) return [3 /*break*/, 11];
+                x = 0;
+                _d.label = 7;
+            case 7:
+                if (!(x < returnData.returnMessage.length)) return [3 /*break*/, 10];
+                return [4 /*yield*/, new Discord.WebhookClient(client.user.id, interaction.token).send(returnData.returnMessage[x])];
+            case 8:
+                _d.sent();
+                _d.label = 9;
+            case 9:
+                x += 1;
+                return [3 /*break*/, 7];
+            case 10: return [3 /*break*/, 13];
+            case 11: return [4 /*yield*/, new Discord.WebhookClient(client.user.id, interaction.token).send(returnData.returnMessage)];
+            case 12:
+                _d.sent();
+                _d.label = 13;
+            case 13: return [2 /*return*/];
         }
     });
 }); });
@@ -161,6 +201,9 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _d.label = 1;
             case 1:
                 _d.trys.push([1, 10, , 11]);
+                console.log(msg.guild.id);
+                console.log(msg.member.id);
+                console.log(msg.channel.id);
                 commandData = new DiscordStuff.CommandData();
                 return [4 /*yield*/, commandData.initialize(client, msg.guild.id, msg.member.id, msg.channel.id)];
             case 2:
@@ -172,9 +215,6 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _d.sent();
                 _d.label = 4;
             case 4:
-                console.log(commandData.guildMember);
-                console.log(commandData.guild);
-                console.log(commandData.textChannel);
                 console.log("Command: '" + command + "' entered by user: " + msg.author.username);
                 return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(commandData, discordUser))];
             case 5:

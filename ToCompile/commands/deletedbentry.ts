@@ -65,7 +65,7 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 	try {
 		const commandReturnData = new DiscordStuff.CommandReturnData;
 		commandReturnData.commandName = command.name;
-		const areWeInADM = await DiscordStuff.areWeInADM(commandData.textChannel as Discord.TextChannel);
+		const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
 		if (areWeInADM){
 			return commandReturnData;

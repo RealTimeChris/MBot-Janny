@@ -11,7 +11,7 @@ export declare function recurseThroughMessagePages(userID: string, message: Disc
 /**
  * Checks to see if we're in a DM channel, and sends a warning message if so.
  */
-export declare function areWeInADM(message: Discord.Message): Promise<boolean>;
+export declare function areWeInADM(commandData: CommandData, channel?: Discord.Channel): Promise<boolean>;
 /**
 * Applies default roles to a new guild member.
 */

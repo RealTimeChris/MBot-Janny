@@ -48,11 +48,11 @@ command.name = 'slashcommands';
 command.description = '!slashcommands';
 function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, interaction, commands, x, botinfo, ghost, help, globalCommands, error_1;
+        var commandReturnData, interaction, commands, x, botinfo, deletedbentry, displayguildsdata, ghost, help, globalCommands, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
+                    _a.trys.push([0, 8, , 9]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID,
@@ -73,6 +73,48 @@ function execute(commandData, discordUser) {
                     // Create Global Command
                     return [4 /*yield*/, interaction.createApplicationCommand(botinfo).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
                 case 2:
+                    // Create Global Command
+                    _a.sent();
+                    deletedbentry = {
+                        "name": "deletedbentry",
+                        "description": "Used to delete database entries, based on their key.",
+                        "options": [{
+                                "name": "delete",
+                                "description": "Delete the entries with the provided key.",
+                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "options": [{
+                                        "name": "botname",
+                                        "description": "Which bot to delete the database entries from.",
+                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                                        "required": true,
+                                        "choices": [
+                                            {
+                                                "name": "janny",
+                                                "value": "janny"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "entrykey",
+                                        "description": "The database key to prune from the database.",
+                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                                        "required": true,
+                                    }]
+                            }]
+                    };
+                    // Create Global Command
+                    return [4 /*yield*/, interaction.createApplicationCommand(deletedbentry).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
+                case 3:
+                    // Create Global Command
+                    _a.sent();
+                    displayguildsdata = {
+                        "name": "displayguildsdata",
+                        "description": "Display info about the servers that the bot is in.",
+                        "options": []
+                    };
+                    // Create Global Command
+                    return [4 /*yield*/, interaction.createApplicationCommand(displayguildsdata).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
+                case 4:
                     // Create Global Command
                     _a.sent();
                     ghost = {
@@ -122,14 +164,13 @@ function execute(commandData, discordUser) {
                     };
                     // Create Global Command
                     return [4 /*yield*/, interaction.createApplicationCommand(ghost).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
-                case 3:
+                case 5:
                     // Create Global Command
                     _a.sent();
                     help = {
                         "name": "help",
                         "description": "Displays help about the bot's various commands.",
-                        "options": [
-                            {
+                        "options": [{
                                 "name": "group1",
                                 "description": "The first group of commands.",
                                 "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
@@ -178,46 +219,6 @@ function execute(commandData, discordUser) {
                                             {
                                                 "name": "purge",
                                                 "value": "purge"
-                                            },
-                                            {
-                                                "name": "serverinfo",
-                                                "value": "serverinfo"
-                                            },
-                                            {
-                                                "name": "setdefaultrole",
-                                                "value": "setdefaultrole"
-                                            },
-                                            {
-                                                "name": "setdeletionstatus",
-                                                "value": "setdeletionstatus"
-                                            },
-                                            {
-                                                "name": "setreplacementinvite",
-                                                "value": "setreplacementinvite"
-                                            },
-                                            {
-                                                "name": "setverificationsystem",
-                                                "value": "setverificationsystem"
-                                            },
-                                            {
-                                                "name": "slashcommands",
-                                                "value": "slashcommands"
-                                            },
-                                            {
-                                                "name": "test",
-                                                "value": "test"
-                                            },
-                                            {
-                                                "name": "timedmessages",
-                                                "value": "timedmessages"
-                                            },
-                                            {
-                                                "name": "trackuser",
-                                                "value": "trackuser"
-                                            },
-                                            {
-                                                "name": "userinfo",
-                                                "value": "userinfo"
                                             }
                                         ]
                                     }]
@@ -279,20 +280,20 @@ function execute(commandData, discordUser) {
                     };
                     // Create Global Command
                     return [4 /*yield*/, interaction.createApplicationCommand(help).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
-                case 4:
+                case 6:
                     // Create Global Command
                     _a.sent();
                     return [4 /*yield*/, interaction.getApplicationCommands()];
-                case 5:
+                case 7:
                     globalCommands = _a.sent();
                     console.log(globalCommands.length);
                     return [2 /*return*/, commandReturnData];
-                case 6:
+                case 8:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 7: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });

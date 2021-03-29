@@ -51,13 +51,13 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
  * Returns a menu of helping information for the various commands I have.
  */
 function execute(commandData) {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, commandFiles_1, commandNames_1, msgString_1, currentIndex_1, messageEmbed, dmChannel, isFound_1, commandDescription_1, commandName_1, messageEmbed, error_1;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
+        return __generator(this, function (_p) {
+            switch (_p.label) {
                 case 0:
-                    _f.trys.push([0, 10, , 11]);
+                    _p.trys.push([0, 10, , 11]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     commandFiles_1 = commandIndex.default.commands;
@@ -80,24 +80,24 @@ function execute(commandData) {
                     });
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
-                        .setImage(((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user).avatarURL().toString())
+                        .setImage(((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.user).avatarURL().toString())
                         .setTimestamp(Date())
-                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor((_c = (_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.client.user) === null || _c === void 0 ? void 0 : _c.username, (_e = (_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.client.user) === null || _e === void 0 ? void 0 : _e.avatarURL())
                         .setTitle("__**" + commandData.guildMember.user.username + " Help:**__")
                         .setDescription(msgString_1)
                         .setColor([254, 254, 254]);
                     if (!(commandData.guildMember.user.dmChannel == null)) return [3 /*break*/, 3];
                     return [4 /*yield*/, commandData.guildMember.user.createDM()];
                 case 1:
-                    dmChannel = _f.sent();
+                    dmChannel = _p.sent();
                     return [4 /*yield*/, dmChannel.send(messageEmbed)];
                 case 2:
-                    _f.sent();
+                    _p.sent();
                     return [3 /*break*/, 5];
                 case 3: return [4 /*yield*/, commandData.guildMember.user.dmChannel.send(messageEmbed)];
                 case 4:
-                    _f.sent();
-                    _f.label = 5;
+                    _p.sent();
+                    _p.label = 5;
                 case 5: return [2 /*return*/, commandReturnData];
                 case 6:
                     isFound_1 = false;
@@ -117,27 +117,27 @@ function execute(commandData) {
                     }
                     if (!(commandDescription_1 instanceof Discord.MessageEmbed)) return [3 /*break*/, 8];
                     commandDescription_1
-                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, ((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user).avatarURL())
+                        .setAuthor((_g = (_f = commandData.guildMember) === null || _f === void 0 ? void 0 : _f.client.user) === null || _g === void 0 ? void 0 : _g.username, (_j = (_h = commandData.guildMember) === null || _h === void 0 ? void 0 : _h.client.user) === null || _j === void 0 ? void 0 : _j.avatarURL())
                         .setColor([254, 254, 254])
                         .setTitle("__**" + (commandName_1.charAt(0).toUpperCase() + commandName_1.slice(1)) + " Help:**__")
                         .setTimestamp(Date());
                     return [4 /*yield*/, commandData.textChannel.send(commandDescription_1)];
                 case 7:
-                    _f.sent();
+                    _p.sent();
                     return [3 /*break*/, 9];
                 case 8:
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setDescription(commandDescription_1)
                         .setTimestamp(Date())
-                        .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, ((_e = commandData.guildMember) === null || _e === void 0 ? void 0 : _e.user).avatarURL())
+                        .setAuthor((_l = (_k = commandData.guildMember) === null || _k === void 0 ? void 0 : _k.client.user) === null || _l === void 0 ? void 0 : _l.username, (_o = (_m = commandData.guildMember) === null || _m === void 0 ? void 0 : _m.client.user) === null || _o === void 0 ? void 0 : _o.avatarURL())
                         .setTitle("__**" + (commandName_1.charAt(0).toUpperCase() + commandName_1.slice(1)) + " Help:**__")
                         .setColor([254, 254, 254]);
                     commandReturnData.returnMessage = messageEmbed;
-                    _f.label = 9;
+                    _p.label = 9;
                 case 9: return [2 /*return*/, commandReturnData];
                 case 10:
-                    error_1 = _f.sent();
+                    error_1 = _p.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

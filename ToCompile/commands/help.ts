@@ -46,9 +46,9 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setImage(((commandData.guildMember?.user as Discord.User).avatarURL() as string).toString())
+                .setImage(((commandData.guildMember?.client.user as Discord.User).avatarURL() as string).toString())
                 .setTimestamp((Date() as unknown) as Date)
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
+                .setAuthor(commandData.guildMember?.client.user?.username, (commandData.guildMember?.client.user?.avatarURL() as string))
                 .setTitle(`__**${((commandData.guildMember as Discord.GuildMember).user as Discord.User).username} Help:**__`)
                 .setDescription(msgString)
                 .setColor([254, 254, 254]);
@@ -84,8 +84,8 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
 
         if (((commandDescription as unknown) as Discord.MessageEmbed) instanceof Discord.MessageEmbed) {
             ((commandDescription as unknown) as Discord.MessageEmbed)
-                .setAuthor(commandData.guildMember?.user.username,
-                (commandData.guildMember?.user as Discord.User).avatarURL() as string)
+                .setAuthor(commandData.guildMember?.client.user?.username,
+                (commandData.guildMember?.client.user?.avatarURL() as string))
                 .setColor([254, 254, 254])
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setTimestamp((Date() as unknown) as Date);
@@ -95,7 +95,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             messageEmbed
                 .setDescription(commandDescription)
                 .setTimestamp((Date() as unknown) as Date)
-                .setAuthor(commandData.guildMember?.user.username, (commandData.guildMember?.user as Discord.User).avatarURL() as string)
+                .setAuthor(commandData.guildMember?.client.user?.username, commandData.guildMember?.client.user?.avatarURL() as string)
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setColor([254, 254, 254]);
 

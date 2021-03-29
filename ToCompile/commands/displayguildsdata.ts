@@ -15,38 +15,38 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 /**
  * Displays all of the data for all of the guilds, either in console or in chat.
  */
- export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+ export async function execute(commandData :DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
 	try {
+		const commandReturnData = new DiscordStuff.CommandReturnData();
+		commandReturnData.commandName = command.name;
 		let currentCount = 0;
+		const msgEmbedArray: Discord.MessageEmbed[] =  [];
 		discordUser.guildsData.forEach(guild => {
 			let msgString = '';
 			msgString += `__Guild Name:__ ${guild.guildName}\n`;
 			msgString += `__Guild ID:__ ${guild.guildID}\n`;
 			msgString += `__Member Count:__ ${guild.guildMemberCount}\n`;
 
-			const { guildID } = guild;
-			let currentGuild = new Discord.Guild(message.client, {});
 
-			currentGuild = message.client.guilds.resolve(guildID as Discord.GuildResolvable) as Discord.Guild;
+			let currentGuild = new Discord.Guild(commandData.guildMember?.client as Discord.Client, {});
+
+			currentGuild = commandData.guild?.client.guilds.resolve(guild.guildID) as Discord.Guild;
 
 			msgString += `__Created:__ ${currentGuild.createdAt}\n`;
 			msgString += `__Guild Owner:__ <@!${(currentGuild.owner as Discord.GuildMember).id}> (${(currentGuild.owner as Discord.GuildMember).user.tag})\n`;
 
-			console.log(msgString);
 			const messageEmbed = new Discord.MessageEmbed()
 				.setThumbnail(currentGuild.iconURL() as string)
 				.setTitle(`__**Guild Data ${currentCount + 1} of ${discordUser.guildsData.size}:**__`)
 				.setTimestamp((Date() as unknown) as Date)
 				.setDescription(msgString);
 
-			message.channel.send(messageEmbed);
+			msgEmbedArray.push(messageEmbed);
 			currentCount += 1;
 		});
 
-		if (message.channel.type !== 'dm' && message.deletable) {
-			await message.delete();
-		}
-		return command.name;
+		commandReturnData.returnMessage = msgEmbedArray;
+		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {
 			reject(error);

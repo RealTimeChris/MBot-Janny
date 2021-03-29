@@ -37,6 +37,45 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         // Create Global Command
         await interaction.createApplicationCommand(botinfo).then(error => console.log(error)).catch(error => console.log(error.message));
 
+        const deletedbentry = {
+            "name": "deletedbentry",
+            "description": "Used to delete database entries, based on their key.",
+            "options":[{
+                "name": "delete",
+                "description": "Delete the entries with the provided key.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options":[{
+                    "name": "botname",
+                    "description": "Which bot to delete the database entries from.",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true,
+                    "choices": [
+                        {
+                            "name": "janny",
+                            "value": "janny"
+                        }]
+                    },
+                    {
+                    "name": "entrykey",
+                    "description": "The database key to prune from the database.",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true,
+                }]
+            }]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(deletedbentry).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const displayguildsdata = {
+            "name": "displayguildsdata",
+            "description": "Display info about the servers that the bot is in.",
+            "options":[]                        
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(displayguildsdata).then(error => console.log(error)).catch(error => console.log(error.message));
+
         const ghost =  {
             "name": "ghost",
             "description": "Ghost or unghost a server member - muting and silencing them across the server.",
@@ -80,15 +119,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 }
             ]
         }
-
         // Create Global Command
         await interaction.createApplicationCommand(ghost).then(error => console.log(error)).catch(error => console.log(error.message));
 
         const help = {
             "name": "help",
             "description": "Displays help about the bot's various commands.",
-            "options":[
-                {  
+            "options":[{
+                  
                     "name": "group1",
                     "description": "The first group of commands.",
                     "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
@@ -137,46 +175,6 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                     {
                                         "name":"purge",
                                         "value":"purge"
-                                    },
-                                    {
-                                        "name":"serverinfo",
-                                        "value":"serverinfo"
-                                    },
-                                    {
-                                        "name":"setdefaultrole",
-                                        "value":"setdefaultrole"
-                                    },
-                                    {
-                                        "name":"setdeletionstatus",
-                                        "value":"setdeletionstatus"
-                                    },
-                                    {
-                                        "name":"setreplacementinvite",
-                                        "value":"setreplacementinvite"
-                                    },
-                                    {
-                                        "name":"setverificationsystem",
-                                        "value":"setverificationsystem"
-                                    },
-                                    {
-                                        "name":"slashcommands",
-                                        "value":"slashcommands"
-                                    },
-                                    {
-                                        "name":"test",
-                                        "value":"test"
-                                    },
-                                    {
-                                        "name":"timedmessages",
-                                        "value":"timedmessages"
-                                    },
-                                    {
-                                        "name":"trackuser",
-                                        "value":"trackuser"
-                                    },
-                                    {
-                                        "name":"userinfo",
-                                        "value":"userinfo"
                                     }
                             ]
                         }]
@@ -236,14 +234,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     }
             ]
         }
-
+        
         // Create Global Command
         await interaction.createApplicationCommand(help).then(error => console.log(error)).catch(error => console.log(error.message));
 
         const globalCommands = await interaction.getApplicationCommands();
         console.log(globalCommands.length);
         return commandReturnData;
-}
+    }
     catch(error){
         return new Promise((resolve, reject) => {
             reject(error);
