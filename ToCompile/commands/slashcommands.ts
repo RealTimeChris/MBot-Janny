@@ -561,7 +561,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         // Create Global Command
         await interaction.createApplicationCommand(timedmessages).then(error => console.log(error)).catch(error => console.log(error.message));
-*/
+
         const trackuser = {
             "name": "trackuser",
             "description": "Tracks a given user's messages within the selected chat channel.",
@@ -597,7 +597,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         // Create Global Command
         await interaction.createApplicationCommand(trackuser).then(error => console.log(error)).catch(error => console.log(error.message));
-
+*/
         const globalCommands = await interaction.getApplicationCommands();
         console.log(globalCommands.length);
         await DiscordStuff.sendMessageWithCorrectChannel(commandData, `Yes, IT'S COMPLETED!, You have ${globalCommands.length} commands registered!`);
