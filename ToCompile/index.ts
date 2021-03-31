@@ -263,7 +263,8 @@ client.on('message', async (msg: Discord.Message) => {
 		if (!botCommands.commands.has(command)){
 			return;
 		}
-		try {
+
+		try{
 			const commandData = new DiscordStuff.CommandData();
 			if (msg.channel.type !== 'dm'){
 				await commandData.initialize(client, msg.channel.id, msg.channel.type, null, (msg.member as Discord.GuildMember).id, (msg.guild as Discord.Guild).id);
@@ -277,9 +278,14 @@ client.on('message', async (msg: Discord.Message) => {
 				await msg.delete();
 			}
 
-			console.log(`Command: '${command}' entered by user: ${msg.author.username}`);
-			const cmdReturnData = await botCommands.commands.get(command)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
-			console.log(`Completed Command: ${cmdReturnData.commandName}`);
+			try {	
+				console.log(`Command: '${command}' entered by user: ${msg.author.username}`);
+				const cmdReturnData = await botCommands.commands.get(command)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
+				console.log(`Completed Command: ${cmdReturnData.commandName}`);
+			} catch (error) {
+				console.log(error);
+				msg.reply('There was an error trying to execute that command!');
+			}
 			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
 			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
 			await discordUser.saveCacheIfTimeHasPassed(client);
@@ -288,20 +294,24 @@ client.on('message', async (msg: Discord.Message) => {
 				console.log(error);
 			});
 			return;
-		} catch (error) {
+		}
+		catch(error){
 			console.log(error);
-			msg.reply('There was an error trying to execute that command!');
 		}
 	} else if (msg.author.id !== (client.user as Discord.User).id) {
 		const command = 'message';
-
 		if (!botCommands.commands.has(command)) {
 			return;
 		}
-		try {
-			console.log(`Standard message entered: ${msg.author.username}`);
-			const cmdName = await botCommands.commands.get(command)?.function(msg);
-			console.log(`Completed Command: ${cmdName}`);
+		try{
+			try {
+				console.log(`Standard message entered: ${msg.author.username}`);
+				const cmdName = await botCommands.commands.get(command)?.function(msg);
+				console.log(`Completed Command: ${cmdName}`);
+			} catch (error) {
+				console.log(error);
+				msg.reply('There was an error trying to process that message!');
+			}
 			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
 			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
 			await discordUser.saveCacheIfTimeHasPassed(client);
@@ -310,9 +320,9 @@ client.on('message', async (msg: Discord.Message) => {
 				console.log(error);
 			});
 			return;
-		} catch (error) {
+		}
+		catch(error){
 			console.log(error);
-			msg.reply('There was an error trying to process that message!');
 		}
 	}
 });

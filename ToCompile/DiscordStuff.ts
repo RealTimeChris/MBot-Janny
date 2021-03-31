@@ -639,7 +639,7 @@ export class DiscordUser {
 				const guildData = new GuildData();
 				guildData.defaultRoleIDs = [];
 				guildData.deletionChannels = [];
-				guildData.ghostedRoleID = String();
+				guildData.ghostedRoleID = '';
 				guildData.guildID = guild.id;
 				guildData.guildMemberCount = guild.memberCount;
 				guildData.guildName = guild.name;
@@ -728,7 +728,6 @@ export class DiscordUser {
 				guildMemberData.displayName = guildMember.displayName;
 				guildMemberData.userID = guildMember.id;
 				guildMemberData.userName = guildMember.user.username;
-				console.log(error);
 				return new Promise((resolve, reject) => {
 					resolve(guildMemberData);
 				});
