@@ -43,9 +43,6 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		const {value:value2} = options_full[1];
 		commandData.args[0] = value1;
 		commandData.args[1] = value2;
-		if (commandData.args[0] !== 'janny') {
-			return;
-		}
 	}
 	if (name_full === "displayguildsdata"){
 		

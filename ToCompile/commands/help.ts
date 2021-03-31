@@ -64,13 +64,15 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
                     .setColor([254, 254, 254]);
             }
             
-            
-            if ((commandData.guildMember as Discord.GuildMember).user.dmChannel == null) {
+            if (commandData.guildMember instanceof Discord.User){
+                const dmChannel = await (commandData.guildMember as Discord.User).createDM();
+                await dmChannel.send(messageEmbed);
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, `<@!${commandData.guildMember?.id}> I've sent you help info, via a message!`);
+            }
+            else if (commandData.guildMember instanceof Discord.GuildMember){
                 const dmChannel = await (commandData.guildMember as Discord.GuildMember).user.createDM();
                 await dmChannel.send(messageEmbed);
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, `<@!${commandData.guildMember?.id}> I've messaged you, with help info!`);
-            } else {
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, `<@!${commandData.guildMember?.id}> I've sent you help info, via a message!`);
             }
 
             return commandReturnData;

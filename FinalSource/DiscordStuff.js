@@ -56,27 +56,33 @@ function sendMessageWithCorrectChannel(commandData, messageContents) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 5, , 6]);
+                    _a.trys.push([0, 7, , 8]);
                     if (!(commandData.toTextChannel instanceof Discord.WebhookClient)) return [3 /*break*/, 2];
                     return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 1:
                     returnMessage_1 = (_a.sent());
-                    return [3 /*break*/, 4];
+                    return [3 /*break*/, 6];
                 case 2:
                     if (!(commandData.toTextChannel instanceof Discord.TextChannel)) return [3 /*break*/, 4];
                     return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 3:
                     returnMessage_1 = (_a.sent());
-                    _a.label = 4;
-                case 4: return [2 /*return*/, new Promise(function (resolve, reject) {
+                    return [3 /*break*/, 6];
+                case 4:
+                    if (!(commandData.toTextChannel instanceof Discord.DMChannel)) return [3 /*break*/, 6];
+                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
+                case 5:
+                    returnMessage_1 = (_a.sent());
+                    _a.label = 6;
+                case 6: return [2 /*return*/, new Promise(function (resolve, reject) {
                         resolve(returnMessage_1);
                     })];
-                case 5:
+                case 7:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 6: return [2 /*return*/];
+                case 8: return [2 /*return*/];
             }
         });
     });
@@ -654,7 +660,7 @@ var CommandData = /** @class */ (function () {
                     case 11:
                         if (!(interaction === null && fromTextChannelType === 'dm')) return [3 /*break*/, 14];
                         _g = this;
-                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                        return [4 /*yield*/, this.guildMember.createDM(true)];
                     case 12:
                         _g.toTextChannel = (_j.sent());
                         _h = this;

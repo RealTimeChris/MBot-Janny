@@ -21,6 +21,9 @@ export async function sendMessageWithCorrectChannel(commandData: CommandData, me
 		else if (commandData.toTextChannel instanceof Discord.TextChannel){
 			returnMessage = (await commandData.toTextChannel.send(messageContents)) as Discord.Message;
 		}
+		else if (commandData.toTextChannel instanceof Discord.DMChannel){
+			returnMessage = (await commandData.toTextChannel.send(messageContents)) as Discord.Message;
+		}
 
 		return new Promise((resolve, reject) => {
 			resolve(returnMessage);
@@ -465,7 +468,7 @@ export class BotCommand {
 				this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
 			}
 			if (interaction === null && fromTextChannelType === 'dm'){
-				this.toTextChannel = await client.channels.fetch(fromTextChannelID) as Discord.TextChannel;
+				this.toTextChannel = await this.guildMember.createDM(true) as Discord.DMChannel;
 				this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
 			}
 		}
@@ -861,6 +864,7 @@ export class DiscordUser {
 			});
 		}
 	}
+	
 	/**
 	* Updates and saves the Discord record, which contains user information.
 	*/
