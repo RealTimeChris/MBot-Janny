@@ -15,8 +15,14 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 
 async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     const returnData = new DiscordStuff.CommandReturnData();
-        returnData.commandName = command.name;
+    returnData.commandName = command.name;
     try {
+        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
+
+        if (areWeInADM){
+            return returnData;
+        }
+
         const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
 
         if (!doWeHaveAdminPerms) {
@@ -362,7 +368,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             }
 
             if (isItFound === false) {
-                await (commandData.textChannel as Discord.TextChannel | Discord.WebhookClient).send?(`<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but that user is not currently ghosted!`): Discord.Message;
+                await (commandData.permsChannel as Discord.TextChannel | Discord.WebhookClient).send?(`<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but that user is not currently ghosted!`): Discord.Message;
                 return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -430,7 +436,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             });
     } catch (error) {
         if (error.message === 'Missing Permissions') {
-            await (commandData.textChannel as Discord.TextChannel).send(`<@!${(commandData.guildMember as Discord.GuildMember).id}> I need more permissions! Please promote my role rank in the server options!`);
+            await (commandData.permsChannel as Discord.TextChannel).send(`<@!${(commandData.guildMember as Discord.GuildMember).id}> I need more permissions! Please promote my role rank in the server options!`);
             console.log(error);
             return new Promise((resolve, reject) => {
                 resolve(returnData);

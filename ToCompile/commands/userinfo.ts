@@ -15,9 +15,9 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
 /**
  * Displays info about a selected user.
  */
-export async function execute(message: Discord.Message, args: string[]): Promise<string> {
+export async function execute(commandData: DiscordStuff.CommandData, args: string[]): Promise<string> {
     try {
-        const areWeInADM = await DiscordStuff.areWeInADM(message);
+        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
         if (areWeInADM === true) {
             return command.name;
@@ -27,13 +27,11 @@ export async function execute(message: Discord.Message, args: string[]): Promise
         const userMentionRegExp = /.{2,3}\d{18}>/;
         const userIDRegExp = /\d{18}/;
         if (args[0] === undefined) {
-            userID = message.author.id;
+            userID = (commandData.guildMember as Discord.GuildMember).id;
         } else if ((args[0].match(userIDRegExp) as string[])[0] as string === null
             && (args[0].match(userMentionRegExp) as string[])[0] === null) {
-            await message.reply('Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)');
-            if (message.deletable){
-                await message.delete();
-            }
+            const msgString = 'Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)';
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return command.name;
         } else if (args[0].match(userMentionRegExp) != null) {
             userID = args[0].substring(3, args[0].length - 1);
@@ -43,16 +41,14 @@ export async function execute(message: Discord.Message, args: string[]): Promise
             userID = userIDOne as string;
         }
 
-        const guildMemberManager = new Discord.GuildMemberManager(message.guild as Discord.Guild);
+        const guildMemberManager = new Discord.GuildMemberManager(commandData.guild as Discord.Guild);
 
         let guildMember;
         try {
             guildMember = await guildMemberManager.fetch(userID);
         } catch (error) {
-            await message.reply('Sorry, but that user could not be found!');
-            if (message.deletable){
-                await message.delete();
-            }
+            const msgString =  'Sorry, but that user could not be found!';
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return command.name;
         }
 
@@ -102,12 +98,9 @@ export async function execute(message: Discord.Message, args: string[]): Promise
             .setTimestamp((Date() as unknown) as Date)
             .setTitle('__**User Info:**__')
             .setImage(guildMember.user.avatarURL() as string)
-            .setAuthor(message.author.username, message.author.avatarURL() as string);
+            .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, ((commandData.guildMember as Discord.GuildMember).user.avatarURL() as string));
         messageEmbed.fields = fields as Discord.EmbedField[];
-        await message.channel.send(messageEmbed);
-        if (message.deletable){
-            await message.delete();
-        }
+        await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
         return command.name;
     } catch (error) {
         return new Promise((resolve, reject) => {

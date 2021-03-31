@@ -13,7 +13,7 @@ command.name = 'serverinfo';
 command.description = '!serverinfo to get info about the current server!\n!serverinfo = SERVERID to display info about that server!';
 
 /**
- * Displays the info of a chosen server.
+ * Displays the info of a chosen server./
  */
 export async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordStuff.CommandReturnData> {
     try {
@@ -23,9 +23,9 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
 
         let currentServerID;
 
-        if (commandData.args[0] === undefined && (commandData.textChannel as Discord.Channel).type !== 'dm') {
+        if (commandData.args[0] === undefined && (commandData.permsChannel as Discord.Channel).type !== 'dm') {
             currentServerID = (commandData.guild as Discord.Guild).id;
-        }   else if (commandData.args[0] === undefined && (commandData.textChannel as Discord.Channel).type === 'dm') {
+        }   else if (commandData.args[0] === undefined && (commandData.permsChannel as Discord.Channel).type === 'dm') {
             const msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
             return commandReturnData;
         }	else if (!idRegExp.test(commandData.args[0] as string)) {

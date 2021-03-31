@@ -52,39 +52,29 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, currentCount_1;
-        var _this = this;
         return __generator(this, function (_a) {
             try {
                 commandReturnData = new DiscordStuff.CommandReturnData();
                 commandReturnData.commandName = command.name;
                 currentCount_1 = 0;
-                discordUser.guildsData.forEach(function (guild) { return __awaiter(_this, void 0, void 0, function () {
-                    var msgString, currentGuild, messageEmbed;
+                discordUser.guildsData.forEach(function (guild) {
                     var _a, _b;
-                    return __generator(this, function (_c) {
-                        switch (_c.label) {
-                            case 0:
-                                msgString = '';
-                                msgString += "__Guild Name:__ " + guild.guildName + "\n";
-                                msgString += "__Guild ID:__ " + guild.guildID + "\n";
-                                msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";
-                                currentGuild = new Discord.Guild((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client, {});
-                                currentGuild = (_b = commandData.guild) === null || _b === void 0 ? void 0 : _b.client.guilds.resolve(guild.guildID);
-                                msgString += "__Created:__ " + currentGuild.createdAt + "\n";
-                                msgString += "__Guild Owner:__ <@!" + currentGuild.owner.id + "> (" + currentGuild.owner.user.tag + ")\n";
-                                messageEmbed = new Discord.MessageEmbed()
-                                    .setThumbnail(currentGuild.iconURL())
-                                    .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
-                                    .setTimestamp(Date())
-                                    .setDescription(msgString);
-                                return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                            case 1:
-                                _c.sent();
-                                currentCount_1 += 1;
-                                return [2 /*return*/];
-                        }
-                    });
-                }); });
+                    var msgString = '';
+                    msgString += "__Guild Name:__ " + guild.guildName + "\n";
+                    msgString += "__Guild ID:__ " + guild.guildID + "\n";
+                    msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";
+                    var currentGuild = new Discord.Guild((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client, {});
+                    currentGuild = (_b = commandData.guild) === null || _b === void 0 ? void 0 : _b.client.guilds.resolve(guild.guildID);
+                    msgString += "__Created:__ " + currentGuild.createdAt + "\n";
+                    msgString += "__Guild Owner:__ <@!" + currentGuild.owner.id + "> (" + currentGuild.owner.user.tag + ")\n";
+                    var messageEmbed = new Discord.MessageEmbed()
+                        .setThumbnail(currentGuild.iconURL())
+                        .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
+                        .setTimestamp(Date())
+                        .setDescription(msgString);
+                    DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                    currentCount_1 += 1;
+                });
                 return [2 /*return*/, commandReturnData];
             }
             catch (error) {

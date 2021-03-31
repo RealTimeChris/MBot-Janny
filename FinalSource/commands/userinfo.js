@@ -49,16 +49,14 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
 /**
  * Displays info about a selected user.
  */
-function execute(message, args) {
+function execute(commandData, args) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, userID, userMentionRegExp, userIDRegExp, argZero, userIDOne, guildMemberManager, guildMember, error_1, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
+        var areWeInADM, userID, userMentionRegExp, userIDRegExp, msgString_1, argZero, userIDOne, guildMemberManager, guildMember, error_1, msgString_2, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 18, , 19]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
-                    commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(message)];
+                    _a.trys.push([0, 12, , 13]);
+                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _a.sent();
                     if (areWeInADM === true) {
@@ -68,21 +66,17 @@ function execute(message, args) {
                     userMentionRegExp = /.{2,3}\d{18}>/;
                     userIDRegExp = /\d{18}/;
                     if (!(args[0] === undefined)) return [3 /*break*/, 2];
-                    userID = message.author.id;
-                    return [3 /*break*/, 7];
+                    userID = commandData.guildMember.id;
+                    return [3 /*break*/, 5];
                 case 2:
                     if (!(args[0].match(userIDRegExp)[0] === null
-                        && args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 6];
-                    return [4 /*yield*/, message.reply('Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)')];
+                        && args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 4];
+                    msgString_1 = 'Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)';
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_1)];
                 case 3:
                     _a.sent();
-                    if (!message.deletable) return [3 /*break*/, 5];
-                    return [4 /*yield*/, message.delete()];
+                    return [2 /*return*/, command.name];
                 case 4:
-                    _a.sent();
-                    _a.label = 5;
-                case 5: return [2 /*return*/, command.name];
-                case 6:
                     if (args[0].match(userMentionRegExp) != null) {
                         userID = args[0].substring(3, args[0].length - 1);
                     }
@@ -91,29 +85,25 @@ function execute(message, args) {
                         userIDOne = argZero.match(userIDRegExp)[0];
                         userID = userIDOne;
                     }
-                    _a.label = 7;
-                case 7:
-                    guildMemberManager = new Discord.GuildMemberManager(message.guild);
+                    _a.label = 5;
+                case 5:
+                    guildMemberManager = new Discord.GuildMemberManager(commandData.guild);
                     guildMember = void 0;
-                    _a.label = 8;
-                case 8:
-                    _a.trys.push([8, 10, , 14]);
+                    _a.label = 6;
+                case 6:
+                    _a.trys.push([6, 8, , 10]);
                     return [4 /*yield*/, guildMemberManager.fetch(userID)];
-                case 9:
+                case 7:
                     guildMember = _a.sent();
-                    return [3 /*break*/, 14];
-                case 10:
+                    return [3 /*break*/, 10];
+                case 8:
                     error_1 = _a.sent();
-                    return [4 /*yield*/, message.reply('Sorry, but that user could not be found!')];
-                case 11:
+                    msgString_2 = 'Sorry, but that user could not be found!';
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_2)];
+                case 9:
                     _a.sent();
-                    if (!message.deletable) return [3 /*break*/, 13];
-                    return [4 /*yield*/, message.delete()];
-                case 12:
-                    _a.sent();
-                    _a.label = 13;
-                case 13: return [2 /*return*/, command.name];
-                case 14:
+                    return [2 /*return*/, command.name];
+                case 10:
                     fields = [];
                     field = { name: '__User Tag:__', value: guildMember.user.tag, inline: true };
                     fields.push(field);
@@ -161,23 +151,18 @@ function execute(message, args) {
                         .setTimestamp(Date())
                         .setTitle('__**User Info:**__')
                         .setImage(guildMember.user.avatarURL())
-                        .setAuthor(message.author.username, message.author.avatarURL());
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL());
                     messageEmbed.fields = fields;
-                    return [4 /*yield*/, message.channel.send(messageEmbed)];
-                case 15:
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                case 11:
                     _a.sent();
-                    if (!message.deletable) return [3 /*break*/, 17];
-                    return [4 /*yield*/, message.delete()];
-                case 16:
-                    _a.sent();
-                    _a.label = 17;
-                case 17: return [2 /*return*/, command.name];
-                case 18:
+                    return [2 /*return*/, command.name];
+                case 12:
                     error_2 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
-                case 19: return [2 /*return*/];
+                case 13: return [2 /*return*/];
             }
         });
     });

@@ -12,20 +12,20 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'jannyoptions';
 command.description = '!jannyoptions, to display a list of options for this bot!';
 
-	export async function execute(commandData: DiscordStuff.CommandData,  discordUser: DiscordStuff.DiscordUser): Promise<string> {
+	export async function execute(commandData: DiscordStuff.CommandData,  discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
 	try {
 		const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
 		const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
 		if (areWeInADM === true) {
-			return command.name;
+			return commandReturnData;
 		}
 
 		const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
 
 		if (doWeHaveAdminPerms === false) {
-			return command.name;
+			return commandReturnData;
 		}
 
 		const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
@@ -105,8 +105,8 @@ command.description = '!jannyoptions, to display a list of options for this bot!
 		fields.push(trackUsersField);
 
 		msgEmbed.fields = fields;
-		await (commandData.textChannel as Discord.TextChannel).send(msgEmbed);
-		return command.name;
+		await (commandData.permsChannel as Discord.TextChannel).send(msgEmbed);
+		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {
 			reject(error);

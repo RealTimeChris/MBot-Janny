@@ -131,8 +131,8 @@ function execute(commandData, discordUser) {
                 case 8:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 12];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 11];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 9:
@@ -189,8 +189,8 @@ function execute(commandData, discordUser) {
                 case 20:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 24];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 23];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 21:
@@ -247,8 +247,8 @@ function execute(commandData, discordUser) {
                 case 32:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 36];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 35];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 33:
@@ -305,8 +305,8 @@ function execute(commandData, discordUser) {
                 case 44:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 48];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 47];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 45:
@@ -363,8 +363,8 @@ function execute(commandData, discordUser) {
                 case 56:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 60];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 59];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 57:
@@ -421,8 +421,8 @@ function execute(commandData, discordUser) {
                 case 68:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 72];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 71];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 69:
@@ -479,8 +479,8 @@ function execute(commandData, discordUser) {
                 case 80:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 84];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 83];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 81:
@@ -537,8 +537,8 @@ function execute(commandData, discordUser) {
                 case 92:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 96];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 95];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 93:
@@ -595,8 +595,8 @@ function execute(commandData, discordUser) {
                 case 104:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 108];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 107];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 105:
@@ -653,8 +653,8 @@ function execute(commandData, discordUser) {
                 case 116:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 120];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 119];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 117:
@@ -711,8 +711,8 @@ function execute(commandData, discordUser) {
                 case 128:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 132];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 131];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 129:
@@ -769,8 +769,8 @@ function execute(commandData, discordUser) {
                 case 140:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 144];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 143];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 141:
@@ -827,8 +827,8 @@ function execute(commandData, discordUser) {
                 case 152:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 156];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 155];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 153:
@@ -885,8 +885,8 @@ function execute(commandData, discordUser) {
                 case 164:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 168];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 167];
-                    guildData.logs[x].loggingChannelID = commandData.textChannel.id;
-                    guildData.logs[x].loggingChannelName = commandData.textChannel.name;
+                    guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
+                    guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 165:

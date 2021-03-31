@@ -51,27 +51,28 @@ var config = require("./config.json");
  * Functino for sending out a message, using the appropriate channel.
  */
 function sendMessageWithCorrectChannel(commandData, messageContents) {
-    var _a;
     return __awaiter(this, void 0, void 0, function () {
         var returnMessage_1, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _b.trys.push([0, 5, , 6]);
-                    if (!(commandData.textChannel === null)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, new Discord.WebhookClient(((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.user).id, commandData.interaction.token).send(messageContents)];
+                    _a.trys.push([0, 5, , 6]);
+                    console.log(commandData.toTextChannel instanceof Discord.WebhookClient);
+                    console.log(commandData.toTextChannel.token);
+                    if (!(commandData.toTextChannel instanceof Discord.WebhookClient)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 1:
-                    returnMessage_1 = _b.sent();
+                    returnMessage_1 = (_a.sent());
                     return [3 /*break*/, 4];
-                case 2: return [4 /*yield*/, commandData.textChannel.send(messageContents)];
+                case 2: return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 3:
-                    returnMessage_1 = _b.sent();
-                    _b.label = 4;
+                    returnMessage_1 = (_a.sent());
+                    _a.label = 4;
                 case 4: return [2 /*return*/, new Promise(function (resolve, reject) {
                         resolve(returnMessage_1);
                     })];
                 case 5:
-                    error_1 = _b.sent();
+                    error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
@@ -199,18 +200,18 @@ exports.recurseThroughMessagePages = recurseThroughMessagePages;
  * Checks to see if we're in a DM channel, and sends a warning message if so.
  */
 function areWeInADM(commandData) {
-    var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var currentChannelType, error_2;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var currentChannelType, msgContents, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _b.trys.push([0, 3, , 4]);
-                    currentChannelType = commandData.permsChannel.type;
+                    _a.trys.push([0, 3, , 4]);
+                    currentChannelType = commandData.fromTextChannelType;
                     if (!(currentChannelType === 'dm')) return [3 /*break*/, 2];
-                    return [4 /*yield*/, commandData.textChannel.send];
+                    msgContents = "Sorry, but we can't do that in a direct message!";
+                    return [4 /*yield*/, sendMessageWithCorrectChannel(commandData, msgContents)];
                 case 1:
-                    (_b.sent()) ? ("<@!" + ((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.id) + "> Sorry, but we can't do that in a direct message!") : Discord.Message;
+                    _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             resolve(true);
                         })];
@@ -218,7 +219,7 @@ function areWeInADM(commandData) {
                         resolve(false);
                     })];
                 case 3:
-                    error_2 = _b.sent();
+                    error_2 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
@@ -584,59 +585,79 @@ exports.BotCommand = BotCommand;
  */
 var CommandData = /** @class */ (function () {
     function CommandData() {
+        this.interaction = null;
         this.guild = null;
         this.guildMember = null;
-        this.textChannel = null;
+        this.fromTextChannel = null;
+        this.fromTextChannelType = '';
         this.permsChannel = null;
+        this.toTextChannel = null;
         this.args = [];
     }
-    CommandData.prototype.initialize = function (client, permsChannelID, guildMemberID, guildID, textChannelID) {
-        if (permsChannelID === void 0) { permsChannelID = null; }
+    CommandData.prototype.initialize = function (client, fromTextChannelID, fromTextChannelType, interaction, guildMemberID, guildID) {
+        if (interaction === void 0) { interaction = null; }
         if (guildMemberID === void 0) { guildMemberID = ''; }
         if (guildID === void 0) { guildID = ''; }
-        if (textChannelID === void 0) { textChannelID = null; }
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, _c, _d, _e;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
+            var _a, _b, _c, _d, _e, _f, error_5;
+            return __generator(this, function (_g) {
+                switch (_g.label) {
                     case 0:
-                        if (!(guildID !== '')) return [3 /*break*/, 2];
+                        _g.trys.push([0, 12, , 13]);
+                        this.fromTextChannelType = fromTextChannelType;
                         _a = this;
-                        return [4 /*yield*/, client.guilds.fetch(guildID)];
+                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
                     case 1:
-                        _a.guild = (_f.sent());
-                        _f.label = 2;
-                    case 2:
-                        if (!(guildMemberID !== '' && guildID !== '')) return [3 /*break*/, 4];
+                        _a.fromTextChannel = (_g.sent());
+                        if (interaction !== null) {
+                            this.interaction = interaction;
+                        }
+                        if (!(guildID !== '')) return [3 /*break*/, 3];
                         _b = this;
-                        return [4 /*yield*/, this.guild.members.fetch(guildMemberID)];
+                        return [4 /*yield*/, client.guilds.fetch(guildID)];
+                    case 2:
+                        _b.guild = (_g.sent());
+                        _g.label = 3;
                     case 3:
-                        _b.guildMember = (_f.sent());
-                        return [3 /*break*/, 6];
-                    case 4:
+                        if (!(guildMemberID !== '' && guildID !== '')) return [3 /*break*/, 5];
                         _c = this;
-                        return [4 /*yield*/, client.users.fetch(guildMemberID)];
+                        return [4 /*yield*/, this.guild.members.fetch(guildMemberID)];
+                    case 4:
+                        _c.guildMember = (_g.sent());
+                        return [3 /*break*/, 7];
                     case 5:
-                        _c.guildMember = _f.sent();
-                        _f.label = 6;
-                    case 6:
-                        if (!(textChannelID === null && this.interaction !== undefined)) return [3 /*break*/, 7];
-                        this.textChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
-                        return [3 /*break*/, 9];
-                    case 7:
                         _d = this;
-                        return [4 /*yield*/, client.channels.fetch(textChannelID)];
-                    case 8:
-                        _d.textChannel = (_f.sent());
-                        _f.label = 9;
-                    case 9:
-                        if (!(permsChannelID !== null)) return [3 /*break*/, 11];
+                        return [4 /*yield*/, client.users.fetch(guildMemberID)];
+                    case 6:
+                        _d.guildMember = (_g.sent());
+                        _g.label = 7;
+                    case 7:
+                        if (interaction !== null && fromTextChannelType !== 'dm') {
+                            this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
+                            this.permsChannel = new Discord.GuildChannel(this.guild, this.fromTextChannel);
+                        }
+                        if (!(interaction === null && fromTextChannelType !== 'dm')) return [3 /*break*/, 9];
                         _e = this;
-                        return [4 /*yield*/, client.channels.fetch(permsChannelID)];
+                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                    case 8:
+                        _e.toTextChannel = (_g.sent());
+                        this.permsChannel = new Discord.GuildChannel(this.guild, this.fromTextChannel);
+                        _g.label = 9;
+                    case 9:
+                        if (!(fromTextChannelType === 'dm')) return [3 /*break*/, 11];
+                        this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
+                        _f = this;
+                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
                     case 10:
-                        _e.permsChannel = (_f.sent());
-                        _f.label = 11;
-                    case 11: return [2 /*return*/];
+                        _f.permsChannel = (_g.sent());
+                        _g.label = 11;
+                    case 11: return [3 /*break*/, 13];
+                    case 12:
+                        error_5 = _g.sent();
+                        return [2 /*return*/, new Promise(function (resolve, reject) {
+                                reject(error_5);
+                            })];
+                    case 13: return [2 /*return*/];
                 }
             });
         });
@@ -668,7 +689,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.initializeInstance = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var dataBaseFilePath, _a, error_5;
+            var dataBaseFilePath, _a, error_6;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -695,9 +716,9 @@ var DiscordUser = /** @class */ (function () {
                                 resolve();
                             })];
                     case 5:
-                        error_5 = _b.sent();
+                        error_6 = _b.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_5);
+                                reject(error_6);
                             })];
                     case 6: return [2 /*return*/];
                 }
@@ -709,7 +730,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getUserDataFromDB = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var userData_1, error_6, userData_2;
+            var userData_1, error_7, userData_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -722,8 +743,8 @@ var DiscordUser = /** @class */ (function () {
                                 resolve(userData_1);
                             })];
                     case 2:
-                        error_6 = _a.sent();
-                        if (error_6.type === 'NotFoundError') {
+                        error_7 = _a.sent();
+                        if (error_7.type === 'NotFoundError') {
                             console.log("Adding new entry for the current user's data!");
                             userData_2 = new DiscordUserData();
                             userData_2.botToken = config.botToken;
@@ -752,7 +773,7 @@ var DiscordUser = /** @class */ (function () {
                                 })];
                         }
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_6);
+                                reject(error_7);
                             })];
                     case 3: return [2 /*return*/];
                 }
@@ -764,7 +785,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateUserDataInDB = function (newUserData) {
         return __awaiter(this, void 0, void 0, function () {
-            var userData, error_7;
+            var userData, error_8;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -782,9 +803,9 @@ var DiscordUser = /** @class */ (function () {
                                 resolve();
                             })];
                     case 3:
-                        error_7 = _a.sent();
+                        error_8 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_7);
+                                reject(error_8);
                             })];
                     case 4: return [2 /*return*/];
                 }
@@ -796,7 +817,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateUserData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var userData, error_8;
+            var userData, error_9;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -832,9 +853,9 @@ var DiscordUser = /** @class */ (function () {
                                 resolve();
                             })];
                     case 3:
-                        error_8 = _a.sent();
+                        error_9 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_8);
+                                reject(error_9);
                             })];
                     case 4: return [2 /*return*/];
                 }
@@ -846,7 +867,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getGuildDataFromDB = function (guild) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildData_1, error_9, guildData_2;
+            var guildData_1, error_10, guildData_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -859,8 +880,8 @@ var DiscordUser = /** @class */ (function () {
                                 resolve(guildData_1);
                             })];
                     case 2:
-                        error_9 = _a.sent();
-                        if (error_9.type === 'NotFoundError') {
+                        error_10 = _a.sent();
+                        if (error_10.type === 'NotFoundError') {
                             console.log("Adding new entry for guild data! For guild: " + guild.name);
                             guildData_2 = new GuildData();
                             guildData_2.defaultRoleIDs = [];
@@ -876,7 +897,7 @@ var DiscordUser = /** @class */ (function () {
                                 })];
                         }
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_9);
+                                reject(error_10);
                             })];
                     case 3: return [2 /*return*/];
                 }
@@ -888,7 +909,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateGuildDataInDB = function (guildData) {
         return __awaiter(this, void 0, void 0, function () {
-            var newGuildData, error_10;
+            var newGuildData, error_11;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -907,9 +928,9 @@ var DiscordUser = /** @class */ (function () {
                                 resolve();
                             })];
                     case 3:
-                        error_10 = _a.sent();
+                        error_11 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_10);
+                                reject(error_11);
                             })];
                     case 4: return [2 /*return*/];
                 }
@@ -921,7 +942,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateGuildsData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var liveDataGuildArray, x, guildData, y, error_11;
+            var liveDataGuildArray, x, guildData, y, error_12;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -960,9 +981,9 @@ var DiscordUser = /** @class */ (function () {
                             resolve();
                         })];
                     case 6:
-                        error_11 = _a.sent();
+                        error_12 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_11);
+                                reject(error_12);
                             })];
                     case 7: return [2 /*return*/];
                 }
@@ -974,7 +995,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getGuildMemberDataFromDB = function (guildMember) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildMemberData_1, error_12, guildMemberData_2;
+            var guildMemberData_1, error_13, guildMemberData_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -986,20 +1007,20 @@ var DiscordUser = /** @class */ (function () {
                                 resolve(guildMemberData_1);
                             })];
                     case 2:
-                        error_12 = _a.sent();
-                        if (error_12.type === 'NotFoundError') {
+                        error_13 = _a.sent();
+                        if (error_13.type === 'NotFoundError') {
                             console.log("Adding new entry for guild member data! For member: " + guildMember.user.username);
                             guildMemberData_2 = new GuildMemberData();
                             guildMemberData_2.displayName = guildMember.displayName;
                             guildMemberData_2.userID = guildMember.id;
                             guildMemberData_2.userName = guildMember.user.username;
-                            console.log(error_12);
+                            console.log(error_13);
                             return [2 /*return*/, new Promise(function (resolve, reject) {
                                     resolve(guildMemberData_2);
                                 })];
                         }
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_12);
+                                reject(error_13);
                             })];
                     case 3: return [2 /*return*/];
                 }
@@ -1011,7 +1032,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateGuildMemberDataInDB = function (guildMemberData, guildID) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildMemberDataNew, error_13;
+            var guildMemberDataNew, error_14;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1025,9 +1046,9 @@ var DiscordUser = /** @class */ (function () {
                                 resolve();
                             })];
                     case 2:
-                        error_13 = _a.sent();
+                        error_14 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_13);
+                                reject(error_14);
                             })];
                     case 3: return [2 /*return*/];
                 }
@@ -1039,7 +1060,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateGuildMembersData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var liveDataGuildArray, x, liveDataGuildMemberArray, y, guildMemberData, userData, error_14;
+            var liveDataGuildArray, x, liveDataGuildMemberArray, y, guildMemberData, userData, error_15;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1087,9 +1108,9 @@ var DiscordUser = /** @class */ (function () {
                                 resolve();
                             })];
                     case 11:
-                        error_14 = _a.sent();
+                        error_15 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_14);
+                                reject(error_15);
                             })];
                     case 12: return [2 /*return*/];
                 }
@@ -1102,7 +1123,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateDataCacheAndSaveToFile = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_15;
+            var error_16;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1120,9 +1141,9 @@ var DiscordUser = /** @class */ (function () {
                                 resolve();
                             })];
                     case 4:
-                        error_15 = _a.sent();
+                        error_16 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_15);
+                                reject(error_16);
                             })];
                     case 5: return [2 /*return*/];
                 }
@@ -1135,7 +1156,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.saveCacheIfTimeHasPassed = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, msPassed, timeLeft, error_16;
+            var currentTime, msPassed, timeLeft, error_17;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1155,9 +1176,9 @@ var DiscordUser = /** @class */ (function () {
                             resolve();
                         })];
                     case 4:
-                        error_16 = _a.sent();
+                        error_17 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_16);
+                                reject(error_17);
                             })];
                     case 5: return [2 /*return*/];
                 }
@@ -1169,7 +1190,7 @@ var DiscordUser = /** @class */ (function () {
      */
     DiscordUser.prototype.doWeHaveAdminPermission = function (commandData) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentChannelPermissions, permissionStrings, areTheyAnAdmin, areTheyACommander, error_17;
+            var currentChannelPermissions, permissionStrings, areTheyAnAdmin, areTheyACommander, error_18;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1183,16 +1204,16 @@ var DiscordUser = /** @class */ (function () {
                                     resolve(true);
                                 })];
                         }
-                        return [4 /*yield*/, commandData.textChannel.send("<@!" + commandData.guildMember.id + "> Sorry, but you don't have the permissions required for that!")];
+                        return [4 /*yield*/, commandData.permsChannel.send("<@!" + commandData.guildMember.id + "> Sorry, but you don't have the permissions required for that!")];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(false);
                             })];
                     case 2:
-                        error_17 = _a.sent();
+                        error_18 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_17);
+                                reject(error_18);
                             })];
                     case 3: return [2 /*return*/];
                 }
@@ -1204,7 +1225,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateAndSaveDiscordRecordIfTimeHasPassed = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, timeDifference, liveGuildArray, keyNames, x, keyname, error_18;
+            var currentTime, timeDifference, liveGuildArray, keyNames, x, keyname, error_19;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1233,9 +1254,9 @@ var DiscordUser = /** @class */ (function () {
                             resolve();
                         })];
                     case 5:
-                        error_18 = _a.sent();
+                        error_19 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_18);
+                                reject(error_19);
                             })];
                     case 6: return [2 /*return*/];
                 }
@@ -1248,7 +1269,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.sendInviteIfTimeHasPassedAndGuildIsActive = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, timeDifference, timeRemaining, x, fileKey, currentFileObject, error_19, userID, guildName, inviteLink, inviteString, currentUser, wereTheyAvailable, dmChannel, error_20, savedUser, availableFileKey, availableFileString, availableFileObject, error_21, serverRecord, deletedUser, notAvailableFileKey, notAvailableFileString, notAvailableFileObject, error_22, serverRecord, error_23;
+            var currentTime, timeDifference, timeRemaining, x, fileKey, currentFileObject, error_20, userID, guildName, inviteLink, inviteString, currentUser, wereTheyAvailable, dmChannel, error_21, savedUser, availableFileKey, availableFileString, availableFileObject, error_22, serverRecord, deletedUser, notAvailableFileKey, notAvailableFileString, notAvailableFileObject, error_23, serverRecord, error_24;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1282,8 +1303,8 @@ var DiscordUser = /** @class */ (function () {
                         currentFileObject = (_a.sent());
                         return [3 /*break*/, 5];
                     case 4:
-                        error_19 = _a.sent();
-                        if (error_19.type === 'NotFoundError') {
+                        error_20 = _a.sent();
+                        if (error_20.type === 'NotFoundError') {
                             this.userData.activeInviteGuilds.splice(x, 1);
                             console.log("Splicing the 'active invite guild'!");
                             return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -1291,7 +1312,7 @@ var DiscordUser = /** @class */ (function () {
                                 })];
                         }
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_19);
+                                reject(error_20);
                             })];
                     case 5:
                         userID = currentFileObject.userRecords[0].userID;
@@ -1312,7 +1333,7 @@ var DiscordUser = /** @class */ (function () {
                         wereTheyAvailable = true;
                         return [3 /*break*/, 10];
                     case 9:
-                        error_20 = _a.sent();
+                        error_21 = _a.sent();
                         console.log("Sorry, but the user " + currentFileObject.userRecords[0].lastKnownUsername + " could not be found!");
                         return [3 /*break*/, 10];
                     case 10:
@@ -1345,7 +1366,7 @@ var DiscordUser = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 19];
                     case 17:
-                        error_21 = _a.sent();
+                        error_22 = _a.sent();
                         serverRecord = new ServerRecord();
                         serverRecord.replacementServerInvite = currentFileObject.replacementServerInvite;
                         serverRecord.serverID = currentFileObject.serverID;
@@ -1387,7 +1408,7 @@ var DiscordUser = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 28];
                     case 27:
-                        error_22 = _a.sent();
+                        error_23 = _a.sent();
                         serverRecord = new ServerRecord();
                         serverRecord.replacementServerInvite = currentFileObject.replacementServerInvite;
                         serverRecord.serverID = currentFileObject.serverID;
@@ -1410,9 +1431,9 @@ var DiscordUser = /** @class */ (function () {
                             resolve();
                         })];
                     case 32:
-                        error_23 = _a.sent();
+                        error_24 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_23);
+                                reject(error_24);
                             })];
                     case 33: return [2 /*return*/];
                 }
@@ -1425,7 +1446,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.deleteMessagesIfTimeHasPassed = function (client, guild, channelIndex) {
         return __awaiter(this, void 0, void 0, function () {
-            var numberOfMessagesToSave, channelID, newGuild, currentChannel, error_24, currentTime, timeDifference, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_25;
+            var numberOfMessagesToSave, channelID, newGuild, currentChannel, error_25, currentTime, timeDifference, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_26;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1443,7 +1464,7 @@ var DiscordUser = /** @class */ (function () {
                         currentChannel = (_a.sent());
                         return [3 /*break*/, 5];
                     case 3:
-                        error_24 = _a.sent();
+                        error_25 = _a.sent();
                         newGuild.deletionChannels.splice(channelIndex, 1);
                         console.log('Removing an "unknown channel" from list of deletion channels!');
                         return [4 /*yield*/, this.updateGuildDataInDB(newGuild)];
@@ -1674,9 +1695,9 @@ var DiscordUser = /** @class */ (function () {
                                 resolve();
                             })];
                     case 40:
-                        error_25 = _a.sent();
+                        error_26 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_25);
+                                reject(error_26);
                             })];
                     case 41: return [2 /*return*/];
                 }
@@ -1784,7 +1805,7 @@ var DiscordUser = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 this.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {
-                    var newGuildData, currentGuild, currentChannel, msgManager, oldVerificationMessage, newMsgEmbed, newVerificationMessage, error_26;
+                    var newGuildData, currentGuild, currentChannel, msgManager, oldVerificationMessage, newMsgEmbed, newVerificationMessage, error_27;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
@@ -1835,7 +1856,7 @@ var DiscordUser = /** @class */ (function () {
                                     })];
                             case 10: return [2 /*return*/, this.userData.userID];
                             case 11:
-                                error_26 = _a.sent();
+                                error_27 = _a.sent();
                                 console.log('Looks like the channel or the message no longer exists! Purging the verification system values!');
                                 newGuildData.verificationSystem.channelID = '';
                                 newGuildData.verificationSystem.messageID = '';
@@ -1844,7 +1865,7 @@ var DiscordUser = /** @class */ (function () {
                             case 12:
                                 _a.sent();
                                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                                        reject(error_26);
+                                        reject(error_27);
                                     })];
                             case 13: return [2 /*return*/];
                         }

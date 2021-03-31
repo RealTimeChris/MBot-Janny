@@ -20,7 +20,7 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 		const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
 		let currentCount = 0;
-		discordUser.guildsData.forEach(async guild => {
+		discordUser.guildsData.forEach(guild => {
 			let msgString = '';
 			msgString += `__Guild Name:__ ${guild.guildName}\n`;
 			msgString += `__Guild ID:__ ${guild.guildID}\n`;
@@ -39,7 +39,7 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 				.setTimestamp((Date() as unknown) as Date)
 				.setDescription(msgString);
 				
-				await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+				DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
 			currentCount += 1;
 		});
 

@@ -1,6 +1,6 @@
 // index.js - The main entry point for my Discord Bot!
 // Jan 28, 2021
-// Chris M.
+// Chris M.s
 // https://github.com/RealTimeChris
 
 'use strict';
@@ -15,17 +15,16 @@ const client = new Discord.Client() as any;
 
 client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	const {channel_id} = interaction;
+	const channel = await client.channels.fetch(channel_id);
 	let id_full, guild_id_full, options_full, name_full;
 	const commandData = new DiscordStuff.CommandData();
-	commandData.interaction = interaction;
-	if ((await client.channels.fetch(channel_id)).type === 'dm'){
-		console.log("WE'RE HERE ALRIGHT!");
+	if (await channel.type === 'dm'){
 		let {user:{id}, guild_id, data:{options, name}} = interaction;
 		id_full = id;
 		guild_id_full = guild_id;
 		options_full = options;
 		name_full = name;
-		await commandData.initialize(client, channel_id, id_full);
+		await commandData.initialize(client, channel_id, channel.type, interaction, id_full);
 	}
 	else {
 		let {member:{user:{id}}, guild_id, data:{options, name}} = interaction;
@@ -33,10 +32,9 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		guild_id_full = guild_id;
 		options_full = options;
 		name_full = name;
-		await commandData.initialize(client, channel_id, id_full, guild_id_full);
+		await commandData.initialize(client, channel_id, channel.type, interaction, id_full, guild_id_full);
 	}
 	const nameSolid = name_full;
-	console.log(interaction);
 	if (name_full === 'botinfo'){
 
 	}
@@ -55,7 +53,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	if (name_full === 'ghost'){
 		let userID;
 		let reason;
-		const name_full = options_full[0].name_full;
+		const name_full = options_full[0].name;
 		if (name_full === 'view'){
 			const viewOrNot = options_full[0].options[0].value;
 			commandData.args[1] = '';
@@ -106,9 +104,41 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 			commandData.args[0] = value1;
 		}		
 	}
+	if (name_full === 'setdefaultrole'){
+		let role =options_full[0].options[0].value;
+		const name_full = options_full[0].name;
+		if (name_full === 'add'){
+			commandData.args[0] = 'add';
+			commandData.args[1] = role;
+		}
+		else if (name_full === 'remove'){
+			commandData.args[0] = 'remove';
+			commandData.args[1] = role;
+		}
+		else{
+
+		}
+	}
+	if (name_full === 'setdeletionstatus'){
+		let quantity;
+		if (options_full[0].options !== undefined){
+			quantity = options_full[0].options[0].value;
+		}
+		const name_full = options_full[0].name;
+		if (name_full == 'view'){
+
+		}
+		else if (name_full === 'enable'){
+			commandData.args[0] = 'enable';
+			commandData.args[1] = quantity;
+		}
+		else if (name_full === 'disable'){
+			commandData.args[0] = 'disable';
+		}
+	}
 	if (name_full === 'slashcommands'){
 
-	}	
+	}
 	if (name_full === 'test'){
 
 	}
@@ -116,7 +146,12 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		data:{
 			type: 5
 	}});
-	console.log(`Command: '${nameSolid}' entered by user: ${(commandData.guildMember as Discord.GuildMember).displayName}`);
+	if (commandData.guildMember instanceof Discord.GuildMember){
+		console.log(`Command: '${nameSolid}' entered by user: ${(commandData.guildMember as Discord.GuildMember).displayName}`);
+	}
+	else if (commandData.guildMember instanceof Discord.User){
+		console.log(`Command: '${nameSolid}' entered by user: ${(commandData.guildMember as Discord.User).username}`);
+	}	
 	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
 })
@@ -159,11 +194,10 @@ client.on('message', async (msg: Discord.Message) => {
 		try {
 			const commandData = new DiscordStuff.CommandData();
 			if (msg.channel.type !== 'dm'){
-				await commandData.initialize(client, msg.channel.id, (msg.member as Discord.GuildMember).id, (msg.guild as Discord.Guild).id, msg.channel.id, );
+				await commandData.initialize(client, msg.channel.id, msg.channel.type, null, (msg.member as Discord.GuildMember).id, (msg.guild as Discord.Guild).id);
 			}
 			else{
-				await commandData.initialize(client);
-				commandData.textChannel = msg.channel;
+				await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id);
 			}
 			commandData.args = args;
 

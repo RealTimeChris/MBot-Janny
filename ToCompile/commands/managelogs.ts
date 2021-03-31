@@ -72,8 +72,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if ((((commandData.args[1] as string) as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = (commandData.textChannel as Discord.TextChannel).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = (commandData.permsChannel as Discord.TextChannel).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -116,8 +116,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -160,8 +160,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -204,8 +204,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -248,8 +248,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -292,8 +292,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -336,8 +336,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -380,8 +380,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -424,8 +424,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -468,8 +468,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -512,8 +512,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -556,8 +556,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -600,8 +600,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();
@@ -644,8 +644,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 if ((commandData.args[0] as string).toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.textChannel as Discord.TextChannel).id;
-                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.textChannel as Discord.TextChannel)).name;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
+                            (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
                             await discordUser.updateGuildDataInDB(guildData);
                             const msgEmbed = new Discord.MessageEmbed();

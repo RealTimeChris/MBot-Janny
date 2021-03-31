@@ -59,13 +59,13 @@ function execute(commandData, discordUser) {
                 case 1:
                     areWeInADM = _a.sent();
                     if (areWeInADM === true) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 2:
                     doWeHaveAdminPerms = _a.sent();
                     if (doWeHaveAdminPerms === false) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 3:
@@ -134,10 +134,10 @@ function execute(commandData, discordUser) {
                     trackUsersField = { name: "__**Track User's Messages:**__", value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!trackuser'", inline: true };
                     fields.push(trackUsersField);
                     msgEmbed.fields = fields;
-                    return [4 /*yield*/, commandData.textChannel.send(msgEmbed)];
+                    return [4 /*yield*/, commandData.permsChannel.send(msgEmbed)];
                 case 6:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 7:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

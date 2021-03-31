@@ -158,10 +158,12 @@ export declare class CommandData {
     interaction: any;
     guild: Discord.Guild | null;
     guildMember: Discord.GuildMember | Discord.User | null;
-    textChannel: Discord.TextChannel | Discord.WebhookClient | Discord.DMChannel | null;
+    fromTextChannel: Discord.TextChannel | Discord.DMChannel | null;
+    fromTextChannelType: string;
     permsChannel: Discord.GuildChannel | null;
+    toTextChannel: Discord.WebhookClient | Discord.TextChannel | Discord.DMChannel | null;
     args: string[];
-    initialize(client: Discord.Client, permsChannelID?: string | null, guildMemberID?: string, guildID?: string, textChannelID?: string | null): Promise<void>;
+    initialize(client: Discord.Client, fromTextChannelID: string, fromTextChannelType: string, interaction?: any, guildMemberID?: string, guildID?: string): Promise<void>;
 }
 /**
  * Class representing a command' return values.

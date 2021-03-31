@@ -324,7 +324,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         // Create Global Command
         await interaction.createApplicationCommand(test).then(error => console.log(error)).catch(error => console.log(error.message));
-*/
+
         const serverinfo = {
             "name": "serverinfo",
             "description": "Displays info about a given server.",
@@ -343,6 +343,80 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         // Create Global Command
         await interaction.createApplicationCommand(serverinfo).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const setdefaultrole =  {
+            "name": "setdefaultrole",
+            "description": "Adds or removes a default role to the server, to be added upon someone joining.",
+            "options":[
+                {  
+                "name": "add",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "description": "Adds a role to the list of defaults.",
+                "options": [{
+                    "name": "role",
+                    "type": SlashCommands.ApplicationCommandOptionType.ROLE,
+                    "description": "The server role to add.",
+                    "required": true
+                },]},
+                {  
+                "name": "remove",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "description": "Removes a role from the list of defaults.",
+                "options": [{
+                    "name": "role",
+                    "type": SlashCommands.ApplicationCommandOptionType.ROLE,
+                    "description": "The server member to unghost.",
+                    "required": true
+                }]},
+                {
+                    "name": "view",
+                    "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                    "description": "Displays the current list of default roles.",
+                    "options":[{
+                        "name": "display",
+                        "type": SlashCommands.ApplicationCommandOptionType.BOOLEAN,
+                        "description": "Displays the currently defaulted server roles.",
+                        "required": true
+                    }]
+                }
+            ]
+        }
+        // Create Global Command
+        await interaction.createApplicationCommand(setdefaultrole).then(error => console.log(error)).catch(error => console.log(error.message));
+*/
+
+        const setdeletionstatus =  {
+            "name": "setdeletionstatus",
+            "description": "Enables or disables message-purging in the current channel.",
+            "options":[
+                {
+                    "name": "enable",
+                    "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                    "description": "Enables purging in the current channel.",
+                    "options": [{
+                        "name": "quantity",
+                        "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
+                        "description": "The quantity of messages in the channel to save.",
+                        "required": false
+                },]},
+                {
+                    "name": "disable",
+                    "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                    "description": "Disables purging in the current channel.",
+                    "options": []
+                },
+                {
+                    "name": "view",
+                    "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                    "description": "Displays the current list of channels with purging enabled.",
+                    "options":[]
+                }
+            ]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(setdeletionstatus).then(error => console.log(error)).catch(error => console.log(error.message));
+
 
         const globalCommands = await interaction.getApplicationCommands();
         console.log(globalCommands.length);

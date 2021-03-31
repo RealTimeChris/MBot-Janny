@@ -48,7 +48,7 @@ command.name = 'slashcommands';
 command.description = '!slashcommands';
 function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, interaction, commands, x, serverinfo, globalCommands, error_1;
+        var commandReturnData, interaction, commands, x, setdeletionstatus, globalCommands, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -65,24 +65,37 @@ function execute(commandData, discordUser) {
                         //const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
                         //console.log(newInteraction);
                     }
-                    serverinfo = {
-                        "name": "serverinfo",
-                        "description": "Displays info about a given server.",
-                        "options": [{
-                                "name": "server",
-                                "description": "Which server shall you list.",
+                    setdeletionstatus = {
+                        "name": "setdeletionstatus",
+                        "description": "Enables or disables message-purging in the current channel.",
+                        "options": [
+                            {
+                                "name": "enable",
                                 "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "description": "Enables purging in the current channel.",
                                 "options": [{
-                                        "name": "serverID",
-                                        "description": "The server ID to examine.",
-                                        "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                                        "required": false,
-                                        "choices": []
-                                    }]
-                            }]
+                                        "name": "quantity",
+                                        "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
+                                        "description": "The quantity of messages in the channel to save.",
+                                        "required": false
+                                    },]
+                            },
+                            {
+                                "name": "disable",
+                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "description": "Disables purging in the current channel.",
+                                "options": []
+                            },
+                            {
+                                "name": "view",
+                                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                                "description": "Displays the current list of channels with purging enabled.",
+                                "options": []
+                            }
+                        ]
                     };
                     // Create Global Command
-                    return [4 /*yield*/, interaction.createApplicationCommand(serverinfo).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
+                    return [4 /*yield*/, interaction.createApplicationCommand(setdeletionstatus).then(function (error) { return console.log(error); }).catch(function (error) { return console.log(error.message); })];
                 case 2:
                     // Create Global Command
                     _a.sent();

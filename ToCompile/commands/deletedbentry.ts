@@ -115,13 +115,12 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 		await iterator.end();
 		const msgEmbed = new Discord.MessageEmbed();
 		msgEmbed
-			.setAuthor(commandData.guildMember?.user.username, (commandData.guildMember?.user.avatarURL() as string))
+			.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, ((commandData.guildMember as Discord.GuildMember).user.avatarURL() as string))
 			.setColor([0, 0, 255])
 			.setDescription(`------\n__**Number of Deleted Entries**__: ${deletedCounter.returnDeletedCount()}\n------`)
 			.setTimestamp(Date.now())
 			.setTitle('__**Deleted DB Entries:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
-		
+		await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {

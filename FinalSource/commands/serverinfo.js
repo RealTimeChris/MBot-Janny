@@ -47,7 +47,7 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'serverinfo';
 command.description = '!serverinfo to get info about the current server!\n!serverinfo = SERVERID to display info about that server!';
 /**
- * Displays the info of a chosen server.
+ * Displays the info of a chosen server./
  */
 function execute(commandData) {
     return __awaiter(this, void 0, void 0, function () {
@@ -60,11 +60,11 @@ function execute(commandData) {
                     commandReturnData.commandName = command.name;
                     idRegExp = /\d{18}/;
                     currentServerID = void 0;
-                    if (!(commandData.args[0] === undefined && commandData.textChannel.type !== 'dm')) return [3 /*break*/, 1];
+                    if (!(commandData.args[0] === undefined && commandData.permsChannel.type !== 'dm')) return [3 /*break*/, 1];
                     currentServerID = commandData.guild.id;
                     return [3 /*break*/, 5];
                 case 1:
-                    if (!(commandData.args[0] === undefined && commandData.textChannel.type === 'dm')) return [3 /*break*/, 2];
+                    if (!(commandData.args[0] === undefined && commandData.permsChannel.type === 'dm')) return [3 /*break*/, 2];
                     msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
                     return [2 /*return*/, commandReturnData];
                 case 2:

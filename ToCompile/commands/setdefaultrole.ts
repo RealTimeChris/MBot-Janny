@@ -7,6 +7,7 @@
 
 import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff');
+import GuildMemberRoleManager from 'discord.js';
 
 const command = new DiscordStuff.BotCommand();
 command.name = 'setdefaultrole';
@@ -29,24 +30,38 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             return commandReturnData;
         }
 
+        let roleMemberManager: Discord.RoleManager;
+        let currentDiscordRole: Discord.Role;
         let whatAreWeDoing = '';
-
+        let roleMentionRegExp = /<@&\d{18}>/;
+        let idRegExp = /\d{18}/;
         if (commandData.args[0] === undefined) {
             whatAreWeDoing = 'view';
         } else if (commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove') {
-            const msgString = "Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)";
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)`;
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return commandReturnData;
         } else if (commandData.args[1] === undefined) {
-            const msgString = 'Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)';
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)`;
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return commandReturnData;
-        } else if (commandData.args[0].toLowerCase() === 'add') {
+        } else if (roleMentionRegExp.test(commandData.args[1])) {
+            const roleID = (commandData.args[1].match(idRegExp) as string[])[0];
+            roleMemberManager = new Discord.RoleManager(commandData.guild as Discord.Guild) as GuildMemberRoleManager.RoleManager
+            currentDiscordRole = (await (roleMemberManager as Discord.RoleManager).fetch(roleID as string)) as Discord.Role;
+            commandData.args[1] = currentDiscordRole.name;
+        } else if (idRegExp.test(commandData.args[1])) {
+            roleMemberManager = new Discord.RoleManager(commandData.guild as Discord.Guild) as GuildMemberRoleManager.RoleManager;
+            currentDiscordRole = (await (roleMemberManager as Discord.RoleManager).fetch(commandData.args[1])) as Discord.Role;
+            commandData.args[1] = currentDiscordRole.name;
+        }
+        if (commandData.args[0]?.toLowerCase() === 'add') {
             whatAreWeDoing = 'add';
-        } else if (commandData.args[0].toLowerCase() === 'remove') {
+        } else if (commandData.args[0]?.toLowerCase() === 'remove') {
             whatAreWeDoing = 'remove';
         }
 
+        console.log(whatAreWeDoing);
         const roleName = commandData.args[1];
 
         const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
@@ -112,13 +127,13 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         roleArray.map(role => {
             if (role.name === roleName) {
                 currentRole = role;
-                isItFound = true;
+                isItFound = true
             }
             return role;
         });
 
         if (isItFound === false) {
-             const msgString = 'Sorry, but the role you entered could not be found! Check spelling and case!';
+             const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but the role you entered could not be found! Check spelling and case!`;
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return commandReturnData;
         }
@@ -126,7 +141,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         if (whatAreWeDoing === 'add') {
             for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
                 if (currentRole.id === guildData.defaultRoleIDs[x]) {
-                    const msgString = "Hey! It looks like you've already added that role!";
+                    const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Hey! It looks like you've already added that role!`;
                     await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
                     return commandReturnData;
                 }
@@ -158,7 +173,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             }
 
             if (isItFound === false) {
-                const msgString = 'Sorry, but the role you entered could not be found! Check spelling and case!';
+                const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but the role you entered could not be found! Check spelling and case!`;
                 await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
                 return commandReturnData;
             }

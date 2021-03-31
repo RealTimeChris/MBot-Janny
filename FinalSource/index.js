@@ -1,6 +1,6 @@
 // index.js - The main entry point for my Discord Bot!
 // Jan 28, 2021
-// Chris M.
+// Chris M.s
 // https://github.com/RealTimeChris
 'use strict';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -50,40 +50,40 @@ var commandindex_1 = __importDefault(require("./commandindex"));
 var discordUser = new DiscordStuff.DiscordUser();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var channel_id, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, value2, userID, reason, name_full_1, viewOrNot, value, value1, msgCountToPurge, value1, returnData;
+    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, value2, userID, reason, name_full_1, viewOrNot, value, value1, msgCountToPurge, value1, role, name_full_2, quantity, name_full_3, returnData;
     var _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
             case 0:
                 channel_id = interaction.channel_id;
-                commandData = new DiscordStuff.CommandData();
-                commandData.interaction = interaction;
                 return [4 /*yield*/, client.channels.fetch(channel_id)];
             case 1:
-                if (!((_d.sent()).type === 'dm')) return [3 /*break*/, 3];
-                console.log("WE'RE HERE ALRIGHT!");
+                channel = _d.sent();
+                commandData = new DiscordStuff.CommandData();
+                return [4 /*yield*/, channel.type];
+            case 2:
+                if (!((_d.sent()) === 'dm')) return [3 /*break*/, 4];
                 id = interaction.user.id, guild_id = interaction.guild_id, _a = interaction.data, options = _a.options, name_1 = _a.name;
                 id_full = id;
                 guild_id_full = guild_id;
                 options_full = options;
                 name_full = name_1;
-                return [4 /*yield*/, commandData.initialize(client, channel_id, id_full)];
-            case 2:
-                _d.sent();
-                return [3 /*break*/, 5];
+                return [4 /*yield*/, commandData.initialize(client, channel_id, channel.type, interaction, id_full)];
             case 3:
+                _d.sent();
+                return [3 /*break*/, 6];
+            case 4:
                 id = interaction.member.user.id, guild_id = interaction.guild_id, _b = interaction.data, options = _b.options, name_2 = _b.name;
                 id_full = id;
                 guild_id_full = guild_id;
                 options_full = options;
                 name_full = name_2;
-                return [4 /*yield*/, commandData.initialize(client, channel_id, id_full, guild_id_full)];
-            case 4:
-                _d.sent();
-                _d.label = 5;
+                return [4 /*yield*/, commandData.initialize(client, channel_id, channel.type, interaction, id_full, guild_id_full)];
             case 5:
+                _d.sent();
+                _d.label = 6;
+            case 6:
                 nameSolid = name_full;
-                console.log(interaction);
                 if (name_full === 'botinfo') {
                 }
                 if (name_full === "deletedbentry") {
@@ -100,7 +100,7 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 if (name_full === 'ghost') {
                     userID = void 0;
                     reason = void 0;
-                    name_full_1 = options_full[0].name_full;
+                    name_full_1 = options_full[0].name;
                     if (name_full_1 === 'view') {
                         viewOrNot = options_full[0].options[0].value;
                         commandData.args[1] = '';
@@ -148,6 +148,36 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                         commandData.args[0] = value1;
                     }
                 }
+                if (name_full === 'setdefaultrole') {
+                    role = options_full[0].options[0].value;
+                    name_full_2 = options_full[0].name;
+                    if (name_full_2 === 'add') {
+                        commandData.args[0] = 'add';
+                        commandData.args[1] = role;
+                    }
+                    else if (name_full_2 === 'remove') {
+                        commandData.args[0] = 'remove';
+                        commandData.args[1] = role;
+                    }
+                    else {
+                    }
+                }
+                if (name_full === 'setdeletionstatus') {
+                    quantity = void 0;
+                    if (options_full[0].options !== undefined) {
+                        quantity = options_full[0].options[0].value;
+                    }
+                    name_full_3 = options_full[0].name;
+                    if (name_full_3 == 'view') {
+                    }
+                    else if (name_full_3 === 'enable') {
+                        commandData.args[0] = 'enable';
+                        commandData.args[1] = quantity;
+                    }
+                    else if (name_full_3 === 'disable') {
+                        commandData.args[0] = 'disable';
+                    }
+                }
                 if (name_full === 'slashcommands') {
                 }
                 if (name_full === 'test') {
@@ -157,11 +187,16 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                             type: 5
                         }
                     })];
-            case 6:
-                _d.sent();
-                console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.displayName);
-                return [4 /*yield*/, ((_c = commandindex_1.default.commands.get(nameSolid)) === null || _c === void 0 ? void 0 : _c.function(commandData, discordUser))];
             case 7:
+                _d.sent();
+                if (commandData.guildMember instanceof Discord.GuildMember) {
+                    console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.displayName);
+                }
+                else if (commandData.guildMember instanceof Discord.User) {
+                    console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.username);
+                }
+                return [4 /*yield*/, ((_c = commandindex_1.default.commands.get(nameSolid)) === null || _c === void 0 ? void 0 : _c.function(commandData, discordUser))];
+            case 8:
                 returnData = _d.sent();
                 console.log("Completed Command: " + returnData.commandName);
                 return [2 /*return*/];
@@ -224,14 +259,13 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.trys.push([1, 13, , 14]);
                 commandData = new DiscordStuff.CommandData();
                 if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 3];
-                return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.member.id, msg.guild.id, msg.channel.id)];
+                return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
             case 2:
                 _c.sent();
                 return [3 /*break*/, 5];
-            case 3: return [4 /*yield*/, commandData.initialize(client)];
+            case 3: return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id)];
             case 4:
                 _c.sent();
-                commandData.textChannel = msg.channel;
                 _c.label = 5;
             case 5:
                 commandData.args = args;

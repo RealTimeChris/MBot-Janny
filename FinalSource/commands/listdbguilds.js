@@ -143,7 +143,7 @@ function execute(commandData, discordUser) {
                     if (!!areAnyFound) return [3 /*break*/, 22];
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
-                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor([0, 0, 255])
                         .setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
                         .setTimestamp(Date())
