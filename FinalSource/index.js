@@ -50,7 +50,7 @@ var commandindex_1 = __importDefault(require("./commandindex"));
 var discordUser = new DiscordStuff.DiscordUser();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, value2, userID, reason, name_full_1, viewOrNot, value, value1, logname, enableOrDisable, msgCountToPurge, value1, name_full_2, role, role, quantity, name_full_3, inviteLink, message, emoji, msgName, msgName, msgContents, msgInterval, userID, userID, user, returnData;
+    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, userID, reason, name_full_1, viewOrNot, value, logname, enableOrDisable, msgCountToPurge, value1, name_full_2, role, role, quantity, name_full_3, inviteLink, message, emoji, msgName, msgName, msgContents, msgInterval, userID, userID, user, returnData;
     var _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -88,12 +88,8 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 }
                 if (name_full === "deletedbentry") {
                     value1 = options_full[0].value;
-                    value2 = options_full[1].value;
-                    commandData.args[0] = value1;
-                    commandData.args[1] = value2;
-                    if (commandData.args[0] !== 'janny') {
-                        return [2 /*return*/];
-                    }
+                    commandData.args[0] = 'janny';
+                    commandData.args[1] = value1;
                 }
                 if (name_full === "displayguildsdata") {
                 }
@@ -131,8 +127,7 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 if (name_full === 'jannyoptinos') {
                 }
                 if (name_full === 'listdbguilds') {
-                    value1 = options_full[0].value;
-                    commandData.args[0] = value1;
+                    commandData.args[0] = 'janny';
                 }
                 if (name_full === "managelogs") {
                     name_full = options_full[0].name;

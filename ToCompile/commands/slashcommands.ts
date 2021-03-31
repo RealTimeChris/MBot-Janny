@@ -37,21 +37,16 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         // Create Global Command
         await interaction.createApplicationCommand(botinfo).then(error => console.log(error)).catch(error => console.log(error.message));
 
+        for (let x = 0; x < commands.length; x += 1){
+            if ((commands[x] as SlashCommands.ApplicationCommand).name === 'deletedbentry'){
+                const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
+                console.log(newInteraction);
+            }            
+        }
         const deletedbentry = {
             "name": "deletedbentry",
             "description": "Used to delete database entries, based on their key.",
             "options":[{
-                "name": "botname",
-                "description": "Which bot to delete the database entries from.",
-                "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                "required": true,
-                "choices": [
-                    {
-                        "name": "janny",
-                        "value": "janny"
-                    }]
-                },
-                {
                 "name": "entrykey",
                 "description": "The database key to prune from the database.",
                 "type": SlashCommands.ApplicationCommandOptionType.STRING,
@@ -238,20 +233,17 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         // Create Global Command
         await interaction.createApplicationCommand(jannyoptions).then(error => console.log(error)).catch(error => console.log(error.message));
 
+        for (let x = 0; x < commands.length; x += 1){
+            if ((commands[x] as SlashCommands.ApplicationCommand).name === 'listdbguilds'){
+                const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
+                console.log(newInteraction);
+            }            
+        }
+
         const listdbguilds = {
             "name": "listdbguilds",
             "description": "Lists all of the database server entries for which the bot is no longer a member.",
-            "options":[{
-                "name": "botname",
-                "description": "Which bot to list the entries from.",
-                "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                "required": true,
-                "choices": [
-                {
-                    "name": "janny",
-                    "value": "janny"
-                }]
-            }]}
+        }
 
         // Create Global Command
         await interaction.createApplicationCommand(listdbguilds).then(error => console.log(error)).catch(error => console.log(error.message));

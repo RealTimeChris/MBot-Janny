@@ -40,9 +40,8 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	}
 	if (name_full === "deletedbentry"){
 		const {value:value1} = options_full[0];
-		const {value:value2} = options_full[1];
-		commandData.args[0] = value1;
-		commandData.args[1] = value2;
+		commandData.args[0] = 'janny';
+		commandData.args[1] = value1;
 	}
 	if (name_full === "displayguildsdata"){
 		
@@ -82,8 +81,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		
 	}
 	if (name_full === 'listdbguilds'){
-		const {value:value1} = options_full[0];
-		commandData.args[0] = value1;
+		commandData.args[0] = 'janny';
 	}
 	if (name_full === "managelogs"){
 		name_full = options_full[0].name;
