@@ -5,8 +5,8 @@
 
 'use strict';
 
-import DiscordStuff = require('../DiscordStuff.js');
 import Discord = require('discord.js');
+import DiscordStuff = require('../DiscordStuff');
 
 const command = new DiscordStuff.BotCommand();
 command.name = 'message';

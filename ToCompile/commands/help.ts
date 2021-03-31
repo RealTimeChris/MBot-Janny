@@ -6,7 +6,7 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff.js');
+import DiscordStuff = require('../DiscordStuff');
 import commandIndex = require('../commandindex');
 
 const command = new DiscordStuff.BotCommand();
@@ -45,20 +45,32 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             });
 
             const messageEmbed = new Discord.MessageEmbed();
-            messageEmbed
-                .setImage(((commandData.guildMember?.client.user as Discord.User).avatarURL() as string).toString())
-                .setTimestamp((Date() as unknown) as Date)
-                .setAuthor(commandData.guildMember?.client.user?.username, (commandData.guildMember?.client.user?.avatarURL() as string))
-                .setTitle(`__**${((commandData.guildMember as Discord.GuildMember).user as Discord.User).username} Help:**__`)
-                .setDescription(msgString)
-                .setColor([254, 254, 254]);
-
+            if (commandData.guildMember instanceof Discord.GuildMember){
+                messageEmbed
+                    .setImage(((commandData.guildMember?.client.user as Discord.User).avatarURL() as string).toString())
+                    .setTimestamp((Date() as unknown) as Date)
+                    .setAuthor(commandData.guildMember?.client.user?.username, (commandData.guildMember?.client.user?.avatarURL() as string))
+                    .setTitle(`__**${((commandData.guildMember as Discord.GuildMember).user as Discord.User).username} Help:**__`)
+                    .setDescription(msgString)
+                    .setColor([254, 254, 254]);
+            }
+            else if (commandData.guildMember instanceof Discord.User){
+                messageEmbed
+                    .setImage(((commandData.guildMember?.client.user as Discord.User).avatarURL() as string).toString())
+                    .setTimestamp((Date() as unknown) as Date)
+                    .setAuthor(commandData.guildMember?.username, (commandData.guildMember?.avatarURL() as string))
+                    .setTitle(`__**${commandData.guildMember.username} Help:**__`)
+                    .setDescription(msgString)
+                    .setColor([254, 254, 254]);
+            }
+            
+            
             if ((commandData.guildMember as Discord.GuildMember).user.dmChannel == null) {
                 const dmChannel = await (commandData.guildMember as Discord.GuildMember).user.createDM();
                 await dmChannel.send(messageEmbed);
-                DiscordStuff.sendMessageWithCorrectChannel(commandData, `<@!${commandData.guildMember?.id}> I've messaged you, with help info!`);
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, `<@!${commandData.guildMember?.id}> I've messaged you, with help info!`);
             } else {
-                DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
             }
 
             return commandReturnData;
@@ -80,7 +92,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
 
         if (isFound === false) {
             const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but that command was not found!`;
-            DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
             return commandReturnData;
         }
 
@@ -91,17 +103,26 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
                 .setColor([254, 254, 254])
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setTimestamp((Date() as unknown) as Date);
-                DiscordStuff.sendMessageWithCorrectChannel(commandData, (commandDescription as unknown) as Discord.MessageEmbed);
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, (commandDescription as unknown) as Discord.MessageEmbed);
         } else {
             const messageEmbed = new Discord.MessageEmbed();
-            messageEmbed
-                .setDescription(commandDescription)
-                .setTimestamp((Date() as unknown) as Date)
-                .setAuthor(commandData.guildMember?.client.user?.username, commandData.guildMember?.client.user?.avatarURL() as string)
-                .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
-                .setColor([254, 254, 254]);
-
-            DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+            if (commandData.guildMember instanceof Discord.GuildMember){
+                messageEmbed
+                    .setDescription(commandDescription)
+                    .setTimestamp((Date() as unknown) as Date)
+                    .setAuthor(commandData.guildMember?.client.user?.username, commandData.guildMember?.client.user?.avatarURL() as string)
+                    .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
+                    .setColor([254, 254, 254]);
+            }
+            else if (commandData.guildMember instanceof Discord.User){
+                messageEmbed
+                    .setDescription(commandDescription)
+                    .setTimestamp((Date() as unknown) as Date)
+                    .setAuthor(commandData.guildMember?.username, commandData.guildMember?.avatarURL() as string)
+                    .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
+                    .setColor([254, 254, 254])
+            }
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
         }
         return commandReturnData;
     } catch (error) {

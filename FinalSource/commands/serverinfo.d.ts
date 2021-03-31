@@ -1,4 +1,4 @@
-import DiscordStuff = require('../DiscordStuff.js');
+import DiscordStuff = require('../DiscordStuff');
 /**
  * Displays the info of a chosen server./
  */

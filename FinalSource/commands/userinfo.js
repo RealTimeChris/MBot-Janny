@@ -49,39 +49,41 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
 /**
  * Displays info about a selected user.
  */
-function execute(commandData, args) {
+function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var areWeInADM, userID, userMentionRegExp, userIDRegExp, msgString_1, argZero, userIDOne, guildMemberManager, guildMember, error_1, msgString_2, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
+        var commandReturnData, areWeInADM, userID, userMentionRegExp, userIDRegExp, msgString_1, argZero, userIDOne, guildMemberManager, guildMember, error_1, msgString_2, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 12, , 13]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _a.sent();
                     if (areWeInADM === true) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     userID = '';
                     userMentionRegExp = /.{2,3}\d{18}>/;
                     userIDRegExp = /\d{18}/;
-                    if (!(args[0] === undefined)) return [3 /*break*/, 2];
+                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 2];
                     userID = commandData.guildMember.id;
                     return [3 /*break*/, 5];
                 case 2:
-                    if (!(args[0].match(userIDRegExp)[0] === null
-                        && args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 4];
+                    if (!(commandData.args[0].match(userIDRegExp)[0] === null
+                        && commandData.args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 4];
                     msgString_1 = 'Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)';
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_1)];
                 case 3:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 4:
-                    if (args[0].match(userMentionRegExp) != null) {
-                        userID = args[0].substring(3, args[0].length - 1);
+                    if (commandData.args[0].match(userMentionRegExp) != null) {
+                        userID = commandData.args[0].substring(3, commandData.args[0].length - 1);
                     }
-                    else if (args[0].match(userIDRegExp)[0] != null) {
-                        argZero = args[0];
+                    else if (commandData.args[0].match(userIDRegExp)[0] != null) {
+                        argZero = commandData.args[0];
                         userIDOne = argZero.match(userIDRegExp)[0];
                         userID = userIDOne;
                     }
@@ -102,7 +104,7 @@ function execute(commandData, args) {
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_2)];
                 case 9:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 10:
                     fields = [];
                     field = { name: '__User Tag:__', value: guildMember.user.tag, inline: true };
@@ -156,7 +158,7 @@ function execute(commandData, args) {
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 11:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 12:
                     error_2 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

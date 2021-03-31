@@ -41,26 +41,21 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             "name": "deletedbentry",
             "description": "Used to delete database entries, based on their key.",
             "options":[{
-                "name": "delete",
-                "description": "Delete the entries with the provided key.",
-                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                "options":[{
-                    "name": "botname",
-                    "description": "Which bot to delete the database entries from.",
-                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                    "required": true,
-                    "choices": [
-                        {
-                            "name": "janny",
-                            "value": "janny"
-                        }]
-                    },
+                "name": "botname",
+                "description": "Which bot to delete the database entries from.",
+                "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                "required": true,
+                "choices": [
                     {
-                    "name": "entrykey",
-                    "description": "The database key to prune from the database.",
-                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                    "required": true,
-                }]
+                        "name": "janny",
+                        "value": "janny"
+                    }]
+                },
+                {
+                "name": "entrykey",
+                "description": "The database key to prune from the database.",
+                "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                "required": true,
             }]
         }
 
@@ -75,7 +70,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         // Create Global Command
         await interaction.createApplicationCommand(displayguildsdata).then(error => console.log(error)).catch(error => console.log(error.message));
-
+        
         const ghost =  {
             "name": "ghost",
             "description": "Ghost or unghost a server member - muting and silencing them across the server.",
@@ -106,19 +101,15 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     "description": "The server member to unghost.",
                     "required": true
                 }]},
-                {
-                    "name": "view",
+                {  
+                    "name": "display",
                     "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                    "description": "Displays the currently ghosted server members, if applicable.",
-                    "options":[{
-                        "name": "display",
-                        "type": SlashCommands.ApplicationCommandOptionType.BOOLEAN,
-                        "description": "Displays the currently ghosted server members, if applicable.",
-                        "required": true
-                    }]
+                    "description": "Display the server's currently ghosted members.",
+                    "options": []
                 }
             ]
         }
+
         // Create Global Command
         await interaction.createApplicationCommand(ghost).then(error => console.log(error)).catch(error => console.log(error.message));
 
@@ -251,21 +242,16 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             "name": "listdbguilds",
             "description": "Lists all of the database server entries for which the bot is no longer a member.",
             "options":[{
-                "name": "list",
-                "description": "List the entries of the depracated servers.",
-                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                "options":[{
-                    "name": "botname",
-                    "description": "Which bot to list the entries from.",
-                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                    "required": true,
-                    "choices": [
-                        {
-                            "name": "janny",
-                            "value": "janny"
-                        }]                    
-                    }]
-                }]}
+                "name": "botname",
+                "description": "Which bot to list the entries from.",
+                "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                "required": true,
+                "choices": [
+                {
+                    "name": "janny",
+                    "value": "janny"
+                }]
+            }]}
 
         // Create Global Command
         await interaction.createApplicationCommand(listdbguilds).then(error => console.log(error)).catch(error => console.log(error.message));
@@ -274,17 +260,12 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 "name": "purge",
                 "description": "Bulk deletes up to 100 messages at a time, from a given channel.",
                 "options":[{
-                    "name": "delete",
-                    "description": "Delete the selected number of messages.",
-                    "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                    "options":[{
-                        "name": "messagecount",
-                        "description": "How many message shall we delete?",
-                        "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
-                        "required": true,
-                        "choices": []
-                        }]
-                    }]}
+                    "name": "messagecount",
+                    "description": "How many message shall we delete?",
+                    "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
+                    "required": true
+                    }]
+                }
 
         // Create Global Command
         await interaction.createApplicationCommand(purge).then(error => console.log(error)).catch(error => console.log(error.message));
@@ -292,8 +273,70 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         const managelogs = {
             "name": "managelogs",
             "description": "Lists the status of all of the available logging types.",
-            "options": []
+            "options": [{
+                "name": "group1",
+                "description": "The first group of logs.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options": [{
+                    "name": "log",
+                    "description": "Which logs are we going to modify?",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true,
+                    "choices": [] as any[]
+            },
+            {
+                "name": "status",
+                "description": "Enable or disable the currently selected logs?",
+                "type": SlashCommands.ApplicationCommandOptionType.BOOLEAN,
+                "required": true,
+            }]},
+            {
+            "name": "group2",
+                "description": "The second group of logs.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options": [{
+                    "name": "log",
+                    "description": "Which logs are we going to modify?",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true,
+                    "choices": [] as any[]
+            },
+            {
+                "name": "status",
+                "description": "Enable or disable the currently selected logs?",
+                "type": SlashCommands.ApplicationCommandOptionType.BOOLEAN,
+                "required": true,
+            }]},
+            {
+                "name": "display",
+                "description": "Display the current log statuses.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options":[]
+            }
+            ]
         }
+        let guildData = new DiscordStuff.GuildData();
+        let choices1: any[] = [];
+        for (let x = 0; x < guildData.logs.length; x += 1){
+            if (x < 10){
+                let choice = {name: '', value: ''};
+                choice.name = (guildData.logs as DiscordStuff.Log[])[x]?.nameSmall as string;
+                choice.value = (guildData.logs as DiscordStuff.Log[])[x]?.nameSmall as string;
+                choices1.push(choice);    
+            }            
+        }
+        managelogs.options[0]!.options[0]!.choices = choices1;
+
+        let choices2: any[] = [];
+        for (let x = 0; x < guildData.logs.length; x += 1){
+            if (x >= 10){
+                let choice = {name: '', value: ''};
+                choice.name = (guildData.logs as DiscordStuff.Log[])[x]?.nameSmall as string;
+                choice.value = (guildData.logs as DiscordStuff.Log[])[x]?.nameSmall as string;
+                choices2.push(choice);
+            }            
+        }
+        managelogs.options[1]!.options[0]!.choices = choices2;
 
         // Create Global Command
         await interaction.createApplicationCommand(managelogs).then(error => console.log(error)).catch(error => console.log(error.message));        
@@ -306,40 +349,18 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         
         // Create Global Command
         await interaction.createApplicationCommand(ping).then(error => console.log(error)).catch(error => console.log(error.message));
-        
-        const slashcommands = {
-            "name": "slashcommands",
-            "description": "Declares the slash commands to the Discord servers!",
-            "options": []
-        }
-
-        // Create Global Command
-        await interaction.createApplicationCommand(slashcommands).then(error => console.log(error)).catch(error => console.log(error.message));
-
-        const test = {
-            "name": "test",
-            "description": "Testing module, for experimentation!",
-            "options": []
-        }
-
-        // Create Global Command
-        await interaction.createApplicationCommand(test).then(error => console.log(error)).catch(error => console.log(error.message));
 
         const serverinfo = {
             "name": "serverinfo",
             "description": "Displays info about a given server.",
             "options":[{
-                "name": "server",
-                "description": "Which server shall you list.",
-                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
-                "options":[{
-                    "name": "serverID",
-                    "description": "The server ID to examine.",
-                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
-                    "required": false,
-                    "choices": []
-                    }]
-                }]}
+                "name": "serverID",
+                "description": "The server ID to examine.",
+                "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                "required": false,
+                "choices": []
+                }]
+            }
 
         // Create Global Command
         await interaction.createApplicationCommand(serverinfo).then(error => console.log(error)).catch(error => console.log(error.message));
@@ -369,21 +390,15 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     "required": true
                 }]},
                 {
-                    "name": "view",
+                    "name": "display",
                     "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
                     "description": "Displays the current list of default roles.",
-                    "options":[{
-                        "name": "display",
-                        "type": SlashCommands.ApplicationCommandOptionType.BOOLEAN,
-                        "description": "Displays the currently defaulted server roles.",
-                        "required": true
-                    }]
+                    "options":[]
                 }
             ]
         }
         // Create Global Command
         await interaction.createApplicationCommand(setdefaultrole).then(error => console.log(error)).catch(error => console.log(error.message));
-*/
 
         const setdeletionstatus =  {
             "name": "setdeletionstatus",
@@ -406,7 +421,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     "options": []
                 },
                 {
-                    "name": "view",
+                    "name": "display",
                     "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
                     "description": "Displays the current list of channels with purging enabled.",
                     "options":[]
@@ -417,6 +432,171 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         // Create Global Command
         await interaction.createApplicationCommand(setdeletionstatus).then(error => console.log(error)).catch(error => console.log(error.message));
 
+        const setreplacementinvite = {
+            "name": "setreplacementinvite",
+            "description": "Sets a replacement invite to be send out to members upon the server's deletion.",
+            "options": [{
+                "name": "link",
+                "description": "The replacement server invite link.",
+                "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                "required": true
+            }]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(setreplacementinvite).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const setverificationsystem = {
+            "name": "setverificationsystem",
+            "description": "Sets a 'verification' channel for new users to have to verify their existence as a non-bot",
+            "options":[{
+                "name": "enable",
+                "description": "Enable the verification system.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options":[{
+                    "name": "message",
+                    "description": "Which message to display as part of the verification?",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true
+                },
+                {
+                    "name": "emoji",
+                    "description": 'Which emoji to use as the reaction target?',
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true
+                }]
+            },
+            {
+                "name": "disable",
+                "description": "Disable the server's current verification system.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+            },
+            {
+                "name": "display",
+                "description": "Display the server's current verification system stats, if applicable.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+            }
+        ]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(setverificationsystem as SlashCommands.PartialApplicationCommand).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const slashcommands = {
+            "name": "slashcommands",
+            "description": "Declares the slash commands to the Discord servers!",
+            "options": []
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(slashcommands).then(error => console.log(error)).catch(error => console.log(error.message));
+        
+        const test = {
+            "name": "test",
+            "description": "Testing module, for experimentation!",
+            "options": []
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(test).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const userinfo = {
+            "name": "userinfo",
+            "description": "Displays information about a selected user.",
+            "options":[{
+                "name": "user",
+                "description": "Which user to display info about.",
+                "type": SlashCommands.ApplicationCommandOptionType.USER,
+                "required": true
+            }]}
+
+        // Create Global Command
+        await interaction.createApplicationCommand(userinfo).then(error => console.log(error)).catch(error => console.log(error.message));
+
+        const timedmessages = {
+            "name": "timedmessages",
+            "description": "Creates a message to be sent out at a chosen time interval.",
+            "options":[{
+                "name": "enable",
+                "description": "Creates the timed message.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options":[{
+                    "name": "name",
+                    "description": "What would you like to name the timed message?",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true
+                },
+                {
+                    "name": "message",
+                    "description": "Which message would you like to be send out?",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true
+                },
+                {
+                    "name": "interval",
+                    "description": 'Which interval would you like it to be sent out in ms?',
+                    "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
+                    "required": true
+                }]
+            },
+            {
+                "name": "disable",
+                "description": "Disable the chosen timed message.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options":[{
+                    "name": "name",
+                    "description": "What is the name of the message you would like to delete?",
+                    "type": SlashCommands.ApplicationCommandOptionType.STRING,
+                    "required": true
+                }]
+
+            },
+            {
+                "name": "display",
+                "description": "Display the server's current timed messages, if applicable.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+            }
+        ]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(timedmessages).then(error => console.log(error)).catch(error => console.log(error.message));
+*/
+        const trackuser = {
+            "name": "trackuser",
+            "description": "Tracks a given user's messages within the selected chat channel.",
+            "options":[{
+                "name": "enable",
+                "description": "Enables the user-tracking.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options":[{
+                    "name": "name",
+                    "description": "Which user would you like to track the messages of?",
+                    "type": SlashCommands.ApplicationCommandOptionType.USER,
+                    "required": true
+                }]
+            },
+            {
+                "name": "disable",
+                "description": "Disable the tracking for the chosen user.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+                "options":[{
+                    "name": "name",
+                    "description": "Which user would you like to disable tracking for?",
+                    "type": SlashCommands.ApplicationCommandOptionType.USER,
+                    "required": true
+                }]
+
+            },
+            {
+                "name": "display",
+                "description": "Display the server's currently tracked users.",
+                "type": SlashCommands.ApplicationCommandOptionType.SUB_COMMAND,
+            }
+        ]};
+
+        // Create Global Command
+        await interaction.createApplicationCommand(trackuser).then(error => console.log(error)).catch(error => console.log(error.message));
 
         const globalCommands = await interaction.getApplicationCommands();
         console.log(globalCommands.length);

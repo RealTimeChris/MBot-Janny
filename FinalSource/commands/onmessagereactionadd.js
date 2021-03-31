@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = void 0;
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff.js");
+var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'onmessagereactionadd';
 command.description = "It's an automatic one!";

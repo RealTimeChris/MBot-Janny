@@ -50,7 +50,7 @@ var commandindex_1 = __importDefault(require("./commandindex"));
 var discordUser = new DiscordStuff.DiscordUser();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, value2, userID, reason, name_full_1, viewOrNot, value, value1, msgCountToPurge, value1, role, name_full_2, quantity, name_full_3, returnData;
+    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, value2, userID, reason, name_full_1, viewOrNot, value, value1, logname, enableOrDisable, msgCountToPurge, value1, name_full_2, role, role, quantity, name_full_3, inviteLink, message, emoji, msgName, msgName, msgContents, msgInterval, userID, userID, user, returnData;
     var _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -87,8 +87,8 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 if (name_full === 'botinfo') {
                 }
                 if (name_full === "deletedbentry") {
-                    value1 = options_full[0].options[0].value;
-                    value2 = options_full[0].options[1].value;
+                    value1 = options_full[0].value;
+                    value2 = options_full[1].value;
                     commandData.args[0] = value1;
                     commandData.args[1] = value2;
                     if (commandData.args[0] !== 'janny') {
@@ -131,31 +131,47 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 if (name_full === 'jannyoptinos') {
                 }
                 if (name_full === 'listdbguilds') {
-                    value1 = options_full[0].options[0].value;
+                    value1 = options_full[0].value;
                     commandData.args[0] = value1;
                 }
                 if (name_full === "managelogs") {
+                    name_full = options_full[0].name;
+                    if (name_full === 'display') {
+                    }
+                    else if (name_full = "group1" || "group2") {
+                        logname = options_full[0].options[0].value;
+                        enableOrDisable = void 0;
+                        if (options_full[0].options[1].value === true) {
+                            enableOrDisable = 'enable';
+                        }
+                        else {
+                            enableOrDisable = 'disable';
+                        }
+                        commandData.args[1] = logname;
+                        commandData.args[0] = enableOrDisable;
+                    }
                 }
                 if (name_full === 'ping') {
                 }
                 if (name_full === 'purge') {
-                    msgCountToPurge = options_full[0].options[0].value;
+                    msgCountToPurge = options_full[0].value;
                     commandData.args[0] = msgCountToPurge;
                 }
                 if (name_full === 'serverinfo') {
-                    if (options_full[0].options !== undefined) {
-                        value1 = options_full[0].options[0].value;
+                    if (options_full !== undefined) {
+                        value1 = options_full[0].value;
                         commandData.args[0] = value1;
                     }
                 }
                 if (name_full === 'setdefaultrole') {
-                    role = options_full[0].options[0].value;
                     name_full_2 = options_full[0].name;
                     if (name_full_2 === 'add') {
+                        role = options_full[0].options[0].value;
                         commandData.args[0] = 'add';
                         commandData.args[1] = role;
                     }
                     else if (name_full_2 === 'remove') {
+                        role = options_full[0].options[0].value;
                         commandData.args[0] = 'remove';
                         commandData.args[1] = role;
                     }
@@ -178,9 +194,66 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                         commandData.args[0] = 'disable';
                     }
                 }
+                if (name_full === 'setreplacementinvite') {
+                    inviteLink = options_full[0].value;
+                    commandData.args[0] = inviteLink;
+                }
+                if (name_full === 'setverificationsystem') {
+                    name_full = options_full[0].name;
+                    if (name_full === "display") {
+                    }
+                    else if (name_full === 'disable') {
+                        commandData.args[0] = 'disable';
+                    }
+                    else if (name_full === 'enable') {
+                        message = options_full[0].options[0].value;
+                        emoji = options_full[0].options[1].value;
+                        commandData.args[0] = 'enable';
+                        commandData.args[1] = message;
+                        commandData.args[2] = emoji;
+                    }
+                }
                 if (name_full === 'slashcommands') {
                 }
                 if (name_full === 'test') {
+                }
+                if (name_full === 'timedmessages') {
+                    name_full = options_full[0].name;
+                    if (name_full === 'display') {
+                    }
+                    else if (name_full === 'disable') {
+                        msgName = options_full[0].options[0].value;
+                        commandData.args[0] = 'remove';
+                        commandData.args[1] = msgName;
+                    }
+                    else if (name_full === 'enable') {
+                        msgName = options_full[0].options[0].value;
+                        msgContents = options_full[0].options[1].value;
+                        msgInterval = options_full[0].options[2].value;
+                        commandData.args[0] = 'add';
+                        commandData.args[1] = msgName;
+                        commandData.args[2] = msgInterval;
+                        commandData.args[3] = msgContents;
+                    }
+                }
+                if (name_full === 'trackuser') {
+                    name_full = options_full[0].name;
+                    if (name_full === "display") {
+                    }
+                    else if (name_full === 'enable') {
+                        userID = options_full[0].options[0].value;
+                        commandData.args[0] = 'add';
+                        commandData.args[1] = userID;
+                    }
+                    else if (name_full === 'disable') {
+                        userID = options_full[0].options[0].value;
+                        commandData.args[0] = 'remove';
+                        commandData.args[1] = userID;
+                    }
+                }
+                if (name_full === 'userinfo') {
+                    user = options_full[0].value;
+                    commandData.args[0] = user;
                 }
                 return [4 /*yield*/, client.api.interactions(interaction.id, interaction.token).callback.post({
                         data: {

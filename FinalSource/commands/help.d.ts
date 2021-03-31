@@ -1,4 +1,4 @@
-import DiscordStuff = require('../DiscordStuff.js');
+import DiscordStuff = require('../DiscordStuff');
 /**
  * Returns a menu of helping information for the various commands I have.
  */

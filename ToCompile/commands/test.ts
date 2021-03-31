@@ -6,19 +6,20 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff.js');
+import DiscordStuff = require('../DiscordStuff');
 
 const command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
 
- export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+ export async function execute(commandData: DiscordStuff.CommandData,  discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
 
+        await DiscordStuff.sendMessageWithCorrectChannel(commandData, "TEST!");
         
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

@@ -13,48 +13,46 @@ command.name = 'timedmessages';
 command.description = "__**Timed Messages Usage:**__ !timedmessages to view the server's current timed messages.\n"
 + '!timedmessages = ADD, MESSAGENAME, MSBETWEENSENDS, MESSAGECONTENT to add a new message.\nAnd !timedmessages = REMOVE, MESSAGENAME, to remove a timed message!';
 
- export async function execute(message: Discord.Message, args: string[], discordUser: DiscordStuff.DiscordUser): Promise<string> {
+ export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
-        const areWeInADM = await DiscordStuff.areWeInADM(message);
+        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
         if (areWeInADM === true) {
-            return command.name;
+            return commandReturnData;
         }
 
-        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(message);
+        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
 
         if (doWeHaveAdminPerms === false) {
-            return command.name;
+            return commandReturnData;
         }
 
-        const guildData = await discordUser.getGuildDataFromDB(message.guild as Discord.Guild);
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
 
         let whatAreWeDoing = '';
         let messageName = '';
         let msBetweenSends = 0;
         let messageContent = '';
 
-        if (args[0] === undefined) {
+        if (commandData.args[0] === undefined) {
             whatAreWeDoing = 'viewing';
-        } else if (args[0].toLowerCase() === 'add') {
+        } else if (commandData.args[0].toLowerCase() === 'add') {
             whatAreWeDoing = 'adding';
-            const argOne = args[1];
+            const argOne = commandData.args[1];
             messageName = argOne as string;
-            msBetweenSends = Math.abs(parseInt(args[2] as string, 10));
-            const argThreee = args[3];
+            msBetweenSends = Math.abs(parseInt(commandData.args[2] as string, 10));
+            const argThreee = commandData.args[3];
             messageContent = argThreee as string;
-        } else if (args[0].toLowerCase() === 'remove') {
+        } else if (commandData.args[0].toLowerCase() === 'remove') {
             whatAreWeDoing = 'removing';
-            const argOne = args[1];
+            const argOne = commandData.args[1];
             messageName = argOne as string;
         } else {
-            await message.reply('Please, enter a proper first argument or enter none at all!');
-            if (message.deletable){
-                await message.delete();
-            }
-            return command.name;
+            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Please, enter a proper first argument or enter none at all!`;
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            return commandReturnData;
         }
 
         if (whatAreWeDoing === 'viewing') {
@@ -90,23 +88,20 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
-                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Timed Messages:**__');
             msgEmbed.fields = embedFields;
 
-            await message.channel.send(msgEmbed);
-            if (message.deletable){
-                await message.delete();
-            }
-            return command.name;
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            return commandReturnData;
         }
         if (whatAreWeDoing === 'adding') {
             const newTimedMessage = new DiscordStuff.TimedMessage();
             newTimedMessage.name = messageName;
             newTimedMessage.msBetweenSends = msBetweenSends;
-            newTimedMessage.textChannelID = message.channel.id;
+            newTimedMessage.textChannelID = (commandData.fromTextChannel as Discord.TextChannel).id;
             newTimedMessage.timeOfLastSend = 0;
             newTimedMessage.messageContent = messageContent;
 
@@ -121,17 +116,14 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             msgString += `__**In Channel:**__ <#${newTimedMessage.textChannelID}>\n`;
             msgString += `__**Content:**__ ${newTimedMessage.messageContent}\n------`;
             msgEmbed
-                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Timed Message Added:**__')
                 .setDescription(msgString);
 
-            await message.channel.send(msgEmbed);
-            if (message.deletable){
-                await message.delete();
-            }
-            return command.name;
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            return commandReturnData;
         }
         if (whatAreWeDoing === 'removing') {
             let isItFound = false;
@@ -147,31 +139,26 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             }
 
             if (isItFound === false) {
-                await message.reply('Sorry, but the timed message you requested could not be found!');
-                if (message.deletable){
-                    await message.delete();
-                }
-                return command.name;
+                const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but the timed message you requested could not be found!`;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                return commandReturnData;
             }
 
             const msgEmbed = new Discord.MessageEmbed();
             let msgString = '';
             msgString = `You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ ${currentTimedMessageName}\n------`;
             msgEmbed
-                .setAuthor(message.author.username, message.author.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Timed Message Removed:**__')
                 .setDescription(msgString);
 
-            await message.channel.send(msgEmbed);
-            if (message.deletable){
-                await message.delete();
-            }
-            return command.name;
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            return commandReturnData;
         }
 
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

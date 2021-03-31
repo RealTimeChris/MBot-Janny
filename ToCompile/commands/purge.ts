@@ -55,4 +55,4 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 	}
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordStuff.BotCommand

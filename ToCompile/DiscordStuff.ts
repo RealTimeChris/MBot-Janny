@@ -15,17 +15,15 @@ import config = require('./config.json');
 export async function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: string | Discord.MessageEmbed): Promise<Discord.Message>{
 	try{
 		let returnMessage: Discord.Message;
-		console.log(commandData.toTextChannel instanceof Discord.WebhookClient);
-		console.log((commandData.toTextChannel as Discord.WebhookClient).token);
 		if (commandData.toTextChannel instanceof Discord.WebhookClient){
-			returnMessage = await commandData.toTextChannel.send(messageContents as Discord.WebhookMessageOptions) as Discord.Message;
+			returnMessage = (await commandData.toTextChannel.send(messageContents)) as Discord.Message;
 		}
-		else{
-			returnMessage = await (commandData.toTextChannel as Discord.TextChannel).send(messageContents) as Discord.Message;
+		else if (commandData.toTextChannel instanceof Discord.TextChannel){
+			returnMessage = (await commandData.toTextChannel.send(messageContents)) as Discord.Message;
 		}
 
 		return new Promise((resolve, reject) => {
-			resolve(returnMessage as Discord.Message);
+			resolve(returnMessage);
 		});
 	}
 	catch(error){
@@ -462,9 +460,13 @@ export class BotCommand {
 				this.toTextChannel = await client.channels.fetch(fromTextChannelID) as Discord.TextChannel;
 				this.permsChannel = new Discord.GuildChannel(this.guild as Discord.Guild, this.fromTextChannel);
 			}
-			if (fromTextChannelType === 'dm'){
+			if (interaction !== null && fromTextChannelType === 'dm'){
 				this.toTextChannel = new Discord.WebhookClient((client.user as Discord.User).id, this.interaction.token) as Discord.WebhookClient;
-				this.permsChannel = (await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel);
+				this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
+			}
+			if (interaction === null && fromTextChannelType === 'dm'){
+				this.toTextChannel = await client.channels.fetch(fromTextChannelID) as Discord.TextChannel;
+				this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
 			}
 		}
 		catch(error){
@@ -849,7 +851,7 @@ export class DiscordUser {
 				});
 			}
 
-			await (commandData.permsChannel as Discord.TextChannel).send(`<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but you don't have the permissions required for that!`);
+			await (commandData.toTextChannel as Discord.TextChannel).send(`<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but you don't have the permissions required for that!`);
 			return new Promise((resolve, reject) => {
 				resolve(false);
 			});

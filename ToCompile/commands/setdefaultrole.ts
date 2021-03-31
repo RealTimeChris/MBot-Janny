@@ -7,7 +7,6 @@
 
 import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff');
-import GuildMemberRoleManager from 'discord.js';
 
 const command = new DiscordStuff.BotCommand();
 command.name = 'setdefaultrole';
@@ -47,11 +46,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             return commandReturnData;
         } else if (roleMentionRegExp.test(commandData.args[1])) {
             const roleID = (commandData.args[1].match(idRegExp) as string[])[0];
-            roleMemberManager = new Discord.RoleManager(commandData.guild as Discord.Guild) as GuildMemberRoleManager.RoleManager
+            roleMemberManager = new Discord.RoleManager(commandData.guild as Discord.Guild) as Discord.RoleManager;
             currentDiscordRole = (await (roleMemberManager as Discord.RoleManager).fetch(roleID as string)) as Discord.Role;
             commandData.args[1] = currentDiscordRole.name;
         } else if (idRegExp.test(commandData.args[1])) {
-            roleMemberManager = new Discord.RoleManager(commandData.guild as Discord.Guild) as GuildMemberRoleManager.RoleManager;
+            roleMemberManager = new Discord.RoleManager(commandData.guild as Discord.Guild) as Discord.RoleManager;
             currentDiscordRole = (await (roleMemberManager as Discord.RoleManager).fetch(commandData.args[1])) as Discord.Role;
             commandData.args[1] = currentDiscordRole.name;
         }

@@ -15,28 +15,30 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
 /**
  * Displays info about a selected user.
  */
-export async function execute(commandData: DiscordStuff.CommandData, args: string[]): Promise<string> {
+export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     try {
+        const commandReturnData = new DiscordStuff.CommandReturnData();
+        commandReturnData.commandName = command.name;
         const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
         if (areWeInADM === true) {
-            return command.name;
+            return commandReturnData;
         }
 
         let userID = '';
         const userMentionRegExp = /.{2,3}\d{18}>/;
         const userIDRegExp = /\d{18}/;
-        if (args[0] === undefined) {
+        if (commandData.args[0] === undefined) {
             userID = (commandData.guildMember as Discord.GuildMember).id;
-        } else if ((args[0].match(userIDRegExp) as string[])[0] as string === null
-            && (args[0].match(userMentionRegExp) as string[])[0] === null) {
+        } else if ((commandData.args[0].match(userIDRegExp) as string[])[0] as string === null
+            && (commandData.args[0].match(userMentionRegExp) as string[])[0] === null) {
             const msgString = 'Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)';
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
-            return command.name;
-        } else if (args[0].match(userMentionRegExp) != null) {
-            userID = args[0].substring(3, args[0].length - 1);
-        } else if ((args[0].match(userIDRegExp) as string[])[0] != null) {
-            const argZero = args[0];
+            return commandReturnData;
+        } else if (commandData.args[0].match(userMentionRegExp) != null) {
+            userID = commandData.args[0].substring(3, commandData.args[0].length - 1);
+        } else if ((commandData.args[0].match(userIDRegExp) as string[])[0] != null) {
+            const argZero = commandData.args[0];
             const userIDOne = (argZero.match(userIDRegExp) as string[])[0];
             userID = userIDOne as string;
         }
@@ -49,7 +51,7 @@ export async function execute(commandData: DiscordStuff.CommandData, args: strin
         } catch (error) {
             const msgString =  'Sorry, but that user could not be found!';
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
-            return command.name;
+            return commandReturnData;
         }
 
         const fields = [];
@@ -101,7 +103,7 @@ export async function execute(commandData: DiscordStuff.CommandData, args: strin
             .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, ((commandData.guildMember as Discord.GuildMember).user.avatarURL() as string));
         messageEmbed.fields = fields as Discord.EmbedField[];
         await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

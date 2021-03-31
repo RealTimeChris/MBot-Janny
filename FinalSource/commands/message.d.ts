@@ -1,5 +1,5 @@
-import DiscordStuff = require('../DiscordStuff.js');
 import Discord = require('discord.js');
+import DiscordStuff = require('../DiscordStuff');
 /**
    * Selects a chosen chat message and sends it via the appropriate channel,
      * upon recieving a trigger phrase or word.

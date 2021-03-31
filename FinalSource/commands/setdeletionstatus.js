@@ -53,7 +53,7 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
-                    _d.trys.push([0, 28, , 29]);
+                    _d.trys.push([0, 30, , 31]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
@@ -207,7 +207,7 @@ function execute(commandData, discordUser) {
                     _d.sent();
                     return [2 /*return*/, commandReturnData];
                 case 25:
-                    if (!(whatAreWeDoing === 'disable')) return [3 /*break*/, 27];
+                    if (!(whatAreWeDoing === 'disable')) return [3 /*break*/, 29];
                     isItFound = false;
                     deletionChannelIndex = 0;
                     for (x = 0; x < guildData.deletionChannels.length; x += 1) {
@@ -217,11 +217,13 @@ function execute(commandData, discordUser) {
                             break;
                         }
                     }
-                    if (isItFound === false) {
-                        msgString_2 = 'Sorry, but this channel could not be found in the list of active deletion channels!';
-                        DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_2);
-                        return [2 /*return*/, commandReturnData];
-                    }
+                    if (!(isItFound === false)) return [3 /*break*/, 27];
+                    msgString_2 = 'Sorry, but this channel could not be found in the list of active deletion channels!';
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_2)];
+                case 26:
+                    _d.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 27:
                     guildData.deletionChannels.splice(deletionChannelIndex, 1);
                     discordUser.updateGuildDataInDB(guildData);
                     msgString = "" + '\n------\n__**Channel Name:**__ <#' + currentDeletionChannel.channelID + ">\n------";
@@ -233,16 +235,16 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Disabled Channel Purging:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                case 26:
-                    _d.sent();
-                    _d.label = 27;
-                case 27: return [2 /*return*/, commandReturnData];
                 case 28:
+                    _d.sent();
+                    _d.label = 29;
+                case 29: return [2 /*return*/, commandReturnData];
+                case 30:
                     error_2 = _d.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
-                case 29: return [2 /*return*/];
+                case 31: return [2 /*return*/];
             }
         });
     });

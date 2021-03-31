@@ -134,7 +134,7 @@ function execute(commandData, discordUser) {
                     trackUsersField = { name: "__**Track User's Messages:**__", value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!trackuser'", inline: true };
                     fields.push(trackUsersField);
                     msgEmbed.fields = fields;
-                    return [4 /*yield*/, commandData.permsChannel.send(msgEmbed)];
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 6:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];

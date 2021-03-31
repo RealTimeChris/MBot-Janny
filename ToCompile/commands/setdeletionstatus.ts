@@ -7,7 +7,6 @@
 
 import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff');
-import {Message} from 'discord.js';
 
 const command = new DiscordStuff.BotCommand();
 command.name = 'setdeletionstatus';
@@ -150,7 +149,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             }
             if (isItFound === false) {
                 const msgString = 'Sorry, but this channel could not be found in the list of active deletion channels!';
-                DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
                 return commandReturnData;
             }
             guildData.deletionChannels.splice(deletionChannelIndex, 1);

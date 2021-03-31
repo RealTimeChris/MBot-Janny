@@ -6,15 +6,15 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff.js');
+import DiscordStuff = require('../DiscordStuff');
 
 const command = new DiscordStuff.BotCommand();
 command.name = 'botinfo';
 command.description = '!botinfo to display info about this bot in chat!';
 
  /**
-  * Displays the data about the currend user
-  * */ 
+ * Displays the data about the currend user.
+ */ 
 export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
    try {
        const commandReturnData = new DiscordStuff.CommandReturnData();

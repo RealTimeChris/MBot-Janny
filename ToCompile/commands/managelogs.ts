@@ -60,18 +60,18 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
            
-        } else if ((commandData.args[0] as string).toLowerCase() !== 'enable' && (commandData.args[0] as string).toLowerCase() !== 'disable') {
+        } else if ((commandData.args[0] as string).toString().toLowerCase() !== 'enable' && (commandData.args[0] as string).toString().toLowerCase() !== 'disable') {
             const msgString = `Please, enter enable or disable for the second argument of this command! 
             (!managelogs = <enable/disable>, <logname>)`;
-            DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
            
             return commandReturnData;
         } else {
             switch (((commandData.args[1] as string) as string).toLowerCase()) {
             case 'guildbanadd':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if ((((commandData.args[1] as string) as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
+                        if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = (commandData.permsChannel as Discord.TextChannel).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
@@ -90,9 +90,9 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
+                        if ((commandData.args[1] as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = '';
                             (guildData.logs[x] as DiscordStuff.Log).enabled = false;
@@ -113,9 +113,9 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'guildbanremove':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
+                        if ((commandData.args[1] as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelName = ((commandData.permsChannel as Discord.TextChannel)).name;
                             (guildData.logs[x] as DiscordStuff.Log).enabled = true;
@@ -134,7 +134,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -157,7 +157,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'guildmemberadd':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -178,7 +178,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -201,7 +201,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'guildmemberremove':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -222,7 +222,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -245,7 +245,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'displaynamechange':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -266,7 +266,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -289,7 +289,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'nicknamechange':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -310,7 +310,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -333,7 +333,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'roleaddorremove':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -354,7 +354,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -377,7 +377,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'invitecreate':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -398,7 +398,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -421,7 +421,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'messagedelete':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -442,7 +442,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -465,7 +465,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'messagedeletebulk':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -486,7 +486,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -509,7 +509,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'messageupdate':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -530,7 +530,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -553,7 +553,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'rolecreate':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -574,7 +574,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -597,7 +597,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'roledelete':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -618,7 +618,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -641,7 +641,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
                 break;
             case 'usernamechange':
-                if ((commandData.args[0] as string).toLowerCase() === 'enable') {
+                if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = (commandData.permsChannel as Discord.TextChannel).id;
@@ -662,7 +662,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             break;
                         }
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'disable') {
+                } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
                     for (let x = 0; x < guildData.logs.length; x += 1) {
                         if (((commandData.args[1] as string) as string).toLowerCase() === (guildData.logs[x] as DiscordStuff.Log).nameSmall) {
                             (guildData.logs[x] as DiscordStuff.Log).loggingChannelID = '';
@@ -686,7 +686,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 break;
             default:
                 const msgString = 'Please enter a proper log name!';
-                DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
                 return commandReturnData;
             }
         }

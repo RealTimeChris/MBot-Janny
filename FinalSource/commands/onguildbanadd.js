@@ -48,12 +48,14 @@ command.name = 'onguildbanadd';
 command.description = "It's an automatic one!'";
 function execute(client, guild, user, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var guildData_1, error_1;
+        var commandReturnData, guildData_1, error_1;
         var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
                     if (!(guild instanceof Discord.Guild)) {
                         return [2 /*return*/, command.name];
                     }

@@ -57,14 +57,14 @@ function sendMessageWithCorrectChannel(commandData, messageContents) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 5, , 6]);
-                    console.log(commandData.toTextChannel instanceof Discord.WebhookClient);
-                    console.log(commandData.toTextChannel.token);
                     if (!(commandData.toTextChannel instanceof Discord.WebhookClient)) return [3 /*break*/, 2];
                     return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 1:
                     returnMessage_1 = (_a.sent());
                     return [3 /*break*/, 4];
-                case 2: return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
+                case 2:
+                    if (!(commandData.toTextChannel instanceof Discord.TextChannel)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 3:
                     returnMessage_1 = (_a.sent());
                     _a.label = 4;
@@ -599,16 +599,16 @@ var CommandData = /** @class */ (function () {
         if (guildMemberID === void 0) { guildMemberID = ''; }
         if (guildID === void 0) { guildID = ''; }
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, _c, _d, _e, _f, error_5;
-            return __generator(this, function (_g) {
-                switch (_g.label) {
+            var _a, _b, _c, _d, _e, _f, _g, _h, error_5;
+            return __generator(this, function (_j) {
+                switch (_j.label) {
                     case 0:
-                        _g.trys.push([0, 12, , 13]);
+                        _j.trys.push([0, 15, , 16]);
                         this.fromTextChannelType = fromTextChannelType;
                         _a = this;
                         return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
                     case 1:
-                        _a.fromTextChannel = (_g.sent());
+                        _a.fromTextChannel = (_j.sent());
                         if (interaction !== null) {
                             this.interaction = interaction;
                         }
@@ -616,21 +616,21 @@ var CommandData = /** @class */ (function () {
                         _b = this;
                         return [4 /*yield*/, client.guilds.fetch(guildID)];
                     case 2:
-                        _b.guild = (_g.sent());
-                        _g.label = 3;
+                        _b.guild = (_j.sent());
+                        _j.label = 3;
                     case 3:
                         if (!(guildMemberID !== '' && guildID !== '')) return [3 /*break*/, 5];
                         _c = this;
                         return [4 /*yield*/, this.guild.members.fetch(guildMemberID)];
                     case 4:
-                        _c.guildMember = (_g.sent());
+                        _c.guildMember = (_j.sent());
                         return [3 /*break*/, 7];
                     case 5:
                         _d = this;
                         return [4 /*yield*/, client.users.fetch(guildMemberID)];
                     case 6:
-                        _d.guildMember = (_g.sent());
-                        _g.label = 7;
+                        _d.guildMember = (_j.sent());
+                        _j.label = 7;
                     case 7:
                         if (interaction !== null && fromTextChannelType !== 'dm') {
                             this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
@@ -640,24 +640,35 @@ var CommandData = /** @class */ (function () {
                         _e = this;
                         return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
                     case 8:
-                        _e.toTextChannel = (_g.sent());
+                        _e.toTextChannel = (_j.sent());
                         this.permsChannel = new Discord.GuildChannel(this.guild, this.fromTextChannel);
-                        _g.label = 9;
+                        _j.label = 9;
                     case 9:
-                        if (!(fromTextChannelType === 'dm')) return [3 /*break*/, 11];
+                        if (!(interaction !== null && fromTextChannelType === 'dm')) return [3 /*break*/, 11];
                         this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
                         _f = this;
                         return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
                     case 10:
-                        _f.permsChannel = (_g.sent());
-                        _g.label = 11;
-                    case 11: return [3 /*break*/, 13];
+                        _f.permsChannel = (_j.sent());
+                        _j.label = 11;
+                    case 11:
+                        if (!(interaction === null && fromTextChannelType === 'dm')) return [3 /*break*/, 14];
+                        _g = this;
+                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
                     case 12:
-                        error_5 = _g.sent();
+                        _g.toTextChannel = (_j.sent());
+                        _h = this;
+                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                    case 13:
+                        _h.permsChannel = (_j.sent());
+                        _j.label = 14;
+                    case 14: return [3 /*break*/, 16];
+                    case 15:
+                        error_5 = _j.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_5);
                             })];
-                    case 13: return [2 /*return*/];
+                    case 16: return [2 /*return*/];
                 }
             });
         });
@@ -1204,7 +1215,7 @@ var DiscordUser = /** @class */ (function () {
                                     resolve(true);
                                 })];
                         }
-                        return [4 /*yield*/, commandData.permsChannel.send("<@!" + commandData.guildMember.id + "> Sorry, but you don't have the permissions required for that!")];
+                        return [4 /*yield*/, commandData.toTextChannel.send("<@!" + commandData.guildMember.id + "> Sorry, but you don't have the permissions required for that!")];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {

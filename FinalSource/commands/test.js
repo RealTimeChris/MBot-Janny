@@ -41,25 +41,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = void 0;
-var DiscordStuff = require("../DiscordStuff.js");
+var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
-function execute(message, args, discordUser) {
+function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData;
+        var commandReturnData, error_1;
         return __generator(this, function (_a) {
-            try {
-                commandReturnData = new DiscordStuff.CommandReturnData();
-                commandReturnData.commandName = command.name;
-                return [2 /*return*/, command.name];
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData.commandName = command.name;
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, "TEST!")];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 2:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 3: return [2 /*return*/];
             }
-            catch (error) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        reject(error);
-                    })];
-            }
-            return [2 /*return*/];
         });
     });
 }

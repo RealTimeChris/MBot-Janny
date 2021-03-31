@@ -1,4 +1,4 @@
-import DiscordStuff = require('../DiscordStuff.js');
+import DiscordStuff = require('../DiscordStuff');
 /**
  * Displays all of the data for all of the guilds, either in console or in chat.
  */

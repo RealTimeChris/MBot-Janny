@@ -105,7 +105,7 @@ command.description = '!jannyoptions, to display a list of options for this bot!
 		fields.push(trackUsersField);
 
 		msgEmbed.fields = fields;
-		await (commandData.permsChannel as Discord.TextChannel).send(msgEmbed);
+		await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {

@@ -42,13 +42,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = void 0;
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff.js");
+var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'botinfo';
 command.description = '!botinfo to display info about this bot in chat!';
 /**
- * Displays the data about the currend user
- * */
+* Displays the data about the currend user.
+*/
 function execute(commandData, discordUser) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function () {

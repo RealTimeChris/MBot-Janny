@@ -39,8 +39,8 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 
 	}
 	if (name_full === "deletedbentry"){
-		const {value:value1} = options_full[0].options[0];
-		const {value:value2} = options_full[0].options[1];
+		const {value:value1} = options_full[0];
+		const {value:value2} = options_full[1];
 		commandData.args[0] = value1;
 		commandData.args[1] = value2;
 		if (commandData.args[0] !== 'janny') {
@@ -48,7 +48,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		}
 	}
 	if (name_full === "displayguildsdata"){
-
+		
 	}
 	if (name_full === 'ghost'){
 		let userID;
@@ -82,36 +82,52 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		}
 	}
 	if (name_full === 'jannyoptinos'){
-
+		
 	}
 	if (name_full === 'listdbguilds'){
-		const {value:value1} = options_full[0].options[0];
+		const {value:value1} = options_full[0];
 		commandData.args[0] = value1;
 	}
 	if (name_full === "managelogs"){
+		name_full = options_full[0].name;
+		if (name_full === 'display'){
 
+		}
+		else if (name_full = "group1" || "group2"){
+			const logname = options_full[0].options[0].value;
+			let enableOrDisable;
+			if (options_full[0].options[1].value === true){
+				enableOrDisable = 'enable';
+			}
+			else {
+				enableOrDisable = 'disable';
+			}
+			commandData.args[1] = logname;
+			commandData.args[0] = enableOrDisable;
+		}
 	}
 	if (name_full === 'ping'){
 		
 	}
 	if (name_full === 'purge'){
-		const msgCountToPurge = options_full[0].options[0].value;
+		const msgCountToPurge = options_full[0].value;
 		commandData.args[0] = msgCountToPurge;
 	}
 	if (name_full === 'serverinfo'){
-		if (options_full[0].options !== undefined){
-			const {value:value1} = options_full[0].options[0];
+		if (options_full !== undefined){
+			const {value:value1} = options_full[0];
 			commandData.args[0] = value1;
 		}		
 	}
 	if (name_full === 'setdefaultrole'){
-		let role =options_full[0].options[0].value;
 		const name_full = options_full[0].name;
 		if (name_full === 'add'){
+			let role = options_full[0].options[0].value;
 			commandData.args[0] = 'add';
 			commandData.args[1] = role;
 		}
 		else if (name_full === 'remove'){
+			let role = options_full[0].options[0].value;
 			commandData.args[0] = 'remove';
 			commandData.args[1] = role;
 		}
@@ -136,16 +152,77 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 			commandData.args[0] = 'disable';
 		}
 	}
-	if (name_full === 'slashcommands'){
+	if (name_full === 'setreplacementinvite'){
+		const inviteLink = options_full[0].value
+		commandData.args[0] = inviteLink;
+	}
+	if (name_full === 'setverificationsystem'){
+		name_full = options_full[0].name;
+		if (name_full === "display"){
 
+		}
+		else if (name_full === 'disable'){
+			commandData.args[0] = 'disable';
+		}
+		else if (name_full === 'enable'){
+			const message = options_full[0].options[0].value;
+			const emoji = options_full[0].options[1].value;
+			commandData.args[0] = 'enable';
+			commandData.args[1] = message;
+			commandData.args[2] = emoji;
+		}
+	}
+	if (name_full === 'slashcommands'){
+		
 	}
 	if (name_full === 'test'){
 
 	}
+	if (name_full === 'timedmessages'){
+		name_full = options_full[0].name;
+		if (name_full === 'display'){
+
+		}
+		else if (name_full === 'disable'){
+			const msgName = options_full[0].options[0].value;
+			commandData.args[0] = 'remove';
+			commandData.args[1] = msgName;
+		}
+		else if (name_full === 'enable'){
+			const msgName = options_full[0].options[0].value;
+			const msgContents = options_full[0].options[1].value;
+			const msgInterval = options_full[0].options[2].value;
+			commandData.args[0] = 'add';
+			commandData.args[1] = msgName;
+			commandData.args[2] = msgInterval;
+			commandData.args[3] = msgContents;
+		}
+	}
+	if (name_full === 'trackuser'){
+		name_full = options_full[0].name;
+		if (name_full === "display"){
+
+		}
+		else if (name_full === 'enable'){
+			const userID = options_full[0].options[0].value;
+			commandData.args[0] = 'add';
+			commandData.args[1] = userID;
+		}
+		else if (name_full === 'disable'){
+			const userID = options_full[0].options[0].value;
+			commandData.args[0] = 'remove';
+			commandData.args[1] = userID;
+		}
+	}
+	if (name_full === 'userinfo'){
+		const user = options_full[0].value;
+		commandData.args[0] = user;
+	}
 	await client.api.interactions(interaction.id, interaction.token).callback.post({
 		data:{
 			type: 5
-	}});
+		}
+	});
 	if (commandData.guildMember instanceof Discord.GuildMember){
 		console.log(`Command: '${nameSolid}' entered by user: ${(commandData.guildMember as Discord.GuildMember).displayName}`);
 	}
@@ -612,3 +689,4 @@ client.on('userUpdate', async (oldUser: Discord.User, newUser: Discord.User) => 
 });
 
 client.login(config.botToken);
+
