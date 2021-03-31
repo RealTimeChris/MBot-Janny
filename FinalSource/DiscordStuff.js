@@ -903,7 +903,7 @@ var DiscordUser = /** @class */ (function () {
                             guildData_2 = new GuildData();
                             guildData_2.defaultRoleIDs = [];
                             guildData_2.deletionChannels = [];
-                            guildData_2.ghostedRoleID = String();
+                            guildData_2.ghostedRoleID = '';
                             guildData_2.guildID = guild.id;
                             guildData_2.guildMemberCount = guild.memberCount;
                             guildData_2.guildName = guild.name;
@@ -1031,7 +1031,6 @@ var DiscordUser = /** @class */ (function () {
                             guildMemberData_2.displayName = guildMember.displayName;
                             guildMemberData_2.userID = guildMember.id;
                             guildMemberData_2.userName = guildMember.user.username;
-                            console.log(error_13);
                             return [2 /*return*/, new Promise(function (resolve, reject) {
                                     resolve(guildMemberData_2);
                                 })];
@@ -1463,11 +1462,11 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.deleteMessagesIfTimeHasPassed = function (client, guild, channelIndex) {
         return __awaiter(this, void 0, void 0, function () {
-            var numberOfMessagesToSave, channelID, newGuild, currentChannel, error_25, currentTime, timeDifference, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_26;
+            var numberOfMessagesToSave, channelID, newGuild, currentChannel, error_25, currentTime, timeDifference, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_26;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 40, , 41]);
+                        _a.trys.push([0, 43, , 44]);
                         numberOfMessagesToSave = guild.deletionChannels[channelIndex].numberOfMessagesToSave;
                         channelID = guild.deletionChannels[channelIndex].channelID;
                         newGuild = guild;
@@ -1507,7 +1506,7 @@ var DiscordUser = /** @class */ (function () {
                         }
                         console.log("Checking for messages to delete in channel: " + currentChannel.name);
                         newGuild.deletionChannels[channelIndex].currentlyBeingDeleted = true;
-                        if (!(numberOfMessagesToSave > 0)) return [3 /*break*/, 26];
+                        if (!(numberOfMessagesToSave > 0)) return [3 /*break*/, 29];
                         startingMessage = void 0;
                         x_1 = (Math.trunc(numberOfMessagesToSave / 100));
                         _a.label = 6;
@@ -1567,7 +1566,8 @@ var DiscordUser = /** @class */ (function () {
                         arrayOfMessageArrays = [];
                         _a.label = 17;
                     case 17:
-                        if (!(x !== 0)) return [3 /*break*/, 19];
+                        if (!(x !== 0)) return [3 /*break*/, 22];
+                        if (!(startingMessage !== undefined)) return [3 /*break*/, 19];
                         return [4 /*yield*/, currentChannel.messages
                                 .fetch({ limit: 100, before: startingMessage.id })];
                     case 18:
@@ -1578,10 +1578,24 @@ var DiscordUser = /** @class */ (function () {
                             arrayOfMessageArrays.push(arrayOfMessages);
                         }
                         else {
-                            return [3 /*break*/, 19];
+                            return [3 /*break*/, 22];
                         }
-                        return [3 /*break*/, 17];
-                    case 19:
+                        return [3 /*break*/, 21];
+                    case 19: return [4 /*yield*/, currentChannel.messages
+                            .fetch({ limit: 100 })];
+                    case 20:
+                        arrayOfMessages = (_a.sent()).array();
+                        x = arrayOfMessages.length;
+                        if (arrayOfMessages !== undefined && x > 0) {
+                            startingMessage = arrayOfMessages[arrayOfMessages.length - 1];
+                            arrayOfMessageArrays.push(arrayOfMessages);
+                        }
+                        else {
+                            return [3 /*break*/, 22];
+                        }
+                        _a.label = 21;
+                    case 21: return [3 /*break*/, 17];
+                    case 22:
                         totalMessageCount = 0;
                         for (y = 0; y < arrayOfMessageArrays.length; y += 1) {
                             for (z = 0; z < arrayOfMessageArrays[y].length; z += 1) {
@@ -1602,51 +1616,51 @@ var DiscordUser = /** @class */ (function () {
                                 })];
                         }
                         y = arrayOfMessageArrays.length - 1;
-                        _a.label = 20;
-                    case 20:
-                        if (!(y >= 0)) return [3 /*break*/, 25];
+                        _a.label = 23;
+                    case 23:
+                        if (!(y >= 0)) return [3 /*break*/, 28];
                         z = arrayOfMessageArrays[y].length - 1;
-                        _a.label = 21;
-                    case 21:
-                        if (!(z >= 0)) return [3 /*break*/, 24];
+                        _a.label = 24;
+                    case 24:
+                        if (!(z >= 0)) return [3 /*break*/, 27];
                         if (newGuild.deletionChannels[channelIndex].currentlyBeingDeleted === false) {
                             return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
                         }
-                        if (!!arrayOfMessageArrays[y][z].pinned) return [3 /*break*/, 23];
+                        if (!!arrayOfMessageArrays[y][z].pinned) return [3 /*break*/, 26];
                         return [4 /*yield*/, arrayOfMessageArrays[y][z].delete()];
-                    case 22:
+                    case 25:
                         _a.sent();
                         console.log("Deleting Message Number: " + (totalMessageCount - (y * 100 + z)) + " of " + totalMessageCount + " in channel " + currentChannel.name + ".");
-                        _a.label = 23;
-                    case 23:
-                        z -= 1;
-                        return [3 /*break*/, 21];
-                    case 24:
-                        y -= 1;
-                        return [3 /*break*/, 20];
-                    case 25: return [3 /*break*/, 38];
+                        _a.label = 26;
                     case 26:
+                        z -= 1;
+                        return [3 /*break*/, 24];
+                    case 27:
+                        y -= 1;
+                        return [3 /*break*/, 23];
+                    case 28: return [3 /*break*/, 41];
+                    case 29:
                         x = 1;
                         y = 0;
                         arrayOfMessageArrays = [];
                         startingMessage = void 0;
-                        _a.label = 27;
-                    case 27:
-                        if (!(x !== 0)) return [3 /*break*/, 32];
-                        arrayOfMessages = void 0;
-                        if (!(y === 0)) return [3 /*break*/, 29];
-                        return [4 /*yield*/, currentChannel.messages.fetch({ limit: 100 })];
-                    case 28:
-                        arrayOfMessages = (_a.sent()).array();
-                        return [3 /*break*/, 31];
-                    case 29: return [4 /*yield*/, currentChannel.messages
-                            .fetch({ limit: 100, })];
+                        _a.label = 30;
                     case 30:
-                        arrayOfMessages = (_a.sent()).array();
-                        _a.label = 31;
+                        if (!(x !== 0)) return [3 /*break*/, 35];
+                        arrayOfMessages = void 0;
+                        if (!(y === 0)) return [3 /*break*/, 32];
+                        return [4 /*yield*/, currentChannel.messages.fetch({ limit: 100 })];
                     case 31:
+                        arrayOfMessages = (_a.sent()).array();
+                        return [3 /*break*/, 34];
+                    case 32: return [4 /*yield*/, currentChannel.messages
+                            .fetch({ limit: 100, })];
+                    case 33:
+                        arrayOfMessages = (_a.sent()).array();
+                        _a.label = 34;
+                    case 34:
                         x = arrayOfMessages.length;
                         if (arrayOfMessages !== undefined && x > 0) {
                             startingMessage = arrayOfMessages[arrayOfMessages.length - 1];
@@ -1654,10 +1668,10 @@ var DiscordUser = /** @class */ (function () {
                             y += 1;
                         }
                         else {
-                            return [3 /*break*/, 32];
+                            return [3 /*break*/, 35];
                         }
-                        return [3 /*break*/, 27];
-                    case 32:
+                        return [3 /*break*/, 30];
+                    case 35:
                         totalMessageCount = 0;
                         for (w = 0; w < arrayOfMessageArrays.length; w += 1) {
                             for (z = 0; z < arrayOfMessageArrays[w].length; z += 1) {
@@ -1678,45 +1692,45 @@ var DiscordUser = /** @class */ (function () {
                                 })];
                         }
                         w = arrayOfMessageArrays.length - 1;
-                        _a.label = 33;
-                    case 33:
-                        if (!(w >= 0)) return [3 /*break*/, 38];
+                        _a.label = 36;
+                    case 36:
+                        if (!(w >= 0)) return [3 /*break*/, 41];
                         z = arrayOfMessageArrays[w].length - 1;
-                        _a.label = 34;
-                    case 34:
-                        if (!(z >= 0)) return [3 /*break*/, 37];
+                        _a.label = 37;
+                    case 37:
+                        if (!(z >= 0)) return [3 /*break*/, 40];
                         if (newGuild.deletionChannels[channelIndex].currentlyBeingDeleted === false) {
                             return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
                         }
-                        if (!!arrayOfMessageArrays[w][z].pinned) return [3 /*break*/, 36];
+                        if (!!arrayOfMessageArrays[w][z].pinned) return [3 /*break*/, 39];
                         return [4 /*yield*/, arrayOfMessageArrays[w][z].delete()];
-                    case 35:
+                    case 38:
                         _a.sent();
                         console.log("Deleting Message Number: " + (totalMessageCount - (w * 100 + z)) + " of " + totalMessageCount + " in channel " + currentChannel.name + ".");
-                        _a.label = 36;
-                    case 36:
+                        _a.label = 39;
+                    case 39:
                         z -= 1;
-                        return [3 /*break*/, 34];
-                    case 37:
+                        return [3 /*break*/, 37];
+                    case 40:
                         w -= 1;
-                        return [3 /*break*/, 33];
-                    case 38:
+                        return [3 /*break*/, 36];
+                    case 41:
                         newGuild.deletionChannels[channelIndex].timeOfLastPurge = new Date().getTime();
                         newGuild.deletionChannels[channelIndex].currentlyBeingDeleted = false;
                         return [4 /*yield*/, this.updateGuildDataInDB(newGuild)];
-                    case 39:
+                    case 42:
                         _a.sent();
                         return [2 /*return*/, new Promise(function (resolve) {
                                 resolve();
                             })];
-                    case 40:
+                    case 43:
                         error_26 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_26);
                             })];
-                    case 41: return [2 /*return*/];
+                    case 44: return [2 /*return*/];
                 }
             });
         });

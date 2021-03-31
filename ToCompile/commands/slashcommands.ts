@@ -37,12 +37,6 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         // Create Global Command
         await interaction.createApplicationCommand(botinfo).then(error => console.log(error)).catch(error => console.log(error.message));
 
-        for (let x = 0; x < commands.length; x += 1){
-            if ((commands[x] as SlashCommands.ApplicationCommand).name === 'deletedbentry'){
-                const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
-                console.log(newInteraction);
-            }            
-        }
         const deletedbentry = {
             "name": "deletedbentry",
             "description": "Used to delete database entries, based on their key.",

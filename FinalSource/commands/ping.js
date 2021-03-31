@@ -41,7 +41,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = void 0;
-var DiscordStuff = require("../DiscordStuff.js");
+var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'ping';
 command.description = 'Simply enter !ping';

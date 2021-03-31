@@ -293,7 +293,7 @@ client.once('ready', function () { return __awaiter(void 0, void 0, void 0, func
     });
 }); });
 client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
-    var command, args, x, commandData, cmdReturnData, error_2, command, cmdName, error_3;
+    var command, args, x, commandData, cmdReturnData, error_2, error_3, command, cmdName, error_4, error_5;
     var _a, _b;
     return __generator(this, function (_c) {
         switch (_c.label) {
@@ -306,7 +306,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                     console.log('Better not track our own messages!');
                     return [2 /*return*/];
                 }
-                if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 15];
+                if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 17];
                 command = '';
                 args = [];
                 if (msg.content.indexOf(' =') === -1) {
@@ -324,7 +324,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 }
                 _c.label = 1;
             case 1:
-                _c.trys.push([1, 13, , 14]);
+                _c.trys.push([1, 15, , 16]);
                 commandData = new DiscordStuff.CommandData();
                 if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 3];
                 return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
@@ -343,74 +343,88 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.sent();
                 _c.label = 7;
             case 7:
+                _c.trys.push([7, 9, , 10]);
                 console.log("Command: '" + command + "' entered by user: " + msg.author.username);
                 return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(commandData, discordUser))];
             case 8:
                 cmdReturnData = _c.sent();
                 console.log("Completed Command: " + cmdReturnData.commandName);
-                return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
+                return [3 /*break*/, 10];
             case 9:
-                _c.sent();
-                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
-            case 10:
-                _c.sent();
-                return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
+                error_2 = _c.sent();
+                console.log(error_2);
+                msg.reply('There was an error trying to execute that command!');
+                return [3 /*break*/, 10];
+            case 10: return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
             case 11:
                 _c.sent();
-                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
+                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
             case 12:
+                _c.sent();
+                return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
+            case 13:
+                _c.sent();
+                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
+            case 14:
                 _c.sent();
                 discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {
                     console.log(error);
                 });
                 return [2 /*return*/];
-            case 13:
-                error_2 = _c.sent();
-                console.log(error_2);
-                msg.reply('There was an error trying to execute that command!');
-                return [3 /*break*/, 14];
-            case 14: return [3 /*break*/, 23];
             case 15:
-                if (!(msg.author.id !== client.user.id)) return [3 /*break*/, 23];
+                error_3 = _c.sent();
+                console.log(error_3);
+                return [3 /*break*/, 16];
+            case 16: return [3 /*break*/, 28];
+            case 17:
+                if (!(msg.author.id !== client.user.id)) return [3 /*break*/, 28];
                 command = 'message';
                 if (!commandindex_1.default.commands.has(command)) {
                     return [2 /*return*/];
                 }
-                _c.label = 16;
-            case 16:
-                _c.trys.push([16, 22, , 23]);
+                _c.label = 18;
+            case 18:
+                _c.trys.push([18, 27, , 28]);
+                _c.label = 19;
+            case 19:
+                _c.trys.push([19, 21, , 22]);
                 console.log("Standard message entered: " + msg.author.username);
                 return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(command)) === null || _b === void 0 ? void 0 : _b.function(msg))];
-            case 17:
+            case 20:
                 cmdName = _c.sent();
                 console.log("Completed Command: " + cmdName);
-                return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
-            case 18:
+                return [3 /*break*/, 22];
+            case 21:
+                error_4 = _c.sent();
+                console.log(error_4);
+                msg.reply('There was an error trying to process that message!');
+                return [3 /*break*/, 22];
+            case 22: return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
+            case 23:
                 _c.sent();
                 return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
-            case 19:
+            case 24:
                 _c.sent();
                 return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
-            case 20:
+            case 25:
                 _c.sent();
                 return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
-            case 21:
+            case 26:
                 _c.sent();
                 discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {
                     console.log(error);
                 });
                 return [2 /*return*/];
-            case 22:
-                error_3 = _c.sent();
-                console.log(error_3);
-                msg.reply('There was an error trying to process that message!');
-                return [3 /*break*/, 23];
-            case 23: return [2 /*return*/];
+            case 27:
+                error_5 = _c.sent();
+                console.log(error_5);
+                return [3 /*break*/, 28];
+            case 28: return [2 /*return*/];
         }
     });
 }); });
 client.on('messageReactionAdd', function (messageReaction, user) { return __awaiter(void 0, void 0, void 0, function () {
-    var command, cmdName, error_4;
+    var command, cmdName, error_6;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -429,15 +443,15 @@ client.on('messageReactionAdd', function (messageReaction, user) { return __awai
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 3:
-                error_4 = _b.sent();
-                console.log(error_4);
+                error_6 = _b.sent();
+                console.log(error_6);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 client.on('guildDelete', function (guild) { return __awaiter(void 0, void 0, void 0, function () {
-    var command, cmdName, error_5;
+    var command, cmdName, error_7;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -456,15 +470,15 @@ client.on('guildDelete', function (guild) { return __awaiter(void 0, void 0, voi
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 3:
-                error_5 = _b.sent();
-                console.log(error_5);
+                error_7 = _b.sent();
+                console.log(error_7);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 client.on('guildBanAdd', function (guild, user) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_6;
+    var guildData, x, command, cmdName, error_8;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -492,15 +506,15 @@ client.on('guildBanAdd', function (guild, user) { return __awaiter(void 0, void 
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_6 = _b.sent();
-                console.log(error_6);
+                error_8 = _b.sent();
+                console.log(error_8);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 client.on('guildBanRemove', function (guild, user) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_7;
+    var guildData, x, command, cmdName, error_9;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -528,15 +542,15 @@ client.on('guildBanRemove', function (guild, user) { return __awaiter(void 0, vo
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_7 = _b.sent();
-                console.log(error_7);
+                error_9 = _b.sent();
+                console.log(error_9);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 client.on('guildMemberAdd', function (member) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_8;
+    var guildData, x, command, cmdName, error_10;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -564,15 +578,15 @@ client.on('guildMemberAdd', function (member) { return __awaiter(void 0, void 0,
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_8 = _b.sent();
-                console.log(error_8);
+                error_10 = _b.sent();
+                console.log(error_10);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 client.on('guildMemberRemove', function (member) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_9;
+    var guildData, x, command, cmdName, error_11;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -600,15 +614,15 @@ client.on('guildMemberRemove', function (member) { return __awaiter(void 0, void
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_9 = _b.sent();
-                console.log(error_9);
+                error_11 = _b.sent();
+                console.log(error_11);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_10, guildData, x, command, cmdName, error_11, oldGuildMemberRoleManager, newGuildMemberRoleManager, collectionSizeDifference, guildData, x, command, cmdName, error_12;
+    var guildData, x, command, cmdName, error_12, guildData, x, command, cmdName, error_13, oldGuildMemberRoleManager, newGuildMemberRoleManager, collectionSizeDifference, guildData, x, command, cmdName, error_14;
     var _a, _b, _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -638,7 +652,7 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_10 = _d.sent();
+                error_12 = _d.sent();
                 return [2 /*return*/];
             case 5:
                 if (!(oldGuildMember.nickname !== newGuildMember.nickname)) return [3 /*break*/, 10];
@@ -666,7 +680,7 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 9:
-                error_11 = _d.sent();
+                error_13 = _d.sent();
                 return [2 /*return*/];
             case 10:
                 oldGuildMemberRoleManager = new Discord.GuildMemberRoleManager(oldGuildMember);
@@ -700,15 +714,15 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 14:
-                error_12 = _d.sent();
-                console.log(error_12);
+                error_14 = _d.sent();
+                console.log(error_14);
                 return [3 /*break*/, 15];
             case 15: return [2 /*return*/];
         }
     });
 }); });
 client.on('inviteCreate', function (invite) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_13;
+    var guildData, x, command, cmdName, error_15;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -736,15 +750,15 @@ client.on('inviteCreate', function (invite) { return __awaiter(void 0, void 0, v
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_13 = _b.sent();
-                console.log(error_13);
+                error_15 = _b.sent();
+                console.log(error_15);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 client.on('messageDelete', function (message) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_14;
+    var guildData, x, command, cmdName, error_16;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -772,15 +786,15 @@ client.on('messageDelete', function (message) { return __awaiter(void 0, void 0,
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_14 = _b.sent();
-                console.log(error_14);
+                error_16 = _b.sent();
+                console.log(error_16);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 client.on('messageDeleteBulk', function (collection) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_15;
+    var guildData, x, command, cmdName, error_17;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -808,15 +822,15 @@ client.on('messageDeleteBulk', function (collection) { return __awaiter(void 0, 
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_15 = _b.sent();
-                console.log(error_15);
+                error_17 = _b.sent();
+                console.log(error_17);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 client.on('roleCreate', function (role) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_16;
+    var guildData, x, command, cmdName, error_18;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -844,15 +858,15 @@ client.on('roleCreate', function (role) { return __awaiter(void 0, void 0, void 
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_16 = _b.sent();
-                console.log(error_16);
+                error_18 = _b.sent();
+                console.log(error_18);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 client.on('roleDelete', function (role) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildData, x, command, cmdName, error_17;
+    var guildData, x, command, cmdName, error_19;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -880,15 +894,15 @@ client.on('roleDelete', function (role) { return __awaiter(void 0, void 0, void 
                 console.log("Completed Command: " + cmdName);
                 return [2 /*return*/];
             case 4:
-                error_17 = _b.sent();
-                console.log(error_17);
+                error_19 = _b.sent();
+                console.log(error_19);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 client.on('userUpdate', function (oldUser, newUser) { return __awaiter(void 0, void 0, void 0, function () {
-    var guildArray, x, guildMembersArray, y, guildData, z, command, cmdName, error_18;
+    var guildArray, x, guildMembersArray, y, guildData, z, command, cmdName, error_20;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -932,8 +946,8 @@ client.on('userUpdate', function (oldUser, newUser) { return __awaiter(void 0, v
                 console.log("Completed Command: " + cmdName);
                 return [3 /*break*/, 11];
             case 9:
-                error_18 = _b.sent();
-                console.log(error_18);
+                error_20 = _b.sent();
+                console.log(error_20);
                 return [2 /*return*/];
             case 10:
                 z += 1;

@@ -1132,15 +1132,28 @@ export class DiscordUser {
 				let x = 1;
 				const arrayOfMessageArrays = [];
 				while (x !== 0) {
-					const arrayOfMessages = (await currentChannel.messages
-						.fetch({ limit: 100, before: (startingMessage as Discord.Message).id })).array() as Discord.Message[];
-					x = arrayOfMessages.length;
-					if (arrayOfMessages !== undefined && startingMessage !== undefined && x > 0) {
-						startingMessage = arrayOfMessages[arrayOfMessages.length - 1];
-						arrayOfMessageArrays.push(arrayOfMessages);
-					} else {
-						break;
-					}
+					if (startingMessage !== undefined){
+						const arrayOfMessages = (await currentChannel.messages
+							.fetch({ limit: 100, before: (startingMessage as Discord.Message).id })).array() as Discord.Message[];
+							x = arrayOfMessages.length;
+						if (arrayOfMessages !== undefined && startingMessage !== undefined && x > 0) {
+							startingMessage = arrayOfMessages[arrayOfMessages.length - 1];
+							arrayOfMessageArrays.push(arrayOfMessages);
+						} else {
+							break;
+						}
+					}	
+					else {
+						const arrayOfMessages = (await currentChannel.messages
+							.fetch({ limit: 100})).array() as Discord.Message[];
+							x = arrayOfMessages.length;
+						if (arrayOfMessages !== undefined && x > 0) {
+							startingMessage = arrayOfMessages[arrayOfMessages.length - 1];
+							arrayOfMessageArrays.push(arrayOfMessages);
+						} else {
+							break;
+						}
+					}			
 				}
 				let totalMessageCount = 0;
 				for (let y = 0; y < arrayOfMessageArrays.length; y += 1) {
