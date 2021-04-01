@@ -299,6 +299,8 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
         switch (_c.label) {
             case 0:
                 if (msg.member == null && !(msg.channel.type === 'dm')) {
+                    console.log(msg.member instanceof Discord.GuildMember);
+                    console.log(msg.author instanceof Discord.User);
                     console.log('HMMM!? NULL MEMBER?! GTFO!');
                     return [2 /*return*/];
                 }

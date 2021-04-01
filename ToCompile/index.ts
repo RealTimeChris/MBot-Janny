@@ -226,8 +226,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	}	
 	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
-})
-
+});
 client.once('ready', async () => {
 	try {
 		await discordUser.initializeInstance(client);
@@ -239,6 +238,12 @@ client.once('ready', async () => {
 
 client.on('message', async (msg: Discord.Message) => {
 	if (msg.member == null && !(msg.channel.type === 'dm')) {
+		console.log(msg.member);
+		console.log(msg.author.id);
+		console.log(msg.author.username);
+		console.log(msg.channel.type);
+		console.log(msg.channel.name);
+		console.log(msg.channel.guild.name);
 		console.log('HMMM!? NULL MEMBER?! GTFO!');
 		return;
 	}
