@@ -26,21 +26,19 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 			msgString += `__Guild ID:__ ${guild.guildID}\n`;
 			msgString += `__Member Count:__ ${guild.guildMemberCount}\n`;
 
-			let currentGuild = new Discord.Guild(commandData.guildMember?.client as Discord.Client, {});
-
-			currentGuild = commandData.guild?.client.guilds.resolve(guild.guildID) as Discord.Guild;
-
-			msgString += `__Created:__ ${currentGuild.createdAt}\n`;
-			msgString += `__Guild Owner:__ <@!${(currentGuild.owner as Discord.GuildMember).id}> (${(currentGuild.owner as Discord.GuildMember).user.tag})\n`;
-
-			const messageEmbed = new Discord.MessageEmbed()
-				.setThumbnail(currentGuild.iconURL() as string)
-				.setTitle(`__**Guild Data ${currentCount + 1} of ${discordUser.guildsData.size}:**__`)
-				.setTimestamp((Date() as unknown) as Date)
-				.setDescription(msgString);
-				
-				DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
-			currentCount += 1;
+			const currentGuild = (commandData.guildMember?.client.guilds.fetch(guild.guildID) as Promise<Discord.Guild>).then(guild => {
+				msgString += `__Created:__ ${guild.createdAt}\n`;
+				msgString += `__Guild Owner:__ <@!${(guild.owner as Discord.GuildMember).id}> (${(guild.owner as Discord.GuildMember).user.tag})\n`;
+	
+				const messageEmbed = new Discord.MessageEmbed()
+					.setThumbnail(guild.iconURL() as string)
+					.setTitle(`__**Guild Data ${currentCount + 1} of ${discordUser.guildsData.size}:**__`)
+					.setTimestamp((Date() as unknown) as Date)
+					.setDescription(msgString);
+					
+					DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+				currentCount += 1;
+			});			
 		});
 
 		return commandReturnData;

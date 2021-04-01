@@ -23,6 +23,12 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
 
         let currentServerID;
 
+        if (commandData.guildMember instanceof Discord.User && commandData.args[0] === undefined){
+            const msgString = `Please, enter a server ID if you're going to DM this command!`;
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            return commandReturnData;
+        }
+
         if (commandData.args[0] === undefined && (commandData.permsChannel as Discord.Channel).type !== 'dm') {
             currentServerID = (commandData.guild as Discord.Guild).id;
         }   else if (commandData.args[0] === undefined && (commandData.permsChannel as Discord.Channel).type === 'dm') {
@@ -36,7 +42,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             const argZero = commandData.args[0];
             currentServerID = argZero;
         }
-        const serverArray = (commandData.guild as Discord.Guild).client.guilds.cache.array().sort();
+        const serverArray = commandData.guildMember?.client.guilds.cache.array().sort() as Discord.Guild[];
 
         let currentServer = null;
         for (let x = 0; x < serverArray.length; x += 1) {
@@ -91,13 +97,26 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
         const field11 = { name: '__Region:__', value: currentServer.region, inline: true };
         fields.push(field11);
 
-        const messageEmbed = new Discord.MessageEmbed()
+        let messageEmbed = new Discord.MessageEmbed()
+        if (commandData.guildMember instanceof Discord.User){
+           messageEmbed
+            .setImage(currentServer.iconURL() as string)
+            .setTitle('__**Server Info:**__')
+            .setTimestamp((Date() as unknown) as Date)
+            .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+            .setColor([0, 0, 255]);
+            messageEmbed.fields = fields as Discord.EmbedField[];
+        }
+        else if (commandData.guildMember instanceof Discord.GuildMember){
+            messageEmbed
             .setImage(currentServer.iconURL() as string)
             .setTitle('__**Server Info:**__')
             .setTimestamp((Date() as unknown) as Date)
             .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, (((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string))
             .setColor([0, 0, 255]);
-        messageEmbed.fields = fields as Discord.EmbedField[];
+            messageEmbed.fields = fields as Discord.EmbedField[];
+        }
+        
         await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
         return commandReturnData;
     } catch (error) {

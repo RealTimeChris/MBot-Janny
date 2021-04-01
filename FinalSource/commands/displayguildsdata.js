@@ -58,22 +58,22 @@ function execute(commandData, discordUser) {
                 commandReturnData.commandName = command.name;
                 currentCount_1 = 0;
                 discordUser.guildsData.forEach(function (guild) {
-                    var _a, _b;
+                    var _a;
                     var msgString = '';
                     msgString += "__Guild Name:__ " + guild.guildName + "\n";
                     msgString += "__Guild ID:__ " + guild.guildID + "\n";
                     msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";
-                    var currentGuild = new Discord.Guild((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client, {});
-                    currentGuild = (_b = commandData.guild) === null || _b === void 0 ? void 0 : _b.client.guilds.resolve(guild.guildID);
-                    msgString += "__Created:__ " + currentGuild.createdAt + "\n";
-                    msgString += "__Guild Owner:__ <@!" + currentGuild.owner.id + "> (" + currentGuild.owner.user.tag + ")\n";
-                    var messageEmbed = new Discord.MessageEmbed()
-                        .setThumbnail(currentGuild.iconURL())
-                        .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
-                        .setTimestamp(Date())
-                        .setDescription(msgString);
-                    DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
-                    currentCount_1 += 1;
+                    var currentGuild = ((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(guild.guildID)).then(function (guild) {
+                        msgString += "__Created:__ " + guild.createdAt + "\n";
+                        msgString += "__Guild Owner:__ <@!" + guild.owner.id + "> (" + guild.owner.user.tag + ")\n";
+                        var messageEmbed = new Discord.MessageEmbed()
+                            .setThumbnail(guild.iconURL())
+                            .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
+                            .setTimestamp(Date())
+                            .setDescription(msgString);
+                        DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                        currentCount_1 += 1;
+                    });
                 });
                 return [2 /*return*/, commandReturnData];
             }

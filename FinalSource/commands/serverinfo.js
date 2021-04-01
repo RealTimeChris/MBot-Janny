@@ -50,49 +50,57 @@ command.description = '!serverinfo to get info about the current server!\n!serve
  * Displays the info of a chosen server./
  */
 function execute(commandData) {
+    var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, idRegExp, currentServerID, msgString, msgString, argZero, serverArray, currentServer, x, msgString, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var commandReturnData, idRegExp, currentServerID, msgString, msgString, msgString, argZero, serverArray, currentServer, x, msgString, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    _a.trys.push([0, 9, , 10]);
+                    _b.trys.push([0, 11, , 12]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     idRegExp = /\d{18}/;
                     currentServerID = void 0;
-                    if (!(commandData.args[0] === undefined && commandData.permsChannel.type !== 'dm')) return [3 /*break*/, 1];
-                    currentServerID = commandData.guild.id;
-                    return [3 /*break*/, 5];
+                    if (!(commandData.guildMember instanceof Discord.User && commandData.args[0] === undefined)) return [3 /*break*/, 2];
+                    msgString = "Please, enter a server ID if you're going to DM this command!";
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
                 case 1:
-                    if (!(commandData.args[0] === undefined && commandData.permsChannel.type === 'dm')) return [3 /*break*/, 2];
-                    msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
+                    _b.sent();
                     return [2 /*return*/, commandReturnData];
                 case 2:
-                    if (!!idRegExp.test(commandData.args[0])) return [3 /*break*/, 4];
-                    msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    if (!(commandData.args[0] === undefined && commandData.permsChannel.type !== 'dm')) return [3 /*break*/, 3];
+                    currentServerID = commandData.guild.id;
+                    return [3 /*break*/, 7];
                 case 3:
-                    _a.sent();
+                    if (!(commandData.args[0] === undefined && commandData.permsChannel.type === 'dm')) return [3 /*break*/, 4];
+                    msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
                     return [2 /*return*/, commandReturnData];
                 case 4:
+                    if (!!idRegExp.test(commandData.args[0])) return [3 /*break*/, 6];
+                    msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                case 5:
+                    _b.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 6:
                     argZero = commandData.args[0];
                     currentServerID = argZero;
-                    _a.label = 5;
-                case 5:
-                    serverArray = commandData.guild.client.guilds.cache.array().sort();
+                    _b.label = 7;
+                case 7:
+                    serverArray = (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.cache.array().sort();
                     currentServer = null;
                     for (x = 0; x < serverArray.length; x += 1) {
                         if (currentServerID === serverArray[x].id) {
                             currentServer = serverArray[x];
                         }
                     }
-                    if (!(currentServer == null)) return [3 /*break*/, 7];
+                    if (!(currentServer == null)) return [3 /*break*/, 9];
                     msgString = 'Sorry! No matching servers were found!';
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
-                case 6:
-                    _a.sent();
+                case 8:
+                    _b.sent();
                     return [2 /*return*/, commandReturnData];
-                case 7:
+                case 9:
                     categoryCount = 0;
                     voiceChannelCount = 0;
                     textChannelCount = 0;
@@ -130,23 +138,35 @@ function execute(commandData) {
                     fields.push(field10);
                     field11 = { name: '__Region:__', value: currentServer.region, inline: true };
                     fields.push(field11);
-                    messageEmbed = new Discord.MessageEmbed()
-                        .setImage(currentServer.iconURL())
-                        .setTitle('__**Server Info:**__')
-                        .setTimestamp(Date())
-                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255]);
-                    messageEmbed.fields = fields;
+                    messageEmbed = new Discord.MessageEmbed();
+                    if (commandData.guildMember instanceof Discord.User) {
+                        messageEmbed
+                            .setImage(currentServer.iconURL())
+                            .setTitle('__**Server Info:**__')
+                            .setTimestamp(Date())
+                            .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
+                            .setColor([0, 0, 255]);
+                        messageEmbed.fields = fields;
+                    }
+                    else if (commandData.guildMember instanceof Discord.GuildMember) {
+                        messageEmbed
+                            .setImage(currentServer.iconURL())
+                            .setTitle('__**Server Info:**__')
+                            .setTimestamp(Date())
+                            .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                            .setColor([0, 0, 255]);
+                        messageEmbed.fields = fields;
+                    }
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                case 8:
-                    _a.sent();
+                case 10:
+                    _b.sent();
                     return [2 /*return*/, commandReturnData];
-                case 9:
-                    error_1 = _a.sent();
+                case 11:
+                    error_1 = _b.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 10: return [2 /*return*/];
+                case 12: return [2 /*return*/];
             }
         });
     });
