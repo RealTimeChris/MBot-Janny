@@ -117,7 +117,7 @@ function execute(commandData, discordUser) {
     var e_1, _a;
     var _b, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, areWeACommander, msgString, msgString, msgString, dbKey, argZero, deletedCounter, iterator, iterator_1, iterator_1_1, _e, key, value, e_1_1, msgEmbed, error_2;
+        var commandReturnData, areWeInADM, areWeACommander, msgString, msgEmbed_1, msgString, msgEmbed_2, msgString, msgEmbed_3, dbKey, argZero, deletedCounter, iterator, iterator_1, iterator_1_1, _e, key, value, e_1_1, msgEmbed, error_2;
         return __generator(this, function (_f) {
             switch (_f.label) {
                 case 0:
@@ -137,15 +137,27 @@ function execute(commandData, discordUser) {
                         return [2 /*return*/, commandReturnData];
                     }
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 4];
-                    msgString = "<@!" + ((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.id) + "> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------";
+                    msgEmbed_1 = new Discord.MessageEmbed()
+                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
                 case 3:
                     _f.sent();
                     return [2 /*return*/, commandReturnData];
                 case 4:
                     if (!(commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 6];
-                    msgString = "<@!" + ((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.id) + "> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------";
+                    msgEmbed_2 = new Discord.MessageEmbed()
+                        .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
                 case 5:
                     _f.sent();
                     return [2 /*return*/, commandReturnData];
@@ -154,8 +166,14 @@ function execute(commandData, discordUser) {
                         return [2 /*return*/, commandReturnData];
                     }
                     if (!(commandData.args[1] === undefined)) return [3 /*break*/, 8];
-                    msgString = "<@!" + ((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.id) + "> Please, enter a DB key to search for!";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please, enter a DB key to search for!**\n------";
+                    msgEmbed_3 = new Discord.MessageEmbed()
+                        .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
                 case 7:
                     _f.sent();
                     return [2 /*return*/, commandReturnData];

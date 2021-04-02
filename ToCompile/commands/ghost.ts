@@ -40,44 +40,84 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             whatAreWeDoing = 'viewing';
             userID = (commandData.guildMember as Discord.GuildMember).id;
         } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() !== 'add' && (commandData.args[0] as string).toString().toLowerCase() !== 'remove') {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}>1 Please, enter a proper first argument! (!ghost = add, REASON, @USERMENTION to 
-                ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please, enter a proper first argument! (!ghost = add, REASON, @USERMENTION to 
+                ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         }	else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'add' && commandData.args[1] === undefined) {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 2Please, enter a reason for this ghosting! (!ghost = add, REASON, @USERMENTION to 
-                ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+            const msgString = `------\n**Please, enter a reason for this ghosting! (!ghost = add, REASON, @USERMENTION to 
+                ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'add' && commandData.args[2] === undefined) {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 3Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
-                @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
+            const msgString = `------\n**Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
+                @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         }	else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'remove' && commandData.args[1] === undefined) {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 4Please, enter a usermention to select the target to de-ghost!
-                (!ghost = remove, @USERMENTION to unghost a user)`;
+            const msgString = `------\n**Please, enter a usermention to select the target to de-ghost!
+                (!ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'add' && !userMentionRegExp.test((commandData.args[2]) as string) && !userIDRegExp.test(commandData.args[2] as string)) {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 5Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
-                @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)`;
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, 
+                @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
+                let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
         } else if (commandData.args[0] !== undefined && (commandData.args[0] as string).toString().toLowerCase() === 'remove' && !userMentionRegExp.test((commandData.args[1]) as string) && !userIDRegExp.test(commandData.args[1] as string)) {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> 6Please, enter a proper usermention to select the target to de-ghost! 
-                (!ghost = remove, @USERMENTION to unghost a user)`;
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please, enter a proper usermention to select the target to de-ghost! 
+                (!ghost = remove, @USERMENTION to unghost a user)**\n------`;
+                let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -269,8 +309,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } if (whatAreWeDoing === 'add') {
             for (let x = 0; x < ghostedUserArray.length; x += 1) {
                 if (currentGuildMember.id === (ghostedUserArray[x] as Discord.GuildMember).id) {
-                    const msgString =  `<@!${(commandData.guildMember as Discord.GuildMember).id}> They are already ghosted!`;
-                    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                    const msgString = `------\n**They are already ghosted!**\n------`;
+                    let msgEmbed = new Discord.MessageEmbed()
+				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				        .setColor([0, 0, 255])
+				        .setDescription(msgString)
+				        .setTimestamp(Date() as unknown as Date)
+				        .setTitle('__**Already Ghosted:**__')
+			        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     return new Promise((resolve, reject) => {
                 resolve(returnData);
             });

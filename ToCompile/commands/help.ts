@@ -65,9 +65,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             }
             
             if (commandData.guildMember instanceof Discord.User){
-                const dmChannel = await (commandData.guildMember as Discord.User).createDM();
-                await dmChannel.send(messageEmbed);
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, `<@!${commandData.guildMember?.id}> I've sent you help info, via a message!`);
+                await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
             }
             else if (commandData.guildMember instanceof Discord.GuildMember){
                 const dmChannel = await (commandData.guildMember as Discord.GuildMember).user.createDM();
@@ -93,8 +91,14 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
         });
 
         if (isFound === false) {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but that command was not found!`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Sorry, but that command was not found!**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Command Issue:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
 
@@ -106,7 +110,8 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setTimestamp((Date() as unknown) as Date);
                 await DiscordStuff.sendMessageWithCorrectChannel(commandData, (commandDescription as unknown) as Discord.MessageEmbed);
-        } else {
+        } 
+        else {
             const messageEmbed = new Discord.MessageEmbed();
             if (commandData.guildMember instanceof Discord.GuildMember){
                 messageEmbed

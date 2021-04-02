@@ -12,17 +12,34 @@ import config = require('./config.json');
 /**
  * Functino for sending out a message, using the appropriate channel.
  */
-export async function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: string | Discord.MessageEmbed): Promise<Discord.Message>{
+ export async function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: String | Discord.MessageEmbed, atUserID: string | null = null): Promise<Discord.Message>{
 	try{
 		let returnMessage: Discord.Message;
 		if (commandData.toTextChannel instanceof Discord.WebhookClient){
-			returnMessage = (await commandData.toTextChannel.send(messageContents)) as Discord.Message;
+            if (atUserID !== null && messageContents instanceof Discord.MessageEmbed){
+                await commandData.fromTextChannel?.send(`<@!${atUserID}>`);
+                returnMessage = (await (commandData.toTextChannel.send(messageContents))) as Discord.Message;
+            }
+            else if (atUserID === null) {
+                returnMessage = (await commandData.toTextChannel.send(messageContents as string)) as Discord.Message;
+            }
+            else{
+                returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}> ${messageContents}`)) as Discord.Message;
+            }
 		}
 		else if (commandData.toTextChannel instanceof Discord.TextChannel){
-			returnMessage = (await commandData.toTextChannel.send(messageContents)) as Discord.Message;
+            if (atUserID !== null && messageContents instanceof Discord.MessageEmbed){
+                returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}>`, {embed: messageContents})) as Discord.Message;
+            }
+            else if (atUserID != null && messageContents instanceof String) {
+                returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}>` + messageContents)) as Discord.Message;
+            }
+            else{
+                returnMessage = (await commandData.toTextChannel.send(messageContents as string)) as Discord.Message;
+            }			
 		}
 		else if (commandData.toTextChannel instanceof Discord.DMChannel){
-			returnMessage = (await commandData.toTextChannel.send(messageContents)) as Discord.Message;
+			returnMessage = (await commandData.toTextChannel.send(messageContents as string)) as Discord.Message;
 		}
 
 		return new Promise((resolve, reject) => {

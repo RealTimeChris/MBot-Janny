@@ -78,21 +78,39 @@ command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a 
 		}
 
 		if (commandData.args[0] === undefined) {
-			const msgString = `<@!${commandData.guildMember?.id}> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)`;
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;
+			let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			return commandReturnData;
 		}
 		if (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse') {
-			const msgString = `<@!${commandData.guildMember?.id}> Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)`;
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;
+			let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			return commandReturnData;
 		}
 		if (commandData.args[0].toLowerCase() !== 'janny') {
 			return commandReturnData;
 		}
 		if (commandData.args[1] === undefined) {
-			const msgString = `<@!${commandData.guildMember?.id}> Please, enter a DB key to search for!`;
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+			const msgString = `------\n**Please, enter a DB key to search for!**\n------`;
+			let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			return commandReturnData;
 		}
 
