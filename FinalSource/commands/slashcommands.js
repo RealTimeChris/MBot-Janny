@@ -40,18 +40,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Discord = require("discord.js");
 var DiscordStuff = require("../DiscordStuff");
 var slash_commands_1 = require("slash-commands");
 var command = new DiscordStuff.BotCommand();
 command.name = 'slashcommands';
 command.description = '!slashcommands';
 function execute(commandData, discordUser) {
+    var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, interaction, commands, x, globalCommands, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var commandReturnData, interaction, commands, x, globalCommands, msgString, msgEmbeds, x, msgEmbed, currentMsgEmbed, x, error_1;
+        return __generator(this, function (_f) {
+            switch (_f.label) {
                 case 0:
-                    _a.trys.push([0, 4, , 5]);
+                    _f.trys.push([0, 7, , 8]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID,
@@ -59,25 +61,60 @@ function execute(commandData, discordUser) {
                         authToken: discordUser.userData.botToken });
                     return [4 /*yield*/, interaction.getApplicationCommands()];
                 case 1:
-                    commands = _a.sent();
+                    commands = _f.sent();
                     for (x = 0; x < commands.length; x += 1) {
                         //const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
                         //console.log(newInteraction);
                     }
                     return [4 /*yield*/, interaction.getApplicationCommands()];
                 case 2:
-                    globalCommands = _a.sent();
-                    console.log(globalCommands.length);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, "Yes, IT'S COMPLETED!, You have " + globalCommands.length + " commands registered!")];
+                    globalCommands = _f.sent();
+                    msgString = "------\n**Yes, IT'S COMPLETED! You have " + globalCommands.length + " commands registered!**\n------\n";
+                    msgEmbeds = [];
+                    for (x = 0; x < globalCommands.length; x += 1) {
+                        msgString += "__**Name**__: " + ((_a = globalCommands[x]) === null || _a === void 0 ? void 0 : _a.name) + " __**Description**__: " + ((_b = globalCommands[x]) === null || _b === void 0 ? void 0 : _b.description) + "\n";
+                        if (msgString.length >= 2000 || x === globalCommands.length - 1) {
+                            msgEmbed = new Discord.MessageEmbed();
+                            if (commandData.guildMember instanceof Discord.User) {
+                                msgEmbed
+                                    .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.username, commandData.guildMember.avatarURL())
+                                    .setColor([0, 0, 255])
+                                    .setTimestamp(Date())
+                                    .setTitle('__**Registered Commands:**__');
+                            }
+                            else {
+                                msgEmbed
+                                    .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
+                                    .setColor([0, 0, 255])
+                                    .setTimestamp(Date())
+                                    .setTitle('__**Registered Commands:**__');
+                            }
+                            msgString += "------";
+                            currentMsgEmbed = msgEmbed;
+                            currentMsgEmbed.setDescription(msgString);
+                            msgEmbeds.push(currentMsgEmbed);
+                            msgString = "------\n**Yes, IT'S COMPLETED! You have " + globalCommands.length + " commands registered!**\n------\n";
+                        }
+                    }
+                    x = 0;
+                    _f.label = 3;
                 case 3:
-                    _a.sent();
-                    return [2 /*return*/, commandReturnData];
+                    if (!(x < msgEmbeds.length)) return [3 /*break*/, 6];
+                    (_e = msgEmbeds[x]) === null || _e === void 0 ? void 0 : _e.setTitle("__**Registered Commands, (" + (x + 1).toString() + " of " + msgEmbeds.length + "): **__");
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbeds[x])];
                 case 4:
-                    error_1 = _a.sent();
+                    _f.sent();
+                    _f.label = 5;
+                case 5:
+                    x += 1;
+                    return [3 /*break*/, 3];
+                case 6: return [2 /*return*/, commandReturnData];
+                case 7:
+                    error_1 = _f.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 5: return [2 /*return*/];
+                case 8: return [2 /*return*/];
             }
         });
     });

@@ -52,7 +52,7 @@ command.description = '!trackuser = ADD, @USERMENTION to track the user within t
 function execute(commandData, discordUser) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPermission, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, msgString, msgString, argOne, trackedUserIDOne, userData, x, isUserFound, y, currentGuild_1, z, currentUser, msgString, currentGuild, currentTextChannel, currentGuildMember, msgString, messageEmbed, msgString, currentIndex, error_1, msgString, currentGuildMember, currentIndex, msgString, messageEmbed, msgString, msgString, messageEmbed, error_2, msgString, msgString, x, trackedGuildName, trackedChannelName, messageEmbed, error_3;
+        var commandReturnData, areWeInADM, doWeHaveAdminPermission, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, msgString, msgEmbed, msgString, msgEmbed, argOne, trackedUserIDOne, userData, x, isUserFound, y, currentGuild_1, z, currentUser, msgString, msgEmbed, currentGuild, currentTextChannel, currentGuildMember, msgString, messageEmbed, msgString, currentIndex, error_1, msgString, msgEmbed, currentGuildMember, currentIndex, msgString, messageEmbed, msgString, msgEmbed, msgString, messageEmbed, error_2, msgString, msgString, x, trackedGuildName, trackedChannelName, messageEmbed, error_3;
         return __generator(this, function (_m) {
             switch (_m.label) {
                 case 0:
@@ -76,15 +76,27 @@ function execute(commandData, discordUser) {
                     whatAreWeDoing = '';
                     trackedUserID = '';
                     if (!(commandData.args[0] !== undefined && (commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove'))) return [3 /*break*/, 4];
-                    msgString = "<@!" + ((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.id) + "}> Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 3:
                     _m.sent();
                     return [2 /*return*/, commandReturnData];
                 case 4:
                     if (!(commandData.args[0] !== undefined && (commandData.args[1] === undefined || (!userMentionRegExp.test(commandData.args[1]) && !idRegExp.test(commandData.args[1]))))) return [3 /*break*/, 6];
-                    msgString = "<@!" + ((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.id) + "> Please enter a valud usermention! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please enter a valud usermention! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 5:
                     _m.sent();
                     return [2 /*return*/, commandReturnData];
@@ -121,8 +133,14 @@ function execute(commandData, discordUser) {
                         }
                     }
                     if (!(isUserFound === false)) return [3 /*break*/, 10];
-                    msgString = "<@!" + ((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.id) + "> Removing user " + userData.trackedUserNames[x] + " from the list of tracked users!";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Removing user " + userData.trackedUserNames[x] + " from the list of tracked users!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing User(s):**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 9:
                     _m.sent();
                     userData.trackedUserIDs.splice(x, 1);
@@ -180,8 +198,14 @@ function execute(commandData, discordUser) {
                 case 16: return [3 /*break*/, 19];
                 case 17:
                     error_1 = _m.sent();
-                    msgString = "<@!" + ((_g = commandData.guildMember) === null || _g === void 0 ? void 0 : _g.id) + "> Sorry, but the specified user could not be found!'";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Sorry, but the specified user could not be found!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_g = commandData.guildMember) === null || _g === void 0 ? void 0 : _g.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**User Issue:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 18:
                     _m.sent();
                     return [3 /*break*/, 19];
@@ -218,8 +242,14 @@ function execute(commandData, discordUser) {
                     return [3 /*break*/, 26];
                 case 24:
                     if (!(currentIndex === -1)) return [3 /*break*/, 26];
-                    msgString = "<@!" + ((_h = commandData.guildMember) === null || _h === void 0 ? void 0 : _h.id) + "> There is noone by that ID being tracked!";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**There is noone by that ID being tracked!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_h = commandData.guildMember) === null || _h === void 0 ? void 0 : _h.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**User Issue:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 25:
                     _m.sent();
                     _m.label = 26;

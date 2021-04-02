@@ -48,23 +48,24 @@ command.name = 'setdeletionstatus';
 command.description = 'Use this to enable/disable message deletion/pruning in a given channel.\nIn the desired channel, type !setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE,'
     + ' enter nothing for AMOUNTOFMESSAGESTOSAVE to save none!\nAlso simply enter !setdeletionstatus to view the current list of channels being purged on the current server!';
 function execute(commandData, discordUser) {
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPerms, whatAreWeDoing, messageCountRegExp, howManyBack, msgString, msgString, guildData, currentDeletionChannel, isItFound, x, msgString, x, msgEmbed, x, msgString_1, previousMessage, error_1, msgString, messageEmbed, pinMessage, _a, _b, _c, deletionChannelIndex, x, msgString_2, msgString, messageEmbed, error_2;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var commandReturnData, areWeInADM, doWeHaveAdminPerms, whatAreWeDoing, messageCountRegExp, howManyBack, msgString, msgEmbed, msgString, msgEmbed, guildData, currentDeletionChannel, isItFound, x, msgString, x, msgEmbed, x, msgString_1, msgEmbed, previousMessage, error_1, msgString, messageEmbed, pinMessage, _e, _f, _g, deletionChannelIndex, x, msgString_2, msgEmbed, msgString, messageEmbed, error_2;
+        return __generator(this, function (_h) {
+            switch (_h.label) {
                 case 0:
-                    _d.trys.push([0, 30, , 31]);
+                    _h.trys.push([0, 30, , 31]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _d.sent();
+                    areWeInADM = _h.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 2:
-                    doWeHaveAdminPerms = _d.sent();
+                    doWeHaveAdminPerms = _h.sent();
                     if (doWeHaveAdminPerms === false) {
                         return [2 /*return*/, commandReturnData];
                     }
@@ -76,17 +77,29 @@ function execute(commandData, discordUser) {
                     return [3 /*break*/, 8];
                 case 3:
                     if (!(commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'enable' && commandData.args[0].toLowerCase() !== 'disable')) return [3 /*break*/, 5];
-                    msgString = "Please enter either 'enable' or 'disable'! (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please enter either 'enable' or 'disable'! (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    _d.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 5:
                     if (!(commandData.args[0].toLowerCase() === 'enable' && commandData.args[1] !== undefined && (!messageCountRegExp.test(commandData.args[1]) || parseInt(commandData.args[1], 10) < 0 || parseInt(commandData.args[1], 10) > 10000))) return [3 /*break*/, 7];
-                    msgString = 'Please enter a valid number of messages back to save! (0 to 10000) (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)';
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = '------\n**Please enter a valid number of messages back to save! (0 to 10000) (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------';
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 6:
-                    _d.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 7:
                     if (commandData.args[1] !== undefined) {
@@ -97,10 +110,10 @@ function execute(commandData, discordUser) {
                         whatAreWeDoing = commandData.args[0].toLowerCase();
                         howManyBack = 0;
                     }
-                    _d.label = 8;
+                    _h.label = 8;
                 case 8: return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 9:
-                    guildData = _d.sent();
+                    guildData = _h.sent();
                     currentDeletionChannel = new DiscordStuff.DeletionChannel();
                     isItFound = false;
                     for (x = 0; x < guildData.deletionChannels.length; x += 1) {
@@ -139,37 +152,43 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Current Deletion Channels:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 10:
-                    _d.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 11:
                     if (!(whatAreWeDoing === 'enable')) return [3 /*break*/, 25];
                     isItFound = false;
                     x = 0;
-                    _d.label = 12;
+                    _h.label = 12;
                 case 12:
                     if (!(x < guildData.deletionChannels.length)) return [3 /*break*/, 21];
                     if (!(guildData.deletionChannels[x].channelID === currentDeletionChannel.channelID)) return [3 /*break*/, 20];
-                    msgString_1 = 'This channel has already been added! I will update your number of saved messages though!';
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_1)];
+                    msgString_1 = '------\n**This channel has already been added! I will update your number of saved messages though!**\n------';
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString_1)
+                        .setTimestamp(Date())
+                        .setTitle('__**Channel Issue:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 13:
-                    _d.sent();
+                    _h.sent();
                     if (!(currentDeletionChannel.deletionMessageID
                         !== undefined && currentDeletionChannel.deletionMessageID !== '')) return [3 /*break*/, 19];
-                    _d.label = 14;
+                    _h.label = 14;
                 case 14:
-                    _d.trys.push([14, 18, , 19]);
+                    _h.trys.push([14, 18, , 19]);
                     return [4 /*yield*/, commandData.permsChannel.messages
                             .fetch(currentDeletionChannel.deletionMessageID)];
                 case 15:
-                    previousMessage = _d.sent();
+                    previousMessage = _h.sent();
                     if (!(previousMessage.deletable === true)) return [3 /*break*/, 17];
                     return [4 /*yield*/, previousMessage.delete()];
                 case 16:
-                    _d.sent();
-                    _d.label = 17;
+                    _h.sent();
+                    _h.label = 17;
                 case 17: return [3 /*break*/, 19];
                 case 18:
-                    error_1 = _d.sent();
+                    error_1 = _h.sent();
                     if (error_1.message === 'Unknown Message') {
                         currentDeletionChannel.deletionMessageID = '';
                     }
@@ -177,7 +196,7 @@ function execute(commandData, discordUser) {
                 case 19:
                     guildData.deletionChannels[x] = currentDeletionChannel;
                     isItFound = true;
-                    _d.label = 20;
+                    _h.label = 20;
                 case 20:
                     x += 1;
                     return [3 /*break*/, 12];
@@ -190,21 +209,21 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Enabled Channel Purging:**__');
-                    _b = (_a = Discord.Message).bind;
-                    _c = [void 0, commandData.guildMember.client];
+                    _f = (_e = Discord.Message).bind;
+                    _g = [void 0, commandData.guildMember.client];
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 22:
-                    pinMessage = new (_b.apply(_a, _c.concat([_d.sent(), commandData.permsChannel])))();
+                    pinMessage = new (_f.apply(_e, _g.concat([_h.sent(), commandData.permsChannel])))();
                     return [4 /*yield*/, pinMessage.pin()];
                 case 23:
-                    _d.sent();
+                    _h.sent();
                     currentDeletionChannel.deletionMessageID = pinMessage.id;
                     if (isItFound === false) {
                         guildData.deletionChannels.push(currentDeletionChannel);
                     }
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 24:
-                    _d.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 25:
                     if (!(whatAreWeDoing === 'disable')) return [3 /*break*/, 29];
@@ -218,10 +237,16 @@ function execute(commandData, discordUser) {
                         }
                     }
                     if (!(isItFound === false)) return [3 /*break*/, 27];
-                    msgString_2 = 'Sorry, but this channel could not be found in the list of active deletion channels!';
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_2)];
+                    msgString_2 = '------\n**Sorry, but this channel could not be found in the list of active deletion channels!**\n------';
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString_2)
+                        .setTimestamp(Date())
+                        .setTitle('__**Channel Issue:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 26:
-                    _d.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 27:
                     guildData.deletionChannels.splice(deletionChannelIndex, 1);
@@ -236,11 +261,11 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Disabled Channel Purging:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 28:
-                    _d.sent();
-                    _d.label = 29;
+                    _h.sent();
+                    _h.label = 29;
                 case 29: return [2 /*return*/, commandReturnData];
                 case 30:
-                    error_2 = _d.sent();
+                    error_2 = _h.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];

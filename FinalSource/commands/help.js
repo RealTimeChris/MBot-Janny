@@ -53,7 +53,7 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
 function execute(commandData) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, commandFiles_1, commandNames_1, msgString_1, currentIndex_1, messageEmbed, dmChannel, isFound_1, commandDescription_1, commandName_1, msgString, msgEmbed, messageEmbed, error_1;
+        var commandReturnData, commandFiles_1, commandNames_1, msgString_1, currentIndex_1, messageEmbed, dmChannel, msgString_2, msgEmbed, isFound_1, commandDescription_1, commandName_1, msgString, msgEmbed, messageEmbed, error_1;
         return __generator(this, function (_w) {
             switch (_w.label) {
                 case 0:
@@ -110,7 +110,14 @@ function execute(commandData) {
                     return [4 /*yield*/, dmChannel.send(messageEmbed)];
                 case 4:
                     _w.sent();
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, "<@!" + ((_j = commandData.guildMember) === null || _j === void 0 ? void 0 : _j.id) + "> I've sent you help info, via a message!")];
+                    msgString_2 = "------\n**I've sent you help info, via a message!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_j = commandData.guildMember) === null || _j === void 0 ? void 0 : _j.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString_2)
+                        .setTimestamp(Date())
+                        .setTitle('__**Help:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 5:
                     _w.sent();
                     _w.label = 6;

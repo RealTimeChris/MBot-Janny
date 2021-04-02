@@ -47,29 +47,30 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'managelogs';
 command.description = '!managelogs, to view an enabled/disabled list of possible logs!';
 function execute(commandData, discordUser) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, areWeAnAdmin, guildData, fields, x, field, field, msgEmbed, msgString, msgString, _a, x, msgEmbed_1, msgString_1, x, msgEmbed_2, msgString_2, x, msgEmbed_3, msgString_3, x, msgEmbed_4, msgString_4, x, msgEmbed_5, msgString_5, x, msgEmbed_6, msgString_6, x, msgEmbed_7, msgString_7, x, msgEmbed_8, msgString_8, x, msgEmbed_9, msgString_9, x, msgEmbed_10, msgString_10, x, msgEmbed_11, msgString_11, x, msgEmbed_12, msgString_12, x, msgEmbed_13, msgString_13, x, msgEmbed_14, msgString_14, x, msgEmbed_15, msgString_15, x, msgEmbed_16, msgString_16, x, msgEmbed_17, msgString_17, x, msgEmbed_18, msgString_18, x, msgEmbed_19, msgString_19, x, msgEmbed_20, msgString_20, x, msgEmbed_21, msgString_21, x, msgEmbed_22, msgString_22, x, msgEmbed_23, msgString_23, x, msgEmbed_24, msgString_24, x, msgEmbed_25, msgString_25, x, msgEmbed_26, msgString_26, x, msgEmbed_27, msgString_27, x, msgEmbed_28, msgString_28, msgString, msgEmbed, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var commandReturnData, areWeInADM, areWeAnAdmin, guildData, fields, x, field, field, msgEmbed, msgString, msgString, msgEmbed, msgString, msgEmbed, _c, x, msgEmbed_1, msgString_1, x, msgEmbed_2, msgString_2, x, msgEmbed_3, msgString_3, x, msgEmbed_4, msgString_4, x, msgEmbed_5, msgString_5, x, msgEmbed_6, msgString_6, x, msgEmbed_7, msgString_7, x, msgEmbed_8, msgString_8, x, msgEmbed_9, msgString_9, x, msgEmbed_10, msgString_10, x, msgEmbed_11, msgString_11, x, msgEmbed_12, msgString_12, x, msgEmbed_13, msgString_13, x, msgEmbed_14, msgString_14, x, msgEmbed_15, msgString_15, x, msgEmbed_16, msgString_16, x, msgEmbed_17, msgString_17, x, msgEmbed_18, msgString_18, x, msgEmbed_19, msgString_19, x, msgEmbed_20, msgString_20, x, msgEmbed_21, msgString_21, x, msgEmbed_22, msgString_22, x, msgEmbed_23, msgString_23, x, msgEmbed_24, msgString_24, x, msgEmbed_25, msgString_25, x, msgEmbed_26, msgString_26, x, msgEmbed_27, msgString_27, x, msgEmbed_28, msgString_28, msgString, msgEmbed, error_1;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
-                    _b.trys.push([0, 179, , 180]);
+                    _d.trys.push([0, 181, , 182]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _b.sent();
+                    areWeInADM = _d.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 2:
-                    areWeAnAdmin = _b.sent();
+                    areWeAnAdmin = _d.sent();
                     if (areWeAnAdmin === false) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 3:
-                    guildData = _b.sent();
+                    guildData = _d.sent();
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 5];
                     fields = [];
                     for (x = 0; x < guildData.logs.length; x += 1) {
@@ -98,47 +99,66 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Manage Logs:**__').fields = fields;
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    _b.sent();
-                    return [3 /*break*/, 178];
+                    _d.sent();
+                    return [3 /*break*/, 180];
                 case 5:
                     if (!(commandData.args[0].toString().toLowerCase() !== 'enable' && commandData.args[0].toString().toLowerCase() !== 'disable')) return [3 /*break*/, 7];
-                    msgString = "Please, enter enable or disable for the second argument of this command! \n            (!managelogs = <enable/disable>, <logname>)";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please, enter enable or disable for the first argument of this command! \n            (!managelogs = <enable/disable>, <logname>)**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 6:
-                    _b.sent();
+                    _d.sent();
                     return [2 /*return*/, commandReturnData];
                 case 7:
-                    _a = commandData.args[1].toLowerCase();
-                    switch (_a) {
-                        case 'guildbanadd': return [3 /*break*/, 8];
-                        case 'guildbanremove': return [3 /*break*/, 20];
-                        case 'guildmemberadd': return [3 /*break*/, 32];
-                        case 'guildmemberremove': return [3 /*break*/, 44];
-                        case 'displaynamechange': return [3 /*break*/, 56];
-                        case 'nicknamechange': return [3 /*break*/, 68];
-                        case 'roleaddorremove': return [3 /*break*/, 80];
-                        case 'invitecreate': return [3 /*break*/, 92];
-                        case 'messagedelete': return [3 /*break*/, 104];
-                        case 'messagedeletebulk': return [3 /*break*/, 116];
-                        case 'messageupdate': return [3 /*break*/, 128];
-                        case 'rolecreate': return [3 /*break*/, 140];
-                        case 'roledelete': return [3 /*break*/, 152];
-                        case 'usernamechange': return [3 /*break*/, 164];
-                    }
-                    return [3 /*break*/, 176];
+                    if (!(commandData.args[1] === undefined)) return [3 /*break*/, 9];
+                    msgString = "------\n**Please, enter  a log name to disable or enable as the second argument of this command! \n            (!managelogs = <enable/disable>, <logname>)**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 8:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 14];
-                    x = 0;
-                    _b.label = 9;
+                    _d.sent();
+                    return [2 /*return*/, commandReturnData];
                 case 9:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 13];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 12];
+                    _c = commandData.args[1].toLowerCase();
+                    switch (_c) {
+                        case 'guildbanadd': return [3 /*break*/, 10];
+                        case 'guildbanremove': return [3 /*break*/, 22];
+                        case 'guildmemberadd': return [3 /*break*/, 34];
+                        case 'guildmemberremove': return [3 /*break*/, 46];
+                        case 'displaynamechange': return [3 /*break*/, 58];
+                        case 'nicknamechange': return [3 /*break*/, 70];
+                        case 'roleaddorremove': return [3 /*break*/, 82];
+                        case 'invitecreate': return [3 /*break*/, 94];
+                        case 'messagedelete': return [3 /*break*/, 106];
+                        case 'messagedeletebulk': return [3 /*break*/, 118];
+                        case 'messageupdate': return [3 /*break*/, 130];
+                        case 'rolecreate': return [3 /*break*/, 142];
+                        case 'roledelete': return [3 /*break*/, 154];
+                        case 'usernamechange': return [3 /*break*/, 166];
+                    }
+                    return [3 /*break*/, 178];
+                case 10:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 16];
+                    x = 0;
+                    _d.label = 11;
+                case 11:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 15];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 14];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 10:
-                    _b.sent();
+                case 12:
+                    _d.sent();
                     msgEmbed_1 = new Discord.MessageEmbed();
                     msgString_1 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_1
@@ -148,26 +168,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
-                case 11:
-                    _b.sent();
-                    return [3 /*break*/, 13];
-                case 12:
-                    x += 1;
-                    return [3 /*break*/, 9];
-                case 13: return [3 /*break*/, 19];
+                case 13:
+                    _d.sent();
+                    return [3 /*break*/, 15];
                 case 14:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 19];
+                    x += 1;
+                    return [3 /*break*/, 11];
+                case 15: return [3 /*break*/, 21];
+                case 16:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 21];
                     x = 0;
-                    _b.label = 15;
-                case 15:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 19];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 18];
+                    _d.label = 17;
+                case 17:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 21];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 20];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 16:
-                    _b.sent();
+                case 18:
+                    _d.sent();
                     msgEmbed_2 = new Discord.MessageEmbed();
                     msgString_2 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_2
@@ -177,26 +197,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
-                case 17:
-                    _b.sent();
-                    return [3 /*break*/, 19];
-                case 18:
-                    x += 1;
-                    return [3 /*break*/, 15];
-                case 19: return [3 /*break*/, 178];
+                case 19:
+                    _d.sent();
+                    return [3 /*break*/, 21];
                 case 20:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 26];
+                    x += 1;
+                    return [3 /*break*/, 17];
+                case 21: return [3 /*break*/, 180];
+                case 22:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 28];
                     x = 0;
-                    _b.label = 21;
-                case 21:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 25];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 24];
+                    _d.label = 23;
+                case 23:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 27];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 26];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 22:
-                    _b.sent();
+                case 24:
+                    _d.sent();
                     msgEmbed_3 = new Discord.MessageEmbed();
                     msgString_3 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_3
@@ -206,26 +226,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
-                case 23:
-                    _b.sent();
-                    return [3 /*break*/, 25];
-                case 24:
-                    x += 1;
-                    return [3 /*break*/, 21];
-                case 25: return [3 /*break*/, 31];
+                case 25:
+                    _d.sent();
+                    return [3 /*break*/, 27];
                 case 26:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 31];
+                    x += 1;
+                    return [3 /*break*/, 23];
+                case 27: return [3 /*break*/, 33];
+                case 28:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 33];
                     x = 0;
-                    _b.label = 27;
-                case 27:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 31];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 30];
+                    _d.label = 29;
+                case 29:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 33];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 32];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 28:
-                    _b.sent();
+                case 30:
+                    _d.sent();
                     msgEmbed_4 = new Discord.MessageEmbed();
                     msgString_4 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_4
@@ -235,26 +255,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_4)];
-                case 29:
-                    _b.sent();
-                    return [3 /*break*/, 31];
-                case 30:
-                    x += 1;
-                    return [3 /*break*/, 27];
-                case 31: return [3 /*break*/, 178];
+                case 31:
+                    _d.sent();
+                    return [3 /*break*/, 33];
                 case 32:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 38];
+                    x += 1;
+                    return [3 /*break*/, 29];
+                case 33: return [3 /*break*/, 180];
+                case 34:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 40];
                     x = 0;
-                    _b.label = 33;
-                case 33:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 37];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 36];
+                    _d.label = 35;
+                case 35:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 39];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 38];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 34:
-                    _b.sent();
+                case 36:
+                    _d.sent();
                     msgEmbed_5 = new Discord.MessageEmbed();
                     msgString_5 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_5
@@ -264,26 +284,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_5)];
-                case 35:
-                    _b.sent();
-                    return [3 /*break*/, 37];
-                case 36:
-                    x += 1;
-                    return [3 /*break*/, 33];
-                case 37: return [3 /*break*/, 43];
+                case 37:
+                    _d.sent();
+                    return [3 /*break*/, 39];
                 case 38:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 43];
+                    x += 1;
+                    return [3 /*break*/, 35];
+                case 39: return [3 /*break*/, 45];
+                case 40:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 45];
                     x = 0;
-                    _b.label = 39;
-                case 39:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 43];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 42];
+                    _d.label = 41;
+                case 41:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 45];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 44];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 40:
-                    _b.sent();
+                case 42:
+                    _d.sent();
                     msgEmbed_6 = new Discord.MessageEmbed();
                     msgString_6 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_6
@@ -293,26 +313,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_6)];
-                case 41:
-                    _b.sent();
-                    return [3 /*break*/, 43];
-                case 42:
-                    x += 1;
-                    return [3 /*break*/, 39];
-                case 43: return [3 /*break*/, 178];
+                case 43:
+                    _d.sent();
+                    return [3 /*break*/, 45];
                 case 44:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 50];
+                    x += 1;
+                    return [3 /*break*/, 41];
+                case 45: return [3 /*break*/, 180];
+                case 46:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 52];
                     x = 0;
-                    _b.label = 45;
-                case 45:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 49];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 48];
+                    _d.label = 47;
+                case 47:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 51];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 50];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 46:
-                    _b.sent();
+                case 48:
+                    _d.sent();
                     msgEmbed_7 = new Discord.MessageEmbed();
                     msgString_7 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "' in channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------'";
                     msgEmbed_7
@@ -322,26 +342,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_7)];
-                case 47:
-                    _b.sent();
-                    return [3 /*break*/, 49];
-                case 48:
-                    x += 1;
-                    return [3 /*break*/, 45];
-                case 49: return [3 /*break*/, 55];
+                case 49:
+                    _d.sent();
+                    return [3 /*break*/, 51];
                 case 50:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 55];
+                    x += 1;
+                    return [3 /*break*/, 47];
+                case 51: return [3 /*break*/, 57];
+                case 52:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 57];
                     x = 0;
-                    _b.label = 51;
-                case 51:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 55];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 54];
+                    _d.label = 53;
+                case 53:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 57];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 56];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 52:
-                    _b.sent();
+                case 54:
+                    _d.sent();
                     msgEmbed_8 = new Discord.MessageEmbed();
                     msgString_8 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_8
@@ -351,26 +371,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_8)];
-                case 53:
-                    _b.sent();
-                    return [3 /*break*/, 55];
-                case 54:
-                    x += 1;
-                    return [3 /*break*/, 51];
-                case 55: return [3 /*break*/, 178];
+                case 55:
+                    _d.sent();
+                    return [3 /*break*/, 57];
                 case 56:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 62];
+                    x += 1;
+                    return [3 /*break*/, 53];
+                case 57: return [3 /*break*/, 180];
+                case 58:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 64];
                     x = 0;
-                    _b.label = 57;
-                case 57:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 61];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 60];
+                    _d.label = 59;
+                case 59:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 63];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 62];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 58:
-                    _b.sent();
+                case 60:
+                    _d.sent();
                     msgEmbed_9 = new Discord.MessageEmbed();
                     msgString_9 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_9
@@ -380,26 +400,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_9)];
-                case 59:
-                    _b.sent();
-                    return [3 /*break*/, 61];
-                case 60:
-                    x += 1;
-                    return [3 /*break*/, 57];
-                case 61: return [3 /*break*/, 67];
+                case 61:
+                    _d.sent();
+                    return [3 /*break*/, 63];
                 case 62:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 67];
+                    x += 1;
+                    return [3 /*break*/, 59];
+                case 63: return [3 /*break*/, 69];
+                case 64:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 69];
                     x = 0;
-                    _b.label = 63;
-                case 63:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 67];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 66];
+                    _d.label = 65;
+                case 65:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 69];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 68];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 64:
-                    _b.sent();
+                case 66:
+                    _d.sent();
                     msgEmbed_10 = new Discord.MessageEmbed();
                     msgString_10 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_10
@@ -409,26 +429,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_10)];
-                case 65:
-                    _b.sent();
-                    return [3 /*break*/, 67];
-                case 66:
-                    x += 1;
-                    return [3 /*break*/, 63];
-                case 67: return [3 /*break*/, 178];
+                case 67:
+                    _d.sent();
+                    return [3 /*break*/, 69];
                 case 68:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 74];
+                    x += 1;
+                    return [3 /*break*/, 65];
+                case 69: return [3 /*break*/, 180];
+                case 70:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 76];
                     x = 0;
-                    _b.label = 69;
-                case 69:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 73];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 72];
+                    _d.label = 71;
+                case 71:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 75];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 74];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 70:
-                    _b.sent();
+                case 72:
+                    _d.sent();
                     msgEmbed_11 = new Discord.MessageEmbed();
                     msgString_11 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_11
@@ -438,26 +458,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_11)];
-                case 71:
-                    _b.sent();
-                    return [3 /*break*/, 73];
-                case 72:
-                    x += 1;
-                    return [3 /*break*/, 69];
-                case 73: return [3 /*break*/, 79];
+                case 73:
+                    _d.sent();
+                    return [3 /*break*/, 75];
                 case 74:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 79];
+                    x += 1;
+                    return [3 /*break*/, 71];
+                case 75: return [3 /*break*/, 81];
+                case 76:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 81];
                     x = 0;
-                    _b.label = 75;
-                case 75:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 79];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 78];
+                    _d.label = 77;
+                case 77:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 81];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 80];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 76:
-                    _b.sent();
+                case 78:
+                    _d.sent();
                     msgEmbed_12 = new Discord.MessageEmbed();
                     msgString_12 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_12
@@ -467,26 +487,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_12)];
-                case 77:
-                    _b.sent();
-                    return [3 /*break*/, 79];
-                case 78:
-                    x += 1;
-                    return [3 /*break*/, 75];
-                case 79: return [3 /*break*/, 178];
+                case 79:
+                    _d.sent();
+                    return [3 /*break*/, 81];
                 case 80:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 86];
+                    x += 1;
+                    return [3 /*break*/, 77];
+                case 81: return [3 /*break*/, 180];
+                case 82:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 88];
                     x = 0;
-                    _b.label = 81;
-                case 81:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 85];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 84];
+                    _d.label = 83;
+                case 83:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 87];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 86];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 82:
-                    _b.sent();
+                case 84:
+                    _d.sent();
                     msgEmbed_13 = new Discord.MessageEmbed();
                     msgString_13 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_13
@@ -496,26 +516,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_13)];
-                case 83:
-                    _b.sent();
-                    return [3 /*break*/, 85];
-                case 84:
-                    x += 1;
-                    return [3 /*break*/, 81];
-                case 85: return [3 /*break*/, 91];
+                case 85:
+                    _d.sent();
+                    return [3 /*break*/, 87];
                 case 86:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 91];
+                    x += 1;
+                    return [3 /*break*/, 83];
+                case 87: return [3 /*break*/, 93];
+                case 88:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 93];
                     x = 0;
-                    _b.label = 87;
-                case 87:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 91];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 90];
+                    _d.label = 89;
+                case 89:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 93];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 92];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 88:
-                    _b.sent();
+                case 90:
+                    _d.sent();
                     msgEmbed_14 = new Discord.MessageEmbed();
                     msgString_14 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_14
@@ -525,26 +545,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_14)];
-                case 89:
-                    _b.sent();
-                    return [3 /*break*/, 91];
-                case 90:
-                    x += 1;
-                    return [3 /*break*/, 87];
-                case 91: return [3 /*break*/, 178];
+                case 91:
+                    _d.sent();
+                    return [3 /*break*/, 93];
                 case 92:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 98];
+                    x += 1;
+                    return [3 /*break*/, 89];
+                case 93: return [3 /*break*/, 180];
+                case 94:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 100];
                     x = 0;
-                    _b.label = 93;
-                case 93:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 97];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 96];
+                    _d.label = 95;
+                case 95:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 99];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 98];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 94:
-                    _b.sent();
+                case 96:
+                    _d.sent();
                     msgEmbed_15 = new Discord.MessageEmbed();
                     msgString_15 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_15
@@ -554,26 +574,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_15)];
-                case 95:
-                    _b.sent();
-                    return [3 /*break*/, 97];
-                case 96:
-                    x += 1;
-                    return [3 /*break*/, 93];
-                case 97: return [3 /*break*/, 103];
+                case 97:
+                    _d.sent();
+                    return [3 /*break*/, 99];
                 case 98:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 103];
+                    x += 1;
+                    return [3 /*break*/, 95];
+                case 99: return [3 /*break*/, 105];
+                case 100:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 105];
                     x = 0;
-                    _b.label = 99;
-                case 99:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 103];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 102];
+                    _d.label = 101;
+                case 101:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 105];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 104];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 100:
-                    _b.sent();
+                case 102:
+                    _d.sent();
                     msgEmbed_16 = new Discord.MessageEmbed();
                     msgString_16 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_16
@@ -583,26 +603,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_16)];
-                case 101:
-                    _b.sent();
-                    return [3 /*break*/, 103];
-                case 102:
-                    x += 1;
-                    return [3 /*break*/, 99];
-                case 103: return [3 /*break*/, 178];
+                case 103:
+                    _d.sent();
+                    return [3 /*break*/, 105];
                 case 104:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 110];
+                    x += 1;
+                    return [3 /*break*/, 101];
+                case 105: return [3 /*break*/, 180];
+                case 106:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 112];
                     x = 0;
-                    _b.label = 105;
-                case 105:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 109];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 108];
+                    _d.label = 107;
+                case 107:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 111];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 110];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 106:
-                    _b.sent();
+                case 108:
+                    _d.sent();
                     msgEmbed_17 = new Discord.MessageEmbed();
                     msgString_17 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_17
@@ -612,26 +632,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_17)];
-                case 107:
-                    _b.sent();
-                    return [3 /*break*/, 109];
-                case 108:
-                    x += 1;
-                    return [3 /*break*/, 105];
-                case 109: return [3 /*break*/, 115];
+                case 109:
+                    _d.sent();
+                    return [3 /*break*/, 111];
                 case 110:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 115];
+                    x += 1;
+                    return [3 /*break*/, 107];
+                case 111: return [3 /*break*/, 117];
+                case 112:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 117];
                     x = 0;
-                    _b.label = 111;
-                case 111:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 115];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 114];
+                    _d.label = 113;
+                case 113:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 117];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 116];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 112:
-                    _b.sent();
+                case 114:
+                    _d.sent();
                     msgEmbed_18 = new Discord.MessageEmbed();
                     msgString_18 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_18
@@ -641,26 +661,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_18)];
-                case 113:
-                    _b.sent();
-                    return [3 /*break*/, 115];
-                case 114:
-                    x += 1;
-                    return [3 /*break*/, 111];
-                case 115: return [3 /*break*/, 178];
+                case 115:
+                    _d.sent();
+                    return [3 /*break*/, 117];
                 case 116:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 122];
+                    x += 1;
+                    return [3 /*break*/, 113];
+                case 117: return [3 /*break*/, 180];
+                case 118:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 124];
                     x = 0;
-                    _b.label = 117;
-                case 117:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 121];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 120];
+                    _d.label = 119;
+                case 119:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 123];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 122];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 118:
-                    _b.sent();
+                case 120:
+                    _d.sent();
                     msgEmbed_19 = new Discord.MessageEmbed();
                     msgString_19 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_19
@@ -670,26 +690,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_19)];
-                case 119:
-                    _b.sent();
-                    return [3 /*break*/, 121];
-                case 120:
-                    x += 1;
-                    return [3 /*break*/, 117];
-                case 121: return [3 /*break*/, 127];
+                case 121:
+                    _d.sent();
+                    return [3 /*break*/, 123];
                 case 122:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 127];
+                    x += 1;
+                    return [3 /*break*/, 119];
+                case 123: return [3 /*break*/, 129];
+                case 124:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 129];
                     x = 0;
-                    _b.label = 123;
-                case 123:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 127];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 126];
+                    _d.label = 125;
+                case 125:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 129];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 128];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 124:
-                    _b.sent();
+                case 126:
+                    _d.sent();
                     msgEmbed_20 = new Discord.MessageEmbed();
                     msgString_20 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_20
@@ -699,26 +719,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_20)];
-                case 125:
-                    _b.sent();
-                    return [3 /*break*/, 127];
-                case 126:
-                    x += 1;
-                    return [3 /*break*/, 123];
-                case 127: return [3 /*break*/, 178];
+                case 127:
+                    _d.sent();
+                    return [3 /*break*/, 129];
                 case 128:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 134];
+                    x += 1;
+                    return [3 /*break*/, 125];
+                case 129: return [3 /*break*/, 180];
+                case 130:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 136];
                     x = 0;
-                    _b.label = 129;
-                case 129:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 133];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 132];
+                    _d.label = 131;
+                case 131:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 135];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 134];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 130:
-                    _b.sent();
+                case 132:
+                    _d.sent();
                     msgEmbed_21 = new Discord.MessageEmbed();
                     msgString_21 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_21
@@ -728,26 +748,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_21)];
-                case 131:
-                    _b.sent();
-                    return [3 /*break*/, 133];
-                case 132:
-                    x += 1;
-                    return [3 /*break*/, 129];
-                case 133: return [3 /*break*/, 139];
+                case 133:
+                    _d.sent();
+                    return [3 /*break*/, 135];
                 case 134:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 139];
+                    x += 1;
+                    return [3 /*break*/, 131];
+                case 135: return [3 /*break*/, 141];
+                case 136:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 141];
                     x = 0;
-                    _b.label = 135;
-                case 135:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 139];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 138];
+                    _d.label = 137;
+                case 137:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 141];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 140];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 136:
-                    _b.sent();
+                case 138:
+                    _d.sent();
                     msgEmbed_22 = new Discord.MessageEmbed();
                     msgString_22 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_22
@@ -757,26 +777,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_22)];
-                case 137:
-                    _b.sent();
-                    return [3 /*break*/, 139];
-                case 138:
-                    x += 1;
-                    return [3 /*break*/, 135];
-                case 139: return [3 /*break*/, 178];
+                case 139:
+                    _d.sent();
+                    return [3 /*break*/, 141];
                 case 140:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 146];
+                    x += 1;
+                    return [3 /*break*/, 137];
+                case 141: return [3 /*break*/, 180];
+                case 142:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 148];
                     x = 0;
-                    _b.label = 141;
-                case 141:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 145];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 144];
+                    _d.label = 143;
+                case 143:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 147];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 146];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 142:
-                    _b.sent();
+                case 144:
+                    _d.sent();
                     msgEmbed_23 = new Discord.MessageEmbed();
                     msgString_23 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_23
@@ -786,26 +806,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_23)];
-                case 143:
-                    _b.sent();
-                    return [3 /*break*/, 145];
-                case 144:
-                    x += 1;
-                    return [3 /*break*/, 141];
-                case 145: return [3 /*break*/, 151];
+                case 145:
+                    _d.sent();
+                    return [3 /*break*/, 147];
                 case 146:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 151];
+                    x += 1;
+                    return [3 /*break*/, 143];
+                case 147: return [3 /*break*/, 153];
+                case 148:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 153];
                     x = 0;
-                    _b.label = 147;
-                case 147:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 151];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 150];
+                    _d.label = 149;
+                case 149:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 153];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 152];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 148:
-                    _b.sent();
+                case 150:
+                    _d.sent();
                     msgEmbed_24 = new Discord.MessageEmbed();
                     msgString_24 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_24
@@ -815,26 +835,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_24)];
-                case 149:
-                    _b.sent();
-                    return [3 /*break*/, 151];
-                case 150:
-                    x += 1;
-                    return [3 /*break*/, 147];
-                case 151: return [3 /*break*/, 178];
+                case 151:
+                    _d.sent();
+                    return [3 /*break*/, 153];
                 case 152:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 158];
+                    x += 1;
+                    return [3 /*break*/, 149];
+                case 153: return [3 /*break*/, 180];
+                case 154:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 160];
                     x = 0;
-                    _b.label = 153;
-                case 153:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 157];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 156];
+                    _d.label = 155;
+                case 155:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 159];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 158];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 154:
-                    _b.sent();
+                case 156:
+                    _d.sent();
                     msgEmbed_25 = new Discord.MessageEmbed();
                     msgString_25 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_25
@@ -844,26 +864,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_25)];
-                case 155:
-                    _b.sent();
-                    return [3 /*break*/, 157];
-                case 156:
-                    x += 1;
-                    return [3 /*break*/, 153];
-                case 157: return [3 /*break*/, 163];
+                case 157:
+                    _d.sent();
+                    return [3 /*break*/, 159];
                 case 158:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 163];
+                    x += 1;
+                    return [3 /*break*/, 155];
+                case 159: return [3 /*break*/, 165];
+                case 160:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 165];
                     x = 0;
-                    _b.label = 159;
-                case 159:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 163];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 162];
+                    _d.label = 161;
+                case 161:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 165];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 164];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 160:
-                    _b.sent();
+                case 162:
+                    _d.sent();
                     msgEmbed_26 = new Discord.MessageEmbed();
                     msgString_26 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_26
@@ -873,26 +893,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_26)];
-                case 161:
-                    _b.sent();
-                    return [3 /*break*/, 163];
-                case 162:
-                    x += 1;
-                    return [3 /*break*/, 159];
-                case 163: return [3 /*break*/, 178];
+                case 163:
+                    _d.sent();
+                    return [3 /*break*/, 165];
                 case 164:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 170];
+                    x += 1;
+                    return [3 /*break*/, 161];
+                case 165: return [3 /*break*/, 180];
+                case 166:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'enable')) return [3 /*break*/, 172];
                     x = 0;
-                    _b.label = 165;
-                case 165:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 169];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 168];
+                    _d.label = 167;
+                case 167:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 171];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 170];
                     guildData.logs[x].loggingChannelID = commandData.permsChannel.id;
                     guildData.logs[x].loggingChannelName = commandData.permsChannel.name;
                     guildData.logs[x].enabled = true;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 166:
-                    _b.sent();
+                case 168:
+                    _d.sent();
                     msgEmbed_27 = new Discord.MessageEmbed();
                     msgString_27 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_27
@@ -902,26 +922,26 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_27)];
-                case 167:
-                    _b.sent();
-                    return [3 /*break*/, 169];
-                case 168:
-                    x += 1;
-                    return [3 /*break*/, 165];
-                case 169: return [3 /*break*/, 175];
+                case 169:
+                    _d.sent();
+                    return [3 /*break*/, 171];
                 case 170:
-                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 175];
+                    x += 1;
+                    return [3 /*break*/, 167];
+                case 171: return [3 /*break*/, 177];
+                case 172:
+                    if (!(commandData.args[0].toString().toLowerCase() === 'disable')) return [3 /*break*/, 177];
                     x = 0;
-                    _b.label = 171;
-                case 171:
-                    if (!(x < guildData.logs.length)) return [3 /*break*/, 175];
-                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 174];
+                    _d.label = 173;
+                case 173:
+                    if (!(x < guildData.logs.length)) return [3 /*break*/, 177];
+                    if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 176];
                     guildData.logs[x].loggingChannelID = '';
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 172:
-                    _b.sent();
+                case 174:
+                    _d.sent();
                     msgEmbed_28 = new Discord.MessageEmbed();
                     msgString_28 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_28
@@ -931,32 +951,32 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_28)];
-                case 173:
-                    _b.sent();
-                    return [3 /*break*/, 175];
-                case 174:
-                    x += 1;
-                    return [3 /*break*/, 171];
-                case 175: return [3 /*break*/, 178];
+                case 175:
+                    _d.sent();
+                    return [3 /*break*/, 177];
                 case 176:
+                    x += 1;
+                    return [3 /*break*/, 173];
+                case 177: return [3 /*break*/, 180];
+                case 178:
                     msgString = 'Please enter a proper log name!';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor([0, 0, 255])
                         .setDescription(msgString)
                         .setTimestamp(Date())
-                        .setTitle('__**Manage Logs Disabled:**__');
+                        .setTitle('__**Manage Logs:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 177:
-                    _b.sent();
-                    return [2 /*return*/, commandReturnData];
-                case 178: return [2 /*return*/, commandReturnData];
                 case 179:
-                    error_1 = _b.sent();
+                    _d.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 180: return [2 /*return*/, commandReturnData];
+                case 181:
+                    error_1 = _d.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 180: return [2 /*return*/];
+                case 182: return [2 /*return*/];
             }
         });
     });

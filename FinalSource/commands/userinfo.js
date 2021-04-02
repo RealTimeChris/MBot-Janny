@@ -50,17 +50,18 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
  * Displays info about a selected user.
  */
 function execute(commandData, discordUser) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, userID, userMentionRegExp, userIDRegExp, msgString_1, argZero, userIDOne, guildMemberManager, guildMember, error_1, msgString_2, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var commandReturnData, areWeInADM, userID, userMentionRegExp, userIDRegExp, msgString_1, msgEmbed, argZero, userIDOne, guildMemberManager, guildMember, error_1, msgString_2, msgEmbed, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _a.trys.push([0, 12, , 13]);
+                    _c.trys.push([0, 12, , 13]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _a.sent();
+                    areWeInADM = _c.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
@@ -73,10 +74,16 @@ function execute(commandData, discordUser) {
                 case 2:
                     if (!(commandData.args[0].match(userIDRegExp)[0] === null
                         && commandData.args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 4];
-                    msgString_1 = 'Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)';
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_1)];
+                    msgString_1 = '------\n**Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)**\n------';
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString_1)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 3:
-                    _a.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 4:
                     if (commandData.args[0].match(userMentionRegExp) != null) {
@@ -87,23 +94,29 @@ function execute(commandData, discordUser) {
                         userIDOne = argZero.match(userIDRegExp)[0];
                         userID = userIDOne;
                     }
-                    _a.label = 5;
+                    _c.label = 5;
                 case 5:
                     guildMemberManager = new Discord.GuildMemberManager(commandData.guild);
                     guildMember = void 0;
-                    _a.label = 6;
+                    _c.label = 6;
                 case 6:
-                    _a.trys.push([6, 8, , 10]);
+                    _c.trys.push([6, 8, , 10]);
                     return [4 /*yield*/, guildMemberManager.fetch(userID)];
                 case 7:
-                    guildMember = _a.sent();
+                    guildMember = _c.sent();
                     return [3 /*break*/, 10];
                 case 8:
-                    error_1 = _a.sent();
-                    msgString_2 = 'Sorry, but that user could not be found!';
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_2)];
+                    error_1 = _c.sent();
+                    msgString_2 = '------\n**Sorry, but that user could not be found!**\n------';
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString_2)
+                        .setTimestamp(Date())
+                        .setTitle('__**User Issue:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 9:
-                    _a.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 10:
                     fields = [];
@@ -157,10 +170,10 @@ function execute(commandData, discordUser) {
                     messageEmbed.fields = fields;
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 11:
-                    _a.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 12:
-                    error_2 = _a.sent();
+                    error_2 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];

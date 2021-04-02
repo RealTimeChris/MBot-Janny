@@ -48,24 +48,24 @@ command.name = 'setdefaultrole';
 command.description = 'Just enter !setdefaultrole to view the current list of default roles!\nEnter !setdefaultrole = ADD, ROLENAME, to add a '
     + 'role as a default for when someone new joins the server.\n!setdefaultrole = REMOVE, ROLENAME to remove a role from the list.';
 function execute(commandData, discordUser) {
-    var _a, _b;
+    var _a, _b, _c, _d, _e, _f, _g;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPerms, roleMemberManager, currentDiscordRole, whatAreWeDoing, roleMentionRegExp, idRegExp, msgString, msgString, roleID, roleName_1, guildData_1, roleArray_1, _loop_1, x, msgString_1, messageEmbed, currentRole_1, isItFound_1, msgString, x, msgString_2, msgString, messageEmbed, x, msgString_3, msgString, messageEmbed, error_1;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var commandReturnData, areWeInADM, doWeHaveAdminPerms, roleMemberManager, currentDiscordRole, whatAreWeDoing, roleMentionRegExp, idRegExp, msgString, msgEmbed, msgString, msgEmbed, roleID, roleName_1, guildData_1, roleArray_1, _loop_1, x, msgString_1, messageEmbed, currentRole_1, isItFound_1, msgString, msgEmbed, x, msgString_2, msgEmbed, msgString, messageEmbed, x, msgString_3, msgEmbed, msgString, messageEmbed, error_1;
+        return __generator(this, function (_h) {
+            switch (_h.label) {
                 case 0:
-                    _c.trys.push([0, 32, , 33]);
+                    _h.trys.push([0, 32, , 33]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _c.sent();
+                    areWeInADM = _h.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 2:
-                    doWeHaveAdminPerms = _c.sent();
+                    doWeHaveAdminPerms = _h.sent();
                     if (doWeHaveAdminPerms === false) {
                         return [2 /*return*/, commandReturnData];
                     }
@@ -79,17 +79,29 @@ function execute(commandData, discordUser) {
                     return [3 /*break*/, 11];
                 case 3:
                     if (!(commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove')) return [3 /*break*/, 5];
-                    msgString = "<@!" + commandData.guildMember.id + "> Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    _c.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 5:
                     if (!(commandData.args[1] === undefined)) return [3 /*break*/, 7];
-                    msgString = "<@!" + commandData.guildMember.id + "> Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 6:
-                    _c.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 7:
                     if (!roleMentionRegExp.test(commandData.args[1])) return [3 /*break*/, 9];
@@ -97,7 +109,7 @@ function execute(commandData, discordUser) {
                     roleMemberManager = new Discord.RoleManager(commandData.guild);
                     return [4 /*yield*/, roleMemberManager.fetch(roleID)];
                 case 8:
-                    currentDiscordRole = (_c.sent());
+                    currentDiscordRole = (_h.sent());
                     commandData.args[1] = currentDiscordRole.name;
                     return [3 /*break*/, 11];
                 case 9:
@@ -105,21 +117,21 @@ function execute(commandData, discordUser) {
                     roleMemberManager = new Discord.RoleManager(commandData.guild);
                     return [4 /*yield*/, roleMemberManager.fetch(commandData.args[1])];
                 case 10:
-                    currentDiscordRole = (_c.sent());
+                    currentDiscordRole = (_h.sent());
                     commandData.args[1] = currentDiscordRole.name;
-                    _c.label = 11;
+                    _h.label = 11;
                 case 11:
-                    if (((_a = commandData.args[0]) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'add') {
+                    if (((_c = commandData.args[0]) === null || _c === void 0 ? void 0 : _c.toLowerCase()) === 'add') {
                         whatAreWeDoing = 'add';
                     }
-                    else if (((_b = commandData.args[0]) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'remove') {
+                    else if (((_d = commandData.args[0]) === null || _d === void 0 ? void 0 : _d.toLowerCase()) === 'remove') {
                         whatAreWeDoing = 'remove';
                     }
                     console.log(whatAreWeDoing);
                     roleName_1 = commandData.args[1];
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 12:
-                    guildData_1 = _c.sent();
+                    guildData_1 = _h.sent();
                     roleArray_1 = commandData.guild.roles.cache.array().sort();
                     _loop_1 = function (x) {
                         var isItFoundReal = roleArray_1.map(function (role) {
@@ -172,7 +184,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_1);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 13:
-                    _c.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 14:
                     currentRole_1 = new Discord.Role(commandData.guildMember.client, {}, commandData.guildMember.client.guilds.resolve(guildData_1.guildID));
@@ -185,22 +197,34 @@ function execute(commandData, discordUser) {
                         return role;
                     });
                     if (!(isItFound_1 === false)) return [3 /*break*/, 16];
-                    msgString = "<@!" + commandData.guildMember.id + "> Sorry, but the role you entered could not be found! Check spelling and case!";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_e = commandData.guildMember) === null || _e === void 0 ? void 0 : _e.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Role Issue:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 15:
-                    _c.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 16:
                     if (!(whatAreWeDoing === 'add')) return [3 /*break*/, 23];
                     x = 0;
-                    _c.label = 17;
+                    _h.label = 17;
                 case 17:
                     if (!(x < guildData_1.defaultRoleIDs.length)) return [3 /*break*/, 20];
                     if (!(currentRole_1.id === guildData_1.defaultRoleIDs[x])) return [3 /*break*/, 19];
-                    msgString_2 = "<@!" + commandData.guildMember.id + "> Hey! It looks like you've already added that role!";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_2)];
+                    msgString_2 = "------\n**Hey! It looks like you've already added that role!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_f = commandData.guildMember) === null || _f === void 0 ? void 0 : _f.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString_2)
+                        .setTimestamp(Date())
+                        .setTitle('__**Role Issue:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 18:
-                    _c.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 19:
                     x += 1;
@@ -209,7 +233,7 @@ function execute(commandData, discordUser) {
                     guildData_1.defaultRoleIDs.push(currentRole_1.id);
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData_1)];
                 case 21:
-                    _c.sent();
+                    _h.sent();
                     msgString = "\n------\n__**Role:**__ <@&" + currentRole_1.id + ">\n------";
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
@@ -220,31 +244,37 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 22:
-                    _c.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 23:
                     if (!(whatAreWeDoing === 'remove')) return [3 /*break*/, 31];
                     isItFound_1 = false;
                     x = 0;
-                    _c.label = 24;
+                    _h.label = 24;
                 case 24:
                     if (!(x < guildData_1.defaultRoleIDs.length)) return [3 /*break*/, 27];
                     if (!(currentRole_1.id === guildData_1.defaultRoleIDs[x])) return [3 /*break*/, 26];
                     guildData_1.defaultRoleIDs.splice(x, 1);
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData_1)];
                 case 25:
-                    _c.sent();
+                    _h.sent();
                     isItFound_1 = true;
-                    _c.label = 26;
+                    _h.label = 26;
                 case 26:
                     x += 1;
                     return [3 /*break*/, 24];
                 case 27:
                     if (!(isItFound_1 === false)) return [3 /*break*/, 29];
-                    msgString_3 = "<@!" + commandData.guildMember.id + "> Sorry, but the role you entered could not be found! Check spelling and case!";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString_3)];
+                    msgString_3 = "------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_g = commandData.guildMember) === null || _g === void 0 ? void 0 : _g.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString_3)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 28:
-                    _c.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 29:
                     msgString = "" + '\n------\n__**Role**__: <@&' + currentRole_1.id + ">\n------";
@@ -257,11 +287,11 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 30:
-                    _c.sent();
+                    _h.sent();
                     return [2 /*return*/, commandReturnData];
                 case 31: return [2 /*return*/, commandReturnData];
                 case 32:
-                    error_1 = _c.sent();
+                    error_1 = _h.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

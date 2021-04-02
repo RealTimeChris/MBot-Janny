@@ -298,16 +298,6 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
-                if (msg.member == null && !(msg.channel.type === 'dm')) {
-                    console.log(msg.member);
-                    console.log(msg.author.id);
-                    console.log(msg.author.username);
-                    console.log(msg.channel.type);
-                    console.log(msg.channel.name);
-                    console.log(msg.channel.guild.name);
-                    console.log('HMMM!? NULL MEMBER?! GTFO!');
-                    return [2 /*return*/];
-                }
                 if (msg.author.id === client.user.id) {
                     console.log('Better not track our own messages!');
                     return [2 /*return*/];
