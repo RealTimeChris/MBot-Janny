@@ -21,7 +21,7 @@ import config = require('./config.json');
                 returnMessage = (await (commandData.toTextChannel.send(messageContents))) as Discord.Message;
             }
             else if (atUserID === null) {
-                returnMessage = (await commandData.toTextChannel.send(messageContents as string)) as Discord.Message;
+                returnMessage = (await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed)) as Discord.Message;
             }
             else{
                 returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}> ${messageContents}`)) as Discord.Message;
@@ -31,11 +31,11 @@ import config = require('./config.json');
             if (atUserID !== null && messageContents instanceof Discord.MessageEmbed){
                 returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}>`, {embed: messageContents})) as Discord.Message;
             }
-            else if (atUserID != null && messageContents instanceof String) {
-                returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}>` + messageContents)) as Discord.Message;
+            else if (atUserID === null) {
+                returnMessage = (await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed)) as Discord.Message;
             }
             else{
-                returnMessage = (await commandData.toTextChannel.send(messageContents as string)) as Discord.Message;
+                returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}> ${messageContents}`)) as Discord.Message;
             }			
 		}
 		else if (commandData.toTextChannel instanceof Discord.DMChannel){
