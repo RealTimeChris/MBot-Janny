@@ -70,7 +70,14 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             else if (commandData.guildMember instanceof Discord.GuildMember){
                 const dmChannel = await (commandData.guildMember as Discord.GuildMember).user.createDM();
                 await dmChannel.send(messageEmbed);
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, `<@!${commandData.guildMember?.id}> I've sent you help info, via a message!`);
+                const msgString = `------\n**I've sent you help info, via a message!**\n------`;
+                let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Help:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             }
 
             return commandReturnData;

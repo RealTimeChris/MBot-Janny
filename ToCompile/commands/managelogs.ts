@@ -61,12 +61,32 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
            
         } else if ((commandData.args[0] as string).toString().toLowerCase() !== 'enable' && (commandData.args[0] as string).toString().toLowerCase() !== 'disable') {
-            const msgString = `Please, enter enable or disable for the second argument of this command! 
-            (!managelogs = <enable/disable>, <logname>)`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please, enter enable or disable for the first argument of this command! 
+            (!managelogs = <enable/disable>, <logname>)**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
            
             return commandReturnData;
-        } else {
+        } 
+        else if (commandData.args[1] === undefined){
+            const msgString = `------\n**Please, enter  a log name to disable or enable as the second argument of this command! 
+            (!managelogs = <enable/disable>, <logname>)**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+           
+            return commandReturnData;
+        }
+        else {
             switch (((commandData.args[1] as string) as string).toLowerCase()) {
             case 'guildbanadd':
                 if ((commandData.args[0] as string).toString().toLowerCase() === 'enable') {
@@ -678,7 +698,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                         .setColor([0, 0, 255])
                         .setDescription(msgString)
                         .setTimestamp((Date() as unknown) as Date)
-                        .setTitle('__**Manage Logs Disabled:**__');
+                        .setTitle('__**Manage Logs:**__');
                     await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 return commandReturnData;
             }
