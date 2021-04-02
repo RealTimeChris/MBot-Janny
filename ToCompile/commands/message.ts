@@ -10,20 +10,14 @@ import DiscordStuff = require('../DiscordStuff');
 
 const command = new DiscordStuff.BotCommand();
 command.name = 'message';
-command.description = 'Command executes automatically upon receiving certain messages!.';
+command.description = '__**Message Usage**__: discordUser command executes automatically upon receiving certain messages!.';
 
 /**
-   * Selects a chosen chat message and sends it via the appropriate channel,
-	 * upon recieving a trigger phrase or word.
-   * @param   {Discord.Message}           message
-   * @param   {String[]}                  args
-   * @param   {DiscordStuff.discordUser}  discordUser
-   * @returns {Promise<string>}
-   */
- export async function execute(message: Discord.Message): Promise<string> {
+* Selects a chosen chat message and sends it via the appropriate channel,
+* upon recieving a trigger phrase or word.
+*/
+async function execute(message: Discord.Message): Promise<string> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
-		commandReturnData.commandName = command.name;
         const number = Math.random() * 100;
         if (message.content != null && message.content !== undefined) {
             if (message.content.toLowerCase().includes('hey ') && number <= 15) {
