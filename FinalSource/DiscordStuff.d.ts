@@ -3,7 +3,7 @@ import Level from 'level-ts';
 /**
  * Functino for sending out a message, using the appropriate channel.
  */
-export declare function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: string | Discord.MessageEmbed): Promise<Discord.Message>;
+export declare function sendMessageWithCorrectChannel(commandData: CommandData, messageContents: String | Discord.MessageEmbed, atUserID?: string | null): Promise<Discord.Message>;
 /**
  * Checks a user ID against an array of user IDs to see if it is present.
  */

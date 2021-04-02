@@ -35,12 +35,24 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         if (commandData.args[0] === undefined) {
             whatAreWeDoing = 'viewing';
         } else if ((commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'enable' && commandData.args[0].toLowerCase() !== 'disable')) {
-            const msgString = "Please enter either 'enable' or 'disable'! (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)";
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = "------\n**Please enter either 'enable' or 'disable'! (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------";
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         } else if (commandData.args[0].toLowerCase() === 'enable' && commandData.args[1] !== undefined && (!messageCountRegExp.test(commandData.args[1]) || parseInt(commandData.args[1], 10) < 0 || parseInt(commandData.args[1], 10) > 10000)) {
-            const msgString = 'Please enter a valid number of messages back to save! (0 to 10000) (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)';
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = '------\n**Please enter a valid number of messages back to save! (0 to 10000) (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         } else if (commandData.args[1] !== undefined) {
             whatAreWeDoing = commandData.args[0].toLowerCase();
@@ -98,8 +110,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             isItFound = false;
             for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
                 if ((guildData.deletionChannels[x] as DiscordStuff.DeletionChannel).channelID === currentDeletionChannel.channelID) {
-                    const msgString = 'This channel has already been added! I will update your number of saved messages though!';
-                    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                    const msgString = '------\n**This channel has already been added! I will update your number of saved messages though!**\n------';
+                    let msgEmbed = new Discord.MessageEmbed()
+				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				        .setColor([0, 0, 255])
+				        .setDescription(msgString)
+				        .setTimestamp(Date() as unknown as Date)
+				        .setTitle('__**Channel Issue:**__');
+			        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     if (currentDeletionChannel.deletionMessageID
                         !== undefined && currentDeletionChannel.deletionMessageID !== '') {
                         try {
@@ -148,8 +166,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 }
             }
             if (isItFound === false) {
-                const msgString = 'Sorry, but this channel could not be found in the list of active deletion channels!';
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                const msgString = '------\n**Sorry, but this channel could not be found in the list of active deletion channels!**\n------';
+                let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Channel Issue:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 return commandReturnData;
             }
             guildData.deletionChannels.splice(deletionChannelIndex, 1);

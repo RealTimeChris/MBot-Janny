@@ -50,57 +50,84 @@ command.description = '!serverinfo to get info about the current server!\n!serve
  * Displays the info of a chosen server./
  */
 function execute(commandData) {
-    var _a;
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, idRegExp, currentServerID, msgString, msgString, msgString, argZero, serverArray, currentServer, x, msgString, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var commandReturnData, idRegExp, currentServerID, msgString, msgEmbed, msgString, msgEmbed, msgString, msgEmbed, argZero, serverArray, currentServer, x, msgString, msgEmbed, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
                 case 0:
-                    _b.trys.push([0, 11, , 12]);
+                    _e.trys.push([0, 12, , 13]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     idRegExp = /\d{18}/;
                     currentServerID = void 0;
                     if (!(commandData.guildMember instanceof Discord.User && commandData.args[0] === undefined)) return [3 /*break*/, 2];
-                    msgString = "Please, enter a server ID if you're going to DM this command!";
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
+                    msgString = "------\n**Please, enter a server ID if you're going to DM this command!**\n------";
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
-                    _b.sent();
+                    _e.sent();
                     return [2 /*return*/, commandReturnData];
                 case 2:
                     if (!(commandData.args[0] === undefined && commandData.permsChannel.type !== 'dm')) return [3 /*break*/, 3];
                     currentServerID = commandData.guild.id;
-                    return [3 /*break*/, 7];
+                    return [3 /*break*/, 8];
                 case 3:
-                    if (!(commandData.args[0] === undefined && commandData.permsChannel.type === 'dm')) return [3 /*break*/, 4];
-                    msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
-                    return [2 /*return*/, commandReturnData];
+                    if (!(commandData.args[0] === undefined && commandData.permsChannel.type === 'dm')) return [3 /*break*/, 5];
+                    msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    if (!!idRegExp.test(commandData.args[0])) return [3 /*break*/, 6];
-                    msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
-                case 5:
-                    _b.sent();
+                    _e.sent();
                     return [2 /*return*/, commandReturnData];
+                case 5:
+                    if (!!idRegExp.test(commandData.args[0])) return [3 /*break*/, 7];
+                    msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Missing Or Invalid Arguments:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 6:
+                    _e.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 7:
                     argZero = commandData.args[0];
                     currentServerID = argZero;
-                    _b.label = 7;
-                case 7:
-                    serverArray = (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.cache.array().sort();
+                    _e.label = 8;
+                case 8:
+                    serverArray = (_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.client.guilds.cache.array().sort();
                     currentServer = null;
                     for (x = 0; x < serverArray.length; x += 1) {
                         if (currentServerID === serverArray[x].id) {
                             currentServer = serverArray[x];
                         }
                     }
-                    if (!(currentServer == null)) return [3 /*break*/, 9];
-                    msgString = 'Sorry! No matching servers were found!';
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString)];
-                case 8:
-                    _b.sent();
-                    return [2 /*return*/, commandReturnData];
+                    if (!(currentServer == null)) return [3 /*break*/, 10];
+                    msgString = '------\n**Sorry! No matching servers were found!**\n------';
+                    msgEmbed = new Discord.MessageEmbed()
+                        .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor([0, 0, 255])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Server Issue:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 9:
+                    _e.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 10:
                     categoryCount = 0;
                     voiceChannelCount = 0;
                     textChannelCount = 0;
@@ -158,15 +185,15 @@ function execute(commandData) {
                         messageEmbed.fields = fields;
                     }
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                case 10:
-                    _b.sent();
-                    return [2 /*return*/, commandReturnData];
                 case 11:
-                    error_1 = _b.sent();
+                    _e.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 12:
+                    error_1 = _e.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 12: return [2 /*return*/];
+                case 13: return [2 /*return*/];
             }
         });
     });

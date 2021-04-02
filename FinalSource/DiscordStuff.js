@@ -50,39 +50,68 @@ var config = require("./config.json");
 /**
  * Functino for sending out a message, using the appropriate channel.
  */
-function sendMessageWithCorrectChannel(commandData, messageContents) {
+function sendMessageWithCorrectChannel(commandData, messageContents, atUserID) {
+    var _a;
+    if (atUserID === void 0) { atUserID = null; }
     return __awaiter(this, void 0, void 0, function () {
         var returnMessage_1, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    _a.trys.push([0, 7, , 8]);
-                    if (!(commandData.toTextChannel instanceof Discord.WebhookClient)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
+                    _b.trys.push([0, 18, , 19]);
+                    if (!(commandData.toTextChannel instanceof Discord.WebhookClient)) return [3 /*break*/, 8];
+                    if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 3];
+                    return [4 /*yield*/, ((_a = commandData.fromTextChannel) === null || _a === void 0 ? void 0 : _a.send("<@!" + atUserID + ">"))];
                 case 1:
-                    returnMessage_1 = (_a.sent());
-                    return [3 /*break*/, 6];
+                    _b.sent();
+                    return [4 /*yield*/, (commandData.toTextChannel.send(messageContents))];
                 case 2:
-                    if (!(commandData.toTextChannel instanceof Discord.TextChannel)) return [3 /*break*/, 4];
-                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
+                    returnMessage_1 = (_b.sent());
+                    return [3 /*break*/, 7];
                 case 3:
-                    returnMessage_1 = (_a.sent());
-                    return [3 /*break*/, 6];
-                case 4:
-                    if (!(commandData.toTextChannel instanceof Discord.DMChannel)) return [3 /*break*/, 6];
+                    if (!(atUserID === null)) return [3 /*break*/, 5];
                     return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
-                case 5:
-                    returnMessage_1 = (_a.sent());
-                    _a.label = 6;
-                case 6: return [2 /*return*/, new Promise(function (resolve, reject) {
+                case 4:
+                    returnMessage_1 = (_b.sent());
+                    return [3 /*break*/, 7];
+                case 5: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
+                case 6:
+                    returnMessage_1 = (_b.sent());
+                    _b.label = 7;
+                case 7: return [3 /*break*/, 17];
+                case 8:
+                    if (!(commandData.toTextChannel instanceof Discord.TextChannel)) return [3 /*break*/, 15];
+                    if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 10];
+                    return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + ">", { embed: messageContents })];
+                case 9:
+                    returnMessage_1 = (_b.sent());
+                    return [3 /*break*/, 14];
+                case 10:
+                    if (!(atUserID === null)) return [3 /*break*/, 12];
+                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
+                case 11:
+                    returnMessage_1 = (_b.sent());
+                    return [3 /*break*/, 14];
+                case 12: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
+                case 13:
+                    returnMessage_1 = (_b.sent());
+                    _b.label = 14;
+                case 14: return [3 /*break*/, 17];
+                case 15:
+                    if (!(commandData.toTextChannel instanceof Discord.DMChannel)) return [3 /*break*/, 17];
+                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
+                case 16:
+                    returnMessage_1 = (_b.sent());
+                    _b.label = 17;
+                case 17: return [2 /*return*/, new Promise(function (resolve, reject) {
                         resolve(returnMessage_1);
                     })];
-                case 7:
-                    error_1 = _a.sent();
+                case 18:
+                    error_1 = _b.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 8: return [2 /*return*/];
+                case 19: return [2 /*return*/];
             }
         });
     });

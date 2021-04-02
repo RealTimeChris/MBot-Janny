@@ -5,6 +5,7 @@
 
 'use strict';
 
+import Discord = require('discord.js');
 import DiscordStuff = require('../DiscordStuff');
 import {DiscordInteractions} from 'slash-commands';
 import SlashCommands = require('slash-commands');
@@ -583,11 +584,43 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         // Create Global Command
         await interaction.createApplicationCommand(trackuser).then(error => console.log(error)).catch(error => console.log(error.message));
-*/
-        const globalCommands = await interaction.getApplicationCommands();
-        console.log(globalCommands.length);
-        await DiscordStuff.sendMessageWithCorrectChannel(commandData, `Yes, IT'S COMPLETED!, You have ${globalCommands.length} commands registered!`);
-        return commandReturnData;
+        */
+       const globalCommands = await interaction.getApplicationCommands();
+
+        let msgString = `------\n**Yes, IT'S COMPLETED! You have ${globalCommands.length} commands registered!**\n------\n`;
+        let msgEmbeds: Discord.MessageEmbed[] = [];
+        for (let x = 0; x < globalCommands.length; x += 1){
+            msgString += `__**Name**__: ${globalCommands[x]?.name} __**Description**__: ${globalCommands[x]?.description}\n`;
+            if (msgString.length >= 2000 || x === globalCommands.length - 1){
+                let msgEmbed = new Discord.MessageEmbed();
+                if (commandData.guildMember instanceof Discord.User){
+                    msgEmbed
+                        .setAuthor((commandData.guildMember as Discord.User)?.username, (commandData.guildMember as Discord.User).avatarURL() as string)
+                        .setColor([0, 0, 255])
+                        .setTimestamp(Date() as unknown as Date)
+                        .setTitle('__**Registered Commands:**__');
+                }
+                else {
+                    msgEmbed
+                        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                        .setColor([0, 0, 255])
+                        .setTimestamp(Date() as unknown as Date)
+                        .setTitle('__**Registered Commands:**__');
+                }
+                
+                msgString += `------`;
+                let currentMsgEmbed = msgEmbed;
+                currentMsgEmbed.setDescription(msgString);
+                msgEmbeds.push(currentMsgEmbed);
+                msgString = `------\n**Yes, IT'S COMPLETED! You have ${globalCommands.length} commands registered!**\n------\n`;
+            }
+        }
+        for (let x = 0; x < msgEmbeds.length; x += 1){
+            msgEmbeds[x]?.setTitle(`__**Registered Commands, (${(x + 1).toString()} of ${msgEmbeds.length}): **__`);
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbeds[x] as Discord.MessageEmbed);
+        }
+
+    return commandReturnData;
     }
     catch(error){
         return new Promise((resolve, reject) => {

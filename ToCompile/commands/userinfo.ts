@@ -32,8 +32,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             userID = (commandData.guildMember as Discord.GuildMember).id;
         } else if ((commandData.args[0].match(userIDRegExp) as string[])[0] as string === null
             && (commandData.args[0].match(userMentionRegExp) as string[])[0] === null) {
-            const msgString = 'Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)';
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = '------\n**Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         } else if (commandData.args[0].match(userMentionRegExp) != null) {
             userID = commandData.args[0].substring(3, commandData.args[0].length - 1);
@@ -49,8 +55,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         try {
             guildMember = await guildMemberManager.fetch(userID);
         } catch (error) {
-            const msgString =  'Sorry, but that user could not be found!';
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = '------\n**Sorry, but that user could not be found!**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**User Issue:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
 

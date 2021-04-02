@@ -19,7 +19,25 @@ command.description = 'Simply enter !ping';
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
-        await DiscordStuff.sendMessageWithCorrectChannel(commandData, 'Pong!');
+        const msgString = '------\n**Pong!**\n------';
+        let msgEmbed = new Discord.MessageEmbed();
+        if (commandData.guildMember instanceof Discord.GuildMember){
+            msgEmbed
+            .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+            .setColor([0, 0, 255])
+            .setDescription(msgString)
+            .setTimestamp(Date() as unknown as Date)
+            .setTitle('__**Ping! Response:**__');
+        }
+        else{
+            msgEmbed
+            .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+            .setColor([0, 0, 255])
+            .setDescription(msgString)
+            .setTimestamp(Date() as unknown as Date)
+            .setTitle('__**Ping! Response:**__');
+        }
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 
         return commandReturnData;
     } catch (error) {

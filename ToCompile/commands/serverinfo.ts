@@ -24,19 +24,38 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
         let currentServerID;
 
         if (commandData.guildMember instanceof Discord.User && commandData.args[0] === undefined){
-            const msgString = `Please, enter a server ID if you're going to DM this command!`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please, enter a server ID if you're going to DM this command!**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
 
         if (commandData.args[0] === undefined && (commandData.permsChannel as Discord.Channel).type !== 'dm') {
             currentServerID = (commandData.guild as Discord.Guild).id;
         }   else if (commandData.args[0] === undefined && (commandData.permsChannel as Discord.Channel).type === 'dm') {
-            const msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
+            const msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }	else if (!idRegExp.test(commandData.args[0] as string)) {
-            const msgString = 'Please enter a valid server ID! (!displayserverinfo = SERVERID)';
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }	else {
             const argZero = commandData.args[0];
@@ -52,8 +71,14 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
         }
 
         if (currentServer == null) {
-            const msgString = 'Sorry! No matching servers were found!';
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = '------\n**Sorry! No matching servers were found!**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Server Issue:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
 

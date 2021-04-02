@@ -36,13 +36,25 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         let whatAreWeDoing = '';
         let trackedUserID = '';
         if (commandData.args[0] !== undefined && (commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove')) {
-            const msgString = `<@!${commandData.guildMember?.id}}> Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
         if (commandData.args[0] !== undefined && (commandData.args[1] === undefined || (!userMentionRegExp.test(commandData.args[1]) && !idRegExp.test(commandData.args[1])))) {
-            const msgString = `<@!${commandData.guildMember?.id}> Please enter a valud usermention! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please enter a valud usermention! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
 
@@ -74,8 +86,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                     }
                 }
                 if (isUserFound === false) {
-                    const msgString = `<@!${commandData.guildMember?.id}> Removing user ${userData.trackedUserNames[x]} from the list of tracked users!`;
-                    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                    const msgString = `------\n**Removing user ${userData.trackedUserNames[x]} from the list of tracked users!**\n------`;
+                    let msgEmbed = new Discord.MessageEmbed()
+				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				        .setColor([0, 0, 255])
+				        .setDescription(msgString)
+				        .setTimestamp(Date() as unknown as Date)
+				        .setTitle('__**Missing User(s):**__');
+			        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     userData.trackedUserIDs.splice(x, 1);
                     userData.trackedUserNames.splice(x, 1);
                     userData.trackingChannelIDs.splice(x, 1);
@@ -132,8 +150,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                     discordUser.updateUserDataInDB(userData);
                 }
             } catch (error) {
-                const msgString = `<@!${commandData.guildMember?.id}> Sorry, but the specified user could not be found!'`;
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                const msgString = `------\n**Sorry, but the specified user could not be found!**\n------`;
+                let msgEmbed = new Discord.MessageEmbed()
+				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				    .setColor([0, 0, 255])
+				    .setDescription(msgString)
+				    .setTimestamp(Date() as unknown as Date)
+				    .setTitle('__**User Issue:**__');
+			    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             }
             
             return commandReturnData;
@@ -166,8 +190,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                             .setColor([254, 254, 254]);
                         await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
                     } else if (currentIndex === -1) {
-                        const msgString = `<@!${commandData.guildMember?.id}> There is noone by that ID being tracked!`;
-                        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                        const msgString = `------\n**There is noone by that ID being tracked!**\n------`;
+                        let msgEmbed = new Discord.MessageEmbed()
+				            .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				            .setColor([0, 0, 255])
+				            .setDescription(msgString)
+				            .setTimestamp(Date() as unknown as Date)
+				            .setTitle('__**User Issue:**__');
+			            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     }
                 } else if ((commandData.args[0] as string).toLowerCase() === 'remove' && userData.trackedUserIDs.length === 0) {
                     const msgString = 'There is noone to remove from the tracked users!';

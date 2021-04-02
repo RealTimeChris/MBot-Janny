@@ -17,7 +17,14 @@ command.description = '!test';
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
 
-        await DiscordStuff.sendMessageWithCorrectChannel(commandData, "TEST!");
+        const msgString = '------\n**TEST!**\n------';
+        let msgEmbed = new Discord.MessageEmbed()
+			.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+			.setColor([0, 0, 255])
+			.setDescription(msgString)
+			.setTimestamp(Date() as unknown as Date)
+			.setTitle('__**Test:**__')
+		await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
         
         return commandReturnData;
     } catch (error) {

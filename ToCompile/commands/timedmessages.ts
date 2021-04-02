@@ -50,8 +50,14 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             const argOne = commandData.args[1];
             messageName = argOne as string;
         } else {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Please, enter a proper first argument or enter none at all!`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please, enter a proper first argument or enter none at all!**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
 
@@ -139,8 +145,14 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             }
 
             if (isItFound === false) {
-                const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but the timed message you requested could not be found!`;
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                const msgString = `------\n**Sorry, but the timed message you requested could not be found!**\n------`;
+                let msgEmbed = new Discord.MessageEmbed()
+				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				    .setColor([0, 0, 255])
+				    .setDescription(msgString)
+				    .setTimestamp(Date() as unknown as Date)
+				    .setTitle('__**Message Issue:**__');
+			    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 return commandReturnData;
             }
 

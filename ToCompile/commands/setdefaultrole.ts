@@ -37,12 +37,24 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         if (commandData.args[0] === undefined) {
             whatAreWeDoing = 'view';
         } else if (commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove') {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         } else if (commandData.args[1] === undefined) {
-            const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = `------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         } else if (roleMentionRegExp.test(commandData.args[1])) {
             const roleID = (commandData.args[1].match(idRegExp) as string[])[0];
@@ -132,16 +144,28 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         });
 
         if (isItFound === false) {
-             const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but the role you entered could not be found! Check spelling and case!`;
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+             const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
+             let msgEmbed = new Discord.MessageEmbed()
+                .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setColor([0, 0, 255])
+                .setDescription(msgString)
+                .setTimestamp(Date() as unknown as Date)
+                 .setTitle('__**Role Issue:**__')
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
 
         if (whatAreWeDoing === 'add') {
             for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
                 if (currentRole.id === guildData.defaultRoleIDs[x]) {
-                    const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Hey! It looks like you've already added that role!`;
-                    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                    const msgString = `------\n**Hey! It looks like you've already added that role!**\n------`;
+                    let msgEmbed = new Discord.MessageEmbed()
+				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				        .setColor([0, 0, 255])
+				        .setDescription(msgString)
+				        .setTimestamp(Date() as unknown as Date)
+				        .setTitle('__**Role Issue:**__')
+			        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     return commandReturnData;
                 }
             }
@@ -172,8 +196,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             }
 
             if (isItFound === false) {
-                const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but the role you entered could not be found! Check spelling and case!`;
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
+                let msgEmbed = new Discord.MessageEmbed()
+				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				    .setColor([0, 0, 255])
+				    .setDescription(msgString)
+				    .setTimestamp(Date() as unknown as Date)
+				    .setTitle('__**Missing Or Invalid Arguments:**__')
+			    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 return commandReturnData;
             }
 

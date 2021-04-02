@@ -32,8 +32,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 
         let whatAreWeDoing = '';
         if (commandData.args[0] !== undefined && !inviteRegExp.test(commandData.args[0])) {
-            const msgString = 'Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)';
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = '------\n**Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
         if (commandData.args[0] === undefined) {
@@ -93,8 +99,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         return commandReturnData;
     } catch (error) {
         if (error.type === 'NotFoundError') {
-            const msgString = 'Sorry, but your current guild could not be found!';
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = '------\n**Sorry, but your current guild could not be found!**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
         return new Promise((resolve, reject) => {

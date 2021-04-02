@@ -35,16 +35,34 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
         if (commandData.args[0] === undefined) {
             whatAreWeDoing = 'viewing';
         } else if (commandData.args[0].toLowerCase() !== 'enable' && commandData.args[0].toLowerCase() !== 'disable') {
-            const msgString = "Please enter either 'enable' or 'disable' as the first argument! (!setverificationsystem = ENABLE, VERIFICATIONMESSAGE, REACTIONEMOJI, or !setverificationsystem = DISABLE)";
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = "------\n**Please enter either 'enable' or 'disable' as the first argument! (!setverificationsystem = ENABLE, VERIFICATIONMESSAGE, REACTIONEMOJI, or !setverificationsystem = DISABLE)**\n------";
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         } else if (commandData.args[0].toLowerCase() === 'enable' && commandData.args[1] === undefined) {
-            const msgString = 'Please, enter a greeting message for the verification system!';
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = '------\n**Please, enter a greeting message for the verification system!**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         } else if (commandData.args[0].toLowerCase() === 'enable' && (commandData.args[2] === undefined || !emojiRegExp.test(commandData.args[2]))) {
-            const msgString = 'Please, enter a valid emoji for them to react with!';
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+            const msgString = '------\n**Please, enter a valid emoji for them to react with!**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__');
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         } else if (commandData.args[0].toLowerCase() === 'enable') {
             whatAreWeDoing = 'enable';
@@ -110,8 +128,14 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
                 .resolve(guildData.verificationSystem.channelID) as Discord.TextChannel;
 
             if (guildData.verificationSystem.channelID == '' || currentChannel === null) {
-                const msgString = 'Sorry, it looks as though it is already disabled!';
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                const msgString = '------\n**Sorry, it looks as though it is already disabled!**\n------';
+                let msgEmbed = new Discord.MessageEmbed()
+				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				    .setColor([0, 0, 255])
+				    .setDescription(msgString)
+	    			.setTimestamp(Date() as unknown as Date)
+    				.setTitle('__**Existence Issue:**__');
+			    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 guildData.verificationSystem.channelID = '';
                 guildData.verificationSystem.messageID = '';
                 guildData.verificationSystem.emoji = '';
@@ -141,8 +165,14 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
         }
         if (whatAreWeDoing === 'enable') {
             if (guildData.defaultRoleIDs.length === 0) {
-                const msgString = 'Please, first set a default role to be applied to the new member! Using !setdefaultrole.';
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                const msgString = '------\n**Please, first set a default role to be applied to the new member! Using !setdefaultrole.**\n------';
+                let msgEmbed = new Discord.MessageEmbed()
+				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				    .setColor([0, 0, 255])
+				    .setDescription(msgString)
+	    			.setTimestamp(Date() as unknown as Date)
+    				.setTitle('__**Role Issue:**__');
+			    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 return commandReturnData;
             }
             

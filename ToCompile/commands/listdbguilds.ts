@@ -29,13 +29,25 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 		}
 
 		if (commandData.args[0] === undefined) {
-			const msgString = 'Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)';
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+			const msgString = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
+			let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			return commandReturnData;
 		}
 		if (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse') {
-			const msgString = 'Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)';
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+			const msgString = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
+			let msgEmbed = new Discord.MessageEmbed()
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor([0, 0, 255])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Missing Or Invalid Arguments:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			return commandReturnData;
 		}
 		if (commandData.args[0].toLowerCase() !== 'janny') {
@@ -46,6 +58,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 
         const iterator = discordUser.dataBase.iterate({});
 		let areAnyFound = false;
+		let msgString = '------\n';
         for await (const {key, value} of iterator){
             if (key.length === 18 && key !== discordUser.userData.userID) {
                 let isItFound = false;
@@ -57,12 +70,22 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				const newValue = value;
                 if (isItFound === false) {
 					areAnyFound = true;
-                    const msgString = `Key: ${key}\nGuild Name: ${newValue.guildName}\nGuild ID: ${newValue.guildID}`;
-					await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgString);
+                    msgString += `__**Key:**__ ${key} __**Guild ID:**__ ${newValue.guildID} __**Guild Name:**__ ${newValue.guildName}\n`;
+					
                 }
             }
         }
-        await iterator.end();
+		if (areAnyFound){
+			msgString += '\n------';
+			await iterator.end();
+			let msgEmbed = new Discord.MessageEmbed()
+					.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+					.setColor([0, 0, 255])
+					.setDescription(msgString)
+					.setTimestamp(Date() as unknown as Date)
+					.setTitle('__**Depracated Database Entries:**__')
+			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+		}		
         
 		if (!areAnyFound){
 			const msgEmbed = new Discord.MessageEmbed();
