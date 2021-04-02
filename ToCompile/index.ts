@@ -237,17 +237,6 @@ client.once('ready', async () => {
 });
 
 client.on('message', async (msg: Discord.Message) => {
-	if (msg.member == null && !(msg.channel.type === 'dm')) {
-		console.log(msg.member);
-		console.log(msg.author.id);
-		console.log(msg.author.username);
-		console.log(msg.channel.type);
-		console.log(msg.channel.name);
-		console.log(msg.channel.guild.name);
-		console.log('HMMM!? NULL MEMBER?! GTFO!');
-		return;
-	}
-
 	if (msg.author.id === (client.user as Discord.User).id) {
 		console.log('Better not track our own messages!');
 		return;
