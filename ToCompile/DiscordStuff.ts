@@ -887,7 +887,11 @@ export class DiscordUser {
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle("__**Permissions Issue:**__");
-			await (commandData.toTextChannel as Discord.TextChannel).send(commandData, msgEmbed);
+			let msg = await sendMessageWithCorrectChannel(commandData, msgEmbed);
+			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+				msg = new Discord.Message((commandData.guildMember as Discord.GuildMember).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+			}
+			await msg.delete({timeout:20000});
 			return new Promise((resolve, reject) => {
 				resolve(false);
 			});

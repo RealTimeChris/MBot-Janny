@@ -1243,11 +1243,11 @@ var DiscordUser = /** @class */ (function () {
      */
     DiscordUser.prototype.doWeHaveAdminPermission = function (commandData) {
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, currentChannelPermissions, permissionStrings, areTheyAnAdmin, areTheyACommander, msgString, msgEmbed, error_18;
+            var guildData, currentChannelPermissions, permissionStrings, areTheyAnAdmin, areTheyACommander, msgString, msgEmbed, msg, error_18;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
+                        _a.trys.push([0, 4, , 5]);
                         return [4 /*yield*/, this.getGuildDataFromDB(commandData.guild)];
                     case 1:
                         guildData = _a.sent();
@@ -1268,18 +1268,24 @@ var DiscordUser = /** @class */ (function () {
                             .setDescription(msgString)
                             .setTimestamp(Date())
                             .setTitle("__**Permissions Issue:**__");
-                        return [4 /*yield*/, commandData.toTextChannel.send(commandData, msgEmbed)];
+                        return [4 /*yield*/, sendMessageWithCorrectChannel(commandData, msgEmbed)];
                     case 2:
+                        msg = _a.sent();
+                        if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                            msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
+                        }
+                        return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                    case 3:
                         _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(false);
                             })];
-                    case 3:
+                    case 4:
                         error_18 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_18);
                             })];
-                    case 4: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
