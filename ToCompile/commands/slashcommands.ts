@@ -624,14 +624,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 if (commandData.guildMember instanceof Discord.User){
                     msgEmbed
                         .setAuthor((commandData.guildMember as Discord.User)?.username, (commandData.guildMember as Discord.User).avatarURL() as string)
-                        .setColor([0, 0, 255])
+                        .setColor([254, 254, 255])
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle('__**Registered Commands:**__');
                 }
                 else {
                     msgEmbed
                         .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                        .setColor([0, 0, 255])
+                        .setColor([254, 254, 254])
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle('__**Registered Commands:**__');
                 }

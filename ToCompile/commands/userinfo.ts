@@ -25,6 +25,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             return commandReturnData;
         }
 
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+
         let userID = '';
         const userMentionRegExp = /.{2,3}\d{18}>/;
         const userIDRegExp = /\d{18}/;
@@ -35,7 +37,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const msgString = '------\n**Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -62,7 +64,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const msgString = '------\n**Sorry, but that user could not be found!**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**User Issue:**__');

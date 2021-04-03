@@ -31,6 +31,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 			return commandReturnData;
 		}
 
+		const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+
 		const regExp = new RegExp(/\d{1,3}/);
 		let message: Discord.Message;
 		if (commandData.args[0] === undefined || !regExp.test(commandData.args[0])
@@ -38,7 +40,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 			const msgString = '------\n**Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -57,7 +59,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 		const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> I've just deleted ${deleteCount} messages from this channel!`;
 		let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Messages Purged:**__')

@@ -73,7 +73,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
                 const msgString = `------\n**I've sent you help info, via a message!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor([254, 254, 255])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Help:**__');
@@ -101,7 +101,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             const msgString = `------\n**Sorry, but that command was not found!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor([254, 254, 254])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Command Issue:**__')

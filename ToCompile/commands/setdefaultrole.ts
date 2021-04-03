@@ -29,6 +29,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             return commandReturnData;
         }
 
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+
         let roleMemberManager: Discord.RoleManager;
         let currentDiscordRole: Discord.Role;
         let whatAreWeDoing = '';
@@ -40,7 +42,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const msgString = `------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -54,7 +56,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const msgString = `------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -82,8 +84,6 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 
         console.log(whatAreWeDoing);
         const roleName = commandData.args[1];
-
-        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
 
         const roleArray = (commandData.guild as Discord.Guild).roles.cache.array().sort();
 
@@ -132,7 +132,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTitle('__**Default Roles:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
@@ -155,7 +155,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Role Issue:**__');
@@ -173,7 +173,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                     const msgString = `------\n**Hey! It looks like you've already added that role!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				        .setColor([0, 0, 255])
+				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Role Issue:**__')
@@ -194,7 +194,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTitle('__**New Default Role Added:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
@@ -215,7 +215,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				    .setColor([0, 0, 255])
+				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**Missing Or Invalid Arguments:**__')
@@ -232,7 +232,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTitle('__**Default Role Removed:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);

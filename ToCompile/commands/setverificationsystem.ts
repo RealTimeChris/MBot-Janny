@@ -38,7 +38,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
             const msgString = "------\n**Please enter either 'enable' or 'disable' as the first argument! (!setverificationsystem = ENABLE, VERIFICATIONMESSAGE, REACTIONEMOJI, or !setverificationsystem = DISABLE)**\n------";
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -52,7 +52,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
             const msgString = '------\n**Please, enter a greeting message for the verification system!**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -66,7 +66,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
             const msgString = '------\n**Please, enter a valid emoji for them to react with!**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -102,7 +102,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
                     const msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor as [number, number, number])
                         .setTimestamp((Date() as unknown) as Date)
                         .setTitle('__**Verification System:**__')
                         .setDescription(msgString);
@@ -120,7 +120,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Verification System:**__')
                 .setDescription(msgString);
@@ -135,7 +135,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
                 const msgString = '------\n**Sorry, it looks as though it is already disabled!**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				    .setColor([0, 0, 255])
+				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 	    			.setTimestamp(Date() as unknown as Date)
     				.setTitle('__**Existence Issue:**__');
@@ -164,7 +164,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Set Verification System:**__')
                 .setDescription(msgString);
@@ -176,7 +176,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
                 const msgString = '------\n**Please, first set a default role to be applied to the new member! Using !setdefaultrole.**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				    .setColor([0, 0, 255])
+				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 	    			.setTimestamp(Date() as unknown as Date)
     				.setTitle('__**Role Issue:**__');
@@ -189,7 +189,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
             }
             
             const msgEmbed2 = new Discord.MessageEmbed()
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(commandData.args[1])
                 .setTimestamp((Date() as unknown) as Date);
             let newMessage = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed2) as Discord.Message;
@@ -209,7 +209,7 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Set Verification System:**__')
                 .setDescription(msgString);

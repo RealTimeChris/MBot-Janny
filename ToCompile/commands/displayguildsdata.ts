@@ -31,6 +31,7 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 				msgString += `__Guild Owner:__ <@!${(guild.owner as Discord.GuildMember).id}> (${(guild.owner as Discord.GuildMember).user.tag})\n`;
 	
 				const messageEmbed = new Discord.MessageEmbed()
+					.setColor([254, 254, 254])
 					.setThumbnail(guild.iconURL() as string)
 					.setTitle(`__**Guild Data ${currentCount + 1} of ${discordUser.guildsData.size}:**__`)
 					.setTimestamp((Date() as unknown) as Date)

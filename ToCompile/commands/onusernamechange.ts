@@ -43,7 +43,7 @@ export async function execute(client: Discord.Client, oldUser: Discord.User, new
 
         const msgEmbed = new Discord.MessageEmbed();
         msgEmbed
-            .setColor([0, 0, 255])
+            .setColor(guildData.borderColor as [number, number, number])
             .setDescription(msgString)
             .setThumbnail(newUser.avatarURL() as string)
             .setTimestamp((Date() as unknown) as Date)

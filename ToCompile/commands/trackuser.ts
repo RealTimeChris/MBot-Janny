@@ -31,6 +31,8 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             return commandReturnData;
         }
 
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+
         const userMentionRegExp = /.{2,3}\d{18}>/;
         const idRegExp = /\d{18}/;
         let whatAreWeDoing = '';
@@ -39,7 +41,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const msgString = `------\n**Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -54,7 +56,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const msgString = `------\n**Please enter a valud usermention! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -97,7 +99,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                     const msgString = `------\n**Removing user ${userData.trackedUserNames[x]} from the list of tracked users!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				        .setColor([0, 0, 255])
+				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Missing User(s):**__');
@@ -165,7 +167,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                 const msgString = `------\n**Sorry, but the specified user could not be found!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				    .setColor([0, 0, 255])
+				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**User Issue:**__');
@@ -209,7 +211,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
                         const msgString = `------\n**There is noone by that ID being tracked!**\n------`;
                         let msgEmbed = new Discord.MessageEmbed()
 				            .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				            .setColor([0, 0, 255])
+				            .setColor(guildData.borderColor as [number, number, number])
 				            .setDescription(msgString)
 				            .setTimestamp(Date() as unknown as Date)
 				            .setTitle('__**User Issue:**__');

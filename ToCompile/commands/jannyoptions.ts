@@ -36,7 +36,7 @@ command.description = '!jannyoptions, to display a list of options for this bot!
 			.avatarURL() as string)
 			.setTimestamp((Date() as unknown) as Date)
 			.setTitle('__**Janny Options:**__')
-			.setColor([0, 0, 255])
+			.setColor(guildData.borderColor as [number, number, number])
 			.setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
 
 		const fields = [];

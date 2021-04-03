@@ -36,7 +36,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         else if (commandData.args[0].toLowerCase() !== 'janny'){
             return commandReturnData;
         }
-        if (parseInt(commandData.args[1] as string, 10) > 255 || parseInt(commandData.args[1] as string) < 0){
+        if (parseInt(commandData.args[1] as string, 10) > 255 || parseInt(commandData.args[1] as string) < 0 || commandData.args[1] === undefined){
             const msgString = `------\n**Please, enter a red-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
@@ -48,7 +48,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
-        else if (parseInt(commandData.args[2] as string, 10) > 255 || parseInt(commandData.args[2] as string) < 0){
+        else if (parseInt(commandData.args[2] as string, 10) > 255 || parseInt(commandData.args[2] as string) < 0 || commandData.args[2] === undefined){
             const msgString = `------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
@@ -60,7 +60,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
-        else if (parseInt(commandData.args[3] as string, 10) > 255 || parseInt(commandData.args[3] as string) < 0){
+        else if (parseInt(commandData.args[3] as string, 10) > 255 || parseInt(commandData.args[3] as string) < 0 || commandData.args[3] === undefined){
             const msgString = `------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed

@@ -31,6 +31,8 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             });
         }
 
+        const guildData = await discordUser.getGuildDataFromDB((commandData.guild as Discord.Guild));
+
         let whatAreWeDoing;
         const userMentionRegExp = /<@!\d{18}>/;
         const userIDRegExp = /\d{18}/;
@@ -44,7 +46,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -61,7 +63,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -78,7 +80,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -95,7 +97,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 (!ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -112,7 +114,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -129,7 +131,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 (!ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -154,8 +156,6 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const userIDRaw = ((argOne as string).match(/\d{18}/) as string[])[0];
             userID = userIDRaw;
         }
-
-        const guildData = await discordUser.getGuildDataFromDB((commandData.guild as Discord.Guild));
 
         const currentGuildMember = await (commandData.guild as Discord.Guild).members.fetch((userID as string));
 
@@ -317,7 +317,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Currently Ghosted Members:**__');
@@ -332,7 +332,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     const msgString = `------\n**They are already ghosted!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				        .setColor([0, 0, 255])
+				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Already Ghosted:**__')
@@ -407,7 +407,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**You\'ve been ghosted:**__');
@@ -419,7 +419,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgEmbed2 = new Discord.MessageEmbed();
             msgEmbed2
                 .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString2)
                 .setTimestamp((Date() as unknown ) as Date)
                 .setTitle('__**New Server Member Ghosted:**__');
@@ -441,7 +441,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 const msgString = `-------\n**Sorry, but that user is not currently ghosted!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				        .setColor([0, 0, 255])
+				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Not Ghosted:**__');
@@ -489,7 +489,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**You\'ve been un-ghosted:**__');
@@ -501,7 +501,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgEmbed2 = new Discord.MessageEmbed();
             msgEmbed2
                 .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString2)
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**New Server Member Un-Ghosted:**__');

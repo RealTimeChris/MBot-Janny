@@ -42,7 +42,7 @@ export async function execute(client: Discord.Client, message: Discord.Message, 
             .setTitle('__**Message Deleted:**__')
             .setTimestamp((Date() as unknown) as Date)
             .setDescription(msgString)
-            .setColor([0, 0, 255]);
+            .setColor(guildData.borderColor as [number, number, number]);
         await textChannel.send(msgEmbed);
 
         for (let x = 0; x < message.embeds.length; x += 1) {

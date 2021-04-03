@@ -53,7 +53,7 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             const msgString = `------\n**Please, enter a proper first argument or enter none at all!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -99,7 +99,7 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Timed Messages:**__');
             msgEmbed.fields = embedFields;
@@ -127,7 +127,7 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             msgString += `__**Content:**__ ${newTimedMessage.messageContent}\n------`;
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Timed Message Added:**__')
                 .setDescription(msgString);
@@ -152,7 +152,7 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
                 const msgString = `------\n**Sorry, but the timed message you requested could not be found!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				    .setColor([0, 0, 255])
+				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**Message Issue:**__');
@@ -169,7 +169,7 @@ command.description = "__**Timed Messages Usage:**__ !timedmessages to view the 
             msgString = `You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ ${currentTimedMessageName}\n------`;
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 255])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Timed Message Removed:**__')
                 .setDescription(msgString);

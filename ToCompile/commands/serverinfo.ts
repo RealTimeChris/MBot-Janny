@@ -15,7 +15,7 @@ command.description = '!serverinfo to get info about the current server!\n!serve
 /**
  * Displays the info of a chosen server./
  */
-export async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordStuff.CommandReturnData> {
+export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
@@ -23,11 +23,13 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
 
         let currentServerID;
 
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+
         if (commandData.guildMember instanceof Discord.User && commandData.args[0] === undefined){
             const msgString = `------\n**Please, enter a server ID if you're going to DM this command!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -45,7 +47,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             const msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -59,7 +61,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             const msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -86,7 +88,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             const msgString = '------\n**Sorry! No matching servers were found!**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor([0, 0, 255])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Server Issue:**__')
@@ -145,7 +147,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             .setTitle('__**Server Info:**__')
             .setTimestamp((Date() as unknown) as Date)
             .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
-            .setColor([0, 0, 255]);
+            .setColor(guildData.borderColor as [number, number, number]);
             messageEmbed.fields = fields as Discord.EmbedField[];
         }
         else if (commandData.guildMember instanceof Discord.GuildMember){
@@ -154,7 +156,7 @@ export async function execute(commandData: DiscordStuff.CommandData): Promise<Di
             .setTitle('__**Server Info:**__')
             .setTimestamp((Date() as unknown) as Date)
             .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, (((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string))
-            .setColor([0, 0, 255]);
+            .setColor(guildData.borderColor as [number, number, number]);
             messageEmbed.fields = fields as Discord.EmbedField[];
         }
         

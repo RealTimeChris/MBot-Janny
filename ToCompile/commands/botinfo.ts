@@ -31,7 +31,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 
         const messageEmbed = new Discord.MessageEmbed()
            .setImage(commandData.guildMember?.client.user?.avatarURL() as string)
-           .setColor([0, 0, 255])
+           .setColor([254, 254, 254])
            .setTitle('__**Bot Info:**__')
            .setTimestamp((Date() as unknown) as Date);
         messageEmbed.fields = fields;
