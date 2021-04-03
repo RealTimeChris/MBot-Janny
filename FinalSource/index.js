@@ -767,7 +767,9 @@ client.on('messageDelete', function (message) { return __awaiter(void 0, void 0,
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
-            case 0: return [4 /*yield*/, discordUser.getGuildDataFromDB(message.guild)];
+            case 0:
+                if (!(message.channel.type !== 'dm')) return [3 /*break*/, 5];
+                return [4 /*yield*/, discordUser.getGuildDataFromDB(message.guild)];
             case 1:
                 guildData = _b.sent();
                 for (x = 0; x < guildData.logs.length; x += 1) {

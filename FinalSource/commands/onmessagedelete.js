@@ -80,7 +80,7 @@ function execute(client, message, discordUser) {
                         .setTitle('__**Message Deleted:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString)
-                        .setColor(guildData.borderColor);
+                        .setColor([0, 0, 255]);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();

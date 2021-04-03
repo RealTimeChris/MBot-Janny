@@ -20,11 +20,10 @@ command.description = 'Simply enter !ping';
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
 
-        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
-
         const msgString = '------\n**Pong!**\n------';
         let msgEmbed = new Discord.MessageEmbed();
         if (commandData.guildMember instanceof Discord.GuildMember){
+            const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
             msgEmbed
             .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
             .setColor(guildData.borderColor as [number, number, number])
@@ -35,7 +34,7 @@ command.description = 'Simply enter !ping';
         else{
             msgEmbed
             .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
-            .setColor(guildData.borderColor as [number, number, number])
+            .setColor([254, 254, 254])
             .setDescription(msgString)
             .setTimestamp(Date() as unknown as Date)
             .setTitle('__**Ping! Response:**__');

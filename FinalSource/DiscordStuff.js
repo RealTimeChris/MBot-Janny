@@ -236,15 +236,22 @@ exports.recurseThroughMessagePages = recurseThroughMessagePages;
  */
 function areWeInADM(commandData) {
     return __awaiter(this, void 0, void 0, function () {
-        var currentChannelType, msgContents, error_2;
+        var currentChannelType, msgString, msgEmbed, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
                     currentChannelType = commandData.fromTextChannelType;
                     if (!(currentChannelType === 'dm')) return [3 /*break*/, 2];
-                    msgContents = "Sorry, but we can't do that in a direct message!";
-                    return [4 /*yield*/, sendMessageWithCorrectChannel(commandData, msgContents)];
+                    msgString = "------\n**Sorry, but we can't do that in a direct message!**\n------";
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgEmbed
+                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
+                        .setColor([254, 254, 254])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Direct Message Issue**__');
+                    return [4 /*yield*/, sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

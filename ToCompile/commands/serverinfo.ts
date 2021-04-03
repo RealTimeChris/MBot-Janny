@@ -23,53 +23,89 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 
         let currentServerID;
 
-        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
-
         if (commandData.guildMember instanceof Discord.User && commandData.args[0] === undefined){
             const msgString = `------\n**Please, enter a server ID if you're going to DM this command!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor([254, 254, 254])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
             let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                msg = new Discord.Message((commandData.guildMember as Discord.User).client, msg, commandData.fromTextChannel as Discord.TextChannel);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
         }
 
+        let guildData: DiscordStuff.GuildData;
+        if (commandData.guildMember instanceof Discord.GuildMember){
+            guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+        }
+
         if (commandData.args[0] === undefined && (commandData.permsChannel as Discord.Channel).type !== 'dm') {
             currentServerID = (commandData.guild as Discord.Guild).id;
         }   else if (commandData.args[0] === undefined && (commandData.permsChannel as Discord.Channel).type === 'dm') {
+            
             const msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
-            let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor(guildData.borderColor as [number, number, number])
-				.setDescription(msgString)
-				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Missing Or Invalid Arguments:**__')
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
-            }
-            await msg.delete({timeout: 20000});
+                const messageEmbed = new Discord.MessageEmbed();
+                if (commandData.guildMember instanceof Discord.User){
+                    messageEmbed
+                        .setDescription(msgString)
+                        .setTitle('__**Missing Or Invalid Arguments:**__')
+                        .setTimestamp((Date() as unknown) as Date)
+                        .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+                        .setColor([254, 254, 254]);
+                    let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                        msg = new Discord.Message((commandData.guildMember as Discord.User).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                    }
+                    await msg.delete({timeout: 20000});
+                }
+                else if (commandData.guildMember instanceof Discord.GuildMember){
+                     messageEmbed
+                        .setDescription(msgString)
+                        .setTitle('__**Missing Or Invalid Arguments:**__')
+                        .setTimestamp((Date() as unknown) as Date)
+                        .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, (((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string))
+                        .setColor(guildData!.borderColor as [number, number, number]);
+                    let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                        msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                    }
+                    await msg.delete({timeout: 20000});
+                }
             return commandReturnData;
         }	else if (!idRegExp.test(commandData.args[0] as string)) {
             const msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
-            let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor(guildData.borderColor as [number, number, number])
-				.setDescription(msgString)
-				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Missing Or Invalid Arguments:**__')
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            const messageEmbed = new Discord.MessageEmbed();
+            if (commandData.guildMember instanceof Discord.User){
+                messageEmbed
+                    .setDescription(msgString)
+                    .setTitle('__**Missing Or Invalid Arguments:**__')
+                    .setTimestamp((Date() as unknown) as Date)
+                    .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+                    .setColor([254, 254, 254]);
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guildMember as Discord.User).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
             }
-            await msg.delete({timeout: 20000});
+            else if (commandData.guildMember instanceof Discord.GuildMember){
+                 messageEmbed
+                    .setDescription(msgString)
+                    .setTitle('__**Missing Or Invalid Arguments:**__')
+                    .setTimestamp((Date() as unknown) as Date)
+                    .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, (((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string))
+                    .setColor(guildData!.borderColor as [number, number, number]);
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
+            }
             return commandReturnData;
         }	else {
             const argZero = commandData.args[0];
@@ -86,17 +122,33 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 
         if (currentServer == null) {
             const msgString = '------\n**Sorry! No matching servers were found!**\n------';
-            let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor(guildData.borderColor as [number, number, number])
-				.setDescription(msgString)
-				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Server Issue:**__')
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            const messageEmbed = new Discord.MessageEmbed()
+            if (commandData.guildMember instanceof Discord.User){
+                messageEmbed
+                    .setDescription(msgString)
+                    .setTitle('__**Server Info:**__')
+                    .setTimestamp((Date() as unknown) as Date)
+                    .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+                    .setColor([254, 254, 254]);
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guildMember as Discord.User).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
+             }
+             else if (commandData.guildMember instanceof Discord.GuildMember){
+                 messageEmbed
+                    .setDescription(msgString)
+                    .setTitle('__**Server Info:**__')
+                    .setTimestamp((Date() as unknown) as Date)
+                    .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, (((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string))
+                    .setColor(guildData!.borderColor as [number, number, number]);
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
             }
-            await msg.delete({timeout: 20000});
             return commandReturnData;
         }
 
@@ -147,7 +199,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             .setTitle('__**Server Info:**__')
             .setTimestamp((Date() as unknown) as Date)
             .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
-            .setColor(guildData.borderColor as [number, number, number]);
+            .setColor([254, 254, 254]);
             messageEmbed.fields = fields as Discord.EmbedField[];
         }
         else if (commandData.guildMember instanceof Discord.GuildMember){
@@ -156,7 +208,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             .setTitle('__**Server Info:**__')
             .setTimestamp((Date() as unknown) as Date)
             .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, (((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string))
-            .setColor(guildData.borderColor as [number, number, number]);
+            .setColor(guildData!.borderColor as [number, number, number]);
             messageEmbed.fields = fields as Discord.EmbedField[];
         }
         

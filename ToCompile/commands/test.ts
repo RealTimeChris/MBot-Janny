@@ -17,12 +17,10 @@ command.description = '!test';
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
 
-        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
-
         const msgString = '------\n**TEST!**\n------';
         let msgEmbed = new Discord.MessageEmbed()
-			.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-			.setColor(guildData.borderColor as [number, number, number])
+			.setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+			.setColor([254, 254, 254])
 			.setDescription(msgString)
 			.setTimestamp(Date() as unknown as Date)
 			.setTitle('__**Test:**__')

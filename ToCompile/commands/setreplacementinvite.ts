@@ -15,8 +15,6 @@ command.description = '!setreplacementinvite = REPLACEMENTINVITELINK\nBe sure to
 export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     const commandReturnData = new DiscordStuff.CommandReturnData();
 	commandReturnData.commandName = command.name;
-
-    const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
     try {
         const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
@@ -30,6 +28,30 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             return commandReturnData;
         }
 
+        let guildData: DiscordStuff.GuildData;
+
+        try{
+            guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+        }
+        catch(error){
+            if (error.type === 'NotFoundError') {
+                const msgString = '------\n**Sorry, but your current guild could not be found!**\n------';
+                let msgEmbed = new Discord.MessageEmbed()
+                    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                    .setColor(guildData!.borderColor as [number, number, number])
+                    .setDescription(msgString)
+                    .setTimestamp(Date() as unknown as Date)
+                    .setTitle('__**Server Issue:**__');
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
+                return commandReturnData;
+            }
+        }
+        
+
         const inviteRegExp = /https:\/\/discord.gg\/\w{1,26}/;
 
         let whatAreWeDoing = '';
@@ -37,7 +59,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
             const msgString = '------\n**Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData!.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -71,7 +93,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 
             const messageEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData!.borderColor as [number, number, number])
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**Replacement Invite Link:**__')
                 .setDescription(msgString);
@@ -104,21 +126,6 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         }
         return commandReturnData;
     } catch (error) {
-        if (error.type === 'NotFoundError') {
-            const msgString = '------\n**Sorry, but your current guild could not be found!**\n------';
-            let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor(guildData.borderColor as [number, number, number])
-				.setDescription(msgString)
-				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Server Issue:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
-            }
-            await msg.delete({timeout: 20000});
-            return commandReturnData;
-        }
         return new Promise((resolve, reject) => {
             reject(error);
         });

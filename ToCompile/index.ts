@@ -232,7 +232,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	}
 	else if (commandData.guildMember instanceof Discord.User){
 		console.log(`Command: '${nameSolid}' entered by user: ${(commandData.guildMember as Discord.User).username}`);
-	}	
+	}
 	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
 });
@@ -564,26 +564,28 @@ client.on('inviteCreate', async (invite: Discord.Invite) => {
 });
 
 client.on('messageDelete', async (message: Discord.Message) => {
-	const guildData = await discordUser.getGuildDataFromDB((message.guild as Discord.Guild)) as DiscordStuff.GuildData;
-	for (let x = 0; x < guildData.logs.length; x += 1) {
-		if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'messagedelete') {
-			if ((guildData.logs[x] as DiscordStuff.Log).enabled === false) {
-				return;
+	if (message.channel.type !== 'dm'){
+		const guildData = await discordUser.getGuildDataFromDB((message.guild as Discord.Guild)) as DiscordStuff.GuildData;
+		for (let x = 0; x < guildData.logs.length; x += 1) {
+			if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'messagedelete') {
+				if ((guildData.logs[x] as DiscordStuff.Log).enabled === false) {
+					return;
+				}
 			}
 		}
-	}
-	const command = 'onmessagedelete';
-
-	if (!botCommands.commands.has(command)) {
-		return;
-	}
-	try {
-		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(client, message, discordUser);
-		console.log(`Completed Command: ${cmdName}`);
-		return;
-	} catch (error) {
-		console.log(error);
+		const command = 'onmessagedelete';
+	
+		if (!botCommands.commands.has(command)) {
+			return;
+		}
+		try {
+			console.log(`Command: '${command}' entered by system.`);
+			const cmdName = await botCommands.commands.get(command)?.function(client, message, discordUser);
+			console.log(`Completed Command: ${cmdName}`);
+			return;
+		} catch (error) {
+			console.log(error);
+		}
 	}
 });
 

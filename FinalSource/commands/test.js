@@ -47,35 +47,31 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
 function execute(commandData, discordUser) {
-    var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, guildData, msgString, msgEmbed, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var commandReturnData, msgString, msgEmbed, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _b.trys.push([0, 3, , 4]);
+                    _a.trys.push([0, 2, , 3]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
-                case 1:
-                    guildData = _b.sent();
                     msgString = '------\n**TEST!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
+                        .setColor([254, 254, 254])
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Test:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 2:
-                    _b.sent();
+                case 1:
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 3:
-                    error_1 = _b.sent();
+                case 2:
+                    error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 4: return [2 /*return*/];
+                case 3: return [2 /*return*/];
             }
         });
     });

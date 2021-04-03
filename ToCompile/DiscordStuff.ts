@@ -134,8 +134,15 @@ export async function areWeInADM(commandData: CommandData): Promise<boolean> {
 		const currentChannelType = commandData.fromTextChannelType;
 
 		if (currentChannelType === 'dm') {
-			const msgContents = `Sorry, but we can't do that in a direct message!`;
-			await sendMessageWithCorrectChannel(commandData, msgContents);
+			const msgString = `------\n**Sorry, but we can't do that in a direct message!**\n------`;
+			const msgEmbed = new Discord.MessageEmbed();
+			msgEmbed
+				.setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+				.setColor([254, 254, 254])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle('__**Direct Message Issue:**__');
+			await sendMessageWithCorrectChannel(commandData, msgEmbed);
 			
 			return new Promise((resolve, reject) => {
 				resolve(true);
