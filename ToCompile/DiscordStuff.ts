@@ -863,6 +863,7 @@ export class DiscordUser {
 	 */
 	async doWeHaveAdminPermission(commandData: CommandData): Promise<boolean> {
 		try {
+			const guildData = await this.getGuildDataFromDB(commandData.guild as Discord.Guild);
 			const currentChannelPermissions = (commandData.guildMember as Discord.GuildMember).permissionsIn(commandData.permsChannel as Discord.GuildChannel);
 
 			const permissionStrings = ['ADMINISTRATOR'] as Discord.PermissionString[];
@@ -878,7 +879,15 @@ export class DiscordUser {
 				});
 			}
 
-			await (commandData.toTextChannel as Discord.TextChannel).send(`<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but you don't have the permissions required for that!`);
+			const msgString = `------\n**Sorry, but you don't have the permissions required for that!**\n------`
+			const msgEmbed = new Discord.MessageEmbed();
+			msgEmbed
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setColor(guildData.borderColor as [number, number, number])
+				.setDescription(msgString)
+				.setTimestamp(Date() as unknown as Date)
+				.setTitle("__**Permissions Issue:**__");
+			await (commandData.toTextChannel as Discord.TextChannel).send(commandData, msgEmbed);
 			return new Promise((resolve, reject) => {
 				resolve(false);
 			});

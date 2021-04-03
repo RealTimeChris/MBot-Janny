@@ -250,7 +250,7 @@ function areWeInADM(commandData) {
                         .setColor([254, 254, 254])
                         .setDescription(msgString)
                         .setTimestamp(Date())
-                        .setTitle('__**Direct Message Issue**__');
+                        .setTitle('__**Direct Message Issue:**__');
                     return [4 /*yield*/, sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
                     _a.sent();
@@ -1243,11 +1243,14 @@ var DiscordUser = /** @class */ (function () {
      */
     DiscordUser.prototype.doWeHaveAdminPermission = function (commandData) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentChannelPermissions, permissionStrings, areTheyAnAdmin, areTheyACommander, error_18;
+            var guildData, currentChannelPermissions, permissionStrings, areTheyAnAdmin, areTheyACommander, msgString, msgEmbed, error_18;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, this.getGuildDataFromDB(commandData.guild)];
+                    case 1:
+                        guildData = _a.sent();
                         currentChannelPermissions = commandData.guildMember.permissionsIn(commandData.permsChannel);
                         permissionStrings = ['ADMINISTRATOR'];
                         areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
@@ -1257,18 +1260,26 @@ var DiscordUser = /** @class */ (function () {
                                     resolve(true);
                                 })];
                         }
-                        return [4 /*yield*/, commandData.toTextChannel.send("<@!" + commandData.guildMember.id + "> Sorry, but you don't have the permissions required for that!")];
-                    case 1:
+                        msgString = "------\n**Sorry, but you don't have the permissions required for that!**\n------";
+                        msgEmbed = new Discord.MessageEmbed();
+                        msgEmbed
+                            .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                            .setColor(guildData.borderColor)
+                            .setDescription(msgString)
+                            .setTimestamp(Date())
+                            .setTitle("__**Permissions Issue:**__");
+                        return [4 /*yield*/, commandData.toTextChannel.send(commandData, msgEmbed)];
+                    case 2:
                         _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(false);
                             })];
-                    case 2:
+                    case 3:
                         error_18 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_18);
                             })];
-                    case 3: return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
