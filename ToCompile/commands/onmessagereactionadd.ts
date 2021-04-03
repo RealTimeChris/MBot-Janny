@@ -12,7 +12,7 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onmessagereactionadd';
 command.description = "It's an automatic one!";
 
-export async function execute(messageReaction: Discord.MessageReaction, client: Discord.Client, args: string[],
+async function execute(messageReaction: Discord.MessageReaction, client: Discord.Client, args: string[],
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
 	try {
 		const commandReturnData = new DiscordStuff.CommandReturnData();

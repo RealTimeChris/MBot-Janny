@@ -12,7 +12,7 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onguildbanadd';
 command.description = "It's an automatic one!'";
 
-export async function execute(client: Discord.Client, guild: Discord.Guild, user: Discord.User,
+async function execute(client: Discord.Client, guild: Discord.Guild, user: Discord.User,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();

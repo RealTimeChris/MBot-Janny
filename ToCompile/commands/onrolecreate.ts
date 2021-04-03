@@ -12,7 +12,7 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onrolecreate';
 command.description = "It's an automatic one!";
 
-export async function execute(client: Discord.Client, role: Discord.Role,
+async function execute(client: Discord.Client, role: Discord.Role,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();

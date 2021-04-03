@@ -15,7 +15,7 @@ command.description = '!displayguildsdata to display the guild info of the bots 
 /**
  * Displays all of the data for all of the guilds, either in console or in chat.
  */
- export async function execute(commandData :DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData :DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
 	try {
 		const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;

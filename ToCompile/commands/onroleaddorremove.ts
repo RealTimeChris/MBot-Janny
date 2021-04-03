@@ -12,7 +12,7 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onroleaddorremove';
 command.description = "It's an automatic one!";
 
-export async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discord.GuildMemberRoleManager, newGuildMemberRoleManager: Discord.GuildMemberRoleManager,
+async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discord.GuildMemberRoleManager, newGuildMemberRoleManager: Discord.GuildMemberRoleManager,
     newGuildMember: Discord.GuildMember, collectionSizeDifference: number, discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();

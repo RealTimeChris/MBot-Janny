@@ -12,7 +12,7 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'onmessageupdate';
 command.description = "It's an automatic one!";
 
-export async function execute(client: Discord.Client, oldMessage: Discord.Message, newMessage: Discord.Message,
+async function execute(client: Discord.Client, oldMessage: Discord.Message, newMessage: Discord.Message,
     discordUser: DiscordStuff.DiscordUser): Promise<string> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();

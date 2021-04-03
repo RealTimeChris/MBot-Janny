@@ -15,7 +15,7 @@ command.description = '!botinfo to display info about this bot in chat!';
  /**
  * Displays the data about the currend user.
  */ 
-export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
    try {
        const commandReturnData = new DiscordStuff.CommandReturnData();
        commandReturnData.commandName = command.name;

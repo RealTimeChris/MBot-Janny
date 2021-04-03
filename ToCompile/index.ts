@@ -236,6 +236,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
 });
+
 client.once('ready', async () => {
 	try {
 		await discordUser.initializeInstance(client);
