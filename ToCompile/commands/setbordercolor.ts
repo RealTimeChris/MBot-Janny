@@ -74,8 +74,17 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         }
         else {
             borderColor[0] = parseInt(commandData.args[1] as string, 10);
+            if (borderColor[0] === 255){
+                borderColor[0] = 254;
+            }
             borderColor[1] = parseInt(commandData.args[2] as string, 10);
+            if (borderColor[1] === 255){
+                borderColor[1] = 254;
+            }
             borderColor[2] = parseInt(commandData.args[3] as string, 10);
+            if (borderColor[2] === 255){
+                borderColor[2] = 254;
+            }
         }
  
         guildData.borderColor = borderColor;
