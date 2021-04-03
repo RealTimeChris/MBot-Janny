@@ -64,6 +64,8 @@ import purge from './commands/purge';
 commands.set(purge.name, purge);
 import serverinfo from './commands/serverinfo';
 commands.set(serverinfo.name, serverinfo);
+import setbordercolor from './commands/setbordercolor';
+commands.set(setbordercolor.name, setbordercolor);
 import etdefaultrole from './commands/setdefaultrole';
 commands.set(etdefaultrole.name, etdefaultrole);
 import setdeletionstatus from './commands/setdeletionstatus';

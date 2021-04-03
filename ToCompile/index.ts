@@ -114,6 +114,15 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 			commandData.args[0] = value1;
 		}		
 	}
+	if (name_full === 'setbordercolor'){
+		commandData.args[0] = 'janny';
+		const redChannelValue = options_full[0].value;
+		const greenChannelValue = options_full[1].value;
+		const blueChannelValue = options_full[2].value;
+		commandData.args[1] = redChannelValue.toString();
+		commandData.args[2] = greenChannelValue.toString();
+		commandData.args[3] = blueChannelValue.toString();
+	}
 	if (name_full === 'setdefaultrole'){
 		const name_full = options_full[0].name;
 		if (name_full === 'add'){

@@ -13,7 +13,7 @@ command.name = 'setbordercolor';
 command.description = '__**Set Border Color Usage:**__ Sets the default color of the borders of the chat messages sent out by this bot! '+
 '!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL where botcolor is an array of 3 color values between 0 and 255.';
 
-export async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     try{
         const commandReturnData = new DiscordStuff.CommandReturnData();
         commandReturnData.commandName = command.name;
@@ -81,6 +81,14 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         guildData.borderColor = borderColor;
         await discordUser.updateGuildDataInDB(guildData);
 
+        const msgEmbed = new Discord.MessageEmbed();
+        msgEmbed
+            .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+            .setColor(guildData.borderColor as [number, number, number])
+            .setDescription(`Nicely done, you've updated the default border color for this bot!\n------\n__**Border Color Values:**__ ${guildData.borderColor}\n------`)
+            .setTimestamp(Date() as unknown as Date)
+            .setTitle('__**Updated Border Color:**__');
+        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
         return commandReturnData;
     }
     catch(error){
