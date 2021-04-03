@@ -52,11 +52,11 @@ command.description = '!purge = AMOUNTTODELETE, between 1 and 100 messages!';
 function execute(commandData, discordUser) {
     var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPerms, regExp, message, msgString_1, msgEmbed_1, deleteCount, messageManager, currentChannel, msgString, msgEmbed, newMessage, error_1;
+        var commandReturnData, areWeInADM, doWeHaveAdminPerms, regExp, message, msgString_1, msgEmbed_1, msg, deleteCount, messageManager, currentChannel, msgString, msgEmbed, newMessage, error_1;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
-                    _d.trys.push([0, 9, , 10]);
+                    _d.trys.push([0, 10, , 11]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
@@ -74,7 +74,7 @@ function execute(commandData, discordUser) {
                     regExp = new RegExp(/\d{1,3}/);
                     message = void 0;
                     if (!(commandData.args[0] === undefined || !regExp.test(commandData.args[0])
-                        || parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100)) return [3 /*break*/, 4];
+                        || parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100)) return [3 /*break*/, 5];
                     msgString_1 = '------\n**Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)**\n------';
                     msgEmbed_1 = new Discord.MessageEmbed()
                         .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
@@ -84,17 +84,23 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
                 case 3:
+                    msg = _d.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 4:
                     _d.sent();
                     return [2 /*return*/, commandReturnData];
-                case 4:
+                case 5:
                     deleteCount = parseInt(commandData.args[0].toString().match(regExp)[0], 10);
                     messageManager = new Discord.MessageManager(commandData.permsChannel, []);
                     currentChannel = new Discord.TextChannel(commandData.guild, messageManager);
                     return [4 /*yield*/, ((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.client.channels.fetch(commandData.permsChannel.id))];
-                case 5:
+                case 6:
                     currentChannel = (_d.sent());
                     return [4 /*yield*/, currentChannel.bulkDelete(deleteCount, true)];
-                case 6:
+                case 7:
                     _d.sent();
                     msgString = "<@!" + commandData.guildMember.id + "> I've just deleted " + deleteCount + " messages from this channel!";
                     msgEmbed = new Discord.MessageEmbed()
@@ -104,18 +110,18 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Messages Purged:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 7:
+                case 8:
                     newMessage = _d.sent();
                     return [4 /*yield*/, newMessage.delete({ timeout: 5000 })];
-                case 8:
+                case 9:
                     _d.sent();
                     return [2 /*return*/, commandReturnData];
-                case 9:
+                case 10:
                     error_1 = _d.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 10: return [2 /*return*/];
+                case 11: return [2 /*return*/];
             }
         });
     });

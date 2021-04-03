@@ -42,7 +42,11 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (commandData.args[0].toLowerCase() === 'enable' && commandData.args[1] === undefined) {
             const msgString = '------\n**Please, enter a greeting message for the verification system!**\n------';
@@ -52,7 +56,11 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (commandData.args[0].toLowerCase() === 'enable' && (commandData.args[2] === undefined || !emojiRegExp.test(commandData.args[2]))) {
             const msgString = '------\n**Please, enter a valid emoji for them to react with!**\n------';
@@ -62,7 +70,11 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (commandData.args[0].toLowerCase() === 'enable') {
             whatAreWeDoing = 'enable';
@@ -74,13 +86,14 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
         if (whatAreWeDoing === 'viewing') {
             if (guildData.verificationSystem.messageID !== ''){
                 try{
-                    const messageManager = new Discord.MessageManager(commandData.fromTextChannel as Discord.TextChannel);
+                    const messageManager = new Discord.MessageManager((commandData.guildMember as Discord.GuildMember).client.channels.resolve(guildData.verificationSystem.channelID) as Discord.TextChannel);
                     const newMessage = await messageManager.fetch(guildData.verificationSystem.messageID);
                     msgString = `------\n__**Channel:**__ <#${guildData.verificationSystem.channelID}>\n`;
                     msgString += `__**Message Content:**__ ${(newMessage.embeds[0] as Discord.MessageEmbed).description}\n`;
                     msgString += `__**Emoji:**__ ${guildData.verificationSystem.emoji}\n------`;
                 }
-                catch{
+                catch(error){
+                    console.log(error);
                     msgString = '------\n__The verification system is currently disabled.__\n------\n';
                     guildData.verificationSystem.channelID = '';
                     guildData.verificationSystem.messageID = '';
@@ -102,15 +115,6 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
                 guildData.verificationSystem.messageID = '';
                 guildData.verificationSystem.emoji = '';
                 await discordUser.updateGuildDataInDB(guildData);
-                const msgEmbed = new Discord.MessageEmbed();
-                msgEmbed
-                    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                    .setColor([0, 0, 255])
-                    .setTimestamp((Date() as unknown) as Date)
-                    .setTitle('__**Verification System:**__')
-                    .setDescription(msgString);
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                return commandReturnData;
             }
 
             const msgEmbed = new Discord.MessageEmbed();
@@ -135,7 +139,11 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
 				    .setDescription(msgString)
 	    			.setTimestamp(Date() as unknown as Date)
     				.setTitle('__**Existence Issue:**__');
-			    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
                 guildData.verificationSystem.channelID = '';
                 guildData.verificationSystem.messageID = '';
                 guildData.verificationSystem.emoji = '';
@@ -172,7 +180,11 @@ export async function execute(commandData: DiscordStuff.CommandData,  discordUse
 				    .setDescription(msgString)
 	    			.setTimestamp(Date() as unknown as Date)
     				.setTitle('__**Role Issue:**__');
-			    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
                 return commandReturnData;
             }
             

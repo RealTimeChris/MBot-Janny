@@ -44,7 +44,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (commandData.args[1] === undefined) {
             const msgString = `------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
@@ -54,7 +58,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (roleMentionRegExp.test(commandData.args[1])) {
             const roleID = (commandData.args[1].match(idRegExp) as string[])[0];
@@ -144,14 +152,18 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
         });
 
         if (isItFound === false) {
-             const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
-             let msgEmbed = new Discord.MessageEmbed()
+            const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
+            let msgEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
                 .setColor([0, 0, 255])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
-                 .setTitle('__**Role Issue:**__')
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                .setTitle('__**Role Issue:**__');
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+             }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         }
 
@@ -165,7 +177,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Role Issue:**__')
-			        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                        msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                    }
+                    await msg.delete({timeout: 20000});
                     return commandReturnData;
                 }
             }
@@ -203,7 +219,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**Missing Or Invalid Arguments:**__')
-			    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
                 return commandReturnData;
             }
 

@@ -48,7 +48,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -61,7 +65,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -74,7 +82,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -87,7 +99,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -100,7 +116,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -113,7 +133,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -312,7 +336,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Already Ghosted:**__')
-			        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                        msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                    }
+                    await msg.delete({timeout: 20000});
                     return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -410,7 +438,18 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             }
 
             if (isItFound === false) {
-                await (commandData.permsChannel as Discord.TextChannel | Discord.WebhookClient).send?(`<@!${(commandData.guildMember as Discord.GuildMember).id}> Sorry, but that user is not currently ghosted!`): Discord.Message;
+                const msgString = `-------\n**Sorry, but that user is not currently ghosted!**\n------`;
+                let msgEmbed = new Discord.MessageEmbed()
+				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				        .setColor([0, 0, 255])
+				        .setDescription(msgString)
+				        .setTimestamp(Date() as unknown as Date)
+				        .setTitle('__**Not Ghosted:**__');
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
                 return new Promise((resolve, reject) => {
                 resolve(returnData);
             });

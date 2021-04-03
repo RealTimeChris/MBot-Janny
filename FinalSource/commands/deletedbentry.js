@@ -117,11 +117,11 @@ function execute(commandData, discordUser) {
     var e_1, _a;
     var _b, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, areWeACommander, msgString, msgEmbed_1, msgString, msgEmbed_2, msgString, msgEmbed_3, dbKey, argZero, deletedCounter, iterator, iterator_1, iterator_1_1, _e, key, value, e_1_1, msgEmbed, error_2;
+        var commandReturnData, areWeInADM, areWeACommander, msgString, msgEmbed_1, msg, msgString, msgEmbed_2, msg, msgString, msgEmbed_3, msg, dbKey, argZero, deletedCounter, iterator, iterator_1, iterator_1_1, _e, key, value, e_1_1, msgEmbed, error_2;
         return __generator(this, function (_f) {
             switch (_f.label) {
                 case 0:
-                    _f.trys.push([0, 24, , 25]);
+                    _f.trys.push([0, 27, , 28]);
                     commandReturnData = new DiscordStuff.CommandReturnData;
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
@@ -136,7 +136,7 @@ function execute(commandData, discordUser) {
                     if (!areWeACommander) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 4];
+                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 5];
                     msgString = "------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------";
                     msgEmbed_1 = new Discord.MessageEmbed()
                         .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
@@ -146,10 +146,16 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
                 case 3:
+                    msg = _f.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 4:
                     _f.sent();
                     return [2 /*return*/, commandReturnData];
-                case 4:
-                    if (!(commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 6];
+                case 5:
+                    if (!(commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 8];
                     msgString = "------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------";
                     msgEmbed_2 = new Discord.MessageEmbed()
                         .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user.username, commandData.guildMember.user.avatarURL())
@@ -158,14 +164,20 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
-                case 5:
+                case 6:
+                    msg = _f.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 7:
                     _f.sent();
                     return [2 /*return*/, commandReturnData];
-                case 6:
+                case 8:
                     if (commandData.args[0].toLowerCase() !== 'janny') {
                         return [2 /*return*/, commandReturnData];
                     }
-                    if (!(commandData.args[1] === undefined)) return [3 /*break*/, 8];
+                    if (!(commandData.args[1] === undefined)) return [3 /*break*/, 11];
                     msgString = "------\n**Please, enter a DB key to search for!**\n------";
                     msgEmbed_3 = new Discord.MessageEmbed()
                         .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
@@ -174,10 +186,16 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
-                case 7:
+                case 9:
+                    msg = _f.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 10:
                     _f.sent();
                     return [2 /*return*/, commandReturnData];
-                case 8:
+                case 11:
                     dbKey = '';
                     if (commandData.args[1] !== undefined) {
                         argZero = commandData.args[1].toString();
@@ -185,42 +203,42 @@ function execute(commandData, discordUser) {
                     }
                     deletedCounter = new DeletedCounter();
                     iterator = discordUser.dataBase.iterate({});
-                    _f.label = 9;
-                case 9:
-                    _f.trys.push([9, 15, 16, 21]);
+                    _f.label = 12;
+                case 12:
+                    _f.trys.push([12, 18, 19, 24]);
                     iterator_1 = __asyncValues(iterator);
-                    _f.label = 10;
-                case 10: return [4 /*yield*/, iterator_1.next()];
-                case 11:
-                    if (!(iterator_1_1 = _f.sent(), !iterator_1_1.done)) return [3 /*break*/, 14];
+                    _f.label = 13;
+                case 13: return [4 /*yield*/, iterator_1.next()];
+                case 14:
+                    if (!(iterator_1_1 = _f.sent(), !iterator_1_1.done)) return [3 /*break*/, 17];
                     _e = iterator_1_1.value, key = _e.key, value = _e.value;
                     console.log(key + ' = ' + value);
-                    if (!key.includes(dbKey)) return [3 /*break*/, 13];
+                    if (!key.includes(dbKey)) return [3 /*break*/, 16];
                     deletedCounter.setData(key, value);
                     return [4 /*yield*/, onData(dbKey, discordUser, deletedCounter)];
-                case 12:
-                    _f.sent();
-                    _f.label = 13;
-                case 13: return [3 /*break*/, 10];
-                case 14: return [3 /*break*/, 21];
                 case 15:
+                    _f.sent();
+                    _f.label = 16;
+                case 16: return [3 /*break*/, 13];
+                case 17: return [3 /*break*/, 24];
+                case 18:
                     e_1_1 = _f.sent();
                     e_1 = { error: e_1_1 };
-                    return [3 /*break*/, 21];
-                case 16:
-                    _f.trys.push([16, , 19, 20]);
-                    if (!(iterator_1_1 && !iterator_1_1.done && (_a = iterator_1.return))) return [3 /*break*/, 18];
-                    return [4 /*yield*/, _a.call(iterator_1)];
-                case 17:
-                    _f.sent();
-                    _f.label = 18;
-                case 18: return [3 /*break*/, 20];
+                    return [3 /*break*/, 24];
                 case 19:
+                    _f.trys.push([19, , 22, 23]);
+                    if (!(iterator_1_1 && !iterator_1_1.done && (_a = iterator_1.return))) return [3 /*break*/, 21];
+                    return [4 /*yield*/, _a.call(iterator_1)];
+                case 20:
+                    _f.sent();
+                    _f.label = 21;
+                case 21: return [3 /*break*/, 23];
+                case 22:
                     if (e_1) throw e_1.error;
                     return [7 /*endfinally*/];
-                case 20: return [7 /*endfinally*/];
-                case 21: return [4 /*yield*/, iterator.end()];
-                case 22:
+                case 23: return [7 /*endfinally*/];
+                case 24: return [4 /*yield*/, iterator.end()];
+                case 25:
                     _f.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
@@ -230,15 +248,15 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date.now())
                         .setTitle('__**Deleted DB Entries:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 23:
+                case 26:
                     _f.sent();
                     return [2 /*return*/, commandReturnData];
-                case 24:
+                case 27:
                     error_2 = _f.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
-                case 25: return [2 /*return*/];
+                case 28: return [2 /*return*/];
             }
         });
     });

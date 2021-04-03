@@ -42,7 +42,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (commandData.args[0].toLowerCase() === 'enable' && commandData.args[1] !== undefined && (!messageCountRegExp.test(commandData.args[1]) || parseInt(commandData.args[1], 10) < 0 || parseInt(commandData.args[1], 10) > 10000)) {
             const msgString = '------\n**Please enter a valid number of messages back to save! (0 to 10000) (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------';
@@ -52,7 +56,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (commandData.args[1] !== undefined) {
             whatAreWeDoing = commandData.args[0].toLowerCase();
@@ -116,7 +124,7 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				        .setColor([0, 0, 255])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
-				        .setTitle('__**Channel Issue:**__');
+				        .setTitle('__**Channel Re-Added:**__');
 			        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     if (currentDeletionChannel.deletionMessageID
                         !== undefined && currentDeletionChannel.deletionMessageID !== '') {
@@ -173,7 +181,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Channel Issue:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
                 return commandReturnData;
             }
             guildData.deletionChannels.splice(deletionChannelIndex, 1);

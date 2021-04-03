@@ -42,7 +42,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+				msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+			}
+			await msg.delete({timeout: 20000});
 			return commandReturnData;
 		}
 		const deleteCount = parseInt(((commandData.args[0].toString().match(regExp) as string[])[0]as string), 10);

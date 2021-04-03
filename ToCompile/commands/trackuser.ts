@@ -43,7 +43,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         }
         if (commandData.args[0] !== undefined && (commandData.args[1] === undefined || (!userMentionRegExp.test(commandData.args[1]) && !idRegExp.test(commandData.args[1])))) {
@@ -54,7 +58,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         }
 
@@ -93,7 +101,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Missing User(s):**__');
-			        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                        msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                    }
+                    await msg.delete({timeout: 20000});
                     userData.trackedUserIDs.splice(x, 1);
                     userData.trackedUserNames.splice(x, 1);
                     userData.trackingChannelIDs.splice(x, 1);
@@ -157,7 +169,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**User Issue:**__');
-			    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                }
+                await msg.delete({timeout: 20000});
             }
             
             return commandReturnData;
@@ -197,7 +213,11 @@ export async function execute(commandData: DiscordStuff.CommandData, discordUser
 				            .setDescription(msgString)
 				            .setTimestamp(Date() as unknown as Date)
 				            .setTitle('__**User Issue:**__');
-			            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                        let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                        if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                            msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                        }
+                        await msg.delete({timeout: 20000});
                     }
                 } else if ((commandData.args[0] as string).toLowerCase() === 'remove' && userData.trackedUserIDs.length === 0) {
                     const msgString = 'There is noone to remove from the tracked users!';
