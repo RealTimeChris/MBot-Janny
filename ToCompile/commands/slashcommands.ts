@@ -352,6 +352,34 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         // Create Global Command
         await interaction.createApplicationCommand(serverinfo).then(error => console.log(error)).catch(error => console.log(error.message));
 
+        const setbordercolor = {
+            "name":"setbordercolor",
+            "description": "Sets the default border color for chat messages sent out by this bot.",
+            "options":[
+                {
+                    "name":"redchannel",
+                    "description": "Pick a value between 0 and 255 to set this color channel value.",
+                    "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
+                    "required": true
+                },
+                {
+                    "name":"greenchannel",
+                    "description": "Pick a value between 0 and 255 to set this color channel value.",
+                    "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
+                    "required": true
+                },
+                {
+                    "name":"bluechannel",
+                    "description": "Pick a value between 0 and 255 to set this color channel value.",
+                    "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
+                    "required": true
+                }
+            ]
+        }
+
+        // Create Global Command
+        await interaction.createApplicationCommand(setbordercolor).then(value => console.log(value)).catch(error => console.log(error.message));
+  
         const setdefaultrole =  {
             "name": "setdefaultrole",
             "description": "Adds or removes a default role to the server, to be added upon someone joining.",

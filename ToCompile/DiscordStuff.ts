@@ -353,6 +353,7 @@ export class Log {
  * Class representing a single guild/server. * 
  */
 export class GuildData {
+	borderColor: number[] = [0, 0, 255];
 	ghostedRoleID: string = '';
 	timedMessages: TimedMessage[] = [];
 	guildID: string = '';

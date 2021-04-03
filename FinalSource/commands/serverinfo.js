@@ -52,11 +52,11 @@ command.description = '!serverinfo to get info about the current server!\n!serve
 function execute(commandData) {
     var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, idRegExp, currentServerID, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, argZero, serverArray, currentServer, x, msgString, msgEmbed, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
+        var commandReturnData, idRegExp, currentServerID, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, argZero, serverArray, currentServer, x, msgString, msgEmbed, msg, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
         return __generator(this, function (_e) {
             switch (_e.label) {
                 case 0:
-                    _e.trys.push([0, 15, , 16]);
+                    _e.trys.push([0, 16, , 17]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     idRegExp = /\d{18}/;
@@ -133,7 +133,7 @@ function execute(commandData) {
                             currentServer = serverArray[x];
                         }
                     }
-                    if (!(currentServer == null)) return [3 /*break*/, 13];
+                    if (!(currentServer == null)) return [3 /*break*/, 14];
                     msgString = '------\n**Sorry! No matching servers were found!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
@@ -143,9 +143,15 @@ function execute(commandData) {
                         .setTitle('__**Server Issue:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 12:
+                    msg = _e.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 13:
                     _e.sent();
                     return [2 /*return*/, commandReturnData];
-                case 13:
+                case 14:
                     categoryCount = 0;
                     voiceChannelCount = 0;
                     textChannelCount = 0;
@@ -203,15 +209,15 @@ function execute(commandData) {
                         messageEmbed.fields = fields;
                     }
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                case 14:
+                case 15:
                     _e.sent();
                     return [2 /*return*/, commandReturnData];
-                case 15:
+                case 16:
                     error_1 = _e.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 16: return [2 /*return*/];
+                case 17: return [2 /*return*/];
             }
         });
     });
