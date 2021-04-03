@@ -17,6 +17,12 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
     try{
         const commandReturnData = new DiscordStuff.CommandReturnData();
         commandReturnData.commandName = command.name;
+
+        let areWeInADM = await DiscordStuff.areWeInADM(commandData);
+
+        if (areWeInADM){
+            return commandReturnData;
+        }
         
         const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
 
