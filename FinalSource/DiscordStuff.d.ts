@@ -104,6 +104,7 @@ export declare class Log {
  * Class representing a single guild/server. *
  */
 export declare class GuildData {
+    borderColor: number[];
     ghostedRoleID: string;
     timedMessages: TimedMessage[];
     guildID: string;

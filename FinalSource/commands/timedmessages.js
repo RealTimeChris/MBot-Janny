@@ -98,7 +98,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please, enter a proper first argument or enter none at all!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -140,7 +140,7 @@ function execute(commandData, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Timed Messages:**__');
                     msgEmbed.fields = embedFields;
@@ -169,7 +169,7 @@ function execute(commandData, discordUser) {
                     msgString += "__**Content:**__ " + newTimedMessage.messageContent + "\n------";
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Timed Message Added:**__')
                         .setDescription(msgString);
@@ -201,7 +201,7 @@ function execute(commandData, discordUser) {
                     msgString_1 = "------\n**Sorry, but the timed message you requested could not be found!**\n------";
                     msgEmbed_1 = new Discord.MessageEmbed()
                         .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Message Issue:**__');
@@ -221,7 +221,7 @@ function execute(commandData, discordUser) {
                     msgString = "You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ " + currentTimedMessageName + "\n------";
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Timed Message Removed:**__')
                         .setDescription(msgString);

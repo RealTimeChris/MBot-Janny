@@ -64,6 +64,8 @@ var purge_1 = __importDefault(require("./commands/purge"));
 commands.set(purge_1.default.name, purge_1.default);
 var serverinfo_1 = __importDefault(require("./commands/serverinfo"));
 commands.set(serverinfo_1.default.name, serverinfo_1.default);
+var setbordercolor_1 = __importDefault(require("./commands/setbordercolor"));
+commands.set(setbordercolor_1.default.name, setbordercolor_1.default);
 var setdefaultrole_1 = __importDefault(require("./commands/setdefaultrole"));
 commands.set(setdefaultrole_1.default.name, setdefaultrole_1.default);
 var setdeletionstatus_1 = __importDefault(require("./commands/setdeletionstatus"));

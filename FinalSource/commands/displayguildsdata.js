@@ -67,6 +67,7 @@ function execute(commandData, discordUser) {
                         msgString += "__Created:__ " + guild.createdAt + "\n";
                         msgString += "__Guild Owner:__ <@!" + guild.owner.id + "> (" + guild.owner.user.tag + ")\n";
                         var messageEmbed = new Discord.MessageEmbed()
+                            .setColor([254, 254, 254])
                             .setThumbnail(guild.iconURL())
                             .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
                             .setTimestamp(Date())

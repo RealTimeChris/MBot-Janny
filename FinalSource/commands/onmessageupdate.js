@@ -81,7 +81,7 @@ function execute(client, oldMessage, newMessage, discordUser) {
                         .setTitle('__**Message Updated:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString)
-                        .setColor([0, 0, 255]);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();

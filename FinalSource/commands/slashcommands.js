@@ -43,18 +43,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
 var DiscordStuff = require("../DiscordStuff");
 var slash_commands_1 = require("slash-commands");
-var SlashCommands = require("slash-commands");
 var command = new DiscordStuff.BotCommand();
 command.name = 'slashcommands';
 command.description = '!slashcommands';
 function execute(commandData, discordUser) {
     var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, interaction, commands, x, setbordercolor, globalCommands, msgString, msgEmbeds, x, msgEmbed, currentMsgEmbed, x, error_1;
+        var commandReturnData, interaction, commands, x, globalCommands, msgString, msgEmbeds, x, msgEmbed, currentMsgEmbed, x, error_1;
         return __generator(this, function (_f) {
             switch (_f.label) {
                 case 0:
-                    _f.trys.push([0, 8, , 9]);
+                    _f.trys.push([0, 7, , 8]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID,
@@ -67,37 +66,8 @@ function execute(commandData, discordUser) {
                         //const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
                         //console.log(newInteraction);
                     }
-                    setbordercolor = {
-                        "name": "setbordercolor",
-                        "description": "Sets the default border color for chat messages sent out by this bot.",
-                        "options": [
-                            {
-                                "name": "redchannel",
-                                "description": "Pick a value between 0 and 255 to set this color channel value.",
-                                "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
-                                "required": true
-                            },
-                            {
-                                "name": "greenchannel",
-                                "description": "Pick a value between 0 and 255 to set this color channel value.",
-                                "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
-                                "required": true
-                            },
-                            {
-                                "name": "bluechannel",
-                                "description": "Pick a value between 0 and 255 to set this color channel value.",
-                                "type": SlashCommands.ApplicationCommandOptionType.INTEGER,
-                                "required": true
-                            }
-                        ]
-                    };
-                    // Create Global Command
-                    return [4 /*yield*/, interaction.createApplicationCommand(setbordercolor).then(function (value) { return console.log(value); }).catch(function (error) { return console.log(error.message); })];
-                case 2:
-                    // Create Global Command
-                    _f.sent();
                     return [4 /*yield*/, interaction.getApplicationCommands()];
-                case 3:
+                case 2:
                     globalCommands = _f.sent();
                     msgString = "------\n**Yes, IT'S COMPLETED! You have " + globalCommands.length + " commands registered!**\n------\n";
                     msgEmbeds = [];
@@ -108,14 +78,14 @@ function execute(commandData, discordUser) {
                             if (commandData.guildMember instanceof Discord.User) {
                                 msgEmbed
                                     .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.username, commandData.guildMember.avatarURL())
-                                    .setColor([0, 0, 255])
+                                    .setColor([254, 254, 255])
                                     .setTimestamp(Date())
                                     .setTitle('__**Registered Commands:**__');
                             }
                             else {
                                 msgEmbed
                                     .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
-                                    .setColor([0, 0, 255])
+                                    .setColor([254, 254, 254])
                                     .setTimestamp(Date())
                                     .setTitle('__**Registered Commands:**__');
                             }
@@ -127,24 +97,24 @@ function execute(commandData, discordUser) {
                         }
                     }
                     x = 0;
-                    _f.label = 4;
-                case 4:
-                    if (!(x < msgEmbeds.length)) return [3 /*break*/, 7];
+                    _f.label = 3;
+                case 3:
+                    if (!(x < msgEmbeds.length)) return [3 /*break*/, 6];
                     (_e = msgEmbeds[x]) === null || _e === void 0 ? void 0 : _e.setTitle("__**Registered Commands, (" + (x + 1).toString() + " of " + msgEmbeds.length + "): **__");
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbeds[x])];
-                case 5:
+                case 4:
                     _f.sent();
-                    _f.label = 6;
-                case 6:
+                    _f.label = 5;
+                case 5:
                     x += 1;
-                    return [3 /*break*/, 4];
-                case 7: return [2 /*return*/, commandReturnData];
-                case 8:
+                    return [3 /*break*/, 3];
+                case 6: return [2 /*return*/, commandReturnData];
+                case 7:
                     error_1 = _f.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 9: return [2 /*return*/];
+                case 8: return [2 /*return*/];
             }
         });
     });

@@ -52,19 +52,22 @@ command.description = 'Simply enter !ping';
 function execute(commandData, discordUser) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, msgString, msgEmbed, error_1;
+        var commandReturnData, guildData, msgString, msgEmbed, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    _b.trys.push([0, 2, , 3]);
+                    _b.trys.push([0, 3, , 4]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
+                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
+                case 1:
+                    guildData = _b.sent();
                     msgString = '------\n**Pong!**\n------';
                     msgEmbed = new Discord.MessageEmbed();
                     if (commandData.guildMember instanceof Discord.GuildMember) {
                         msgEmbed
                             .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
-                            .setColor([0, 0, 255])
+                            .setColor(guildData.borderColor)
                             .setDescription(msgString)
                             .setTimestamp(Date())
                             .setTitle('__**Ping! Response:**__');
@@ -72,21 +75,21 @@ function execute(commandData, discordUser) {
                     else {
                         msgEmbed
                             .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
-                            .setColor([0, 0, 255])
+                            .setColor(guildData.borderColor)
                             .setDescription(msgString)
                             .setTimestamp(Date())
                             .setTitle('__**Ping! Response:**__');
                     }
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 1:
+                case 2:
                     _b.sent();
                     return [2 /*return*/, commandReturnData];
-                case 2:
+                case 3:
                     error_1 = _b.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 3: return [2 /*return*/];
+                case 4: return [2 /*return*/];
             }
         });
     });

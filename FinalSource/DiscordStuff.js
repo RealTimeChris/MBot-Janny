@@ -519,6 +519,7 @@ exports.Log = Log;
  */
 var GuildData = /** @class */ (function () {
     function GuildData() {
+        this.borderColor = [0, 0, 255];
         this.ghostedRoleID = '';
         this.timedMessages = [];
         this.guildID = '';

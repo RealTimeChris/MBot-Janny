@@ -78,7 +78,7 @@ function execute(client, collection, discordUser) {
                         .setTitle('__**Messages Bulk Deleted:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString)
-                        .setColor([0, 0, 255]);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();
@@ -96,7 +96,7 @@ function execute(client, collection, discordUser) {
                         .setTitle("__**Deleted Message: " + (x + 1) + " of " + keyArray.length + "**__")
                         .setTimestamp(Date())
                         .setDescription(msgString2)
-                        .setColor([0, 0, 255]);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 5:
                     _a.sent();

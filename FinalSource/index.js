@@ -50,7 +50,7 @@ var commandindex_1 = __importDefault(require("./commandindex"));
 var discordUser = new DiscordStuff.DiscordUser();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, userID, reason, name_full_1, viewOrNot, value, logname, enableOrDisable, msgCountToPurge, value1, name_full_2, role, role, quantity, name_full_3, inviteLink, message, emoji, msgName, msgName, msgContents, msgInterval, userID, userID, user, returnData;
+    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, userID, reason, name_full_1, viewOrNot, value, logname, enableOrDisable, msgCountToPurge, value1, redChannelValue, greenChannelValue, blueChannelValue, name_full_2, role, role, quantity, name_full_3, inviteLink, message, emoji, msgName, msgName, msgContents, msgInterval, userID, userID, user, returnData;
     var _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -157,6 +157,15 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                         value1 = options_full[0].value;
                         commandData.args[0] = value1;
                     }
+                }
+                if (name_full === 'setbordercolor') {
+                    commandData.args[0] = 'janny';
+                    redChannelValue = options_full[0].value;
+                    greenChannelValue = options_full[1].value;
+                    blueChannelValue = options_full[2].value;
+                    commandData.args[1] = redChannelValue.toString();
+                    commandData.args[2] = greenChannelValue.toString();
+                    commandData.args[3] = blueChannelValue.toString();
                 }
                 if (name_full === 'setdefaultrole') {
                     name_full_2 = options_full[0].name;

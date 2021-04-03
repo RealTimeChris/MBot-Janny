@@ -113,7 +113,7 @@ function execute(commandData) {
                     msgString_2 = "------\n**I've sent you help info, via a message!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_j = commandData.guildMember) === null || _j === void 0 ? void 0 : _j.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor([254, 254, 255])
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Help:**__');
@@ -138,7 +138,7 @@ function execute(commandData) {
                     msgString = "------\n**Sorry, but that command was not found!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_k = commandData.guildMember) === null || _k === void 0 ? void 0 : _k.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor([254, 254, 254])
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Command Issue:**__');

@@ -50,7 +50,7 @@ command.description = 'Just enter !setdefaultrole to view the current list of de
 function execute(commandData, discordUser) {
     var _a, _b, _c, _d, _e, _f, _g;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPerms, roleMemberManager, currentDiscordRole, whatAreWeDoing, roleMentionRegExp, idRegExp, msgString, msgEmbed, msg, msgString, msgEmbed, msg, roleID, roleName_1, guildData_1, roleArray_1, _loop_1, x, msgString_1, messageEmbed, currentRole_1, isItFound_1, msgString, msgEmbed, msg, x, msgString_2, msgEmbed, msg, msgString, messageEmbed, x, msgString_3, msgEmbed, msg, msgString, messageEmbed, error_1;
+        var commandReturnData, areWeInADM, doWeHaveAdminPerms, guildData_1, roleMemberManager, currentDiscordRole, whatAreWeDoing, roleMentionRegExp, idRegExp, msgString, msgEmbed, msg, msgString, msgEmbed, msg, roleID, roleName_1, roleArray_1, _loop_1, x, msgString_1, messageEmbed, currentRole_1, isItFound_1, msgString, msgEmbed, msg, x, msgString_2, msgEmbed, msg, msgString, messageEmbed, x, msgString_3, msgEmbed, msg, msgString, messageEmbed, error_1;
         return __generator(this, function (_h) {
             switch (_h.label) {
                 case 0:
@@ -69,70 +69,73 @@ function execute(commandData, discordUser) {
                     if (doWeHaveAdminPerms === false) {
                         return [2 /*return*/, commandReturnData];
                     }
+                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
+                case 3:
+                    guildData_1 = _h.sent();
                     roleMemberManager = void 0;
                     currentDiscordRole = void 0;
                     whatAreWeDoing = '';
                     roleMentionRegExp = /<@&\d{18}>/;
                     idRegExp = /\d{18}/;
-                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 3];
+                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 4];
                     whatAreWeDoing = 'view';
-                    return [3 /*break*/, 13];
-                case 3:
-                    if (!(commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove')) return [3 /*break*/, 6];
+                    return [3 /*break*/, 14];
+                case 4:
+                    if (!(commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove')) return [3 /*break*/, 7];
                     msgString = "------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 4:
+                case 5:
                     msg = _h.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 5:
+                case 6:
                     _h.sent();
                     return [2 /*return*/, commandReturnData];
-                case 6:
-                    if (!(commandData.args[1] === undefined)) return [3 /*break*/, 9];
+                case 7:
+                    if (!(commandData.args[1] === undefined)) return [3 /*break*/, 10];
                     msgString = "------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 7:
+                case 8:
                     msg = _h.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 8:
+                case 9:
                     _h.sent();
                     return [2 /*return*/, commandReturnData];
-                case 9:
-                    if (!roleMentionRegExp.test(commandData.args[1])) return [3 /*break*/, 11];
+                case 10:
+                    if (!roleMentionRegExp.test(commandData.args[1])) return [3 /*break*/, 12];
                     roleID = commandData.args[1].match(idRegExp)[0];
                     roleMemberManager = new Discord.RoleManager(commandData.guild);
                     return [4 /*yield*/, roleMemberManager.fetch(roleID)];
-                case 10:
+                case 11:
                     currentDiscordRole = (_h.sent());
                     commandData.args[1] = currentDiscordRole.name;
-                    return [3 /*break*/, 13];
-                case 11:
-                    if (!idRegExp.test(commandData.args[1])) return [3 /*break*/, 13];
+                    return [3 /*break*/, 14];
+                case 12:
+                    if (!idRegExp.test(commandData.args[1])) return [3 /*break*/, 14];
                     roleMemberManager = new Discord.RoleManager(commandData.guild);
                     return [4 /*yield*/, roleMemberManager.fetch(commandData.args[1])];
-                case 12:
+                case 13:
                     currentDiscordRole = (_h.sent());
                     commandData.args[1] = currentDiscordRole.name;
-                    _h.label = 13;
-                case 13:
+                    _h.label = 14;
+                case 14:
                     if (((_c = commandData.args[0]) === null || _c === void 0 ? void 0 : _c.toLowerCase()) === 'add') {
                         whatAreWeDoing = 'add';
                     }
@@ -141,9 +144,6 @@ function execute(commandData, discordUser) {
                     }
                     console.log(whatAreWeDoing);
                     roleName_1 = commandData.args[1];
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
-                case 14:
-                    guildData_1 = _h.sent();
                     roleArray_1 = commandData.guild.roles.cache.array().sort();
                     _loop_1 = function (x) {
                         var isItFoundReal = roleArray_1.map(function (role) {
@@ -190,7 +190,7 @@ function execute(commandData, discordUser) {
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData_1.borderColor)
                         .setTitle('__**Default Roles:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString_1);
@@ -212,7 +212,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_e = commandData.guildMember) === null || _e === void 0 ? void 0 : _e.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Role Issue:**__');
@@ -236,7 +236,7 @@ function execute(commandData, discordUser) {
                     msgString_2 = "------\n**Hey! It looks like you've already added that role!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_f = commandData.guildMember) === null || _f === void 0 ? void 0 : _f.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Role Issue:**__');
@@ -262,7 +262,7 @@ function execute(commandData, discordUser) {
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData_1.borderColor)
                         .setTitle('__**New Default Role Added:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString);
@@ -292,7 +292,7 @@ function execute(commandData, discordUser) {
                     msgString_3 = "------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_g = commandData.guildMember) === null || _g === void 0 ? void 0 : _g.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString_3)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -311,7 +311,7 @@ function execute(commandData, discordUser) {
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData_1.borderColor)
                         .setTitle('__**Default Role Removed:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString);

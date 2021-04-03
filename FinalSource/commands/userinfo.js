@@ -52,11 +52,11 @@ command.description = '!userinfo to display your own info!\nOr !userinfo = @USER
 function execute(commandData, discordUser) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, userID, userMentionRegExp, userIDRegExp, msgString_1, msgEmbed, msg, argZero, userIDOne, guildMemberManager, guildMember, error_1, msgString_2, msgEmbed, msg, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
+        var commandReturnData, areWeInADM, guildData, userID, userMentionRegExp, userIDRegExp, msgString_1, msgEmbed, msg, argZero, userIDOne, guildMemberManager, guildMember, error_1, msgString_2, msgEmbed, msg, fields, field, field1, field2, field3, field4, field5, field6, permissionsArray, msgString, x, field7, field8, messageEmbed, error_2;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    _c.trys.push([0, 14, , 15]);
+                    _c.trys.push([0, 15, , 16]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
@@ -65,33 +65,36 @@ function execute(commandData, discordUser) {
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
+                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
+                case 2:
+                    guildData = _c.sent();
                     userID = '';
                     userMentionRegExp = /.{2,3}\d{18}>/;
                     userIDRegExp = /\d{18}/;
-                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 2];
+                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 3];
                     userID = commandData.guildMember.id;
-                    return [3 /*break*/, 6];
-                case 2:
+                    return [3 /*break*/, 7];
+                case 3:
                     if (!(commandData.args[0].match(userIDRegExp)[0] === null
-                        && commandData.args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 5];
+                        && commandData.args[0].match(userMentionRegExp)[0] === null)) return [3 /*break*/, 6];
                     msgString_1 = '------\n**Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 3:
+                case 4:
                     msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 4:
+                case 5:
                     _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 5:
+                case 6:
                     if (commandData.args[0].match(userMentionRegExp) != null) {
                         userID = commandData.args[0].substring(3, commandData.args[0].length - 1);
                     }
@@ -100,37 +103,37 @@ function execute(commandData, discordUser) {
                         userIDOne = argZero.match(userIDRegExp)[0];
                         userID = userIDOne;
                     }
-                    _c.label = 6;
-                case 6:
-                    guildMemberManager = new Discord.GuildMemberManager(commandData.guild);
-                    guildMember = void 0;
                     _c.label = 7;
                 case 7:
-                    _c.trys.push([7, 9, , 12]);
-                    return [4 /*yield*/, guildMemberManager.fetch(userID)];
+                    guildMemberManager = new Discord.GuildMemberManager(commandData.guild);
+                    guildMember = void 0;
+                    _c.label = 8;
                 case 8:
-                    guildMember = _c.sent();
-                    return [3 /*break*/, 12];
+                    _c.trys.push([8, 10, , 13]);
+                    return [4 /*yield*/, guildMemberManager.fetch(userID)];
                 case 9:
+                    guildMember = _c.sent();
+                    return [3 /*break*/, 13];
+                case 10:
                     error_1 = _c.sent();
                     msgString_2 = '------\n**Sorry, but that user could not be found!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**User Issue:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 10:
+                case 11:
                     msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 11:
+                case 12:
                     _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 12:
+                case 13:
                     fields = [];
                     field = { name: '__User Tag:__', value: guildMember.user.tag, inline: true };
                     fields.push(field);
@@ -181,15 +184,15 @@ function execute(commandData, discordUser) {
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL());
                     messageEmbed.fields = fields;
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                case 13:
+                case 14:
                     _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 14:
+                case 15:
                     error_2 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
-                case 15: return [2 /*return*/];
+                case 16: return [2 /*return*/];
             }
         });
     });

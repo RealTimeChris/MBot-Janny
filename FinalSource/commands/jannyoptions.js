@@ -76,7 +76,7 @@ function execute(commandData, discordUser) {
                         .avatarURL())
                         .setTimestamp(Date())
                         .setTitle('__**Janny Options:**__')
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
                     fields = [];
                     resultIcon = '❌';

@@ -93,7 +93,7 @@ function execute(commandData, discordUser) {
                     msgString = "**To enable/disable a given log, enter within the text channel where you would like it to be logged: !managelogs = \n                <enable/disable>, <logname>\nFor example, '!managelogs = enable, guildbanadd'.**'";
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs:**__').fields = fields;
@@ -106,7 +106,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please, enter enable or disable for the first argument of this command! \n            (!managelogs = <enable/disable>, <logname>)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -125,7 +125,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please, enter  a log name to disable or enable as the second argument of this command! \n            (!managelogs = <enable/disable>, <logname>)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -175,7 +175,7 @@ function execute(commandData, discordUser) {
                     msgString_1 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_1
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -204,7 +204,7 @@ function execute(commandData, discordUser) {
                     msgString_2 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_2
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -233,7 +233,7 @@ function execute(commandData, discordUser) {
                     msgString_3 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_3
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_3)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -262,7 +262,7 @@ function execute(commandData, discordUser) {
                     msgString_4 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_4
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_4)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -291,7 +291,7 @@ function execute(commandData, discordUser) {
                     msgString_5 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_5
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_5)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -320,7 +320,7 @@ function execute(commandData, discordUser) {
                     msgString_6 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_6
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_6)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -349,7 +349,7 @@ function execute(commandData, discordUser) {
                     msgString_7 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "' in channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------'";
                     msgEmbed_7
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_7)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -378,7 +378,7 @@ function execute(commandData, discordUser) {
                     msgString_8 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_8
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_8)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -407,7 +407,7 @@ function execute(commandData, discordUser) {
                     msgString_9 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_9
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_9)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -436,7 +436,7 @@ function execute(commandData, discordUser) {
                     msgString_10 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_10
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_10)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -465,7 +465,7 @@ function execute(commandData, discordUser) {
                     msgString_11 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_11
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_11)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -494,7 +494,7 @@ function execute(commandData, discordUser) {
                     msgString_12 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_12
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_12)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -523,7 +523,7 @@ function execute(commandData, discordUser) {
                     msgString_13 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_13
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_13)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -552,7 +552,7 @@ function execute(commandData, discordUser) {
                     msgString_14 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_14
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_14)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -581,7 +581,7 @@ function execute(commandData, discordUser) {
                     msgString_15 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_15
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_15)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -610,7 +610,7 @@ function execute(commandData, discordUser) {
                     msgString_16 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_16
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_16)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -639,7 +639,7 @@ function execute(commandData, discordUser) {
                     msgString_17 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_17
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_17)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -668,7 +668,7 @@ function execute(commandData, discordUser) {
                     msgString_18 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_18
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_18)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -697,7 +697,7 @@ function execute(commandData, discordUser) {
                     msgString_19 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_19
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_19)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -726,7 +726,7 @@ function execute(commandData, discordUser) {
                     msgString_20 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_20
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_20)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -755,7 +755,7 @@ function execute(commandData, discordUser) {
                     msgString_21 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_21
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_21)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -784,7 +784,7 @@ function execute(commandData, discordUser) {
                     msgString_22 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_22
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_22)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -813,7 +813,7 @@ function execute(commandData, discordUser) {
                     msgString_23 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_23
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_23)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -842,7 +842,7 @@ function execute(commandData, discordUser) {
                     msgString_24 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_24
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_24)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -871,7 +871,7 @@ function execute(commandData, discordUser) {
                     msgString_25 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_25
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_25)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -900,7 +900,7 @@ function execute(commandData, discordUser) {
                     msgString_26 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_26
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_26)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -929,7 +929,7 @@ function execute(commandData, discordUser) {
                     msgString_27 = "------\n**Nicely done! You've enabled logging for '" + guildData.logs[x].name + "'.\nIn channel <#" + guildData.logs[x].loggingChannelID + ">.**\n------";
                     msgEmbed_27
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_27)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
@@ -958,7 +958,7 @@ function execute(commandData, discordUser) {
                     msgString_28 = "------\n**Nicely done! You've disabled logging for '" + guildData.logs[x].name + "'.**\n------";
                     msgEmbed_28
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_28)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
@@ -974,7 +974,7 @@ function execute(commandData, discordUser) {
                     msgString = 'Please enter a proper log name!';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs:**__');

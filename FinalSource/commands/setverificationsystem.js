@@ -81,7 +81,7 @@ function execute(commandData, discordUser) {
                     msgString_1 = "------\n**Please enter either 'enable' or 'disable' as the first argument! (!setverificationsystem = ENABLE, VERIFICATIONMESSAGE, REACTIONEMOJI, or !setverificationsystem = DISABLE)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -100,7 +100,7 @@ function execute(commandData, discordUser) {
                     msgString_2 = '------\n**Please, enter a greeting message for the verification system!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -119,7 +119,7 @@ function execute(commandData, discordUser) {
                     msgString_3 = '------\n**Please, enter a valid emoji for them to react with!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_3)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -169,7 +169,7 @@ function execute(commandData, discordUser) {
                     msgEmbed_1 = new Discord.MessageEmbed();
                     msgEmbed_1
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Verification System:**__')
                         .setDescription(msgString);
@@ -191,7 +191,7 @@ function execute(commandData, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Verification System:**__')
                         .setDescription(msgString);
@@ -207,7 +207,7 @@ function execute(commandData, discordUser) {
                     msgString_4 = '------\n**Sorry, it looks as though it is already disabled!**\n------';
                     msgEmbed_2 = new Discord.MessageEmbed()
                         .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_4)
                         .setTimestamp(Date())
                         .setTitle('__**Existence Issue:**__');
@@ -242,7 +242,7 @@ function execute(commandData, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Set Verification System:**__')
                         .setDescription(msgString);
@@ -256,7 +256,7 @@ function execute(commandData, discordUser) {
                     msgString_5 = '------\n**Please, first set a default role to be applied to the new member! Using !setdefaultrole.**\n------';
                     msgEmbed_3 = new Discord.MessageEmbed()
                         .setAuthor((_e = commandData.guildMember) === null || _e === void 0 ? void 0 : _e.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_5)
                         .setTimestamp(Date())
                         .setTitle('__**Role Issue:**__');
@@ -272,7 +272,7 @@ function execute(commandData, discordUser) {
                     return [2 /*return*/, commandReturnData];
                 case 36:
                     msgEmbed2 = new Discord.MessageEmbed()
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(commandData.args[1])
                         .setTimestamp(Date());
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed2)];
@@ -293,7 +293,7 @@ function execute(commandData, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Set Verification System:**__')
                         .setDescription(msgString);

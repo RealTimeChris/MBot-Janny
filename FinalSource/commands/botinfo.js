@@ -70,7 +70,7 @@ function execute(commandData, discordUser) {
                     fields.push(field4);
                     messageEmbed = new Discord.MessageEmbed()
                         .setImage((_b = (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.user) === null || _b === void 0 ? void 0 : _b.avatarURL())
-                        .setColor([0, 0, 255])
+                        .setColor([254, 254, 254])
                         .setTitle('__**Bot Info:**__')
                         .setTimestamp(Date());
                     messageEmbed.fields = fields;

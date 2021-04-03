@@ -80,7 +80,7 @@ function execute(client, oldUser, newUser, guild, discordUser) {
                     msgString += "__**User ID:**__ " + newUser.id + "\n";
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
-                        .setColor([0, 0, 255])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setThumbnail(newUser.avatarURL())
                         .setTimestamp(Date())
