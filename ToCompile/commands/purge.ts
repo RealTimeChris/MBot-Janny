@@ -34,12 +34,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 		const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
 
 		const regExp = new RegExp(/\d{1,3}/);
-		let message: Discord.Message;
 		if (commandData.args[0] === undefined || !regExp.test(commandData.args[0])
 		|| parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100) {
 			const msgString = '------\n**Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -51,13 +50,12 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 			await msg.delete({timeout: 20000});
 			return commandReturnData;
 		}
-		const deleteCount = parseInt(((commandData.args[0].toString().match(regExp) as string[])[0]as string), 10);
-		let messageManager = new Discord.MessageManager(commandData.permsChannel as Discord.TextChannel, []);
-		let currentChannel = await commandData.guildMember?.client.channels.fetch(commandData.permsChannel!.id) as Discord.TextChannel;
+		const deleteCount = parseInt(commandData.args[0].toString().match(regExp)![0]!, 10);
+		let currentChannel = await commandData.guildMember!.client.channels.fetch(commandData.toTextChannel!.id) as Discord.TextChannel;
         await currentChannel.bulkDelete(deleteCount, true);
 		const msgString = `<@!${commandData.guildMember!.id}> I've just deleted ${deleteCount} messages from this channel!`;
 		let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)

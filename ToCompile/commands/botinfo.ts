@@ -30,7 +30,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
        fields.push(field4);
 
         const messageEmbed = new Discord.MessageEmbed()
-           .setImage(commandData.guildMember?.client.user?.avatarURL() as string)
+           .setImage(commandData.guildMember?.client.user?.avatarURL()!)
            .setColor([254, 254, 254])
            .setTitle('__**Bot Info:**__')
            .setTimestamp(Date() as unknown as Date);

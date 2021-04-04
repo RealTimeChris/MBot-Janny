@@ -664,9 +664,9 @@ client.on('roleDelete', async (role: Discord.Role) => {
 
 client.on('userUpdate', async (oldUser: Discord.User, newUser: Discord.User) => {
 	if (oldUser.username !== newUser.username) {
-		const guildArray = client.guilds.cache.array();
+		const guildArray = client.guilds.cache.array() as Discord.Guild[];
 		for (let x = 0; x < guildArray.length; x += 1) {
-			const guildMembersArray = await guildArray[x]!.members.fetch().array();
+			const guildMembersArray = (await guildArray[x]!.members.fetch()).array();
 			for (let y = 0; y < guildMembersArray.length; y += 1) {
 				if (guildMembersArray[y]!.id === oldUser.id) {
 					const guildData = await discordUser.getGuildDataFromDB(guildArray[x]!);
