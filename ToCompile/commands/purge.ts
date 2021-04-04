@@ -62,7 +62,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Messages Purged:**__')
+				.setTitle('__**Messages Purged:**__');
 		const newMessage = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		await newMessage.delete({timeout: 5000});
 		return commandReturnData;

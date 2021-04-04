@@ -77,7 +77,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 			return commandReturnData;
 		}
 
-		const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+		const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
 
 		if (commandData.args[0] === undefined) {
 			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;
@@ -86,10 +86,10 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Missing Or Invalid Arguments:**__')
+				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
-				msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
 			return commandReturnData;
@@ -101,10 +101,10 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Missing Or Invalid Arguments:**__')
+				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
-				msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
 			return commandReturnData;
@@ -122,7 +122,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setTitle('__**Missing Or Invalid Arguments:**__')
 			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
-				msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
 			return commandReturnData;

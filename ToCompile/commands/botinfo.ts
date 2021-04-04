@@ -21,19 +21,19 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
        commandReturnData.commandName = command.name;
        const fields: Discord.EmbedField[] = [];
        const field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
-       fields.push(field1 as Discord.EmbedField);
+       fields.push(field1);
        const field2 = { name: '__Bot ID:__', value: discordUser.userData.userID, inline: true };
-       fields.push(field2 as Discord.EmbedField);
+       fields.push(field2);
        const field3 = { name: '__Guild Count:__', value: discordUser.userData.guildCount.toString(), inline: true };
-       fields.push(field3 as Discord.EmbedField);
+       fields.push(field3);
        const field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
-       fields.push(field4 as Discord.EmbedField);
+       fields.push(field4);
 
         const messageEmbed = new Discord.MessageEmbed()
            .setImage(commandData.guildMember?.client.user?.avatarURL() as string)
            .setColor([254, 254, 254])
            .setTitle('__**Bot Info:**__')
-           .setTimestamp((Date() as unknown) as Date);
+           .setTimestamp(Date() as unknown as Date);
         messageEmbed.fields = fields;
         await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
         return commandReturnData;

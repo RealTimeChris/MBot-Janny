@@ -26,7 +26,7 @@ async function execute(commandData :DiscordStuff.CommandData, discordUser: Disco
 			msgString += `__Guild ID:__ ${guild.guildID}\n`;
 			msgString += `__Member Count:__ ${guild.guildMemberCount}\n`;
 
-			const currentGuild = (commandData.guildMember?.client.guilds.fetch(guild.guildID) as Promise<Discord.Guild>).then(guild => {
+			commandData.guildMember?.client.guilds.fetch(guild.guildID).then(guild => {
 				msgString += `__Created:__ ${guild.createdAt}\n`;
 				msgString += `__Guild Owner:__ <@!${(guild.owner as Discord.GuildMember).id}> (${(guild.owner as Discord.GuildMember).user.tag})\n`;
 	
@@ -34,7 +34,7 @@ async function execute(commandData :DiscordStuff.CommandData, discordUser: Disco
 					.setColor([254, 254, 254])
 					.setThumbnail(guild.iconURL() as string)
 					.setTitle(`__**Guild Data ${currentCount + 1} of ${discordUser.guildsData.size}:**__`)
-					.setTimestamp((Date() as unknown) as Date)
+					.setTimestamp(Date() as unknown as Date)
 					.setDescription(msgString);
 					
 					DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
