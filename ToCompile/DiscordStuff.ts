@@ -40,7 +40,7 @@ import config = require('./config.json');
             }			
 		}
 		else if (commandData.toTextChannel instanceof Discord.DMChannel){
-			returnMessage = await commandData.toTextChannel.send(messageContents as string);
+			returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);
 		}
 
 		return new Promise((resolve, reject) => {
