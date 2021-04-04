@@ -49,30 +49,30 @@ command.description = '!trackuser = ADD, @USERMENTION to track the user within t
  * Deals with the setting of a user's tracking status.
  */
 function execute(commandData, discordUser) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPermission, guildData, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, msgString, msgEmbed, msg, msgString, msgEmbed, msg, argOne, trackedUserIDOne, x, isUserFound, currentGuild_1, z, currentUser, msgString, msgEmbed, msg, currentGuild, currentTextChannel, currentGuildMember, currentIndex, x, trackedUser, msgString, messageEmbed, currentIndex_1, x, msgString, msgEmbed, error_1, msgString, msgEmbed, msg, currentIndex, x, msgString, messageEmbed, msgString, msgEmbed, msg, msgString, messageEmbed, error_2, msgString, msgString, x, trackedChannelName, messageEmbed, error_3;
-        return __generator(this, function (_k) {
-            switch (_k.label) {
+        var commandReturnData, areWeInADM, doWeHaveAdminPermission, guildData, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, msgString, msgEmbed, msg, msgString, msgEmbed, msg, argOne, trackedUserIDOne, x, isUserFound, currentGuild_1, z, currentUser, msgString, msgEmbed, msg, currentGuild, currentTextChannel, currentGuildMember, currentIndex, x, trackedUser, msgString, messageEmbed, currentIndex_1, x, msgString, msgEmbed, error_1, msgString, msgEmbed, msg, currentIndex, x, msgString, messageEmbed, msgString, msgEmbed, msg, msgString, messageEmbed, error_2, msgString, messageEmbed, msg, msgString, x, trackedChannelName, messageEmbed, error_3;
+        return __generator(this, function (_j) {
+            switch (_j.label) {
                 case 0:
-                    _k.trys.push([0, 40, , 41]);
+                    _j.trys.push([0, 42, , 43]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _k.sent();
+                    areWeInADM = _j.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 2:
-                    doWeHaveAdminPermission = _k.sent();
+                    doWeHaveAdminPermission = _j.sent();
                     if (doWeHaveAdminPermission === false) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 3:
-                    guildData = _k.sent();
+                    guildData = _j.sent();
                     userMentionRegExp = /.{2,3}\d{18}>/;
                     idRegExp = /\d{18}/;
                     whatAreWeDoing = '';
@@ -87,13 +87,13 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    msg = _k.sent();
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 5:
-                    _k.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 6:
                     if (!(commandData.args[0] !== undefined && (commandData.args[1] === undefined || (!userMentionRegExp.test(commandData.args[1]) && !idRegExp.test(commandData.args[1]))))) return [3 /*break*/, 9];
@@ -106,13 +106,13 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 7:
-                    msg = _k.sent();
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 8:
-                    _k.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 9:
                     if (commandData.args[0] !== undefined) {
@@ -128,7 +128,7 @@ function execute(commandData, discordUser) {
                     }
                     if (!(guildData.trackedUsers !== undefined)) return [3 /*break*/, 14];
                     x = 0;
-                    _k.label = 10;
+                    _j.label = 10;
                 case 10:
                     if (!(x < guildData.trackedUsers.length)) return [3 /*break*/, 14];
                     isUserFound = false;
@@ -151,16 +151,16 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing User(s):**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 11:
-                    msg = _k.sent();
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 12:
-                    _k.sent();
+                    _j.sent();
                     guildData.trackedUsers.splice(x, 1);
                     discordUser.updateGuildDataInDB(guildData);
-                    _k.label = 13;
+                    _j.label = 13;
                 case 13:
                     x += 1;
                     return [3 /*break*/, 10];
@@ -169,11 +169,11 @@ function execute(commandData, discordUser) {
                     currentTextChannel = commandData.fromTextChannel;
                     return [4 /*yield*/, currentGuild.members.fetch(trackedUserID)];
                 case 15:
-                    currentGuildMember = _k.sent();
+                    currentGuildMember = _j.sent();
                     if (!(whatAreWeDoing === 'add')) return [3 /*break*/, 25];
-                    _k.label = 16;
+                    _j.label = 16;
                 case 16:
-                    _k.trys.push([16, 21, , 24]);
+                    _j.trys.push([16, 21, , 24]);
                     currentIndex = -1;
                     for (x = 0; x < guildData.trackedUsers.length; x += 1) {
                         if (trackedUserID === ((_b = guildData.trackedUsers[x]) === null || _b === void 0 ? void 0 : _b.userID)) {
@@ -198,7 +198,7 @@ function execute(commandData, discordUser) {
                         .setColor(guildData.borderColor);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 17:
-                    _k.sent();
+                    _j.sent();
                     return [3 /*break*/, 20];
                 case 18:
                     if (!(currentIndex >= 0)) return [3 /*break*/, 20];
@@ -220,12 +220,12 @@ function execute(commandData, discordUser) {
                         .setTitle("__**User Already Added:**__");
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 19:
-                    _k.sent();
+                    _j.sent();
                     discordUser.updateGuildDataInDB(guildData);
-                    _k.label = 20;
+                    _j.label = 20;
                 case 20: return [3 /*break*/, 24];
                 case 21:
-                    error_1 = _k.sent();
+                    error_1 = _j.sent();
                     console.log(error_1);
                     msgString = "------\n**Sorry, but the specified user could not be found!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
@@ -236,20 +236,20 @@ function execute(commandData, discordUser) {
                         .setTitle('__**User Issue:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 22:
-                    msg = _k.sent();
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 23:
-                    _k.sent();
+                    _j.sent();
                     return [3 /*break*/, 24];
                 case 24: return [2 /*return*/, commandReturnData];
                 case 25:
-                    if (!(whatAreWeDoing === 'remove')) return [3 /*break*/, 37];
-                    _k.label = 26;
+                    if (!(whatAreWeDoing === 'remove')) return [3 /*break*/, 39];
+                    _j.label = 26;
                 case 26:
-                    _k.trys.push([26, 35, , 36]);
+                    _j.trys.push([26, 35, , 38]);
                     if (!(commandData.args[0].toLowerCase() === 'remove' && guildData.trackedUsers.length >= 1)) return [3 /*break*/, 32];
                     currentIndex = -1;
                     for (x = 0; x < guildData.trackedUsers.length; x += 1) {
@@ -273,7 +273,7 @@ function execute(commandData, discordUser) {
                         .setColor(guildData.borderColor);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 27:
-                    _k.sent();
+                    _j.sent();
                     return [3 /*break*/, 31];
                 case 28:
                     if (!(currentIndex === -1)) return [3 /*break*/, 31];
@@ -286,14 +286,14 @@ function execute(commandData, discordUser) {
                         .setTitle('__**User Issue:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 29:
-                    msg = _k.sent();
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 30:
-                    _k.sent();
-                    _k.label = 31;
+                    _j.sent();
+                    _j.label = 31;
                 case 31: return [3 /*break*/, 34];
                 case 32:
                     if (!(commandData.args[0].toLowerCase() === 'remove' && guildData.trackedUsers.length === 0)) return [3 /*break*/, 34];
@@ -306,16 +306,31 @@ function execute(commandData, discordUser) {
                         .setColor(guildData.borderColor);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 33:
-                    _k.sent();
-                    _k.label = 34;
-                case 34: return [3 /*break*/, 36];
+                    _j.sent();
+                    _j.label = 34;
+                case 34: return [3 /*break*/, 38];
                 case 35:
-                    error_2 = _k.sent();
-                    msgString = "<@!" + ((_f = commandData.guildMember) === null || _f === void 0 ? void 0 : _f.id) + "> Sorry, but the specified user could not be found!";
-                    return [3 /*break*/, 36];
-                case 36: return [2 /*return*/, commandReturnData];
+                    error_2 = _j.sent();
+                    msgString = "------\n**Sorry, but the specified user could not be found!**\n------";
+                    messageEmbed = new Discord.MessageEmbed()
+                        .setTimestamp(Date())
+                        .setTitle('__**User Issue:**__')
+                        .setDescription(msgString)
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor(guildData.borderColor);
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                case 36:
+                    msg = _j.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 37:
-                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 39];
+                    _j.sent();
+                    return [3 /*break*/, 38];
+                case 38: return [2 /*return*/, commandReturnData];
+                case 39:
+                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 41];
                     msgString = '';
                     if (guildData.trackedUsers.length > 0) {
                         for (x = 0; x < guildData.trackedUsers.length; x += 1) {
@@ -324,8 +339,8 @@ function execute(commandData, discordUser) {
                             }
                             trackedChannelName = commandData.guild.client.channels
                                 .resolve(guildData.trackedUsers[x].channelID).name;
-                            msgString += "__**Tracked User Name #" + (x + 1) + ":**__ <@!" + ((_g = guildData.trackedUsers[x]) === null || _g === void 0 ? void 0 : _g.userID) + "> (" + ((_h = guildData.trackedUsers[x]) === null || _h === void 0 ? void 0 : _h.userName) + ")\n";
-                            msgString += "__**In Channel:**__ <#" + ((_j = guildData.trackedUsers[x]) === null || _j === void 0 ? void 0 : _j.channelID) + "> (" + trackedChannelName + ")\n------";
+                            msgString += "__**Tracked User Name #" + (x + 1) + ":**__ <@!" + ((_f = guildData.trackedUsers[x]) === null || _f === void 0 ? void 0 : _f.userID) + "> (" + ((_g = guildData.trackedUsers[x]) === null || _g === void 0 ? void 0 : _g.userName) + ")\n";
+                            msgString += "__**In Channel:**__ <#" + ((_h = guildData.trackedUsers[x]) === null || _h === void 0 ? void 0 : _h.channelID) + "> (" + trackedChannelName + ")\n------";
                             if (x < guildData.trackedUsers.length - 1) {
                                 msgString += '\n';
                             }
@@ -341,16 +356,16 @@ function execute(commandData, discordUser) {
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor([254, 254, 254]);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                case 38:
-                    _k.sent();
-                    return [2 /*return*/, commandReturnData];
-                case 39: return [2 /*return*/, commandReturnData];
                 case 40:
-                    error_3 = _k.sent();
+                    _j.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 41: return [2 /*return*/, commandReturnData];
+                case 42:
+                    error_3 = _j.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_3);
                         })];
-                case 41: return [2 /*return*/];
+                case 43: return [2 /*return*/];
             }
         });
     });

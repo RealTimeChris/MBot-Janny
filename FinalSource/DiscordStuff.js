@@ -62,7 +62,7 @@ function sendMessageWithCorrectChannel(commandData, messageContents, atUserID) {
                     if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 2];
                     msgEmbeds = [];
                     msgEmbeds.push(messageContents);
-                    return [4 /*yield*/, (commandData.toTextChannel.send("<@!" + atUserID + ">", { embeds: msgEmbeds, split: false }))];
+                    return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + ">", { embeds: msgEmbeds, split: false })];
                 case 1:
                     returnMessage_1 = _a.sent();
                     return [3 /*break*/, 6];

@@ -125,7 +125,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Channel Re-Added:**__');
-			        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    let message = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                        message = new Discord.Message(commandData.guildMember!.client, message, commandData.fromTextChannel!);
+                    }
+                    await message.delete({timeout: 20000});
                     if (currentDeletionChannel.deletionMessageID
                         !== undefined && currentDeletionChannel.deletionMessageID !== '') {
                         try {
@@ -155,7 +159,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setTitle('__**Enabled Channel Purging:**__');
             let pinMessage = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
-               pinMessage = new Discord.Message(commandData.guildMember!.client, await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed), commandData.fromTextChannel!);   
+               pinMessage = new Discord.Message(commandData.guildMember!.client, pinMessage, commandData.fromTextChannel!);
             }
             await pinMessage.pin();
             currentDeletionChannel.deletionMessageID = pinMessage.id;          

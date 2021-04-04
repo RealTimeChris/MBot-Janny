@@ -241,7 +241,18 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 }
             } catch (error) {
-                const msgString = `<@!${commandData.guildMember?.id}> Sorry, but the specified user could not be found!`;
+                const msgString = `------\n**Sorry, but the specified user could not be found!**\n------`;
+                const messageEmbed = new Discord.MessageEmbed()
+                    .setTimestamp(Date() as unknown as Date)
+                    .setTitle('__**User Issue:**__')
+                    .setDescription(msgString)
+                    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+                    .setColor(guildData.borderColor as [number, number, number]);
+                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
+                }
+                await msg.delete({timeout: 20000});
             }
             return commandReturnData;
         }
