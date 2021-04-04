@@ -25,7 +25,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         if (commandData.guildMember instanceof Discord.GuildMember){
             const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
             msgEmbed
-            .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+            .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
             .setColor(guildData.borderColor as [number, number, number])
             .setDescription(msgString)
             .setTimestamp(Date() as unknown as Date)
@@ -33,7 +33,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         }
         else{
             msgEmbed
-            .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL()!)
+            .setAuthor(commandData.guildMember!.username, commandData.guildMember!.avatarURL()!)
             .setColor([254, 254, 254])
             .setDescription(msgString)
             .setTimestamp(Date() as unknown as Date)

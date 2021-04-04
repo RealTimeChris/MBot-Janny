@@ -31,12 +31,12 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         const userMentionRegExp = /.{2,3}\d{18}>/;
         const userIDRegExp = /\d{18}/;
         if (commandData.args[0] === undefined) {
-            userID = (commandData.guildMember as Discord.GuildMember).id;
+            userID = commandData.guildMember!.id;
         } else if (commandData.args[0].match(userIDRegExp)![0]! === null
             && (commandData.args[0].match(userMentionRegExp)![0]!) === null) {
             const msgString = '------\n**Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -52,7 +52,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } else if (commandData.args[0].match(userIDRegExp)![0] != null) {
             const argZero = commandData.args[0];
             const userIDOne = argZero.match(userIDRegExp)![0];
-            userID = userIDOne as string;
+            userID = userIDOne!;
         }
 
         const guildMemberManager = new Discord.GuildMemberManager(commandData.guild!);
@@ -63,7 +63,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } catch (error) {
             const msgString = '------\n**Sorry, but that user could not be found!**\n------';
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)

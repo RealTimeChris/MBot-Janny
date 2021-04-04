@@ -39,7 +39,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } else if ((commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'enable' && commandData.args[0].toLowerCase() !== 'disable')) {
             const msgString = "------\n**Please enter either 'enable' or 'disable'! (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------";
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -53,7 +53,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } else if (commandData.args[0].toLowerCase() === 'enable' && commandData.args[1] !== undefined && (!messageCountRegExp.test(commandData.args[1]) || parseInt(commandData.args[1], 10) < 0 || parseInt(commandData.args[1], 10) > 10000)) {
             const msgString = '------\n**Please enter a valid number of messages back to save! (0 to 10000) (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -120,7 +120,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 if (guildData.deletionChannels[x]!.channelID === currentDeletionChannel.channelID) {
                     const msgString = '------\n**This channel has already been added! I will update your number of saved messages though!**\n------';
                     let msgEmbed = new Discord.MessageEmbed()
-				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
@@ -129,7 +129,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     if (currentDeletionChannel.deletionMessageID
                         !== undefined && currentDeletionChannel.deletionMessageID !== '') {
                         try {
-                            const previousMessage = await (commandData.permsChannel as Discord.TextChannel).messages
+                            const previousMessage = await commandData.fromTextChannel!.messages
                                 .fetch(currentDeletionChannel.deletionMessageID);
                             if (previousMessage.deletable === true) {
                                 await previousMessage.delete();
@@ -148,12 +148,12 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgString = `__**Messages beyond message number ${currentDeletionChannel.numberOfMessagesToSave} are being purged, in this channel.**__`;
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user!.username, (commandData.guildMember as Discord.GuildMember).user!.avatarURL()!)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Enabled Channel Purging:**__');
-            let pinMessage = new Discord.Message(commandData.guildMember!.client, await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed), commandData.permsChannel as Discord.TextChannel);
+            let pinMessage = new Discord.Message(commandData.guildMember!.client, await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed), commandData.fromTextChannel!);
             await pinMessage.pin();
             currentDeletionChannel.deletionMessageID = pinMessage.id;
             if (isItFound === false) {
@@ -176,7 +176,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             if (isItFound === false) {
                 const msgString = '------\n**Sorry, but this channel could not be found in the list of active deletion channels!**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -194,12 +194,12 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgString = `${'\n------\n__**Channel Name:**__ <#'}${currentDeletionChannel.channelID}>\n------`;
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user!.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
-                .setTimestamp((Date() as unknown) as Date)
+                .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Disabled Channel Purging:**__');
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
         }
         return commandReturnData;
     } catch (error) {

@@ -82,7 +82,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 		if (commandData.args[0] === undefined) {
 			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -97,7 +97,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 		if (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse') {
 			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -115,7 +115,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 		if (commandData.args[1] === undefined) {
 			const msgString = `------\n**Please, enter a DB key to search for!**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -147,7 +147,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 		await iterator.end();
 		const msgEmbed = new Discord.MessageEmbed();
 		msgEmbed
-			.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, ((commandData.guildMember as Discord.GuildMember).user.avatarURL() as string))
+			.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 			.setColor(guildData.borderColor as [number, number, number])
 			.setDescription(`------\n__**Number of Deleted Entries**__: ${deletedCounter.returnDeletedCount()}\n------`)
 			.setTimestamp(Date.now())

@@ -50,7 +50,7 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
             msgEmbed
                 .setColor(guildMember.displayColor)
                 .setDescription(msgString)
-                .setThumbnail((guildMember.user as Discord.User).avatarURL()!)
+                .setThumbnail(guildMember.user.avatarURL()!)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Guild Member Kicked:**__');
 
@@ -65,7 +65,7 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
             msgEmbed
                 .setColor(guildMember.displayColor)
                 .setDescription(msgString)
-                .setThumbnail((guildMember.user as Discord.User).avatarURL()!)
+                .setThumbnail(guildMember.user.avatarURL()!)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Guild Member Left:**__');
 

@@ -41,7 +41,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } else if (commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove') {
             const msgString = `------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -55,7 +55,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } else if (commandData.args[1] === undefined) {
             const msgString = `------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -67,7 +67,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (roleMentionRegExp.test(commandData.args[1])) {
-            const roleID = (commandData.args[1].match(idRegExp) as string[])[0];
+            const roleID = commandData.args[1].match(idRegExp)![0];
             roleMemberManager = new Discord.RoleManager(commandData.guild!);
             currentDiscordRole = await roleMemberManager.fetch(roleID!) as Discord.Role;
             commandData.args[1] = currentDiscordRole.name;
@@ -140,7 +140,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             return commandReturnData;
         }
 
-        let currentRole = new Discord.Role((commandData.guildMember!).client, {}, (commandData.guildMember!).client.guilds.resolve(guildData.guildID)!);
+        let currentRole = new Discord.Role(commandData.guildMember!.client, {}, commandData.guildMember!.client.guilds.resolve(guildData.guildID)!);
 
         let isItFound = false;
         roleArray.map(role => {
@@ -154,7 +154,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         if (isItFound === false) {
             const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-                .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
@@ -172,7 +172,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 if (currentRole.id === guildData.defaultRoleIDs[x]) {
                     const msgString = `------\n**Hey! It looks like you've already added that role!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
-				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
@@ -214,7 +214,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             if (isItFound === false) {
                 const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
-				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)

@@ -28,12 +28,12 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 			return commandReturnData;
 		}
 
-		const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+		const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
 
 		if (commandData.args[0] === undefined) {
 			const msgString = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -48,7 +48,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 		if (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse') {
 			const msgString = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -89,7 +89,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 			msgString += '\n------';
 			await iterator.end();
 			let msgEmbed = new Discord.MessageEmbed()
-					.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+					.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 					.setColor(guildData.borderColor as [number, number, number])
 					.setDescription(msgString)
 					.setTimestamp(Date() as unknown as Date)
@@ -100,7 +100,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 		if (!areAnyFound){
 			const msgEmbed = new Discord.MessageEmbed();
 			msgEmbed
-				.setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
 				.setTimestamp((Date() as unknown) as Date)

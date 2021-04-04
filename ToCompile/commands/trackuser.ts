@@ -40,7 +40,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         if (commandData.args[0] !== undefined && (commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove')) {
             const msgString = `------\n**Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -55,7 +55,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         if (commandData.args[0] !== undefined && (commandData.args[1] === undefined || (!userMentionRegExp.test(commandData.args[1]) && !idRegExp.test(commandData.args[1])))) {
             const msgString = `------\n**Please enter a valud usermention! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -80,11 +80,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             trackedUserID = trackedUserIDOne;
         }
 
-        const userData = await discordUser.getUserDataFromDB((commandData.guildMember as Discord.GuildMember).client);
+        const userData = await discordUser.getUserDataFromDB(commandData.guildMember!.client);
         if (userData.trackedUserIDs !== undefined) {
             for (let x = 0; x < userData.trackedUserIDs.length; x += 1) {
                 let isUserFound = false;
-                for (let y = 0; y < (commandData.guildMember as Discord.GuildMember).client.guilds.cache.size; y += 1) {
+                for (let y = 0; y < commandData.guildMember!.client.guilds.cache.size; y += 1) {
                     const currentGuild = commandData.guildMember!.client.guilds.resolve(userData.trackingGuildIDs[x]!);
                     if (currentGuild != null) {
                         for (let z = 0; z < currentGuild.memberCount; z += 1) {
@@ -98,7 +98,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 if (isUserFound === false) {
                     const msgString = `------\n**Removing user ${userData.trackedUserNames[x]} from the list of tracked users!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
-				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
 				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
@@ -150,7 +150,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                         .setTitle('__**New Tracked User:**__')
                         .setDescription(msgString)
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                        .setThumbnail(currentGuildMember.user.avatarURL() as string)
+                        .setThumbnail(currentGuildMember.user.avatarURL()!)
                         .setColor(guildData.borderColor as [number, number, number]);
                     await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 } else if (userData.trackedUserIDs.indexOf(trackedUserID) >= 0) {
@@ -158,15 +158,15 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
                     const currentIndex = userData.trackedUserIDs.indexOf(trackedUserID);
 
-                    userData.trackingGuildIDs[currentIndex] = (commandData.guild as Discord.Guild).id;
-                    userData.trackingChannelIDs[currentIndex] = commandData.fromTextChannel?.id as string;
+                    userData.trackingGuildIDs[currentIndex] = commandData.guild!.id;
+                    userData.trackingChannelIDs[currentIndex] = commandData.fromTextChannel!.id;
 
                     discordUser.updateUserDataInDB(userData);
                 }
             } catch (error) {
                 const msgString = `------\n**Sorry, but the specified user could not be found!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
-				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
@@ -210,7 +210,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     } else if (currentIndex === -1) {
                         const msgString = `------\n**There is noone by that ID being tracked!**\n------`;
                         let msgEmbed = new Discord.MessageEmbed()
-				            .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				            .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				            .setColor(guildData.borderColor as [number, number, number])
 				            .setDescription(msgString)
 				            .setTimestamp(Date() as unknown as Date)

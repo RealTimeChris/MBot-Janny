@@ -25,8 +25,8 @@ async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discor
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'roleaddorremove') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'roleaddorremove') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -34,13 +34,13 @@ async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discor
         const newRoleCollection = oldGuildMemberRoleManager.cache
             .difference(newGuildMemberRoleManager.cache);
 
-        const newRole = newRoleCollection.first() as Discord.Role;
+        const newRole = newRoleCollection.first()!;
 
-        const textChannel = client.channels.resolve(logs.loggingChannelID);
+        const textChannel = client.channels.resolve(logs.loggingChannelID) as Discord.TextChannel;
 
         const auditLogs = await newGuildMember.guild.fetchAuditLogs({ type: 'MEMBER_ROLE_UPDATE', limit: 1 });
         const auditLogEntry = auditLogs.entries
-            .find(entry => Date.now() - entry.createdTimestamp < 5000) as Discord.GuildAuditLogsEntry;
+            .find(entry => Date.now() - entry.createdTimestamp < 5000)!;
 
         if (collectionSizeDifference > 0) {
             let finalString = `__**Role Lost:**__ <@&${newRole.id}> (${newRole.name})\n`;
@@ -53,10 +53,10 @@ async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discor
             const messageEmbed = new Discord.MessageEmbed()
                 .setColor(newGuildMember.displayColor)
                 .setTitle('__**Lost Role:**__')
-                .setTimestamp((Date() as unknown) as Date)
-                .setThumbnail((newGuildMember.user as Discord.User).avatarURL()!)
+                .setTimestamp(Date() as unknown as Date)
+                .setThumbnail(newGuildMember.user.avatarURL()!)
                 .setDescription(finalString);
-            await (textChannel as Discord.TextChannel).send(messageEmbed);
+            await textChannel.send(messageEmbed);
             return command.name;
         }
         if (collectionSizeDifference < 0) {
@@ -70,10 +70,10 @@ async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discor
             const messageEmbed = new Discord.MessageEmbed()
                 .setColor(newGuildMember.displayColor)
                 .setTitle('__**New Role:**__')
-                .setTimestamp((Date() as unknown) as Date)
-                .setThumbnail((newGuildMember.user as Discord.User).avatarURL()!)
+                .setTimestamp(Date() as unknown as Date)
+                .setThumbnail(newGuildMember.user.avatarURL()!)
                 .setDescription(finalString);
-            await (textChannel as Discord.TextChannel).send(messageEmbed);
+            await textChannel.send(messageEmbed);
             return command.name;
         }
 

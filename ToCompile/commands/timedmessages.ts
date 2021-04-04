@@ -52,7 +52,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } else {
             const msgString = `------\n**Please, enter a proper first argument or enter none at all!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -151,7 +151,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             if (isItFound === false) {
                 const msgString = `------\n**Sorry, but the timed message you requested could not be found!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
-				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)

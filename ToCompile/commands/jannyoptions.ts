@@ -28,12 +28,11 @@ async function execute(commandData: DiscordStuff.CommandData,  discordUser: Disc
 			return commandReturnData;
 		}
 
-		const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+		const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
 
 		const msgEmbed = new Discord.MessageEmbed();
 		msgEmbed
-			.setAuthor(((commandData.guildMember as Discord.GuildMember).client.user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).client.user as Discord.User)
-			.avatarURL() as string)
+			.setAuthor((commandData.guildMember as Discord.GuildMember).client.user!.username, (commandData.guildMember as Discord.GuildMember).client.user!.avatarURL()!)
 			.setTimestamp(Date() as unknown as Date)
 			.setTitle('__**Janny Options:**__')
 			.setColor(guildData.borderColor as [number, number, number])

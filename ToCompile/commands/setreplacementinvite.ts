@@ -37,7 +37,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             if (error.type === 'NotFoundError') {
                 const msgString = '------\n**Sorry, but your current guild could not be found!**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
-                    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+                    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                     .setColor(guildData!.borderColor as [number, number, number])
                     .setDescription(msgString)
                     .setTimestamp(Date() as unknown as Date)
@@ -58,7 +58,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         if (commandData.args[0] !== undefined && !inviteRegExp.test(commandData.args[0])) {
             const msgString = '------\n**Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData!.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)

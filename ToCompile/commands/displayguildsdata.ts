@@ -28,11 +28,11 @@ async function execute(commandData :DiscordStuff.CommandData, discordUser: Disco
 
 			commandData.guildMember?.client.guilds.fetch(guild.guildID).then(guild => {
 				msgString += `__Created:__ ${guild.createdAt}\n`;
-				msgString += `__Guild Owner:__ <@!${(guild.owner as Discord.GuildMember).id}> (${(guild.owner as Discord.GuildMember).user.tag})\n`;
+				msgString += `__Guild Owner:__ <@!${guild.owner!.id}> (${guild.owner!.user.tag})\n`;
 	
 				const messageEmbed = new Discord.MessageEmbed()
 					.setColor([254, 254, 254])
-					.setThumbnail(guild.iconURL() as string)
+					.setThumbnail(guild.iconURL()!)
 					.setTitle(`__**Guild Data ${currentCount + 1} of ${discordUser.guildsData.size}:**__`)
 					.setTimestamp(Date() as unknown as Date)
 					.setDescription(msgString);

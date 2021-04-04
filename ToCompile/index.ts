@@ -436,7 +436,7 @@ client.on('guildMemberAdd', async (member: Discord.GuildMember) => {
 });
 
 client.on('guildMemberRemove', async (member: Discord.GuildMember) => {
-	const guildData = await discordUser.getGuildDataFromDB(member.guild) as DiscordStuff.GuildData;
+	const guildData = await discordUser.getGuildDataFromDB(member.guild);
 	for (let x = 0; x < guildData.logs.length; x += 1) {
 		if (guildData.logs[x]!.nameSmall === 'guildmemberremove') {
 			if (guildData.logs[x]!.enabled === false) {
@@ -700,4 +700,3 @@ client.on('userUpdate', async (oldUser: Discord.User, newUser: Discord.User) => 
 });
 
 client.login(config.botToken);
-

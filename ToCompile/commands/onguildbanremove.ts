@@ -48,7 +48,7 @@ async function execute(client: Discord.Client, guild: Discord.Guild, user: Disco
 
         msgEmbed
             .setColor([0, 255, 0])
-            .setThumbnail(user.avatarURL() as string)
+            .setThumbnail(user.avatarURL()!)
             .setTimestamp(Date() as unknown as Date)
             .setTitle('__**User Unbanned:**__')
             .setDescription(msgString);

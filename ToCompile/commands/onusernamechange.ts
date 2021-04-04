@@ -45,7 +45,7 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
         msgEmbed
             .setColor(guildData.borderColor as [number, number, number])
             .setDescription(msgString)
-            .setThumbnail(newUser.avatarURL() as string)
+            .setThumbnail(newUser.avatarURL()!)
             .setTimestamp(Date() as unknown as Date)
             .setTitle('__**New Username:**__');
 

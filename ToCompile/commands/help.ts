@@ -47,18 +47,18 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
             const messageEmbed = new Discord.MessageEmbed();
             if (commandData.guildMember instanceof Discord.GuildMember){
                 messageEmbed
-                    .setImage((commandData.guildMember?.client.user as Discord.User).avatarURL()!.toString())
-                    .setTimestamp((Date() as unknown) as Date)
-                    .setAuthor(commandData.guildMember?.client.user?.username, commandData.guildMember?.client.user?.avatarURL()!)
-                    .setTitle(`__**${((commandData.guildMember as Discord.GuildMember).user as Discord.User).username} Help:**__`)
+                    .setImage(commandData.guildMember.client.user!.avatarURL()!.toString())
+                    .setTimestamp(Date() as unknown as Date)
+                    .setAuthor(commandData.guildMember.client.user!.username, commandData.guildMember.client.user!.avatarURL()!)
+                    .setTitle(`__**${commandData.guildMember.user.username} Help:**__`)
                     .setDescription(msgString)
                     .setColor([254, 254, 254]);
             }
             else if (commandData.guildMember instanceof Discord.User){
                 messageEmbed
-                    .setImage(((commandData.guildMember?.client.user as Discord.User).avatarURL() as string).toString())
+                    .setImage(commandData.guildMember.client.user!.avatarURL()!.toString())
                     .setTimestamp(Date() as unknown as Date)
-                    .setAuthor(commandData.guildMember?.username, (commandData.guildMember?.avatarURL() as string))
+                    .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL()!)
                     .setTitle(`__**${commandData.guildMember.username} Help:**__`)
                     .setDescription(msgString)
                     .setColor([254, 254, 254]);
@@ -68,11 +68,11 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
                 await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
             }
             else if (commandData.guildMember instanceof Discord.GuildMember){
-                const dmChannel = await (commandData.guildMember as Discord.GuildMember).user.createDM();
+                const dmChannel = await commandData.guildMember.user.createDM();
                 await dmChannel.send(messageEmbed);
                 const msgString = `------\n**I've sent you help info, via a message!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
 				.setColor([254, 254, 255])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -100,7 +100,7 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
         if (isFound === false) {
             const msgString = `------\n**Sorry, but that command was not found!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor([254, 254, 254])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
@@ -111,8 +111,8 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
 
         if ((commandDescription as unknown as Discord.MessageEmbed) instanceof Discord.MessageEmbed) {
             (commandDescription as unknown as Discord.MessageEmbed)
-                .setAuthor(commandData.guildMember?.client.user?.username,
-                (commandData.guildMember?.client.user?.avatarURL() as string))
+                .setAuthor(commandData.guildMember!.client.user!.username,
+                commandData.guildMember!.client.user!.avatarURL()!)
                 .setColor([254, 254, 254])
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setTimestamp(Date() as unknown as Date);
@@ -124,7 +124,7 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
                 messageEmbed
                     .setDescription(commandDescription)
                     .setTimestamp(Date() as unknown as Date)
-                    .setAuthor(commandData.guildMember?.client.user?.username, commandData.guildMember?.client.user?.avatarURL()!)
+                    .setAuthor(commandData.guildMember.client.user!.username, commandData.guildMember.client.user!.avatarURL()!)
                     .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                     .setColor([254, 254, 254]);
             }
@@ -132,7 +132,7 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
                 messageEmbed
                     .setDescription(commandDescription)
                     .setTimestamp(Date() as unknown as Date)
-                    .setAuthor(commandData.guildMember?.username, commandData.guildMember?.avatarURL()!)
+                    .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL()!)
                     .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                     .setColor([254, 254, 254]);
             }

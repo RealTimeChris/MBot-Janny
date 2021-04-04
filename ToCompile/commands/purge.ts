@@ -31,7 +31,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 			return commandReturnData;
 		}
 
-		const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+		const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
 
 		const regExp = new RegExp(/\d{1,3}/);
 		let message: Discord.Message;
