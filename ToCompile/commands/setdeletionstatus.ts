@@ -129,7 +129,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     if (commandData.toTextChannel instanceof Discord.WebhookClient){
                         message = new Discord.Message(commandData.guildMember!.client, message, commandData.fromTextChannel!);
                     }
-                    await message.delete({timeout: 20000});
+                    message.delete({timeout: 20000});
                     if (currentDeletionChannel.deletionMessageID
                         !== undefined && currentDeletionChannel.deletionMessageID !== '') {
                         try {
