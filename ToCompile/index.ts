@@ -228,7 +228,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		}
 	});
 	if (commandData.guildMember instanceof Discord.GuildMember){
-		console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember!.displayName}`);
+		console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember.user.username}`);
 	}
 	else if (commandData.guildMember instanceof Discord.User){
 		console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember!.username}`);
