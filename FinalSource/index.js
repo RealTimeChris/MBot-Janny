@@ -267,7 +267,7 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
             case 7:
                 _d.sent();
                 if (commandData.guildMember instanceof Discord.GuildMember) {
-                    console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.displayName);
+                    console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.user.username);
                 }
                 else if (commandData.guildMember instanceof Discord.User) {
                     console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.username);

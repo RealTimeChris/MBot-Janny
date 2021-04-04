@@ -94,7 +94,7 @@ function execute(commandData, discordUser) {
                     return [2 /*return*/, commandReturnData];
                 case 6:
                     deleteCount = parseInt(commandData.args[0].toString().match(regExp)[0], 10);
-                    return [4 /*yield*/, commandData.guildMember.client.channels.fetch(commandData.toTextChannel.id)];
+                    return [4 /*yield*/, commandData.guildMember.client.channels.fetch(commandData.fromTextChannel.id)];
                 case 7:
                     currentChannel = _a.sent();
                     return [4 /*yield*/, currentChannel.bulkDelete(deleteCount, true)];

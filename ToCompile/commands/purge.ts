@@ -51,7 +51,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 			return commandReturnData;
 		}
 		const deleteCount = parseInt(commandData.args[0].toString().match(regExp)![0]!, 10);
-		let currentChannel = await commandData.guildMember!.client.channels.fetch(commandData.toTextChannel!.id) as Discord.TextChannel;
+		let currentChannel = await commandData.guildMember!.client.channels.fetch(commandData.fromTextChannel!.id) as Discord.TextChannel;
         await currentChannel.bulkDelete(deleteCount, true);
 		const msgString = `<@!${commandData.guildMember!.id}> I've just deleted ${deleteCount} messages from this channel!`;
 		let msgEmbed = new Discord.MessageEmbed()
