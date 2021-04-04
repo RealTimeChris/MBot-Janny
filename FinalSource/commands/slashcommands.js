@@ -47,13 +47,13 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'slashcommands';
 command.description = '!slashcommands';
 function execute(commandData, discordUser) {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, interaction, commands, x, globalCommands, msgString, msgEmbeds, x, msgEmbed, currentMsgEmbed, x, error_1;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
-                    _f.trys.push([0, 7, , 8]);
+                    _d.trys.push([0, 7, , 8]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID,
@@ -61,14 +61,14 @@ function execute(commandData, discordUser) {
                         authToken: discordUser.userData.botToken });
                     return [4 /*yield*/, interaction.getApplicationCommands()];
                 case 1:
-                    commands = _f.sent();
+                    commands = _d.sent();
                     for (x = 0; x < commands.length; x += 1) {
                         //const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
                         //console.log(newInteraction);
                     }
                     return [4 /*yield*/, interaction.getApplicationCommands()];
                 case 2:
-                    globalCommands = _f.sent();
+                    globalCommands = _d.sent();
                     msgString = "------\n**Yes, IT'S COMPLETED! You have " + globalCommands.length + " commands registered!**\n------\n";
                     msgEmbeds = [];
                     for (x = 0; x < globalCommands.length; x += 1) {
@@ -77,14 +77,14 @@ function execute(commandData, discordUser) {
                             msgEmbed = new Discord.MessageEmbed();
                             if (commandData.guildMember instanceof Discord.User) {
                                 msgEmbed
-                                    .setAuthor((_c = commandData.guildMember) === null || _c === void 0 ? void 0 : _c.username, commandData.guildMember.avatarURL())
+                                    .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
                                     .setColor([254, 254, 255])
                                     .setTimestamp(Date())
                                     .setTitle('__**Registered Commands:**__');
                             }
                             else {
                                 msgEmbed
-                                    .setAuthor((_d = commandData.guildMember) === null || _d === void 0 ? void 0 : _d.user.username, commandData.guildMember.user.avatarURL())
+                                    .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                                     .setColor([254, 254, 254])
                                     .setTimestamp(Date())
                                     .setTitle('__**Registered Commands:**__');
@@ -97,20 +97,20 @@ function execute(commandData, discordUser) {
                         }
                     }
                     x = 0;
-                    _f.label = 3;
+                    _d.label = 3;
                 case 3:
                     if (!(x < msgEmbeds.length)) return [3 /*break*/, 6];
-                    (_e = msgEmbeds[x]) === null || _e === void 0 ? void 0 : _e.setTitle("__**Registered Commands, (" + (x + 1).toString() + " of " + msgEmbeds.length + "): **__");
+                    (_c = msgEmbeds[x]) === null || _c === void 0 ? void 0 : _c.setTitle("__**Registered Commands, (" + (x + 1).toString() + " of " + msgEmbeds.length + "): **__");
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbeds[x])];
                 case 4:
-                    _f.sent();
-                    _f.label = 5;
+                    _d.sent();
+                    _d.label = 5;
                 case 5:
                     x += 1;
                     return [3 /*break*/, 3];
                 case 6: return [2 /*return*/, commandReturnData];
                 case 7:
-                    error_1 = _f.sent();
+                    error_1 = _d.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

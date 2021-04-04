@@ -47,30 +47,30 @@ command.name = 'setdefaultrole';
 command.description = 'Just enter !setdefaultrole to view the current list of default roles!\nEnter !setdefaultrole = ADD, ROLENAME, to add a '
     + 'role as a default for when someone new joins the server.\n!setdefaultrole = REMOVE, ROLENAME to remove a role from the list.';
 function execute(commandData, discordUser) {
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, areWeInADM, doWeHaveAdminPerms, guildData_1, roleMemberManager, currentDiscordRole, whatAreWeDoing, roleMentionRegExp, idRegExp, msgString, msgEmbed, msg, msgString, msgEmbed, msg, roleID, roleName_1, roleArray_1, _loop_1, x, msgString_1, messageEmbed, currentRole_1, isItFound_1, msgString, msgEmbed, msg, x, msgString_2, msgEmbed, msg, msgString, messageEmbed, x, msgString_3, msgEmbed, msg, msgString, messageEmbed, error_1;
-        return __generator(this, function (_h) {
-            switch (_h.label) {
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _h.trys.push([0, 37, , 38]);
+                    _c.trys.push([0, 37, , 38]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _h.sent();
+                    areWeInADM = _c.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 2:
-                    doWeHaveAdminPerms = _h.sent();
+                    doWeHaveAdminPerms = _c.sent();
                     if (doWeHaveAdminPerms === false) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 3:
-                    guildData_1 = _h.sent();
+                    guildData_1 = _c.sent();
                     roleMemberManager = void 0;
                     currentDiscordRole = void 0;
                     whatAreWeDoing = '';
@@ -83,39 +83,39 @@ function execute(commandData, discordUser) {
                     if (!(commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove')) return [3 /*break*/, 7];
                     msgString = "------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 5:
-                    msg = _h.sent();
+                    msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 6:
-                    _h.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 7:
                     if (!(commandData.args[1] === undefined)) return [3 /*break*/, 10];
                     msgString = "------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 8:
-                    msg = _h.sent();
+                    msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 9:
-                    _h.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 10:
                     if (!roleMentionRegExp.test(commandData.args[1])) return [3 /*break*/, 12];
@@ -123,7 +123,7 @@ function execute(commandData, discordUser) {
                     roleMemberManager = new Discord.RoleManager(commandData.guild);
                     return [4 /*yield*/, roleMemberManager.fetch(roleID)];
                 case 11:
-                    currentDiscordRole = (_h.sent());
+                    currentDiscordRole = (_c.sent());
                     commandData.args[1] = currentDiscordRole.name;
                     return [3 /*break*/, 14];
                 case 12:
@@ -131,14 +131,14 @@ function execute(commandData, discordUser) {
                     roleMemberManager = new Discord.RoleManager(commandData.guild);
                     return [4 /*yield*/, roleMemberManager.fetch(commandData.args[1])];
                 case 13:
-                    currentDiscordRole = (_h.sent());
+                    currentDiscordRole = (_c.sent());
                     commandData.args[1] = currentDiscordRole.name;
-                    _h.label = 14;
+                    _c.label = 14;
                 case 14:
-                    if (((_c = commandData.args[0]) === null || _c === void 0 ? void 0 : _c.toLowerCase()) === 'add') {
+                    if (((_a = commandData.args[0]) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'add') {
                         whatAreWeDoing = 'add';
                     }
-                    else if (((_d = commandData.args[0]) === null || _d === void 0 ? void 0 : _d.toLowerCase()) === 'remove') {
+                    else if (((_b = commandData.args[0]) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'remove') {
                         whatAreWeDoing = 'remove';
                     }
                     console.log(whatAreWeDoing);
@@ -195,7 +195,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_1);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 15:
-                    _h.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 16:
                     currentRole_1 = new Discord.Role(commandData.guildMember.client, {}, commandData.guildMember.client.guilds.resolve(guildData_1.guildID));
@@ -210,44 +210,44 @@ function execute(commandData, discordUser) {
                     if (!(isItFound_1 === false)) return [3 /*break*/, 19];
                     msgString = "------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_e = commandData.guildMember) === null || _e === void 0 ? void 0 : _e.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Role Issue:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 17:
-                    msg = _h.sent();
+                    msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 18:
-                    _h.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 19:
                     if (!(whatAreWeDoing === 'add')) return [3 /*break*/, 27];
                     x = 0;
-                    _h.label = 20;
+                    _c.label = 20;
                 case 20:
                     if (!(x < guildData_1.defaultRoleIDs.length)) return [3 /*break*/, 24];
                     if (!(currentRole_1.id === guildData_1.defaultRoleIDs[x])) return [3 /*break*/, 23];
                     msgString_2 = "------\n**Hey! It looks like you've already added that role!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_f = commandData.guildMember) === null || _f === void 0 ? void 0 : _f.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData_1.borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Role Issue:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 21:
-                    msg = _h.sent();
+                    msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 22:
-                    _h.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 23:
                     x += 1;
@@ -256,7 +256,7 @@ function execute(commandData, discordUser) {
                     guildData_1.defaultRoleIDs.push(currentRole_1.id);
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData_1)];
                 case 25:
-                    _h.sent();
+                    _c.sent();
                     msgString = "\n------\n__**Role:**__ <@&" + currentRole_1.id + ">\n------";
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
@@ -267,22 +267,22 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 26:
-                    _h.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 27:
                     if (!(whatAreWeDoing === 'remove')) return [3 /*break*/, 36];
                     isItFound_1 = false;
                     x = 0;
-                    _h.label = 28;
+                    _c.label = 28;
                 case 28:
                     if (!(x < guildData_1.defaultRoleIDs.length)) return [3 /*break*/, 31];
                     if (!(currentRole_1.id === guildData_1.defaultRoleIDs[x])) return [3 /*break*/, 30];
                     guildData_1.defaultRoleIDs.splice(x, 1);
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData_1)];
                 case 29:
-                    _h.sent();
+                    _c.sent();
                     isItFound_1 = true;
-                    _h.label = 30;
+                    _c.label = 30;
                 case 30:
                     x += 1;
                     return [3 /*break*/, 28];
@@ -290,20 +290,20 @@ function execute(commandData, discordUser) {
                     if (!(isItFound_1 === false)) return [3 /*break*/, 34];
                     msgString_3 = "------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_g = commandData.guildMember) === null || _g === void 0 ? void 0 : _g.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData_1.borderColor)
                         .setDescription(msgString_3)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 32:
-                    msg = _h.sent();
+                    msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 33:
-                    _h.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 34:
                     msgString = "" + '\n------\n__**Role**__: <@&' + currentRole_1.id + ">\n------";
@@ -316,11 +316,11 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 35:
-                    _h.sent();
+                    _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 36: return [2 /*return*/, commandReturnData];
                 case 37:
-                    error_1 = _h.sent();
+                    error_1 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

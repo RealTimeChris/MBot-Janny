@@ -43,7 +43,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DiscordUser = exports.CommandReturnData = exports.CommandData = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = exports.recurseThroughServerRecords = exports.applyDefaultRoles = exports.areWeInADM = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = exports.sendMessageWithCorrectChannel = void 0;
+exports.DiscordUser = exports.CommandReturnData = exports.CommandData = exports.BotCommand = exports.DiscordUserData = exports.GuildData = exports.TrackedUser = exports.Log = exports.VerificationSystem = exports.TimedMessage = exports.DeletionChannel = exports.GuildMemberData = exports.ServerRecord = exports.UserRecord = exports.PermissionOverwrites = exports.recurseThroughServerRecords = exports.applyDefaultRoles = exports.areWeInADM = exports.recurseThroughMessagePages = exports.checkForBotCommanderStatus = exports.sendMessageWithCorrectChannel = void 0;
 var Discord = require("discord.js");
 var level_ts_1 = __importDefault(require("level-ts"));
 var config = require("./config.json");
@@ -66,17 +66,17 @@ function sendMessageWithCorrectChannel(commandData, messageContents, atUserID) {
                     _b.sent();
                     return [4 /*yield*/, (commandData.toTextChannel.send(messageContents))];
                 case 2:
-                    returnMessage_1 = (_b.sent());
+                    returnMessage_1 = _b.sent();
                     return [3 /*break*/, 7];
                 case 3:
                     if (!(atUserID === null)) return [3 /*break*/, 5];
                     return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 4:
-                    returnMessage_1 = (_b.sent());
+                    returnMessage_1 = _b.sent();
                     return [3 /*break*/, 7];
                 case 5: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
                 case 6:
-                    returnMessage_1 = (_b.sent());
+                    returnMessage_1 = _b.sent();
                     _b.label = 7;
                 case 7: return [3 /*break*/, 17];
                 case 8:
@@ -84,24 +84,24 @@ function sendMessageWithCorrectChannel(commandData, messageContents, atUserID) {
                     if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 10];
                     return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + ">", { embed: messageContents })];
                 case 9:
-                    returnMessage_1 = (_b.sent());
+                    returnMessage_1 = _b.sent();
                     return [3 /*break*/, 14];
                 case 10:
                     if (!(atUserID === null)) return [3 /*break*/, 12];
                     return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 11:
-                    returnMessage_1 = (_b.sent());
+                    returnMessage_1 = _b.sent();
                     return [3 /*break*/, 14];
                 case 12: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
                 case 13:
-                    returnMessage_1 = (_b.sent());
+                    returnMessage_1 = _b.sent();
                     _b.label = 14;
                 case 14: return [3 /*break*/, 17];
                 case 15:
                     if (!(commandData.toTextChannel instanceof Discord.DMChannel)) return [3 /*break*/, 17];
                     return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 16:
-                    returnMessage_1 = (_b.sent());
+                    returnMessage_1 = _b.sent();
                     _b.label = 17;
                 case 17: return [2 /*return*/, new Promise(function (resolve, reject) {
                         resolve(returnMessage_1);
@@ -384,7 +384,7 @@ function recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y) {
                     serverRecord = new ServerRecord();
                     serverRecord.serverName = liveGuildArray[y].name;
                     serverRecord.serverID = liveGuildArray[y].id;
-                    serverRecord.replacementServerInvite = String();
+                    serverRecord.replacementServerInvite = '';
                     serverRecord.userRecords = [];
                     console.log("Adding New Server Record: " + serverRecord.serverName);
                     console.log("Saving the JSON file for this Discord server for the first time: " + serverRecord.serverName);
@@ -528,10 +528,23 @@ var Log = /** @class */ (function () {
 }());
 exports.Log = Log;
 /**
+ * Class representing a "tracked user".
+ */
+var TrackedUser = /** @class */ (function () {
+    function TrackedUser() {
+        this.userID = '';
+        this.channelID = '';
+        this.userName = '';
+    }
+    return TrackedUser;
+}());
+exports.TrackedUser = TrackedUser;
+/**
  * Class representing a single guild/server. *
  */
 var GuildData = /** @class */ (function () {
     function GuildData() {
+        this.trackedUsers = [];
         this.borderColor = [0, 0, 255];
         this.ghostedRoleID = '';
         this.timedMessages = [];
@@ -609,10 +622,6 @@ var DiscordUserData = /** @class */ (function () {
         this.startupCall = true;
         this.activeInviteGuilds = [];
         this.botCommanders = [];
-        this.trackingGuildIDs = [];
-        this.trackingChannelIDs = [];
-        this.trackedUserIDs = [];
-        this.trackedUserNames = [];
     }
     return DiscordUserData;
 }());
@@ -648,16 +657,16 @@ var CommandData = /** @class */ (function () {
         if (guildMemberID === void 0) { guildMemberID = ''; }
         if (guildID === void 0) { guildID = ''; }
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, error_5;
-            return __generator(this, function (_j) {
-                switch (_j.label) {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, error_5;
+            return __generator(this, function (_k) {
+                switch (_k.label) {
                     case 0:
-                        _j.trys.push([0, 15, , 16]);
+                        _k.trys.push([0, 16, , 17]);
                         this.fromTextChannelType = fromTextChannelType;
                         _a = this;
                         return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
                     case 1:
-                        _a.fromTextChannel = (_j.sent());
+                        _a.fromTextChannel = (_k.sent());
                         if (interaction !== null) {
                             this.interaction = interaction;
                         }
@@ -665,59 +674,62 @@ var CommandData = /** @class */ (function () {
                         _b = this;
                         return [4 /*yield*/, client.guilds.fetch(guildID)];
                     case 2:
-                        _b.guild = (_j.sent());
-                        _j.label = 3;
+                        _b.guild = _k.sent();
+                        _k.label = 3;
                     case 3:
                         if (!(guildMemberID !== '' && guildID !== '')) return [3 /*break*/, 5];
                         _c = this;
                         return [4 /*yield*/, this.guild.members.fetch(guildMemberID)];
                     case 4:
-                        _c.guildMember = (_j.sent());
+                        _c.guildMember = _k.sent();
                         return [3 /*break*/, 7];
                     case 5:
                         _d = this;
                         return [4 /*yield*/, client.users.fetch(guildMemberID)];
                     case 6:
-                        _d.guildMember = (_j.sent());
-                        _j.label = 7;
+                        _d.guildMember = _k.sent();
+                        _k.label = 7;
                     case 7:
                         if (interaction !== null && fromTextChannelType !== 'dm') {
                             this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
                             this.permsChannel = new Discord.GuildChannel(this.guild, this.fromTextChannel);
                         }
-                        if (!(interaction === null && fromTextChannelType !== 'dm')) return [3 /*break*/, 9];
+                        if (!(interaction === null && fromTextChannelType !== 'dm')) return [3 /*break*/, 10];
                         _e = this;
                         return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
                     case 8:
-                        _e.toTextChannel = (_j.sent());
-                        this.permsChannel = new Discord.GuildChannel(this.guild, this.fromTextChannel);
-                        _j.label = 9;
-                    case 9:
-                        if (!(interaction !== null && fromTextChannelType === 'dm')) return [3 /*break*/, 11];
-                        this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
+                        _e.toTextChannel = (_k.sent());
                         _f = this;
                         return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                    case 9:
+                        _f.permsChannel = (_k.sent());
+                        _k.label = 10;
                     case 10:
-                        _f.permsChannel = (_j.sent());
-                        _j.label = 11;
-                    case 11:
-                        if (!(interaction === null && fromTextChannelType === 'dm')) return [3 /*break*/, 14];
+                        if (!(interaction !== null && fromTextChannelType === 'dm')) return [3 /*break*/, 12];
+                        this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
                         _g = this;
-                        return [4 /*yield*/, this.guildMember.createDM(true)];
-                    case 12:
-                        _g.toTextChannel = (_j.sent());
-                        _h = this;
                         return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                    case 11:
+                        _g.permsChannel = (_k.sent());
+                        _k.label = 12;
+                    case 12:
+                        if (!(interaction === null && fromTextChannelType === 'dm')) return [3 /*break*/, 15];
+                        _h = this;
+                        return [4 /*yield*/, this.guildMember.createDM(true)];
                     case 13:
-                        _h.permsChannel = (_j.sent());
-                        _j.label = 14;
-                    case 14: return [3 /*break*/, 16];
-                    case 15:
-                        error_5 = _j.sent();
+                        _h.toTextChannel = _k.sent();
+                        _j = this;
+                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                    case 14:
+                        _j.permsChannel = (_k.sent());
+                        _k.label = 15;
+                    case 15: return [3 /*break*/, 17];
+                    case 16:
+                        error_5 = _k.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_5);
                             })];
-                    case 16: return [2 /*return*/];
+                    case 17: return [2 /*return*/];
                 }
             });
         });
@@ -759,7 +771,7 @@ var DiscordUser = /** @class */ (function () {
                         _a = this;
                         return [4 /*yield*/, this.getUserDataFromDB(client)];
                     case 1:
-                        _a.userData = (_b.sent());
+                        _a.userData = _b.sent();
                         this.userData.dataBaseFilePath = dataBaseFilePath;
                         this.userData.startupCall = true;
                         return [4 /*yield*/, this.updateUserDataInDB(this.userData)];
@@ -822,10 +834,6 @@ var DiscordUser = /** @class */ (function () {
                             userData_2.msBetweenCacheBackup = config.msBetweenCacheBackup;
                             userData_2.prefix = config.prefix;
                             userData_2.timeOfLastUpdateAndSave = new Date().getTime();
-                            userData_2.trackedUserIDs = [];
-                            userData_2.trackedUserNames = [];
-                            userData_2.trackingChannelIDs = [];
-                            userData_2.trackingGuildIDs = [];
                             userData_2.userID = client.user.id;
                             userData_2.userName = client.user.username;
                             return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -898,12 +906,6 @@ var DiscordUser = /** @class */ (function () {
                         userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
                         userData.prefix = config.prefix;
                         userData.timeOfLastUpdateAndSave = new Date().getTime();
-                        if (userData.trackedUserIDs === undefined) {
-                            userData.trackedUserIDs = [];
-                            userData.trackedUserNames = [];
-                            userData.trackingChannelIDs = [];
-                            userData.trackingGuildIDs = [];
-                        }
                         userData.userID = client.user.id;
                         userData.userName = client.user.username;
                         return [4 /*yield*/, this.updateUserDataInDB(userData)];
@@ -951,6 +953,7 @@ var DiscordUser = /** @class */ (function () {
                             guildData_2.guildMemberCount = guild.memberCount;
                             guildData_2.guildName = guild.name;
                             guildData_2.timedMessages = [];
+                            guildData_2.trackedUsers = [];
                             guildData_2.verificationSystem = new VerificationSystem();
                             return [2 /*return*/, new Promise(function (resolve, reject) {
                                     resolve(guildData_2);
@@ -1030,6 +1033,7 @@ var DiscordUser = /** @class */ (function () {
                         guildData.guildID = liveDataGuildArray[x].id;
                         guildData.guildMemberCount = liveDataGuildArray[x].memberCount;
                         guildData.guildName = liveDataGuildArray[x].name;
+                        guildData.trackedUsers = [];
                         return [4 /*yield*/, this.updateGuildDataInDB(guildData)];
                     case 3:
                         _a.sent();
@@ -1345,7 +1349,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.sendInviteIfTimeHasPassedAndGuildIsActive = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, timeDifference, timeRemaining, x, fileKey, currentFileObject, error_20, userID, guildName, inviteLink, inviteString, currentUser, wereTheyAvailable, dmChannel, error_21, savedUser, availableFileKey, availableFileString, availableFileObject, error_22, serverRecord, deletedUser, notAvailableFileKey, notAvailableFileString, notAvailableFileObject, error_23, serverRecord, error_24;
+            var currentTime, timeDifference, timeRemaining, x, fileKey, currentFileObject, error_20, userID, guildName, inviteLink, inviteString, currentUser, wereTheyAvailable, dmChannel, error_21, savedUser, availableFileKey, availableFileString, availableFileObject, error_22, serverRecord, deletedUser, notAvailableFileKey, notAvailableFileObject, error_23, serverRecord, error_24;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1368,7 +1372,7 @@ var DiscordUser = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         if (!(x < this.userData.activeInviteGuilds.length)) return [3 /*break*/, 31];
-                        fileKey = String();
+                        fileKey = '';
                         fileKey = this.userData.activeInviteGuilds[x] + " + Record";
                         currentFileObject = void 0;
                         _a.label = 2;
@@ -1376,7 +1380,7 @@ var DiscordUser = /** @class */ (function () {
                         _a.trys.push([2, 4, , 5]);
                         return [4 /*yield*/, this.dataBase.get(fileKey)];
                     case 3:
-                        currentFileObject = (_a.sent());
+                        currentFileObject = _a.sent();
                         return [3 /*break*/, 5];
                     case 4:
                         error_20 = _a.sent();
@@ -1428,7 +1432,7 @@ var DiscordUser = /** @class */ (function () {
                         _a.label = 13;
                     case 13:
                         availableFileKey = fileKey + " + Available";
-                        availableFileString = String();
+                        availableFileString = '';
                         _a.label = 14;
                     case 14:
                         _a.trys.push([14, 17, , 19]);
@@ -1471,7 +1475,6 @@ var DiscordUser = /** @class */ (function () {
                         _a.label = 23;
                     case 23:
                         notAvailableFileKey = fileKey + " +  NotAvailable";
-                        notAvailableFileString = String();
                         _a.label = 24;
                     case 24:
                         _a.trys.push([24, 27, , 28]);
@@ -1936,7 +1939,7 @@ var DiscordUser = /** @class */ (function () {
                             case 7:
                                 _a.sent();
                                 return [4 /*yield*/, newVerificationMessage
-                                        .react(oldVerificationMessage.reactions.cache.first().emoji.name)];
+                                        .react((oldVerificationMessage.reactions.cache.first()).emoji.name)];
                             case 8:
                                 _a.sent();
                                 return [4 /*yield*/, oldVerificationMessage.delete()];

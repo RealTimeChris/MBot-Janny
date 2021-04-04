@@ -47,30 +47,29 @@ command.name = 'timedmessages';
 command.description = "__**Timed Messages Usage:**__ !timedmessages to view the server's current timed messages.\n"
     + '!timedmessages = ADD, MESSAGENAME, MSBETWEENSENDS, MESSAGECONTENT to add a new message.\nAnd !timedmessages = REMOVE, MESSAGENAME, to remove a timed message!';
 function execute(commandData, discordUser) {
-    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, areWeInADM, doWeHaveAdminPerms, guildData, whatAreWeDoing, messageName, msBetweenSends, messageContent, argOne, argThreee, argOne, msgString, msgEmbed, msg, embedFields, x, msPerSecond, secondPerMinute, msPerMinute, minutePerHour, msPerHour, timeRemaining, hoursRemaining, minutesRemaining, secondsRemaining, currentField, currentField, msgEmbed, newTimedMessage, msgEmbed, msgString, isItFound, currentTimedMessageName, x, msgString_1, msgEmbed_1, msg, msgEmbed, msgString, error_1;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _c.trys.push([0, 24, , 25]);
+                    _a.trys.push([0, 24, , 25]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _c.sent();
+                    areWeInADM = _a.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 2:
-                    doWeHaveAdminPerms = _c.sent();
+                    doWeHaveAdminPerms = _a.sent();
                     if (doWeHaveAdminPerms === false) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 3:
-                    guildData = _c.sent();
+                    guildData = _a.sent();
                     whatAreWeDoing = '';
                     messageName = '';
                     msBetweenSends = 0;
@@ -96,20 +95,20 @@ function execute(commandData, discordUser) {
                 case 6:
                     msgString = "------\n**Please, enter a proper first argument or enter none at all!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 7:
-                    msg = _c.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 8:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 9:
                     if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 11];
@@ -145,7 +144,7 @@ function execute(commandData, discordUser) {
                     msgEmbed.fields = embedFields;
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 10:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 11:
                     if (!(whatAreWeDoing === 'adding')) return [3 /*break*/, 14];
@@ -158,7 +157,7 @@ function execute(commandData, discordUser) {
                     guildData.timedMessages.push(newTimedMessage);
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 12:
-                    _c.sent();
+                    _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = '';
                     msgString = "Congrats, you've just added a new timed message to your server! It is as follows:\n------\n";
@@ -174,14 +173,14 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 13:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 14:
                     if (!(whatAreWeDoing === 'removing')) return [3 /*break*/, 23];
                     isItFound = false;
                     currentTimedMessageName = '';
                     x = 0;
-                    _c.label = 15;
+                    _a.label = 15;
                 case 15:
                     if (!(x < guildData.timedMessages.length)) return [3 /*break*/, 18];
                     if (!(messageName === guildData.timedMessages[x].name)) return [3 /*break*/, 17];
@@ -190,7 +189,7 @@ function execute(commandData, discordUser) {
                     guildData.timedMessages.splice(x, 1);
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 16:
-                    _c.sent();
+                    _a.sent();
                     return [3 /*break*/, 18];
                 case 17:
                     x += 1;
@@ -199,20 +198,20 @@ function execute(commandData, discordUser) {
                     if (!(isItFound === false)) return [3 /*break*/, 21];
                     msgString_1 = "------\n**Sorry, but the timed message you requested could not be found!**\n------";
                     msgEmbed_1 = new Discord.MessageEmbed()
-                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Message Issue:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
                 case 19:
-                    msg = _c.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 20:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 21:
                     msgEmbed = new Discord.MessageEmbed();
@@ -226,11 +225,11 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 22:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 23: return [2 /*return*/, commandReturnData];
                 case 24:
-                    error_1 = _c.sent();
+                    error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

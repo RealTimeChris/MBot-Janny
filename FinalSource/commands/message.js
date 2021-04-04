@@ -40,35 +40,100 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Discord = require("discord.js");
 var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
 command.name = 'message';
-command.description = '__**Message Usage**__: discordUser command executes automatically upon receiving certain messages!.';
+command.description = '__**Message Usage**__: Command executes automatically upon receiving certain messages!.';
+function trackIfTrackedUser(message, commandData, discordUser) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _this = this;
+        return __generator(this, function (_a) {
+            try {
+                if (message.guild === undefined || message.guild === null) {
+                    return [2 /*return*/];
+                }
+                discordUser.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {
+                    var x, user, msgStringContent, isItFound, index, msgEmbed, currentTextChannel;
+                    var _a, _b;
+                    return __generator(this, function (_c) {
+                        switch (_c.label) {
+                            case 0:
+                                x = 0;
+                                _c.label = 1;
+                            case 1:
+                                if (!(x < guildData.trackedUsers.length)) return [3 /*break*/, 6];
+                                user = message.author;
+                                msgStringContent = void 0;
+                                isItFound = false;
+                                index = void 0;
+                                if (user.id === ((_a = guildData.trackedUsers[x]) === null || _a === void 0 ? void 0 : _a.userID)) {
+                                    msgStringContent = "__**Tracked User:**__ <@!" + user.id + "> (" + user.username + ")\n__**On Server:**__ " + message.guild.name + "\n                            \n__**In Channel:**__ <#" + message.channel.id + "> (" + message.channel.name + ")\n__**Message ID**__ " + message.id + "\n__**What They Said:**__ " + message.content;
+                                    isItFound = true;
+                                    index = x;
+                                }
+                                if (!(isItFound === false)) return [3 /*break*/, 2];
+                                return [2 /*return*/];
+                            case 2:
+                                msgEmbed = new Discord.MessageEmbed();
+                                msgEmbed
+                                    .setAuthor(user.username, user.avatarURL())
+                                    .setColor([254, 254, 254])
+                                    .setDescription(msgStringContent)
+                                    .setTimestamp(Date())
+                                    .setTitle("__**Tracked User Message:**__");
+                                return [4 /*yield*/, commandData.guildMember.client.channels.fetch((_b = guildData.trackedUsers[index]) === null || _b === void 0 ? void 0 : _b.channelID)];
+                            case 3:
+                                currentTextChannel = _c.sent();
+                                return [4 /*yield*/, currentTextChannel.send(msgEmbed)];
+                            case 4:
+                                _c.sent();
+                                _c.label = 5;
+                            case 5:
+                                x += 1;
+                                return [3 /*break*/, 1];
+                            case 6: return [2 /*return*/];
+                        }
+                    });
+                }); });
+            }
+            catch (error) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        reject(error);
+                    })];
+            }
+            return [2 /*return*/];
+        });
+    });
+}
 /**
 * Selects a chosen chat message and sends it via the appropriate channel,
 * upon recieving a trigger phrase or word.
 */
-function execute(message) {
+function execute(message, commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var number, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
-                    number = Math.random() * 100;
-                    if (!(message.content != null && message.content !== undefined)) return [3 /*break*/, 2];
-                    if (!(message.content.toLowerCase().includes('hey ') && number <= 15)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, message.reply("Greetings, what's up fellow Discordee?! Can I offer you some drugs?")];
+                    _a.trys.push([0, 4, , 5]);
+                    return [4 /*yield*/, trackIfTrackedUser(message, commandData, discordUser)];
                 case 1:
                     _a.sent();
-                    _a.label = 2;
-                case 2: return [2 /*return*/, command.name];
-                case 3:
+                    number = Math.random() * 100;
+                    if (!(message.content != null && message.content !== undefined)) return [3 /*break*/, 3];
+                    if (!(message.content.toLowerCase().includes('hey ') && number <= 15)) return [3 /*break*/, 3];
+                    return [4 /*yield*/, message.reply("Greetings, what's up fellow Discordee?! Can I offer you some drugs?")];
+                case 2:
+                    _a.sent();
+                    _a.label = 3;
+                case 3: return [2 /*return*/, command.name];
+                case 4:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 4: return [2 /*return*/];
+                case 5: return [2 /*return*/];
             }
         });
     });

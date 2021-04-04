@@ -49,13 +49,12 @@ command.description = 'Simply enter !ping';
  * A testing function for the early implementation of the command handler.
  */
 function execute(commandData, discordUser) {
-    var _a;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, msgString, msgEmbed, guildData, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _b.trys.push([0, 5, , 6]);
+                    _a.trys.push([0, 5, , 6]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     msgString = '------\n**Pong!**\n------';
@@ -63,9 +62,9 @@ function execute(commandData, discordUser) {
                     if (!(commandData.guildMember instanceof Discord.GuildMember)) return [3 /*break*/, 2];
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 1:
-                    guildData = _b.sent();
+                    guildData = _a.sent();
                     msgEmbed
-                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
@@ -78,13 +77,13 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Ping! Response:**__');
-                    _b.label = 3;
+                    _a.label = 3;
                 case 3: return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
-                    _b.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 5:
-                    error_1 = _b.sent();
+                    error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

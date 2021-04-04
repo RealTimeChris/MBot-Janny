@@ -302,7 +302,7 @@ client.once('ready', function () { return __awaiter(void 0, void 0, void 0, func
     });
 }); });
 client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
-    var command, args, x, commandData, cmdReturnData, error_2, error_3, command, cmdName, error_4, error_5;
+    var command, args, x, commandData, cmdReturnData, error_2, newMsg, error_3, command, commandData, cmdName, error_4, newMsg, error_5;
     var _a, _b;
     return __generator(this, function (_c) {
         switch (_c.label) {
@@ -311,7 +311,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                     console.log('Better not track our own messages!');
                     return [2 /*return*/];
                 }
-                if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 17];
+                if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 18];
                 command = '';
                 args = [];
                 if (msg.content.indexOf(' =') === -1) {
@@ -329,7 +329,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 }
                 _c.label = 1;
             case 1:
-                _c.trys.push([1, 15, , 16]);
+                _c.trys.push([1, 16, , 17]);
                 commandData = new DiscordStuff.CommandData();
                 if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 3];
                 return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
@@ -348,83 +348,100 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.sent();
                 _c.label = 7;
             case 7:
-                _c.trys.push([7, 9, , 10]);
+                _c.trys.push([7, 9, , 11]);
                 console.log("Command: '" + command + "' entered by user: " + msg.author.username);
                 return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(commandData, discordUser))];
             case 8:
                 cmdReturnData = _c.sent();
                 console.log("Completed Command: " + cmdReturnData.commandName);
-                return [3 /*break*/, 10];
+                return [3 /*break*/, 11];
             case 9:
                 error_2 = _c.sent();
                 console.log(error_2);
-                msg.reply('There was an error trying to execute that command!');
-                return [3 /*break*/, 10];
-            case 10: return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
-            case 11:
-                _c.sent();
-                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
+                return [4 /*yield*/, msg.reply('There was an error trying to process that message!')];
+            case 10:
+                newMsg = _c.sent();
+                newMsg.delete({ timeout: 20000 });
+                return [3 /*break*/, 11];
+            case 11: return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
             case 12:
                 _c.sent();
-                return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
+                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
             case 13:
                 _c.sent();
-                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
+                return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
             case 14:
+                _c.sent();
+                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
+            case 15:
                 _c.sent();
                 discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {
                     console.log(error);
                 });
                 return [2 /*return*/];
-            case 15:
+            case 16:
                 error_3 = _c.sent();
                 console.log(error_3);
-                return [3 /*break*/, 16];
-            case 16: return [3 /*break*/, 28];
-            case 17:
-                if (!(msg.author.id !== client.user.id)) return [3 /*break*/, 28];
+                return [3 /*break*/, 17];
+            case 17: return [3 /*break*/, 34];
+            case 18:
+                if (!(msg.author.id !== client.user.id)) return [3 /*break*/, 34];
                 command = 'message';
                 if (!commandindex_1.default.commands.has(command)) {
                     return [2 /*return*/];
                 }
-                _c.label = 18;
-            case 18:
-                _c.trys.push([18, 27, , 28]);
                 _c.label = 19;
             case 19:
-                _c.trys.push([19, 21, , 22]);
-                console.log("Standard message entered: " + msg.author.username);
-                return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(command)) === null || _b === void 0 ? void 0 : _b.function(msg))];
+                _c.trys.push([19, 33, , 34]);
+                _c.label = 20;
             case 20:
-                cmdName = _c.sent();
-                console.log("Completed Command: " + cmdName);
-                return [3 /*break*/, 22];
+                _c.trys.push([20, 26, , 28]);
+                commandData = new DiscordStuff.CommandData();
+                if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 22];
+                return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
             case 21:
-                error_4 = _c.sent();
-                console.log(error_4);
-                msg.reply('There was an error trying to process that message!');
-                return [3 /*break*/, 22];
-            case 22: return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
+                _c.sent();
+                return [3 /*break*/, 24];
+            case 22: return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id)];
             case 23:
                 _c.sent();
-                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
+                _c.label = 24;
             case 24:
+                console.log("Standard message entered: " + msg.author.username);
+                return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(command)) === null || _b === void 0 ? void 0 : _b.function(msg, commandData, discordUser))];
+            case 25:
+                cmdName = _c.sent();
+                console.log("Completed Command: " + cmdName);
+                return [3 /*break*/, 28];
+            case 26:
+                error_4 = _c.sent();
+                console.log(error_4);
+                return [4 /*yield*/, msg.reply('There was an error trying to process that message!')];
+            case 27:
+                newMsg = _c.sent();
+                newMsg.delete({ timeout: 20000 });
+                return [3 /*break*/, 28];
+            case 28: return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
+            case 29:
+                _c.sent();
+                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
+            case 30:
                 _c.sent();
                 return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
-            case 25:
+            case 31:
                 _c.sent();
                 return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
-            case 26:
+            case 32:
                 _c.sent();
                 discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {
                     console.log(error);
                 });
                 return [2 /*return*/];
-            case 27:
+            case 33:
                 error_5 = _c.sent();
                 console.log(error_5);
-                return [3 /*break*/, 28];
-            case 28: return [2 /*return*/];
+                return [3 /*break*/, 34];
+            case 34: return [2 /*return*/];
         }
     });
 }); });

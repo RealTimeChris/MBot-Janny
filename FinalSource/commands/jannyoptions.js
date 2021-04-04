@@ -47,11 +47,11 @@ command.name = 'jannyoptions';
 command.description = '!jannyoptions, to display a list of options for this bot!';
 function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPerms, guildData, msgEmbed, fields, resultIcon, x, logsField, defaultRolesField, deletionChannelsField, serverRecordKey, serverRecordObject, replacementServerInviteField, requireServerVerificationField, timedMessagesField, userData, x, trackUsersField, error_1;
+        var commandReturnData, areWeInADM, doWeHaveAdminPerms, guildData, msgEmbed, fields, resultIcon, x, logsField, defaultRolesField, deletionChannelsField, serverRecordKey, serverRecordObject, replacementServerInviteField, requireServerVerificationField, timedMessagesField, trackUsersField, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 7, , 8]);
+                    _a.trys.push([0, 6, , 7]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
@@ -71,8 +71,7 @@ function execute(commandData, discordUser) {
                     guildData = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
-                        .setAuthor(commandData.guildMember.client.user.username, commandData.guildMember.client.user
-                        .avatarURL())
+                        .setAuthor(commandData.guildMember.client.user.username, commandData.guildMember.client.user.avatarURL())
                         .setTimestamp(Date())
                         .setTitle('__**Janny Options:**__')
                         .setColor(guildData.borderColor)
@@ -121,28 +120,23 @@ function execute(commandData, discordUser) {
                     }
                     timedMessagesField = { name: '__**Send Out Timed Messages:**__', value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!timedmessages'", inline: true };
                     fields.push(timedMessagesField);
-                    return [4 /*yield*/, discordUser.getUserDataFromDB(commandData.guild.client)];
-                case 5:
-                    userData = _a.sent();
                     resultIcon = '❌';
-                    for (x = 0; x < userData.trackingGuildIDs.length; x += 1) {
-                        if (userData.trackingGuildIDs[x] === commandData.guild.id) {
-                            resultIcon = '✅';
-                        }
+                    if (guildData.trackedUsers.length > 0) {
+                        resultIcon = '✅';
                     }
                     trackUsersField = { name: "__**Track User's Messages:**__", value: "__Active:__ " + resultIcon + "\n\n\t\t\t__Command(s):__ '!trackuser'", inline: true };
                     fields.push(trackUsersField);
                     msgEmbed.fields = fields;
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 6:
+                case 5:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 7:
+                case 6:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 8: return [2 /*return*/];
+                case 7: return [2 /*return*/];
             }
         });
     });

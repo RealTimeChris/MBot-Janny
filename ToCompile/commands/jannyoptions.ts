@@ -91,13 +91,10 @@ async function execute(commandData: DiscordStuff.CommandData,  discordUser: Disc
 		const timedMessagesField = { name: '__**Send Out Timed Messages:**__', value: `__Active:__ ${resultIcon}\n
 			__Command(s):__ '!timedmessages'`, inline: true };
 		fields.push(timedMessagesField);
-
-		const userData = await discordUser.getUserDataFromDB(commandData.guild!.client);
+		
 		resultIcon = '❌';
-		for (let x = 0; x < userData.trackingGuildIDs.length; x += 1) {
-			if (userData.trackingGuildIDs[x] === commandData.guild!.id) {
-				resultIcon = '✅';
-			}
+		if (guildData.trackedUsers.length > 0) {
+			resultIcon = '✅';
 		}
 		const trackUsersField = { name: "__**Track User's Messages:**__", value: `__Active:__ ${resultIcon}\n
 			__Command(s):__ '!trackuser'`, inline: true };

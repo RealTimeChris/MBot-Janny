@@ -361,9 +361,19 @@ export class Log {
 }
 
 /**
+ * Class representing a "tracked user".
+ */
+export class TrackedUser{
+	userID: string = '';
+	channelID: string | undefined = '';
+	userName: string | undefined = '';
+}
+
+/**
  * Class representing a single guild/server. * 
  */
 export class GuildData {
+	trackedUsers: TrackedUser[] = [];
 	borderColor: number[] = [0, 0, 255];
 	ghostedRoleID: string = '';
 	timedMessages: TimedMessage[] = [];
@@ -441,10 +451,6 @@ export class DiscordUserData {
 	startupCall: boolean = true;
 	activeInviteGuilds: string[] = [];
 	botCommanders: string[] = [];
-	trackingGuildIDs: string[] = [];
-	trackingChannelIDs: string[] = [];
-	trackedUserIDs: string[] = [];
-	trackedUserNames: string[] = [];
 }
 
 /**
@@ -490,7 +496,7 @@ export class BotCommand {
 			}
 			if (interaction === null && fromTextChannelType !== 'dm'){
 				this.toTextChannel = await client.channels.fetch(fromTextChannelID) as Discord.TextChannel;
-				this.permsChannel = new Discord.GuildChannel(this.guild!, this.fromTextChannel);
+				this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
 			}
 			if (interaction !== null && fromTextChannelType === 'dm'){
 				this.toTextChannel = new Discord.WebhookClient(client.user!.id, this.interaction.token);
@@ -578,10 +584,6 @@ export class DiscordUser {
 				userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
 				userData.prefix = config.prefix;
 				userData.timeOfLastUpdateAndSave = new Date().getTime();
-				userData.trackedUserIDs = [];
-				userData.trackedUserNames = [];
-				userData.trackingChannelIDs = [];
-				userData.trackingGuildIDs = [];
 				userData.userID = client.user!.id;
 				userData.userName = client.user!.username;
 				return new Promise((resolve, reject) => {
@@ -633,12 +635,6 @@ export class DiscordUser {
 			userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
 			userData.prefix = config.prefix;
 			userData.timeOfLastUpdateAndSave = new Date().getTime();
-			if (userData.trackedUserIDs === undefined){ 
-				userData.trackedUserIDs = [];
-				userData.trackedUserNames = [];
-				userData.trackingChannelIDs = [];
-				userData.trackingGuildIDs = [];
-			}
 			userData.userID = client.user!.id;
 			userData.userName = client.user!.username;
 			await this.updateUserDataInDB(userData);
@@ -673,6 +669,7 @@ export class DiscordUser {
 				guildData.guildMemberCount = guild.memberCount;
 				guildData.guildName = guild.name;
 				guildData.timedMessages = [];
+				guildData.trackedUsers = [];
 				guildData.verificationSystem = new VerificationSystem();
 				return new Promise((resolve, reject) => {
 					resolve(guildData);
@@ -729,6 +726,7 @@ export class DiscordUser {
 				guildData.guildID = liveDataGuildArray[x]!.id;
 				guildData.guildMemberCount = liveDataGuildArray[x]!.memberCount;
 				guildData.guildName = liveDataGuildArray[x]!.name;
+				guildData.trackedUsers = [];
 				await this.updateGuildDataInDB(guildData);
 			}
 			return new Promise((resolve, reject) => {

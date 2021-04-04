@@ -49,13 +49,12 @@ command.description = '!serverinfo to get info about the current server!\n!serve
  * Displays the info of a chosen server./
  */
 function execute(commandData, discordUser) {
-    var _a;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, idRegExp, currentServerID, msgString, msgEmbed, msg, guildData, msgString, messageEmbed_1, msg, msg, msgString, messageEmbed_2, msg, msg, argZero, serverArray, currentServer, x, msgString, messageEmbed_3, msg, msg, categoryCount, voiceChannelCount, textChannelCount, x, fields, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, messageEmbed, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _b.trys.push([0, 30, , 31]);
+                    _a.trys.push([0, 30, , 31]);
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     idRegExp = /\d{18}/;
@@ -70,21 +69,21 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
-                    msg = _b.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 2:
-                    _b.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 3:
                     guildData = void 0;
                     if (!(commandData.guildMember instanceof Discord.GuildMember)) return [3 /*break*/, 5];
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 4:
-                    guildData = _b.sent();
-                    _b.label = 5;
+                    guildData = _a.sent();
+                    _a.label = 5;
                 case 5:
                     if (!(commandData.args[0] === undefined && commandData.permsChannel.type !== 'dm')) return [3 /*break*/, 6];
                     currentServerID = commandData.guild.id;
@@ -102,13 +101,13 @@ function execute(commandData, discordUser) {
                         .setColor([254, 254, 254]);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_1)];
                 case 7:
-                    msg = _b.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 8:
-                    _b.sent();
+                    _a.sent();
                     return [3 /*break*/, 12];
                 case 9:
                     if (!(commandData.guildMember instanceof Discord.GuildMember)) return [3 /*break*/, 12];
@@ -116,18 +115,18 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTitle('__**Missing Or Invalid Arguments:**__')
                         .setTimestamp(Date())
-                        .setAuthor(commandData.guildMember.user.username, (commandData.guildMember.user.avatarURL()))
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_1)];
                 case 10:
-                    msg = _b.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 11:
-                    _b.sent();
-                    _b.label = 12;
+                    _a.sent();
+                    _a.label = 12;
                 case 12: return [2 /*return*/, commandReturnData];
                 case 13:
                     if (!!idRegExp.test(commandData.args[0])) return [3 /*break*/, 20];
@@ -142,13 +141,13 @@ function execute(commandData, discordUser) {
                         .setColor([254, 254, 254]);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_2)];
                 case 14:
-                    msg = _b.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 15:
-                    _b.sent();
+                    _a.sent();
                     return [3 /*break*/, 19];
                 case 16:
                     if (!(commandData.guildMember instanceof Discord.GuildMember)) return [3 /*break*/, 19];
@@ -160,21 +159,21 @@ function execute(commandData, discordUser) {
                         .setColor(guildData.borderColor);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_2)];
                 case 17:
-                    msg = _b.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 18:
-                    _b.sent();
-                    _b.label = 19;
+                    _a.sent();
+                    _a.label = 19;
                 case 19: return [2 /*return*/, commandReturnData];
                 case 20:
                     argZero = commandData.args[0];
                     currentServerID = argZero;
-                    _b.label = 21;
+                    _a.label = 21;
                 case 21:
-                    serverArray = (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.cache.array().sort();
+                    serverArray = commandData.guildMember.client.guilds.cache.array().sort();
                     currentServer = null;
                     for (x = 0; x < serverArray.length; x += 1) {
                         if (currentServerID === serverArray[x].id) {
@@ -193,13 +192,13 @@ function execute(commandData, discordUser) {
                         .setColor([254, 254, 254]);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_3)];
                 case 22:
-                    msg = _b.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 23:
-                    _b.sent();
+                    _a.sent();
                     return [3 /*break*/, 27];
                 case 24:
                     if (!(commandData.guildMember instanceof Discord.GuildMember)) return [3 /*break*/, 27];
@@ -211,14 +210,14 @@ function execute(commandData, discordUser) {
                         .setColor(guildData.borderColor);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_3)];
                 case 25:
-                    msg = _b.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 26:
-                    _b.sent();
-                    _b.label = 27;
+                    _a.sent();
+                    _a.label = 27;
                 case 27: return [2 /*return*/, commandReturnData];
                 case 28:
                     categoryCount = 0;
@@ -279,10 +278,10 @@ function execute(commandData, discordUser) {
                     }
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 29:
-                    _b.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 30:
-                    error_1 = _b.sent();
+                    error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];

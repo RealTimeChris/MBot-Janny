@@ -101,9 +101,18 @@ export declare class Log {
     loggingChannelName: string;
 }
 /**
+ * Class representing a "tracked user".
+ */
+export declare class TrackedUser {
+    userID: string;
+    channelID: string | undefined;
+    userName: string | undefined;
+}
+/**
  * Class representing a single guild/server. *
  */
 export declare class GuildData {
+    trackedUsers: TrackedUser[];
     borderColor: number[];
     ghostedRoleID: string;
     timedMessages: TimedMessage[];
@@ -139,10 +148,6 @@ export declare class DiscordUserData {
     startupCall: boolean;
     activeInviteGuilds: string[];
     botCommanders: string[];
-    trackingGuildIDs: string[];
-    trackingChannelIDs: string[];
-    trackedUserIDs: string[];
-    trackedUserNames: string[];
 }
 /**
  * Class representing a function/command.

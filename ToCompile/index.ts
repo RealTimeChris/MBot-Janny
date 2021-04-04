@@ -288,7 +288,8 @@ client.on('message', async (msg: Discord.Message) => {
 				console.log(`Completed Command: ${cmdReturnData.commandName}`);
 			} catch (error) {
 				console.log(error);
-				msg.reply('There was an error trying to execute that command!');
+				const newMsg = await msg.reply('There was an error trying to process that message!');
+				newMsg.delete({timeout: 20000});
 			}
 			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
 			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
@@ -309,12 +310,21 @@ client.on('message', async (msg: Discord.Message) => {
 		}
 		try{
 			try {
+				const commandData = new DiscordStuff.CommandData();
+				if (msg.channel.type !== 'dm'){
+					await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member!.id, msg.guild!.id);
+				}
+				else{
+					await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id);
+				}
+
 				console.log(`Standard message entered: ${msg.author.username}`);
-				const cmdName = await botCommands.commands.get(command)?.function(msg);
+				const cmdName = await botCommands.commands.get(command)?.function(msg, commandData, discordUser);
 				console.log(`Completed Command: ${cmdName}`);
 			} catch (error) {
 				console.log(error);
-				msg.reply('There was an error trying to process that message!');
+				const newMsg = await msg.reply('There was an error trying to process that message!');
+				newMsg.delete({timeout: 20000});
 			}
 			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
 			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);

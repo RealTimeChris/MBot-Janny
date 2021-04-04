@@ -46,56 +46,55 @@ var command = new DiscordStuff.BotCommand();
 command.name = 'setreplacementinvite';
 command.description = '!setreplacementinvite = REPLACEMENTINVITELINK\nBe sure to call this from within the chosen server, before it gets nuked!';
 function execute(commandData, discordUser) {
-    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, areWeInADM, doWeHaveAdminPerms, guildData, error_1, msgString, msgEmbed, msg, inviteRegExp, whatAreWeDoing, msgString, msgEmbed, msg, inviteLink, serverRecordKey, serverRecordObject, inviteLink2, msgString, messageEmbed, serverRecordKey, serverRecordObject, msgString, messageEmbed, error_2;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     commandReturnData = new DiscordStuff.CommandReturnData();
                     commandReturnData.commandName = command.name;
-                    _c.label = 1;
+                    _a.label = 1;
                 case 1:
-                    _c.trys.push([1, 21, , 22]);
+                    _a.trys.push([1, 21, , 22]);
                     return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
                 case 2:
-                    areWeInADM = _c.sent();
+                    areWeInADM = _a.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
                 case 3:
-                    doWeHaveAdminPerms = _c.sent();
+                    doWeHaveAdminPerms = _a.sent();
                     if (doWeHaveAdminPerms === false) {
                         return [2 /*return*/, commandReturnData];
                     }
                     guildData = void 0;
-                    _c.label = 4;
+                    _a.label = 4;
                 case 4:
-                    _c.trys.push([4, 6, , 10]);
+                    _a.trys.push([4, 6, , 10]);
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 5:
-                    guildData = _c.sent();
+                    guildData = _a.sent();
                     return [3 /*break*/, 10];
                 case 6:
-                    error_1 = _c.sent();
+                    error_1 = _a.sent();
                     if (!(error_1.type === 'NotFoundError')) return [3 /*break*/, 9];
                     msgString = '------\n**Sorry, but your current guild could not be found!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Server Issue:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 7:
-                    msg = _c.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 8:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 9: return [3 /*break*/, 10];
                 case 10:
@@ -104,20 +103,20 @@ function execute(commandData, discordUser) {
                     if (!(commandData.args[0] !== undefined && !inviteRegExp.test(commandData.args[0]))) return [3 /*break*/, 13];
                     msgString = '------\n**Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)**\n------';
                     msgEmbed = new Discord.MessageEmbed()
-                        .setAuthor((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 11:
-                    msg = _c.sent();
+                    msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 12:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 13:
                     if (commandData.args[0] === undefined) {
@@ -131,7 +130,7 @@ function execute(commandData, discordUser) {
                     serverRecordKey = commandData.guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
                 case 14:
-                    serverRecordObject = _c.sent();
+                    serverRecordObject = _a.sent();
                     inviteLink2 = serverRecordObject.replacementServerInvite;
                     msgString = '\n------\n';
                     if (inviteLink === '') {
@@ -148,34 +147,34 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 15:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 16:
                     if (!(whatAreWeDoing === 'adding')) return [3 /*break*/, 20];
                     serverRecordKey = commandData.guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
                 case 17:
-                    serverRecordObject = _c.sent();
+                    serverRecordObject = _a.sent();
                     serverRecordObject.replacementServerInvite = inviteLink;
                     console.log(serverRecordObject);
                     return [4 /*yield*/, discordUser.dataBase.put(serverRecordKey, serverRecordObject)];
                 case 18:
-                    _c.sent();
+                    _a.sent();
                     msgString = "Great! You've updated the guild " + serverRecordObject.serverName + "'s replacement invite link!"
                         + ("\n------\n__**Link:**__ " + serverRecordObject.replacementServerInvite + "\n------");
                     messageEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor([0, 0, 254])
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Replacement Invite Link Updated:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 19:
-                    _c.sent();
+                    _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 20: return [2 /*return*/, commandReturnData];
                 case 21:
-                    error_2 = _c.sent();
+                    error_2 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
