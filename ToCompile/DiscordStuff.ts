@@ -17,8 +17,9 @@ import config = require('./config.json');
 		let returnMessage: Discord.Message;
 		if (commandData.toTextChannel instanceof Discord.WebhookClient){
             if (atUserID !== null && messageContents instanceof Discord.MessageEmbed){
-                await commandData.fromTextChannel?.send(`<@!${atUserID}>`);
-                returnMessage = await (commandData.toTextChannel.send(messageContents));
+				const msgEmbeds: Discord.MessageEmbed[] = [];
+				msgEmbeds.push(messageContents);
+                returnMessage = await (commandData.toTextChannel.send(`<@!${atUserID}>`, {embeds: msgEmbeds, split: false}));
             }
             else if (atUserID === null) {
                 returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);

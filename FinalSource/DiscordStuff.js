@@ -51,67 +51,65 @@ var config = require("./config.json");
  * Functino for sending out a message, using the appropriate channel.
  */
 function sendMessageWithCorrectChannel(commandData, messageContents, atUserID) {
-    var _a;
     if (atUserID === void 0) { atUserID = null; }
     return __awaiter(this, void 0, void 0, function () {
-        var returnMessage_1, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var returnMessage_1, msgEmbeds, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    _b.trys.push([0, 18, , 19]);
-                    if (!(commandData.toTextChannel instanceof Discord.WebhookClient)) return [3 /*break*/, 8];
-                    if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 3];
-                    return [4 /*yield*/, ((_a = commandData.fromTextChannel) === null || _a === void 0 ? void 0 : _a.send("<@!" + atUserID + ">"))];
+                    _a.trys.push([0, 17, , 18]);
+                    if (!(commandData.toTextChannel instanceof Discord.WebhookClient)) return [3 /*break*/, 7];
+                    if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 2];
+                    msgEmbeds = [];
+                    msgEmbeds.push(messageContents);
+                    return [4 /*yield*/, (commandData.toTextChannel.send("<@!" + atUserID + ">", { embeds: msgEmbeds, split: false }))];
                 case 1:
-                    _b.sent();
-                    return [4 /*yield*/, (commandData.toTextChannel.send(messageContents))];
+                    returnMessage_1 = _a.sent();
+                    return [3 /*break*/, 6];
                 case 2:
-                    returnMessage_1 = _b.sent();
-                    return [3 /*break*/, 7];
+                    if (!(atUserID === null)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 3:
-                    if (!(atUserID === null)) return [3 /*break*/, 5];
-                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
-                case 4:
-                    returnMessage_1 = _b.sent();
-                    return [3 /*break*/, 7];
-                case 5: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
-                case 6:
-                    returnMessage_1 = _b.sent();
-                    _b.label = 7;
-                case 7: return [3 /*break*/, 17];
-                case 8:
-                    if (!(commandData.toTextChannel instanceof Discord.TextChannel)) return [3 /*break*/, 15];
-                    if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 10];
+                    returnMessage_1 = _a.sent();
+                    return [3 /*break*/, 6];
+                case 4: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
+                case 5:
+                    returnMessage_1 = _a.sent();
+                    _a.label = 6;
+                case 6: return [3 /*break*/, 16];
+                case 7:
+                    if (!(commandData.toTextChannel instanceof Discord.TextChannel)) return [3 /*break*/, 14];
+                    if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 9];
                     return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + ">", { embed: messageContents })];
+                case 8:
+                    returnMessage_1 = _a.sent();
+                    return [3 /*break*/, 13];
                 case 9:
-                    returnMessage_1 = _b.sent();
-                    return [3 /*break*/, 14];
+                    if (!(atUserID === null)) return [3 /*break*/, 11];
+                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                 case 10:
-                    if (!(atUserID === null)) return [3 /*break*/, 12];
+                    returnMessage_1 = _a.sent();
+                    return [3 /*break*/, 13];
+                case 11: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
+                case 12:
+                    returnMessage_1 = _a.sent();
+                    _a.label = 13;
+                case 13: return [3 /*break*/, 16];
+                case 14:
+                    if (!(commandData.toTextChannel instanceof Discord.DMChannel)) return [3 /*break*/, 16];
                     return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
-                case 11:
-                    returnMessage_1 = _b.sent();
-                    return [3 /*break*/, 14];
-                case 12: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
-                case 13:
-                    returnMessage_1 = _b.sent();
-                    _b.label = 14;
-                case 14: return [3 /*break*/, 17];
                 case 15:
-                    if (!(commandData.toTextChannel instanceof Discord.DMChannel)) return [3 /*break*/, 17];
-                    return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
-                case 16:
-                    returnMessage_1 = _b.sent();
-                    _b.label = 17;
-                case 17: return [2 /*return*/, new Promise(function (resolve, reject) {
+                    returnMessage_1 = _a.sent();
+                    _a.label = 16;
+                case 16: return [2 /*return*/, new Promise(function (resolve, reject) {
                         resolve(returnMessage_1);
                     })];
-                case 18:
-                    error_1 = _b.sent();
+                case 17:
+                    error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 19: return [2 /*return*/];
+                case 18: return [2 /*return*/];
             }
         });
     });
