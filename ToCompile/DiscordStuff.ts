@@ -726,7 +726,6 @@ export class DiscordUser {
 				guildData.guildID = liveDataGuildArray[x]!.id;
 				guildData.guildMemberCount = liveDataGuildArray[x]!.memberCount;
 				guildData.guildName = liveDataGuildArray[x]!.name;
-				guildData.trackedUsers = [];
 				await this.updateGuildDataInDB(guildData);
 			}
 			return new Promise((resolve, reject) => {
