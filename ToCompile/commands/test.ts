@@ -12,19 +12,31 @@ const command = new DiscordStuff.BotCommand();
 command.name = 'test';
 command.description = '!test';
 
-async function execute(commandData: DiscordStuff.CommandData,  discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     try {
         const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
 
-        const msgString = '------\n**TEST!**\n------';
-        let msgEmbed = new Discord.MessageEmbed()
-			.setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL()!)
-			.setColor([254, 254, 254])
-			.setDescription(msgString)
-			.setTimestamp(Date() as unknown as Date)
-			.setTitle('__**Test:**__')
-		await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+        if (commandData.guildMember instanceof Discord.User){
+            const msgString = '------\n**TEST!**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+                .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL()!)
+                .setColor([254, 254, 254])
+                .setDescription(msgString)
+                .setTimestamp(Date() as unknown as Date)
+                .setTitle('__**Test:**__')
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+        }
+        else{
+            const msgString = '------\n**TEST!**\n------';
+            let msgEmbed = new Discord.MessageEmbed()
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+                .setColor([254, 254, 254])
+                .setDescription(msgString)
+                .setTimestamp(Date() as unknown as Date)
+                .setTitle('__**Test:**__')
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+        }
         
         return commandReturnData;
     } catch (error) {
