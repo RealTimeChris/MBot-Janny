@@ -19,7 +19,7 @@ import config = require('./config.json');
             if (atUserID !== null && messageContents instanceof Discord.MessageEmbed){
 				const msgEmbeds: Discord.MessageEmbed[] = [];
 				msgEmbeds.push(messageContents);
-                returnMessage = await (commandData.toTextChannel.send(`<@!${atUserID}>`, {embeds: msgEmbeds, split: false}));
+                returnMessage = await commandData.toTextChannel.send(`<@!${atUserID}>`, {embeds: msgEmbeds, split: false});
             }
             else if (atUserID === null) {
                 returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);
