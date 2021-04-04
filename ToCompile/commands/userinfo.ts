@@ -25,37 +25,37 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             return commandReturnData;
         }
 
-        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
 
         let userID = '';
         const userMentionRegExp = /.{2,3}\d{18}>/;
         const userIDRegExp = /\d{18}/;
         if (commandData.args[0] === undefined) {
             userID = (commandData.guildMember as Discord.GuildMember).id;
-        } else if ((commandData.args[0].match(userIDRegExp) as string[])[0] as string === null
-            && (commandData.args[0].match(userMentionRegExp) as string[])[0] === null) {
+        } else if (commandData.args[0].match(userIDRegExp)![0]! === null
+            && (commandData.args[0].match(userMentionRegExp)![0]!) === null) {
             const msgString = '------\n**Please enter a valid user ID or user mention! (!displayuserinfo = @USERMENTION)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (commandData.args[0].match(userMentionRegExp) != null) {
             userID = commandData.args[0].substring(3, commandData.args[0].length - 1);
-        } else if ((commandData.args[0].match(userIDRegExp) as string[])[0] != null) {
+        } else if (commandData.args[0].match(userIDRegExp)![0] != null) {
             const argZero = commandData.args[0];
-            const userIDOne = (argZero.match(userIDRegExp) as string[])[0];
+            const userIDOne = argZero.match(userIDRegExp)![0];
             userID = userIDOne as string;
         }
 
-        const guildMemberManager = new Discord.GuildMemberManager(commandData.guild as Discord.Guild);
+        const guildMemberManager = new Discord.GuildMemberManager(commandData.guild!);
 
         let guildMember;
         try {
@@ -63,14 +63,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } catch (error) {
             const msgString = '------\n**Sorry, but that user could not be found!**\n------';
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**User Issue:**__');
             let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
@@ -92,20 +92,20 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         const field6 = {name: '__Created At:__', value: guildMember.user.createdAt, inline: true}
         fields.push(field6);
         const permissionsArray = guildMember.permissions.toArray();
-        let msgString = String();
+        let msgString = '';
         for (let x = 0; x < permissionsArray.length; x += 1) {
-            if ((permissionsArray[x] as Discord.PermissionString).split('_')[2] !== undefined) {
-                msgString += `${((permissionsArray[x] as string ).split('_')[0] as string).substr(0, 1)}${((permissionsArray[x] as string)
-                    .split('_')[0] as string).substr(1).toLowerCase()} ${((permissionsArray[x] as string)
-                    .split('_')[1] as string).substr(0, 1)}${((permissionsArray[x]as string).split('_')[1] as string).substr(1).toLowerCase()} ${((permissionsArray[x] as string).split('_')[2] as string)
-                    .substr(0, 1)}${((permissionsArray[x] as string).split('_')[2] as string).substr(1).toLowerCase()}`;
-            } else if ((permissionsArray[x] as string).split('_')[1] !== undefined) {
-                msgString += `${((permissionsArray[x] as string).split('_')[0] as string).substr(0, 1)}${((permissionsArray[x] as string).split('_')[0] as string)
-                    .substr(1).toLowerCase()}	${((permissionsArray[x] as string)
-                    .split('_')[1] as string).substr(0, 1)}${((permissionsArray[x] as string).split('_')[1] as string).substr(1).toLowerCase()}`;
+            if (permissionsArray[x]!.split('_')[2] !== undefined) {
+                msgString += `${permissionsArray[x]!.split('_')[0]!.substr(0, 1)}${permissionsArray[x]!
+                    .split('_')[0]!.substr(1).toLowerCase()} ${permissionsArray[x]!
+                    .split('_')[1]!.substr(0, 1)}${permissionsArray[x]!.split('_')[1]!.substr(1).toLowerCase()} ${permissionsArray[x]!.split('_')[2]!
+                    .substr(0, 1)}${permissionsArray[x]!.split('_')[2]!.substr(1).toLowerCase()}`;
+            } else if (permissionsArray[x]!.split('_')[1] !== undefined) {
+                msgString += `${permissionsArray[x]!.split('_')[0]!.substr(0, 1)}${permissionsArray[x]!.split('_')[0]!
+                    .substr(1).toLowerCase()}	${permissionsArray[x]!
+                    .split('_')[1]!.substr(0, 1)}${permissionsArray[x]!.split('_')[1]!.substr(1).toLowerCase()}`;
             } else {
-                msgString += `${((permissionsArray[x] as string).split('_')[0] as string).substr(0, 1)}${((permissionsArray[x] as string)
-                    .split('_')[0] as string).substr(1).toLowerCase()}`;
+                msgString += `${permissionsArray[x]!.split('_')[0]!.substr(0, 1)}${permissionsArray[x]!
+                    .split('_')[0]!.substr(1).toLowerCase()}`;
             }
             if (x < permissionsArray.length - 1) {
                 msgString += ', ';
@@ -119,10 +119,10 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         const messageEmbed = new Discord.MessageEmbed();
         messageEmbed
             .setColor(guildMember.displayColor)
-            .setTimestamp((Date() as unknown) as Date)
+            .setTimestamp(Date() as unknown as Date)
             .setTitle('__**User Info:**__')
-            .setImage(guildMember.user.avatarURL() as string)
-            .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, ((commandData.guildMember as Discord.GuildMember).user.avatarURL() as string));
+            .setImage(guildMember.user.avatarURL()!)
+            .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!);
         messageEmbed.fields = fields as Discord.EmbedField[];
         await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
         return commandReturnData;

@@ -29,7 +29,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             return commandReturnData;
         }
 
-        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
 
         let whatAreWeDoing = '';
         let messageName = '';
@@ -41,25 +41,25 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } else if (commandData.args[0].toLowerCase() === 'add') {
             whatAreWeDoing = 'adding';
             const argOne = commandData.args[1];
-            messageName = argOne as string;
-            msBetweenSends = Math.abs(parseInt(commandData.args[2] as string, 10));
+            messageName = argOne!;
+            msBetweenSends = Math.abs(parseInt(commandData.args[2]!, 10));
             const argThreee = commandData.args[3];
-            messageContent = argThreee as string;
+            messageContent = argThreee!;
         } else if (commandData.args[0].toLowerCase() === 'remove') {
             whatAreWeDoing = 'removing';
             const argOne = commandData.args[1];
-            messageName = argOne as string;
+            messageName = argOne!;
         } else {
             const msgString = `------\n**Please, enter a proper first argument or enter none at all!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
@@ -75,18 +75,18 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 const minutePerHour = 60;
                 const msPerHour = msPerMinute * minutePerHour;
 
-                const timeRemaining = (guildData.timedMessages[x] as DiscordStuff.TimedMessage)
-                    .msBetweenSends - (new Date().getTime() - (guildData.timedMessages[x] as DiscordStuff.TimedMessage).timeOfLastSend);
+                const timeRemaining = guildData.timedMessages[x]!
+                    .msBetweenSends - (new Date().getTime() - guildData.timedMessages[x]!.timeOfLastSend);
 
                 const hoursRemaining = Math.trunc(timeRemaining / msPerHour);
                 const minutesRemaining = Math.trunc((timeRemaining % msPerHour) / msPerMinute);
                 const secondsRemaining = Math.trunc(((timeRemaining % msPerHour)
                 % msPerMinute) / msPerSecond);
 
-                const currentField = { name: `__**${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).name}:**__`, value: `__**ms Between Sends:**__ 
-                    ${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).msBetweenSends}\n`, inline: true };
-                currentField.value += `__**In Channel:**__ <#${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).textChannelID}>\n`;
-                currentField.value += `__**Content:**__ ${(guildData.timedMessages[x] as DiscordStuff.TimedMessage).messageContent}\n`;
+                const currentField = { name: `__**${guildData.timedMessages[x]!.name}:**__`, value: `__**ms Between Sends:**__ 
+                    ${guildData.timedMessages[x]!.msBetweenSends}\n`, inline: true };
+                currentField.value += `__**In Channel:**__ <#${guildData.timedMessages[x]!.textChannelID}>\n`;
+                currentField.value += `__**Content:**__ ${guildData.timedMessages[x]!.messageContent}\n`;
                 currentField.value += `__**Time Until Next Send:**__ ${hoursRemaining} Hours, ${minutesRemaining} Minutes, and ${secondsRemaining} Seconds.`;
                 embedFields.push(currentField);
             }
@@ -98,9 +98,9 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
-                .setTimestamp((Date() as unknown) as Date)
+                .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Timed Messages:**__');
             msgEmbed.fields = embedFields;
 
@@ -111,7 +111,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const newTimedMessage = new DiscordStuff.TimedMessage();
             newTimedMessage.name = messageName;
             newTimedMessage.msBetweenSends = msBetweenSends;
-            newTimedMessage.textChannelID = (commandData.fromTextChannel as Discord.TextChannel).id;
+            newTimedMessage.textChannelID = commandData.fromTextChannel!.id;
             newTimedMessage.timeOfLastSend = 0;
             newTimedMessage.messageContent = messageContent;
 
@@ -126,9 +126,9 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             msgString += `__**In Channel:**__ <#${newTimedMessage.textChannelID}>\n`;
             msgString += `__**Content:**__ ${newTimedMessage.messageContent}\n------`;
             msgEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
-                .setTimestamp((Date() as unknown) as Date)
+                .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Timed Message Added:**__')
                 .setDescription(msgString);
 
@@ -139,9 +139,9 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             let isItFound = false;
             let currentTimedMessageName = '';
             for (let x = 0; x < guildData.timedMessages.length; x += 1) {
-                if (messageName === (guildData.timedMessages[x] as DiscordStuff.TimedMessage).name) {
+                if (messageName === guildData.timedMessages[x]!.name) {
                     isItFound = true;
-                    currentTimedMessageName = (guildData.timedMessages[x] as DiscordStuff.TimedMessage).name;
+                    currentTimedMessageName = guildData.timedMessages[x]!.name;
                     guildData.timedMessages.splice(x, 1);
                     await discordUser.updateGuildDataInDB(guildData);
                     break;
@@ -151,14 +151,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             if (isItFound === false) {
                 const msgString = `------\n**Sorry, but the timed message you requested could not be found!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
-				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**Message Issue:**__');
                 let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                    msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
                 return commandReturnData;
@@ -168,9 +168,9 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             let msgString = '';
             msgString = `You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ ${currentTimedMessageName}\n------`;
             msgEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
-                .setTimestamp((Date() as unknown) as Date)
+                .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Timed Message Removed:**__')
                 .setDescription(msgString);
 

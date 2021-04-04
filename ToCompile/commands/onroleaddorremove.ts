@@ -54,7 +54,7 @@ async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discor
                 .setColor(newGuildMember.displayColor)
                 .setTitle('__**Lost Role:**__')
                 .setTimestamp((Date() as unknown) as Date)
-                .setThumbnail((newGuildMember.user as Discord.User).avatarURL() as string)
+                .setThumbnail((newGuildMember.user as Discord.User).avatarURL()!)
                 .setDescription(finalString);
             await (textChannel as Discord.TextChannel).send(messageEmbed);
             return command.name;
@@ -71,7 +71,7 @@ async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discor
                 .setColor(newGuildMember.displayColor)
                 .setTitle('__**New Role:**__')
                 .setTimestamp((Date() as unknown) as Date)
-                .setThumbnail((newGuildMember.user as Discord.User).avatarURL() as string)
+                .setThumbnail((newGuildMember.user as Discord.User).avatarURL()!)
                 .setDescription(finalString);
             await (textChannel as Discord.TextChannel).send(messageEmbed);
             return command.name;

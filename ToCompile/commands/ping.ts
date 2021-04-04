@@ -23,9 +23,9 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         const msgString = '------\n**Pong!**\n------';
         let msgEmbed = new Discord.MessageEmbed();
         if (commandData.guildMember instanceof Discord.GuildMember){
-            const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+            const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
             msgEmbed
-            .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+            .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
             .setColor(guildData.borderColor as [number, number, number])
             .setDescription(msgString)
             .setTimestamp(Date() as unknown as Date)
@@ -33,7 +33,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         }
         else{
             msgEmbed
-            .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+            .setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL()!)
             .setColor([254, 254, 254])
             .setDescription(msgString)
             .setTimestamp(Date() as unknown as Date)

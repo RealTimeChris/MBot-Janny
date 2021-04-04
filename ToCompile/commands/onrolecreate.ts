@@ -25,8 +25,8 @@ async function execute(client: Discord.Client, role: Discord.Role,
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log) .nameSmall === 'rolecreate') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'rolecreate') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -35,7 +35,7 @@ async function execute(client: Discord.Client, role: Discord.Role,
 
         const auditLogs = await role.guild.fetchAuditLogs({ type: 'ROLE_CREATE', limit: 1 });
         const auditLogEntry = auditLogs.entries
-            .find(entry => Date.now() - entry.createdTimestamp < 5000) as Discord.GuildAuditLogsEntry;
+            .find(entry => Date.now() - entry.createdTimestamp < 5000)!;
 
         const currentGuild = await client.guilds.fetch(role.guild.id);
 
@@ -47,7 +47,7 @@ async function execute(client: Discord.Client, role: Discord.Role,
 
         msgEmbed
             .setTitle('__**Role Created:**__')
-            .setTimestamp((Date() as unknown) as Date)
+            .setTimestamp(Date() as unknown as Date)
             .setDescription(msgString)
             .setColor(role.color);
         await textChannel.send(msgEmbed);

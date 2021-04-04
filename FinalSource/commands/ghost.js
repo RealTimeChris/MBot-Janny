@@ -49,32 +49,32 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 function execute(commandData, discordUser) {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     return __awaiter(this, void 0, void 0, function () {
-        var returnData, areWeInADM, doWeHaveAdminPerms, guildData, whatAreWeDoing, userMentionRegExp, userIDRegExp, ghostReason, userID, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, argOne, argTwo, userIDRaw, argOne, userIDRaw, currentGuildMember, guildMemberData, channelsArray, roleManager, ghostedRole, memberRoleManager, memberRoleManagerBot, x, voicePermissionOptions, textPermissionOptions, currentChannel, isItFound, currentChannelPerms, y, currentOverwritesArray, currentChannel, isItFound1, isItFound2, currentChannelPerms, y, argOne, currentOverwritesArray, ghostedUserArray, x, msgString, x, msgEmbed, x, msgString_1, msgEmbed_1, msg, x, x, error_1, x, currentChannel, currentChannelOverwritesArray, y, permOWs, msgString, msgEmbed, dmChannel, msgString2, msgEmbed2, isItFound, x, msgString_2, msgEmbed_2, msg, x, error_2, x, currentChannel, currentChannelOverwritesArray, z, msgString, msgEmbed, dmChannel, msgString2, msgEmbed2, error_3;
+        var returnData, guildData, areWeInADM, doWeHaveAdminPerms, whatAreWeDoing, userMentionRegExp, userIDRegExp, ghostReason, userID, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, msgString, msgEmbed, msg, argOne, argTwo, userIDRaw, argOne, userIDRaw, currentGuildMember, guildMemberData, channelsArray, roleManager, ghostedRole, memberRoleManager, memberRoleManagerBot, x, voicePermissionOptions, textPermissionOptions, currentChannel, isItFound, currentChannelPerms, y, currentOverwritesArray, currentChannel, isItFound1, isItFound2, currentChannelPerms, y, argOne, currentOverwritesArray, ghostedUserArray, x, msgString, x, msgEmbed, x, msgString_1, msgEmbed_1, msg, x, x, error_1, x, currentChannel, currentChannelOverwritesArray, y, permOWs, msgString, msgEmbed, dmChannel, msgString2, msgEmbed2, isItFound, x, msgString_2, msgEmbed_2, msg, x, error_2, x, currentChannel, currentChannelOverwritesArray, z, msgString, msgEmbed, dmChannel, msgString2, msgEmbed2, error_3, msgString, msgEmbed;
         return __generator(this, function (_j) {
             switch (_j.label) {
                 case 0:
                     returnData = new DiscordStuff.CommandReturnData();
                     returnData.commandName = command.name;
-                    _j.label = 1;
+                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 1:
-                    _j.trys.push([1, 79, , 82]);
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
+                    guildData = _j.sent();
+                    _j.label = 2;
                 case 2:
+                    _j.trys.push([2, 79, , 82]);
+                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
+                case 3:
                     areWeInADM = _j.sent();
                     if (areWeInADM) {
                         return [2 /*return*/, returnData];
                     }
                     return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
-                case 3:
+                case 4:
                     doWeHaveAdminPerms = _j.sent();
                     if (!doWeHaveAdminPerms) {
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(returnData);
                             })];
                     }
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
-                case 4:
-                    guildData = _j.sent();
                     whatAreWeDoing = void 0;
                     userMentionRegExp = /<@!\d{18}>/;
                     userIDRegExp = /\d{18}/;
@@ -169,7 +169,7 @@ function execute(commandData, discordUser) {
                             resolve(returnData);
                         })];
                 case 17:
-                    if (!(commandData.args[0] !== undefined && commandData.args[0].toString().toLowerCase() === 'add' && !userMentionRegExp.test((commandData.args[2])) && !userIDRegExp.test(commandData.args[2]))) return [3 /*break*/, 20];
+                    if (!(commandData.args[0] !== undefined && commandData.args[0].toString().toLowerCase() === 'add' && !userMentionRegExp.test(commandData.args[2]) && !userIDRegExp.test(commandData.args[2]))) return [3 /*break*/, 20];
                     msgString = "------\n**Please, enter a usermention to select the target to ghost! (!ghost = add, REASON, \n                @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_e = commandData.guildMember) === null || _e === void 0 ? void 0 : _e.user.username, commandData.guildMember.user.avatarURL())
@@ -190,7 +190,7 @@ function execute(commandData, discordUser) {
                             resolve(returnData);
                         })];
                 case 20:
-                    if (!(commandData.args[0] !== undefined && commandData.args[0].toString().toLowerCase() === 'remove' && !userMentionRegExp.test((commandData.args[1])) && !userIDRegExp.test(commandData.args[1]))) return [3 /*break*/, 23];
+                    if (!(commandData.args[0] !== undefined && commandData.args[0].toString().toLowerCase() === 'remove' && !userMentionRegExp.test(commandData.args[1]) && !userIDRegExp.test(commandData.args[1]))) return [3 /*break*/, 23];
                     msgString = "------\n**Please, enter a proper usermention to select the target to de-ghost! \n                (!ghost = remove, @USERMENTION to unghost a user)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((_f = commandData.guildMember) === null || _f === void 0 ? void 0 : _f.user.username, commandData.guildMember.user.avatarURL())
@@ -586,7 +586,7 @@ function execute(commandData, discordUser) {
                     currentChannel = channelsArray[x];
                     currentChannelOverwritesArray = currentChannel.permissionOverwrites.array();
                     for (z = 0; z < guildMemberData.previousPermissionOverwrites.length; z += 1) {
-                        if (guildMemberData.previousPermissionOverwrites[z]
+                        if ((guildMemberData.previousPermissionOverwrites[z])
                             .channel.id === channelsArray[x].id) {
                             currentChannelOverwritesArray.push(guildMemberData.previousPermissionOverwrites[z]);
                         }
@@ -639,7 +639,15 @@ function execute(commandData, discordUser) {
                 case 79:
                     error_3 = _j.sent();
                     if (!(error_3.message === 'Missing Permissions')) return [3 /*break*/, 81];
-                    return [4 /*yield*/, commandData.permsChannel.send("<@!" + commandData.guildMember.id + "> I need more permissions! Please promote my role rank in the server options!")];
+                    msgString = "------\n**I need more permissions! Please promote my role rank in the server options!**\n------";
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgEmbed
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor(guildData.borderColor)
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Permissions Issue:**__');
+                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 80:
                     _j.sent();
                     console.log(error_3);

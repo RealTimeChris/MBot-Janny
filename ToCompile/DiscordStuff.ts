@@ -18,28 +18,28 @@ import config = require('./config.json');
 		if (commandData.toTextChannel instanceof Discord.WebhookClient){
             if (atUserID !== null && messageContents instanceof Discord.MessageEmbed){
                 await commandData.fromTextChannel?.send(`<@!${atUserID}>`);
-                returnMessage = (await (commandData.toTextChannel.send(messageContents))) as Discord.Message;
+                returnMessage = await (commandData.toTextChannel.send(messageContents));
             }
             else if (atUserID === null) {
-                returnMessage = (await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed)) as Discord.Message;
+                returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);
             }
             else{
-                returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}> ${messageContents}`)) as Discord.Message;
+                returnMessage = await commandData.toTextChannel.send(`<@!${atUserID}> ${messageContents}`);
             }
 		}
 		else if (commandData.toTextChannel instanceof Discord.TextChannel){
             if (atUserID !== null && messageContents instanceof Discord.MessageEmbed){
-                returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}>`, {embed: messageContents})) as Discord.Message;
+                returnMessage = await commandData.toTextChannel.send(`<@!${atUserID}>`, {embed: messageContents});
             }
             else if (atUserID === null) {
-                returnMessage = (await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed)) as Discord.Message;
+                returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);
             }
             else{
-                returnMessage = (await commandData.toTextChannel.send(`<@!${atUserID}> ${messageContents}`)) as Discord.Message;
+                returnMessage = await commandData.toTextChannel.send(`<@!${atUserID}> ${messageContents}`);
             }			
 		}
 		else if (commandData.toTextChannel instanceof Discord.DMChannel){
-			returnMessage = (await commandData.toTextChannel.send(messageContents as string)) as Discord.Message;
+			returnMessage = await commandData.toTextChannel.send(messageContents as string);
 		}
 
 		return new Promise((resolve, reject) => {
@@ -86,22 +86,22 @@ export async function recurseThroughMessagePages(userID: string, message: Discor
 			} else if (reaction.emoji.name === '▶️' && (newCurrentPageIndex === (messageEmbeds.length - 1))) {
 				reaction.users.remove(userID);
 				newCurrentPageIndex = 0;
-				const messageEmbed = messageEmbeds[newCurrentPageIndex] as Discord.MessageEmbed;
+				const messageEmbed = messageEmbeds[newCurrentPageIndex]!;
 				await message.edit(messageEmbed);
 			} else if (reaction.emoji.name === '▶️' && (newCurrentPageIndex < messageEmbeds.length)) {
 				reaction.users.remove(userID);
 				newCurrentPageIndex += 1;
-				const messageEmbed = messageEmbeds[newCurrentPageIndex] as Discord.MessageEmbed;
+				const messageEmbed = messageEmbeds[newCurrentPageIndex]!;
 				await message.edit(messageEmbed);
 			} else if (reaction.emoji.name === '◀️' && (newCurrentPageIndex > 0)) {
 				reaction.users.remove(userID);
 				newCurrentPageIndex -= 1;
-				const messageEmbed = messageEmbeds[newCurrentPageIndex] as Discord.MessageEmbed;
+				const messageEmbed = messageEmbeds[newCurrentPageIndex]!;
 				await message.edit(messageEmbed);
 			} else if (reaction.emoji.name === '◀️' && (newCurrentPageIndex === 0)) {
 				reaction.users.remove(userID);
 				newCurrentPageIndex = messageEmbeds.length - 1;
-				const messageEmbed = messageEmbeds[newCurrentPageIndex] as Discord.MessageEmbed;
+				const messageEmbed = messageEmbeds[newCurrentPageIndex]!;
 				await message.edit(messageEmbed);
 			}
 		});
@@ -137,14 +137,14 @@ export async function areWeInADM(commandData: CommandData): Promise<boolean> {
 			const msgString = `------\n**Sorry, but we can't do that in a direct message!**\n------`;
 			const msgEmbed = new Discord.MessageEmbed();
 			msgEmbed
-				.setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.User).username, (commandData.guildMember as Discord.User).avatarURL()!)
 				.setColor([254, 254, 254])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Direct Message Issue:**__');
 			let msg = await sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
-				msg = new Discord.Message((commandData.guildMember as Discord.GuildMember).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+				msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
 			
@@ -173,7 +173,7 @@ export async function applyDefaultRoles(guildData: GuildData, guildMember: Disco
 
 			for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
 				currentIndex = x;
-				await guildMemberRoleManager.add((guildData.defaultRoleIDs[x] as string));
+				await guildMemberRoleManager.add(guildData.defaultRoleIDs[x]!);
 			}
 		}
 		return new Promise((resolve, reject) => {
@@ -199,38 +199,38 @@ export async function recurseThroughServerRecords(dataBase: Level, liveGuildArra
 			});
 		}
 		let yNew = y;
-		const fileObject = await dataBase.get(keyNames[0] as string) as ServerRecord;
+		const fileObject = await dataBase.get(keyNames[0]!);
 		
 		keyNames.splice(0, 1);
 
-		fileObject.serverName = liveGuildArray[y]?.name as string;
-		fileObject.serverID = liveGuildArray[y]?.id as string;
+		fileObject.serverName = liveGuildArray[y]?.name;
+		fileObject.serverID = liveGuildArray[y]?.id;
 		console.log(`Updating Server Record Info For Server #${y}: ${fileObject.serverName}`);
 
-		const guildMembersCollection = await (liveGuildArray[y] as Discord.Guild).members.fetch();
+		const guildMembersCollection = await liveGuildArray[y]!.members.fetch();
 
 		const membersArray = guildMembersCollection.array().sort();
 
 		for (let z = 0; z < membersArray.length; z += 1) {
 			let areTheyFoundInFile = false;
 			for (let w = 0; w < fileObject.userRecords.length; w += 1) {
-				if ((membersArray[z] as Discord.GuildMember).id === (fileObject.userRecords[w] as UserRecord).userID) {
+				if (membersArray[z]!.id === fileObject.userRecords[w]!.userID) {
 					areTheyFoundInFile = true;
-					(fileObject.userRecords[w] as UserRecord).userID = (membersArray[z] as Discord.GuildMember).user.id;
-					(fileObject.userRecords[w] as UserRecord).lastKnownUserTag = (membersArray[z] as Discord.GuildMember).user.tag;
-					(fileObject.userRecords[w] as UserRecord).lastKnownUsername = (membersArray[z] as Discord.GuildMember).user.username;
+					fileObject.userRecords[w]!.userID = membersArray[z]!.user.id;
+					fileObject.userRecords[w]!.lastKnownUserTag = membersArray[z]!.user.tag;
+					fileObject.userRecords[w]!.lastKnownUsername = membersArray[z]!.user.username;
 				}
 			}
 			if (areTheyFoundInFile === false) {
 				const userRecord = new UserRecord();
-				userRecord.lastKnownUserTag = (membersArray[z] as Discord.GuildMember).user.tag;
-				userRecord.lastKnownUsername = (membersArray[z] as Discord.GuildMember).user.username;
-				userRecord.userID = (membersArray[z] as Discord.GuildMember).id;
+				userRecord.lastKnownUserTag = membersArray[z]!.user.tag;
+				userRecord.lastKnownUsername = membersArray[z]!.user.username;
+				userRecord.userID = membersArray[z]!.id;
 				fileObject.userRecords.push(userRecord);
 				console.log(`Adding New User Record: ${userRecord.lastKnownUserTag} of server: ${fileObject.serverName}`);
 			}
 		}
-		const serverRecordKey = `${(liveGuildArray[y] as Discord.Guild).id} + Record`;
+		const serverRecordKey = `${liveGuildArray[y]!.id} + Record`;
 		dataBase.put(serverRecordKey, fileObject);
 		console.log(fileObject);
 		yNew += 1;
@@ -241,26 +241,26 @@ export async function recurseThroughServerRecords(dataBase: Level, liveGuildArra
 	} catch (error) {
 		if (error.type === 'NotFoundError') {
 			const serverRecord = new ServerRecord();
-			serverRecord.serverName = (liveGuildArray[y] as Discord.Guild).name;
-			serverRecord.serverID = (liveGuildArray[y] as Discord.Guild).id;
-			serverRecord.replacementServerInvite = String();
+			serverRecord.serverName = liveGuildArray[y]!.name;
+			serverRecord.serverID = liveGuildArray[y]!.id;
+			serverRecord.replacementServerInvite = '';
 			serverRecord.userRecords = [];
 			console.log(`Adding New Server Record: ${serverRecord.serverName}`);
 			console.log(`Saving the JSON file for this Discord server for the first time: ${serverRecord.serverName}`);
 
-			const guildMembersCollection = await (liveGuildArray[y] as Discord.Guild).members.fetch();
+			const guildMembersCollection = await liveGuildArray[y]!.members.fetch();
 
 			const membersArray = guildMembersCollection.array().sort();
 
 			for (let z = 0; z < membersArray.length; z += 1) {
 				const userRecord = new UserRecord();
-				userRecord.lastKnownUserTag = (membersArray[z] as Discord.GuildMember).user.tag;
-				userRecord.lastKnownUsername = (membersArray[z] as Discord.GuildMember).user.username;
-				userRecord.userID = (membersArray[z] as Discord.GuildMember).id;
-				serverRecord.userRecords.push(userRecord as UserRecord);
+				userRecord.lastKnownUserTag = membersArray[z]!.user.tag;
+				userRecord.lastKnownUsername = membersArray[z]!.user.username;
+				userRecord.userID = membersArray[z]!.id;
+				serverRecord.userRecords.push(userRecord);
 				console.log(`Adding New User Record: ${userRecord.lastKnownUserTag} of server: ${serverRecord.serverName}`);
 			}
-			const serverRecordKey = `${(liveGuildArray[y] as Discord.Guild).id} + Record`;
+			const serverRecordKey = `${liveGuildArray[y]!.id} + Record`;
 			await dataBase.put(serverRecordKey, serverRecord);
 			console.log(serverRecord);
 			await recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y);
@@ -476,28 +476,28 @@ export class BotCommand {
 				this.interaction = interaction;
 			}
 			if (guildID !== ''){
-				this.guild  = (await client.guilds.fetch(guildID) as Discord.Guild);
+				this.guild  = await client.guilds.fetch(guildID);
 			}
 			if (guildMemberID !== '' && guildID !== ''){
-				this.guildMember = (await (this.guild as Discord.Guild).members.fetch(guildMemberID) as Discord.GuildMember);
+				this.guildMember = await this.guild!.members.fetch(guildMemberID);
 			}
 			else{
-				this.guildMember = await client.users.fetch(guildMemberID) as Discord.User;
+				this.guildMember = await client.users.fetch(guildMemberID);
 			}
 			if (interaction !== null && fromTextChannelType !== 'dm'){
-				this.toTextChannel = new Discord.WebhookClient((client.user as Discord.User).id, this.interaction.token) as Discord.WebhookClient;
-				this.permsChannel = new Discord.GuildChannel(this.guild as Discord.Guild, this.fromTextChannel);
+				this.toTextChannel = new Discord.WebhookClient(client.user!.id, this.interaction.token);
+				this.permsChannel = new Discord.GuildChannel(this.guild!, this.fromTextChannel);
 			}
 			if (interaction === null && fromTextChannelType !== 'dm'){
 				this.toTextChannel = await client.channels.fetch(fromTextChannelID) as Discord.TextChannel;
-				this.permsChannel = new Discord.GuildChannel(this.guild as Discord.Guild, this.fromTextChannel);
+				this.permsChannel = new Discord.GuildChannel(this.guild!, this.fromTextChannel);
 			}
 			if (interaction !== null && fromTextChannelType === 'dm'){
-				this.toTextChannel = new Discord.WebhookClient((client.user as Discord.User).id, this.interaction.token) as Discord.WebhookClient;
+				this.toTextChannel = new Discord.WebhookClient(client.user!.id, this.interaction.token);
 				this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
 			}
 			if (interaction === null && fromTextChannelType === 'dm'){
-				this.toTextChannel = await this.guildMember.createDM(true) as Discord.DMChannel;
+				this.toTextChannel = await this.guildMember.createDM(true);
 				this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
 			}
 		}
@@ -530,13 +530,13 @@ export class DiscordUser {
 	*/
 	async initializeInstance(client: Discord.Client): Promise<void> {
 		try {
-			const dataBaseFilePath = `${config.dataBaseFilePath} + ${(client.user as Discord.User).id}`;
+			const dataBaseFilePath = `${config.dataBaseFilePath} + ${client.user!.id}`;
 			this.dataBase = new Level(dataBaseFilePath) as Level;
-			this.userData = await this.getUserDataFromDB(client) as DiscordUserData;
+			this.userData = await this.getUserDataFromDB(client);
 			this.userData.dataBaseFilePath = dataBaseFilePath;
 			this.userData.startupCall = true;
 			await this.updateUserDataInDB(this.userData);
-			console.log(`Logged in as ${(client.user as Discord.User).tag}!`);
+			console.log(`Logged in as ${client.user!.tag}!`);
 			await this.updateDataCacheAndSaveToFile(client);
 			await this.cacheMessagesForVerification(client);
 			return new Promise((resolve, reject) => {
@@ -582,8 +582,8 @@ export class DiscordUser {
 				userData.trackedUserNames = [];
 				userData.trackingChannelIDs = [];
 				userData.trackingGuildIDs = [];
-				userData.userID = (client.user as Discord.User).id;
-				userData.userName = (client.user as Discord.User).username;
+				userData.userID = client.user!.id;
+				userData.userName = client.user!.username;
 				return new Promise((resolve, reject) => {
 					resolve(userData);
 				});
@@ -639,8 +639,8 @@ export class DiscordUser {
 				userData.trackingChannelIDs = [];
 				userData.trackingGuildIDs = [];
 			}
-			userData.userID = (client.user as Discord.User).id;
-			userData.userName = (client.user as Discord.User).username;
+			userData.userID = client.user!.id;
+			userData.userName = client.user!.username;
 			await this.updateUserDataInDB(userData);
 			return new Promise((resolve, reject) => {
 				resolve();
@@ -689,8 +689,8 @@ export class DiscordUser {
 	*/
 	async updateGuildDataInDB(guildData: GuildData): Promise<void> {
 		try {
-			this.guildsData.set((guildData.guildID as string), guildData);
-			let newGuildData = this.guildsData.get((guildData.guildID as string))
+			this.guildsData.set(guildData.guildID, guildData);
+			let newGuildData = this.guildsData.get(guildData.guildID);
 			await this.dataBase.put(guildData.guildID, newGuildData);
 			newGuildData = await this.dataBase.get(guildData.guildID);
 			console.log('New Guild Cache:');
@@ -715,20 +715,20 @@ export class DiscordUser {
 			liveDataGuildArray = client.guilds.cache.array().sort();
 
 			for (let x = 0; x < liveDataGuildArray.length; x += 1) {
-				let guildData = await this.getGuildDataFromDB(liveDataGuildArray[x] as Discord.Guild) as GuildData;
+				let guildData = await this.getGuildDataFromDB(liveDataGuildArray[x]!);
 				console.log(`Updating the guild data, for guild number ${x}!`);
-				if (this.guildsData.get((liveDataGuildArray[x] as Discord.Guild).id) !== undefined) {
-					guildData = this.guildsData.get((liveDataGuildArray[x] as Discord.Guild).id) as GuildData;
+				if (this.guildsData.get(liveDataGuildArray[x]!.id) !== undefined) {
+					guildData = this.guildsData.get(liveDataGuildArray[x]!.id)!;
 				}
 				if (this.userData.startupCall === true) {
 					for (let y = 0; y < guildData.deletionChannels.length; y += 1) {
-						(guildData.deletionChannels[y] as DeletionChannel).currentlyBeingDeleted = false;
-						(guildData.deletionChannels[y] as DeletionChannel).timeOfLastPurge = 0;
+						guildData.deletionChannels[y]!.currentlyBeingDeleted = false;
+						guildData.deletionChannels[y]!.timeOfLastPurge = 0;
 					}
 				}
-				guildData.guildID = (liveDataGuildArray[x] as Discord.Guild).id;
-				guildData.guildMemberCount = (liveDataGuildArray[x] as Discord.Guild).memberCount;
-				guildData.guildName = (liveDataGuildArray[x] as Discord.Guild).name;
+				guildData.guildID = liveDataGuildArray[x]!.id;
+				guildData.guildMemberCount = liveDataGuildArray[x]!.memberCount;
+				guildData.guildName = liveDataGuildArray[x]!.name;
 				await this.updateGuildDataInDB(guildData);
 			}
 			return new Promise((resolve, reject) => {
@@ -792,17 +792,17 @@ export class DiscordUser {
 		try {
 			const liveDataGuildArray = client.guilds.cache.array();
 			for (let x = 0; x < liveDataGuildArray.length; x += 1) {
-				const liveDataGuildMemberArray = (await (liveDataGuildArray[x] as Discord.Guild).members.fetch()).array();
+				const liveDataGuildMemberArray = (await liveDataGuildArray[x]!.members.fetch()).array();
 				
 				for (let y = 0; y < liveDataGuildMemberArray.length; y += 1) {
-					let guildMemberData = await this.getGuildMemberDataFromDB(liveDataGuildMemberArray[y] as Discord.GuildMember) as GuildMemberData;
-					if (this.guildMembersData.get(`${(liveDataGuildArray[x] as Discord.Guild).id} + ${(liveDataGuildMemberArray[y] as Discord.GuildMember).id}`) !== undefined) {
-						guildMemberData = this.guildMembersData.get(`${(liveDataGuildArray[x] as Discord.Guild).id} + ${(liveDataGuildMemberArray[y] as Discord.GuildMember).id}`) as GuildMemberData;
+					let guildMemberData = await this.getGuildMemberDataFromDB(liveDataGuildMemberArray[y]!);
+					if (this.guildMembersData.get(`${liveDataGuildArray[x]!.id} + ${liveDataGuildMemberArray[y]!.id}`) !== undefined) {
+						guildMemberData = this.guildMembersData.get(`${liveDataGuildArray[x]!.id} + ${liveDataGuildMemberArray[y]!.id}`)!;
 					}
-					guildMemberData.displayName = (liveDataGuildMemberArray[y] as Discord.GuildMember).displayName;
-					guildMemberData.userID = (liveDataGuildMemberArray[y] as Discord.GuildMember).id;
-					guildMemberData.userName = (liveDataGuildMemberArray[y] as Discord.GuildMember).user.username;
-					await this.updateGuildMemberDataInDB(guildMemberData, (liveDataGuildArray[x] as Discord.Guild).id);
+					guildMemberData.displayName = liveDataGuildMemberArray[y]!.displayName;
+					guildMemberData.userID = liveDataGuildMemberArray[y]!.id;
+					guildMemberData.userName = liveDataGuildMemberArray[y]!.user.username;
+					await this.updateGuildMemberDataInDB(guildMemberData, liveDataGuildArray[x]!.id);
 				}
 			}
 			const userData = await this.getUserDataFromDB(client);
@@ -867,14 +867,14 @@ export class DiscordUser {
 	 */
 	async doWeHaveAdminPermission(commandData: CommandData): Promise<boolean> {
 		try {
-			const guildData = await this.getGuildDataFromDB(commandData.guild as Discord.Guild);
-			const currentChannelPermissions = (commandData.guildMember as Discord.GuildMember).permissionsIn(commandData.permsChannel as Discord.GuildChannel);
+			const guildData = await this.getGuildDataFromDB(commandData.guild!);
+			const currentChannelPermissions = (commandData.guildMember! as Discord.GuildMember).permissionsIn(commandData.permsChannel!);
 
 			const permissionStrings = ['ADMINISTRATOR'] as Discord.PermissionString[];
 
 			const areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
 
-			const areTheyACommander = checkForBotCommanderStatus((commandData.guildMember as Discord.GuildMember).id,
+			const areTheyACommander = checkForBotCommanderStatus(commandData.guildMember!.id,
 				this.userData.botCommanders);
 
 			if (areTheyAnAdmin === true || areTheyACommander === true) {
@@ -886,14 +886,14 @@ export class DiscordUser {
 			const msgString = `------\n**Sorry, but you don't have the permissions required for that!**\n------`
 			const msgEmbed = new Discord.MessageEmbed();
 			msgEmbed
-				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle("__**Permissions Issue:**__");
 			let msg = await sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
-				msg = new Discord.Message((commandData.guildMember as Discord.GuildMember).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+				msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout:20000});
 			return new Promise((resolve, reject) => {
@@ -920,7 +920,7 @@ export class DiscordUser {
 
 				const keyNames = [];
 				for (let x = 0; x < liveGuildArray.length; x += 1) {
-					const keyname = `${(liveGuildArray[x] as Discord.Guild).id} + Record`;
+					const keyname = `${liveGuildArray[x]!.id} + Record`;
 					keyNames.push(keyname);
 				}
 
@@ -965,13 +965,13 @@ export class DiscordUser {
 			}
 
 			for (let x = 0; x < this.userData.activeInviteGuilds.length; x += 1) {
-				let fileKey: string = String();
+				let fileKey = '';
 
 				fileKey = `${this.userData.activeInviteGuilds[x]} + Record`;
 
 				let currentFileObject: ServerRecord;
 				try {
-					currentFileObject = await this.dataBase.get(fileKey) as ServerRecord;
+					currentFileObject = await this.dataBase.get(fileKey);
 				} catch (error) {
 					if (error.type === 'NotFoundError') {
 						this.userData.activeInviteGuilds.splice(x, 1);
@@ -985,7 +985,7 @@ export class DiscordUser {
 					});
 				}
 
-				const { userID } = currentFileObject.userRecords[0] as UserRecord;
+				const { userID } = currentFileObject.userRecords[0]!;
 				const guildName = currentFileObject.serverName;
 				const inviteLink = currentFileObject.replacementServerInvite;
 				const inviteString = `Hello, it is my understanding that you were a member of ${guildName
@@ -995,18 +995,18 @@ export class DiscordUser {
 				let wereTheyAvailable = false;
 
 				try {
-					const dmChannel = await (currentUser as Discord.User).createDM();
+					const dmChannel = await currentUser!.createDM();
 					await dmChannel.send(inviteString);
 					wereTheyAvailable = true;
 				} catch (error) {
-					console.log(`Sorry, but the user ${(currentFileObject.userRecords[0] as UserRecord).lastKnownUsername} could not be found!`);
+					console.log(`Sorry, but the user ${currentFileObject.userRecords[0]!.lastKnownUsername} could not be found!`);
 				}
 
 				if (wereTheyAvailable === true) {
 					const savedUser = new UserRecord();
-					savedUser.userID = (currentFileObject.userRecords[0] as UserRecord).userID;
-					savedUser.lastKnownUserTag = (currentFileObject.userRecords[0] as UserRecord).lastKnownUserTag;
-					savedUser.lastKnownUsername = (currentFileObject.userRecords[0] as UserRecord).lastKnownUsername;
+					savedUser.userID = currentFileObject.userRecords[0]!.userID;
+					savedUser.lastKnownUserTag = currentFileObject.userRecords[0]!.lastKnownUserTag;
+					savedUser.lastKnownUsername = currentFileObject.userRecords[0]!.lastKnownUsername;
 					currentFileObject.userRecords.splice(0, 1);
 
 					if (currentFileObject.userRecords.length === 0) {
@@ -1017,9 +1017,9 @@ export class DiscordUser {
 
 					const availableFileKey = `${fileKey} + Available`;
 
-					let availableFileString: string = String();
+					let availableFileString = '';
 					try {
-						const availableFileObject = await this.dataBase.get(availableFileKey) as ServerRecord;
+						const availableFileObject = await this.dataBase.get(availableFileKey);
 
 						availableFileObject.userRecords.push(savedUser);
 
@@ -1042,9 +1042,9 @@ export class DiscordUser {
 					}
 				} else {
 					const deletedUser = new UserRecord();
-					deletedUser.userID = (currentFileObject.userRecords[0]as UserRecord).userID;
-					deletedUser.lastKnownUserTag = (currentFileObject.userRecords[0] as UserRecord).lastKnownUserTag;
-					deletedUser.lastKnownUsername = (currentFileObject.userRecords[0]as UserRecord).lastKnownUsername;
+					deletedUser.userID = currentFileObject.userRecords[0]!.userID;
+					deletedUser.lastKnownUserTag = currentFileObject.userRecords[0]!.lastKnownUserTag;
+					deletedUser.lastKnownUsername = currentFileObject.userRecords[0]!.lastKnownUsername;
 					currentFileObject.userRecords.splice(0, 1);
 
 					if (currentFileObject.userRecords.length === 0) {
@@ -1055,7 +1055,6 @@ export class DiscordUser {
 
 					const notAvailableFileKey = `${fileKey} +  NotAvailable`;
 
-					let notAvailableFileString: string = String();
 					try {
 						const notAvailableFileObject = await this.dataBase.get(notAvailableFileKey);
 
@@ -1094,11 +1093,11 @@ export class DiscordUser {
 	*/
 	private async deleteMessagesIfTimeHasPassed(client: Discord.Client, guild: GuildData, channelIndex: number): Promise<void> {
 		try {
-			const { numberOfMessagesToSave } = guild.deletionChannels[channelIndex] as DeletionChannel;
-			const { channelID } = guild.deletionChannels[channelIndex] as DeletionChannel;
+			const { numberOfMessagesToSave } = guild.deletionChannels[channelIndex]!;
+			const { channelID } = guild.deletionChannels[channelIndex]!;
 			const newGuild = guild;
 			let currentChannel = new Discord.TextChannel(client.guilds
-				.resolve(newGuild.guildID) as Discord.Guild, {});
+				.resolve(newGuild.guildID)!, {});
 			try {
 				currentChannel = await client.channels.fetch(channelID) as Discord.TextChannel;
 			} catch (error) {
@@ -1111,8 +1110,8 @@ export class DiscordUser {
 			}
 
 			const currentTime = new Date().getTime();
-			const timeDifference = currentTime -(newGuild.deletionChannels[channelIndex] as DeletionChannel).timeOfLastPurge;
-			if ((newGuild.deletionChannels[channelIndex] as DeletionChannel).currentlyBeingDeleted === true) {
+			const timeDifference = currentTime - newGuild.deletionChannels[channelIndex]!.timeOfLastPurge;
+			if (newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted === true) {
 				console.log(`Nope! Still being deleted! Channel: ${currentChannel.name}`);
 				return new Promise(resolve => {
 					resolve();
@@ -1127,7 +1126,7 @@ export class DiscordUser {
 
 			console.log(`Checking for messages to delete in channel: ${currentChannel.name}`);
 
-			(newGuild.deletionChannels[channelIndex] as DeletionChannel).currentlyBeingDeleted = true;
+			newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted = true;
 
 			if (numberOfMessagesToSave > 0) {
 				let startingMessage;
@@ -1199,10 +1198,10 @@ export class DiscordUser {
 				}
 				let totalMessageCount = 0;
 				for (let y = 0; y < arrayOfMessageArrays.length; y += 1) {
-					for (let z = 0; z < (arrayOfMessageArrays[y] as Discord.Message[]).length; z += 1) {
-						if (((arrayOfMessageArrays[y] as Discord.Message[])[z] as Discord.Message).pinned === true
-			|| ((arrayOfMessageArrays[y] as Discord.Message[])[z] as Discord.Message).deleted === true) {
-							(arrayOfMessageArrays[y] as Discord.Message[]).splice(z, 1);
+					for (let z = 0; z < arrayOfMessageArrays[y]!.length; z += 1) {
+						if (arrayOfMessageArrays[y]![z]!.pinned === true
+			|| arrayOfMessageArrays[y]![z]!.deleted === true) {
+							arrayOfMessageArrays[y]!.splice(z, 1);
 						} else {
 							totalMessageCount += 1;
 						}
@@ -1210,20 +1209,20 @@ export class DiscordUser {
 				}
 				console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
 				if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
-					(newGuild.deletionChannels[channelIndex] as DeletionChannel).currentlyBeingDeleted = false;
+					newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
 					return new Promise(resolve => {
 						resolve();
 					});
 				}
 				for (let y = arrayOfMessageArrays.length - 1; y >= 0; y -= 1) {
-					for (let z = (arrayOfMessageArrays[y] as Discord.Message[]).length - 1; z >= 0; z -= 1) {
-						if ((newGuild.deletionChannels[channelIndex] as DeletionChannel).currentlyBeingDeleted === false) {
+					for (let z = arrayOfMessageArrays[y]!.length - 1; z >= 0; z -= 1) {
+						if (newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
 							return new Promise(resolve => {
 								resolve();
 							});
 						}
-						if (!((arrayOfMessageArrays[y] as Discord.Message[])[z] as Discord.Message).pinned) {
-							await ((arrayOfMessageArrays[y] as Discord.Message[])[z] as Discord.Message).delete();
+						if (!arrayOfMessageArrays[y]![z]!.pinned) {
+							await arrayOfMessageArrays[y]![z]!.delete();
 							console.log(`Deleting Message Number: ${totalMessageCount - (y * 100 + z)} of ${totalMessageCount} in channel ${currentChannel.name}.`);
 						}
 					}
@@ -1253,10 +1252,10 @@ export class DiscordUser {
 				}
 				let totalMessageCount = 0;
 				for (let w = 0; w < arrayOfMessageArrays.length; w += 1) {
-					for (let z = 0; z < (arrayOfMessageArrays[w] as Discord.Message[]).length; z += 1) {
-						if (((arrayOfMessageArrays[w] as Discord.Message[])[z] as Discord.Message).pinned === true
-			|| ((arrayOfMessageArrays[w] as Discord.Message[])[z] as Discord.Message).deleted === true) {
-							(arrayOfMessageArrays[w] as Discord.Message[]).splice(z, 1);
+					for (let z = 0; z < arrayOfMessageArrays[w]!.length; z += 1) {
+						if (arrayOfMessageArrays[w]![z]!.pinned === true
+			|| arrayOfMessageArrays[w]![z]!.deleted === true) {
+							arrayOfMessageArrays[w]!.splice(z, 1);
 						} else {
 							totalMessageCount += 1;
 						}
@@ -1264,27 +1263,27 @@ export class DiscordUser {
 				}
 				console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
 				if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
-					(newGuild.deletionChannels[channelIndex] as DeletionChannel).currentlyBeingDeleted = false;
+					newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
 					return new Promise(resolve => {
 						resolve();
 					});
 				}
 				for (let w = arrayOfMessageArrays.length - 1; w >= 0; w -= 1) {
-					for (let z = (arrayOfMessageArrays[w] as Discord.Message[]).length - 1; z >= 0; z -= 1) {
-						if ((newGuild.deletionChannels[channelIndex] as DeletionChannel).currentlyBeingDeleted === false) {
+					for (let z = arrayOfMessageArrays[w]!.length - 1; z >= 0; z -= 1) {
+						if (newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
 							return new Promise(resolve => {
 								resolve();
 							});
 						}
-						if (!((arrayOfMessageArrays[w] as Discord.Message[])[z] as Discord.Message).pinned) {
-							await ((arrayOfMessageArrays[w] as Discord.Message[])[z] as Discord.Message).delete();
+						if (!arrayOfMessageArrays[w]![z]!.pinned) {
+							await arrayOfMessageArrays[w]![z]!.delete();
 							console.log(`Deleting Message Number: ${totalMessageCount - (w * 100 + z)} of ${totalMessageCount} in channel ${currentChannel.name}.`);
 						}
 					}
 				}
 			}
-			(newGuild.deletionChannels[channelIndex] as DeletionChannel).timeOfLastPurge = new Date().getTime();
-			(newGuild.deletionChannels[channelIndex] as DeletionChannel).currentlyBeingDeleted = false;
+			newGuild.deletionChannels[channelIndex]!.timeOfLastPurge = new Date().getTime();
+			newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
 			await this.updateGuildDataInDB(newGuild);
 			return new Promise(resolve => {
 				resolve();
@@ -1329,19 +1328,19 @@ export class DiscordUser {
 				for (let y = 0; y < guildData.timedMessages.length; y += 1) {
 					const newGuildData = guildData;
 					const currentTime = new Date().getTime();
-					if ((currentTime - (newGuildData.timedMessages[y] as TimedMessage).timeOfLastSend)
-						> (newGuildData.timedMessages[y] as TimedMessage).msBetweenSends) {
+					if ((currentTime - newGuildData.timedMessages[y]!.timeOfLastSend)
+						> newGuildData.timedMessages[y]!.msBetweenSends) {
 						const guild = client.guilds.resolve(newGuildData.guildID);
-						let textChannel = new Discord.TextChannel(guild as Discord.Guild, {});
-						textChannel = await client.channels.fetch((newGuildData.timedMessages[y] as TimedMessage).textChannelID) as Discord.TextChannel;
-						await textChannel.send((newGuildData.timedMessages[y] as TimedMessage).messageContent);
-						(newGuildData.timedMessages[y] as TimedMessage).timeOfLastSend = new Date().getTime();
+						let textChannel = new Discord.TextChannel(guild!, {});
+						textChannel = await client.channels.fetch(newGuildData.timedMessages[y]!.textChannelID) as Discord.TextChannel;
+						await textChannel.send(newGuildData.timedMessages[y]!.messageContent);
+						newGuildData.timedMessages[y]!.timeOfLastSend = new Date().getTime();
 						await this.updateGuildDataInDB(newGuildData);
 						break;
 					} else {
-						const timeDifference = currentTime - (newGuildData.timedMessages[y] as TimedMessage).timeOfLastSend;
-						const timeRemaining = (newGuildData.timedMessages[y] as TimedMessage).msBetweenSends - timeDifference;
-						console.log(`${(newGuildData.timedMessages[y] as TimedMessage).name} has ${timeRemaining}ms left until it can be sent!`);
+						const timeDifference = currentTime - newGuildData.timedMessages[y]!.timeOfLastSend;
+						const timeRemaining = newGuildData.timedMessages[y]!.msBetweenSends - timeDifference;
+						console.log(`${newGuildData.timedMessages[y]!.name} has ${timeRemaining}ms left until it can be sent!`);
 					}
 				}
 			});
@@ -1363,7 +1362,7 @@ export class DiscordUser {
 			const newGuildData = guildData;
 			try {
 				if (newGuildData.verificationSystem.channelID != '') {
-					const currentGuild = await client.guilds.fetch((newGuildData.guildID as string));
+					const currentGuild = await client.guilds.fetch(newGuildData.guildID!);
 					const currentChannel = currentGuild.channels
 						.resolve(newGuildData.verificationSystem.channelID) as Discord.TextChannel;
 					if (currentChannel === null){
@@ -1380,11 +1379,11 @@ export class DiscordUser {
 					const oldVerificationMessage = await msgManager
 						.fetch(newGuildData.verificationSystem.messageID);
 					const newMsgEmbed = oldVerificationMessage.embeds[0];
-					const newVerificationMessage = await currentChannel.send(newMsgEmbed as Discord.MessageEmbed);
+					const newVerificationMessage = await currentChannel.send(newMsgEmbed!);
 					newGuildData.verificationSystem.messageID = newVerificationMessage.id;
 					await this.updateGuildDataInDB(newGuildData);
 					await newVerificationMessage
-						.react((oldVerificationMessage.reactions.cache.first() as Discord.MessageReaction).emoji.name);
+						.react((oldVerificationMessage.reactions.cache.first()!).emoji.name);
 					await oldVerificationMessage.delete();
 					return new Promise((resolve, reject) => {
 						resolve();

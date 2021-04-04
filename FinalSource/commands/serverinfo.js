@@ -116,7 +116,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTitle('__**Missing Or Invalid Arguments:**__')
                         .setTimestamp(Date())
-                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setAuthor(commandData.guildMember.user.username, (commandData.guildMember.user.avatarURL()))
                         .setColor(guildData.borderColor);
                     return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_1)];
                 case 10:
@@ -187,7 +187,7 @@ function execute(commandData, discordUser) {
                     if (!(commandData.guildMember instanceof Discord.User)) return [3 /*break*/, 24];
                     messageEmbed_3
                         .setDescription(msgString)
-                        .setTitle('__**Server Info:**__')
+                        .setTitle('__**Server Issue:**__')
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
                         .setColor([254, 254, 254]);
@@ -205,7 +205,7 @@ function execute(commandData, discordUser) {
                     if (!(commandData.guildMember instanceof Discord.GuildMember)) return [3 /*break*/, 27];
                     messageEmbed_3
                         .setDescription(msgString)
-                        .setTitle('__**Server Info:**__')
+                        .setTitle('__**Server Issue:**__')
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor);

@@ -71,7 +71,7 @@ function execute(client, invite, discordUser) {
                 case 2:
                     textChannel = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
-                    msgString = String('');
+                    msgString = '';
                     msgString = "__**Max Uses:**__ " + invite.maxUses + "\n";
                     msgString += "__**Expires At:**__ " + invite.expiresAt + "\n";
                     msgString += "__**URL:**__ " + invite.url + "\n";

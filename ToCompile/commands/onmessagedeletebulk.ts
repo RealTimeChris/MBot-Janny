@@ -21,12 +21,12 @@ async function execute(client: Discord.Client, collection: Discord.Collection<st
             return command.name;
         }
 
-        const guildData = await discordUser.getGuildDataFromDB((collection.first() as Discord.Message).guild as Discord.Guild);
+        const guildData = await discordUser.getGuildDataFromDB(collection.first()!.guild!);
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'messagedeletebulk') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'messagedeletebulk') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -39,27 +39,27 @@ async function execute(client: Discord.Client, collection: Discord.Collection<st
 
         msgEmbed
             .setTitle('__**Messages Bulk Deleted:**__')
-            .setTimestamp((Date() as unknown) as Date)
+            .setTimestamp(Date() as unknown as Date)
             .setDescription(msgString)
             .setColor(guildData.borderColor as [number, number, number]);
         await textChannel.send(msgEmbed);
 
         const keyArray = collection.keyArray();
         for (let x = 0; x < keyArray.length; x += 1) {
-            const currentMessage = collection.get(keyArray[x] as string);
-            if ((currentMessage as Discord.Message).content !== '') {
-                let msgString2 = `__**Message Author:**__ <@!${(currentMessage as Discord.Message).author.id}> (${(currentMessage as Discord.Message).author.tag})\n`;
-                msgString2 += `__**Message Id:**__ ${(currentMessage as Discord.Message).id}\n`;
-                msgString2 += `__**Message Content:**__ ${(currentMessage as Discord.Message).content}`;
+            const currentMessage = collection.get(keyArray[x]!);
+            if (currentMessage!.content !== '') {
+                let msgString2 = `__**Message Author:**__ <@!${currentMessage!.author.id}> (${currentMessage!.author.tag})\n`;
+                msgString2 += `__**Message Id:**__ ${currentMessage!.id}\n`;
+                msgString2 += `__**Message Content:**__ ${currentMessage!.content}`;
                 msgEmbed
                     .setTitle(`__**Deleted Message: ${x + 1} of ${keyArray.length}**__`)
-                    .setTimestamp((Date() as unknown) as Date)
+                    .setTimestamp(Date() as unknown as Date)
                     .setDescription(msgString2)
                     .setColor(guildData.borderColor as [number, number, number]);
                 await textChannel.send(msgEmbed);
             }
-            if ((currentMessage as Discord.Message).embeds.length > 0) {
-                const msgEmbed2 = (currentMessage as Discord.Message).embeds[0];
+            if (currentMessage!.embeds.length > 0) {
+                const msgEmbed2 = currentMessage!.embeds[0];
                 await textChannel.send(`Message Content: ${x + 1} of ${keyArray.length}`, { embed: msgEmbed2 });
             }
         }

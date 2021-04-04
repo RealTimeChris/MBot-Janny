@@ -62,7 +62,7 @@ function execute(commandData, discordUser) {
                     msgString += "__Guild Name:__ " + guild.guildName + "\n";
                     msgString += "__Guild ID:__ " + guild.guildID + "\n";
                     msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";
-                    var currentGuild = ((_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(guild.guildID)).then(function (guild) {
+                    (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(guild.guildID).then(function (guild) {
                         msgString += "__Created:__ " + guild.createdAt + "\n";
                         msgString += "__Guild Owner:__ <@!" + guild.owner.id + "> (" + guild.owner.user.tag + ")\n";
                         var messageEmbed = new Discord.MessageEmbed()

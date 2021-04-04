@@ -97,10 +97,9 @@ function execute(commandData, discordUser) {
                 case 6:
                     deleteCount = parseInt(commandData.args[0].toString().match(regExp)[0], 10);
                     messageManager = new Discord.MessageManager(commandData.permsChannel, []);
-                    currentChannel = new Discord.TextChannel(commandData.guild, messageManager);
                     return [4 /*yield*/, ((_b = commandData.guildMember) === null || _b === void 0 ? void 0 : _b.client.channels.fetch(commandData.permsChannel.id))];
                 case 7:
-                    currentChannel = (_d.sent());
+                    currentChannel = _d.sent();
                     return [4 /*yield*/, currentChannel.bulkDelete(deleteCount, true)];
                 case 8:
                     _d.sent();

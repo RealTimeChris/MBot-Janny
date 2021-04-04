@@ -31,20 +31,20 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         let guildData: DiscordStuff.GuildData;
 
         try{
-            guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+            guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
         }
         catch(error){
             if (error.type === 'NotFoundError') {
                 const msgString = '------\n**Sorry, but your current guild could not be found!**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
-                    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                     .setColor(guildData!.borderColor as [number, number, number])
                     .setDescription(msgString)
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Server Issue:**__');
                 let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                    msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
                 return commandReturnData;
@@ -58,14 +58,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         if (commandData.args[0] !== undefined && !inviteRegExp.test(commandData.args[0])) {
             const msgString = '------\n**Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData!.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
@@ -79,7 +79,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         const inviteLink = commandData.args[0];
 
         if (whatAreWeDoing === 'viewing') {
-            const serverRecordKey = `${(commandData.guild as Discord.Guild).id} + Record`;
+            const serverRecordKey = `${commandData.guild!.id} + Record`;
             const serverRecordObject = await discordUser.dataBase.get(serverRecordKey);
 
             const inviteLink2 = serverRecordObject.replacementServerInvite;
@@ -92,9 +92,9 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             }
 
             const messageEmbed = new Discord.MessageEmbed()
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData!.borderColor as [number, number, number])
-                .setTimestamp((Date() as unknown) as Date)
+                .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Replacement Invite Link:**__')
                 .setDescription(msgString);
 
@@ -102,7 +102,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             return commandReturnData;
         }
         if (whatAreWeDoing === 'adding') {
-            const serverRecordKey = `${(commandData.guild as Discord.Guild).id} + Record`;
+            const serverRecordKey = `${commandData.guild!.id} + Record`;
             const serverRecordObject = await discordUser.dataBase.get(serverRecordKey);
 
             serverRecordObject.replacementServerInvite = inviteLink;
@@ -115,9 +115,9 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 + `\n------\n__**Link:**__ ${serverRecordObject.replacementServerInvite}\n------`;
 
             const messageEmbed = new Discord.MessageEmbed()
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-                .setColor([0, 0, 254])
-                .setTimestamp((Date() as unknown) as Date)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+                .setColor(guildData!.borderColor as [number, number, number])
+                .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Replacement Invite Link Updated:**__')
                 .setDescription(msgString);
 

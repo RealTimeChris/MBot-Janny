@@ -24,14 +24,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             return commandReturnData;
         }
         
-        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
 
         const borderColor: number[] = [];
         if (commandData.args[0] === undefined || (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'gamehouse' && commandData.args[0] !== 'musichouse')){
             const msgString = `------\n**Please, enter a bot's name as the first argument to this command! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
@@ -46,7 +46,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgString = `------\n**Please, enter a red-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
@@ -58,7 +58,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgString = `------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
@@ -70,7 +70,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             const msgString = `------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
@@ -79,15 +79,15 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             return commandReturnData;
         }
         else {
-            borderColor[0] = parseInt(commandData.args[1] as string, 10);
+            borderColor[0] = parseInt(commandData.args[1], 10);
             if (borderColor[0] === 255){
                 borderColor[0] = 254;
             }
-            borderColor[1] = parseInt(commandData.args[2] as string, 10);
+            borderColor[1] = parseInt(commandData.args[2], 10);
             if (borderColor[1] === 255){
                 borderColor[1] = 254;
             }
-            borderColor[2] = parseInt(commandData.args[3] as string, 10);
+            borderColor[2] = parseInt(commandData.args[3], 10);
             if (borderColor[2] === 255){
                 borderColor[2] = 254;
             }
@@ -98,7 +98,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         const msgEmbed = new Discord.MessageEmbed();
         msgEmbed
-            .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+            .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
             .setColor(guildData.borderColor as [number, number, number])
             .setDescription(`Nicely done, you've updated the default border color for this bot!\n------\n__**Border Color Values:**__ ${guildData.borderColor}\n------`)
             .setTimestamp(Date() as unknown as Date)

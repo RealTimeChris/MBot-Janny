@@ -25,8 +25,8 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'usernamechange') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'usernamechange') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -46,7 +46,7 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
             .setColor(guildData.borderColor as [number, number, number])
             .setDescription(msgString)
             .setThumbnail(newUser.avatarURL() as string)
-            .setTimestamp((Date() as unknown) as Date)
+            .setTimestamp(Date() as unknown as Date)
             .setTitle('__**New Username:**__');
 
         await textChannel.send(msgEmbed);

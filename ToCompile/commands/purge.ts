@@ -39,26 +39,25 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 		|| parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100) {
 			const msgString = '------\n**Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
 			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
-				msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
 			return commandReturnData;
 		}
 		const deleteCount = parseInt(((commandData.args[0].toString().match(regExp) as string[])[0]as string), 10);
 		let messageManager = new Discord.MessageManager(commandData.permsChannel as Discord.TextChannel, []);
-        let currentChannel = new Discord.TextChannel(commandData.guild as Discord.Guild, messageManager as Discord.MessageManager);
-		currentChannel = await commandData.guildMember?.client.channels.fetch((commandData.permsChannel as Discord.TextChannel).id) as Discord.TextChannel;
+		let currentChannel = await commandData.guildMember?.client.channels.fetch(commandData.permsChannel!.id) as Discord.TextChannel;
         await currentChannel.bulkDelete(deleteCount, true);
-		const msgString = `<@!${(commandData.guildMember as Discord.GuildMember).id}> I've just deleted ${deleteCount} messages from this channel!`;
+		const msgString = `<@!${commandData.guildMember!.id}> I've just deleted ${deleteCount} messages from this channel!`;
 		let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)

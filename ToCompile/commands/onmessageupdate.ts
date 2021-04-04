@@ -21,12 +21,12 @@ async function execute(client: Discord.Client, oldMessage: Discord.Message, newM
             return command.name;
         }
 
-        const guildData = await discordUser.getGuildDataFromDB(newMessage.guild as Discord.Guild);
+        const guildData = await discordUser.getGuildDataFromDB(newMessage.guild!);
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'messageupdate') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'messageupdate') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -42,7 +42,7 @@ async function execute(client: Discord.Client, oldMessage: Discord.Message, newM
 
         msgEmbed
             .setTitle('__**Message Updated:**__')
-            .setTimestamp((Date() as unknown) as Date)
+            .setTimestamp(Date() as unknown as Date)
             .setDescription(msgString)
             .setColor(guildData.borderColor as [number, number, number]);
         await textChannel.send(msgEmbed);

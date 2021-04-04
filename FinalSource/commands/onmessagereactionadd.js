@@ -60,8 +60,8 @@ function execute(messageReaction, client, args, discordUser) {
                     if (messageReaction instanceof Discord.MessageReaction === false) {
                         return [2 /*return*/, command.name];
                     }
-                    userID = messageReaction.users.cache
-                        .array()[messageReaction.users.cache.array().length - 1].id;
+                    userID = (messageReaction.users.cache
+                        .array()[messageReaction.users.cache.array().length - 1]).id;
                     x = 0;
                     _a.label = 2;
                 case 2:

@@ -34,7 +34,7 @@ async function execute(commandData: DiscordStuff.CommandData,  discordUser: Disc
 		msgEmbed
 			.setAuthor(((commandData.guildMember as Discord.GuildMember).client.user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).client.user as Discord.User)
 			.avatarURL() as string)
-			.setTimestamp((Date() as unknown) as Date)
+			.setTimestamp(Date() as unknown as Date)
 			.setTitle('__**Janny Options:**__')
 			.setColor(guildData.borderColor as [number, number, number])
 			.setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
@@ -42,7 +42,7 @@ async function execute(commandData: DiscordStuff.CommandData,  discordUser: Disc
 		const fields = [];
 		let resultIcon = '❌';
 		for (let x = 0; x < guildData.logs.length; x += 1) {
-			if ((guildData.logs[x] as DiscordStuff.Log).enabled === true) {
+			if (guildData.logs[x]!.enabled === true) {
 				resultIcon = '✅';
 				break;
 			}
@@ -68,7 +68,7 @@ async function execute(commandData: DiscordStuff.CommandData,  discordUser: Disc
 		fields.push(deletionChannelsField);
 
 		resultIcon = '❌';
-		const serverRecordKey = `${(commandData.guild as Discord.Guild).id} + Record`;
+		const serverRecordKey = `${commandData.guild!.id} + Record`;
 		const serverRecordObject = await discordUser.dataBase.get(serverRecordKey);
 		if (serverRecordObject.replacementServerInvite !== '') {
 			resultIcon = '✅';
@@ -93,10 +93,10 @@ async function execute(commandData: DiscordStuff.CommandData,  discordUser: Disc
 			__Command(s):__ '!timedmessages'`, inline: true };
 		fields.push(timedMessagesField);
 
-		const userData = await discordUser.getUserDataFromDB((commandData.guild as Discord.Guild).client);
+		const userData = await discordUser.getUserDataFromDB(commandData.guild!.client);
 		resultIcon = '❌';
 		for (let x = 0; x < userData.trackingGuildIDs.length; x += 1) {
-			if (userData.trackingGuildIDs[x] === ((commandData.guild as Discord.Guild) as Discord.Guild).id) {
+			if (userData.trackingGuildIDs[x] === commandData.guild!.id) {
 				resultIcon = '✅';
 			}
 		}

@@ -24,8 +24,8 @@ async function execute(client: Discord.Client, message: Discord.Message, discord
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'messagedelete') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'messagedelete') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -33,14 +33,14 @@ async function execute(client: Discord.Client, message: Discord.Message, discord
         const textChannel = await client.channels.fetch(logs.loggingChannelID) as Discord.TextChannel;
 
         const msgEmbed = new Discord.MessageEmbed();
-        let msgString = String('');
+        let msgString = '';
         msgString = `__**Message Author:**__ <@!${message.author.id}> (${message.author.tag})\n`;
         msgString += `__**Message ID:**__ ${message.id}\n`;
         msgString += `__**Content:**__ ${message.content}`;
 
         msgEmbed
             .setTitle('__**Message Deleted:**__')
-            .setTimestamp((Date() as unknown) as Date)
+            .setTimestamp(Date() as unknown as Date)
             .setDescription(msgString)
             .setColor([0, 0, 255]);
         await textChannel.send(msgEmbed);

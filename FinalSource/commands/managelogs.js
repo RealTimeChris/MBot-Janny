@@ -715,7 +715,7 @@ function execute(commandData, discordUser) {
                 case 127:
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 131];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 130];
-                    guildData.logs[x].loggingChannelID = '';
+                    guildData.logs[x].enabled = true;
                     guildData.logs[x].loggingChannelName = '';
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
@@ -890,7 +890,7 @@ function execute(commandData, discordUser) {
                     if (!(x < guildData.logs.length)) return [3 /*break*/, 167];
                     if (!(commandData.args[1].toLowerCase() === guildData.logs[x].nameSmall)) return [3 /*break*/, 166];
                     guildData.logs[x].loggingChannelID = '';
-                    guildData.logs[x].loggingChannelName = '';
+                    guildData.logs[x].enabled = false;
                     guildData.logs[x].enabled = false;
                     return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
                 case 164:

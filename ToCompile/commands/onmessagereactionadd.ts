@@ -17,15 +17,15 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 	try {
 		const commandReturnData = new DiscordStuff.CommandReturnData();
 		commandReturnData.commandName = command.name;
-		const guildData = await discordUser.getGuildDataFromDB(messageReaction.message.guild as Discord.Guild);
+		const guildData = await discordUser.getGuildDataFromDB(messageReaction.message.guild!);
 
 		if (messageReaction instanceof Discord.MessageReaction === false) {
 			return command.name;
 		}
 		const userID = (messageReaction.users.cache
-			.array()[messageReaction.users.cache.array().length - 1] as Discord.User).id;
+			.array()[messageReaction.users.cache.array().length - 1]!).id;
 		for (let x = 0; x < discordUser.guildsData.size; x += 1) {
-			if ((messageReaction.message.guild as Discord.Guild).id !== guildData.guildID) {
+			if (messageReaction.message.guild!.id !== guildData.guildID) {
 				if (x === discordUser.guildsData.size - 1) {
 					break;
 				}
@@ -44,17 +44,17 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 				continue;
 			}
 			if (messageReaction.emoji.name === guildData
-				.verificationSystem.emoji && userID !== (client.user as Discord.User).id) {
+				.verificationSystem.emoji && userID !== client.user!.id) {
 				const currentGuild = await client.guilds.fetch(guildData.guildID);
 				const currentGuildMember = currentGuild.members.resolve(userID);
 				const currentGuildMemberRoleManager = new Discord
-					.GuildMemberRoleManager(currentGuildMember as Discord.GuildMember);
+					.GuildMemberRoleManager(currentGuildMember!);
 
 				for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
-					await currentGuildMemberRoleManager.add(guildData.defaultRoleIDs[y] as string);
+					await currentGuildMemberRoleManager.add(guildData.defaultRoleIDs[y]!);
 					await messageReaction.users.remove(userID);
 				}
-			} else if (userID !== (client.user as Discord.User).id) {
+			} else if (userID !== client.user!.id) {
 				await messageReaction.users.remove(userID);
 			}
 		}

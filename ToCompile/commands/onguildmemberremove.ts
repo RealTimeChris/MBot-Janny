@@ -25,8 +25,8 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'guildmemberremove') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'guildmemberremove') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -50,8 +50,8 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
             msgEmbed
                 .setColor(guildMember.displayColor)
                 .setDescription(msgString)
-                .setThumbnail((guildMember.user as Discord.User).avatarURL() as string)
-                .setTimestamp((Date() as unknown) as Date)
+                .setThumbnail((guildMember.user as Discord.User).avatarURL()!)
+                .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Guild Member Kicked:**__');
 
             await textChannel.send(msgEmbed);
@@ -65,8 +65,8 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
             msgEmbed
                 .setColor(guildMember.displayColor)
                 .setDescription(msgString)
-                .setThumbnail((guildMember.user as Discord.User).avatarURL() as string)
-                .setTimestamp((Date() as unknown) as Date)
+                .setThumbnail((guildMember.user as Discord.User).avatarURL()!)
+                .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Guild Member Left:**__');
 
             await textChannel.send(msgEmbed);

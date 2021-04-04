@@ -23,8 +23,8 @@ async function execute(client: Discord.Client, guild: Discord.Guild, user: Disco
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'guildbanremove') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'guildbanremove') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -36,8 +36,8 @@ async function execute(client: Discord.Client, guild: Discord.Guild, user: Disco
             .find(entry => Date.now() - entry.createdTimestamp < 5000);
 
         let msgString = '';
-        msgString += `__**Unbanned By:**__ <@!${(auditLogEntry as Discord.GuildAuditLogsEntry).executor.id}> 
-        (${(auditLogEntry as Discord.GuildAuditLogsEntry).executor.tag})\n`;
+        msgString += `__**Unbanned By:**__ <@!${auditLogEntry!.executor.id}> 
+        (${auditLogEntry!.executor.tag})\n`;
         msgString += `__**Time of Unban:**__ ${Date()}\n`;
         msgString += `__**User:**__ <@!${user.id}>\n`;
         msgString += `__**User Tag:**__ ${user.tag}\n`;
@@ -49,7 +49,7 @@ async function execute(client: Discord.Client, guild: Discord.Guild, user: Disco
         msgEmbed
             .setColor([0, 255, 0])
             .setThumbnail(user.avatarURL() as string)
-            .setTimestamp((Date() as unknown) as Date)
+            .setTimestamp(Date() as unknown as Date)
             .setTitle('__**User Unbanned:**__')
             .setDescription(msgString);
 

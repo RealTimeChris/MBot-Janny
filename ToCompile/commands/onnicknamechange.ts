@@ -25,8 +25,8 @@ async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMemb
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'nicknamechange') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'nicknamechange') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -45,8 +45,8 @@ async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMemb
         msgEmbed
             .setColor(newGuildMember.displayColor)
             .setDescription(msgString)
-            .setThumbnail((newGuildMember.user as Discord.User).avatarURL() as string)
-            .setTimestamp((Date() as unknown) as Date)
+            .setThumbnail(newGuildMember.user.avatarURL()!)
+            .setTimestamp(Date() as unknown as Date)
             .setTitle('__**New Nickname:**__');
 
         await textChannel.send(msgEmbed);

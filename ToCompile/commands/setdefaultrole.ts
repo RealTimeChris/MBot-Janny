@@ -29,7 +29,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             return commandReturnData;
         }
 
-        const guildData = await discordUser.getGuildDataFromDB(commandData.guild as Discord.Guild);
+        const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
 
         let roleMemberManager: Discord.RoleManager;
         let currentDiscordRole: Discord.Role;
@@ -41,39 +41,39 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } else if (commandData.args[0] !== undefined && commandData.args[0].toLowerCase() !== 'add' && commandData.args[0].toLowerCase() !== 'remove') {
             const msgString = `------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
             let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (commandData.args[1] === undefined) {
             const msgString = `------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				.setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
             let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
             return commandReturnData;
         } else if (roleMentionRegExp.test(commandData.args[1])) {
             const roleID = (commandData.args[1].match(idRegExp) as string[])[0];
-            roleMemberManager = new Discord.RoleManager(commandData.guild as Discord.Guild) as Discord.RoleManager;
-            currentDiscordRole = (await (roleMemberManager as Discord.RoleManager).fetch(roleID as string)) as Discord.Role;
+            roleMemberManager = new Discord.RoleManager(commandData.guild!);
+            currentDiscordRole = await roleMemberManager.fetch(roleID!) as Discord.Role;
             commandData.args[1] = currentDiscordRole.name;
         } else if (idRegExp.test(commandData.args[1])) {
-            roleMemberManager = new Discord.RoleManager(commandData.guild as Discord.Guild) as Discord.RoleManager;
-            currentDiscordRole = (await (roleMemberManager as Discord.RoleManager).fetch(commandData.args[1])) as Discord.Role;
+            roleMemberManager = new Discord.RoleManager(commandData.guild!);
+            currentDiscordRole = await roleMemberManager.fetch(commandData.args[1]) as Discord.Role;
             commandData.args[1] = currentDiscordRole.name;
         }
         if (commandData.args[0]?.toLowerCase() === 'add') {
@@ -85,7 +85,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         console.log(whatAreWeDoing);
         const roleName = commandData.args[1];
 
-        const roleArray = (commandData.guild as Discord.Guild).roles.cache.array().sort();
+        const roleArray = commandData.guild!.roles.cache.array().sort();
 
         for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
             const isItFoundReal = roleArray.map(role => {
@@ -131,16 +131,16 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setTitle('__**Default Roles:**__')
-                .setTimestamp((Date() as unknown) as Date)
+                .setTimestamp(Date() as unknown as Date)
                 .setDescription(msgString);
             await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)
             return commandReturnData;
         }
 
-        let currentRole = new Discord.Role((commandData.guildMember as Discord.GuildMember).client, {}, (commandData.guildMember as Discord.GuildMember).client.guilds.resolve(guildData.guildID) as Discord.Guild);
+        let currentRole = new Discord.Role((commandData.guildMember!).client, {}, (commandData.guildMember!).client.guilds.resolve(guildData.guildID)!);
 
         let isItFound = false;
         roleArray.map(role => {
@@ -154,14 +154,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         if (isItFound === false) {
             const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
-                .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Role Issue:**__');
             let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
              }
             await msg.delete({timeout: 20000});
             return commandReturnData;
@@ -172,14 +172,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 if (currentRole.id === guildData.defaultRoleIDs[x]) {
                     const msgString = `------\n**Hey! It looks like you've already added that role!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
-				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Role Issue:**__')
                     let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                        msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                        msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                     }
                     await msg.delete({timeout: 20000});
                     return commandReturnData;
@@ -193,7 +193,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setTitle('__**New Default Role Added:**__')
                 .setTimestamp((Date() as unknown) as Date)
@@ -214,14 +214,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             if (isItFound === false) {
                 const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
-				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+				    .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
 				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**Missing Or Invalid Arguments:**__')
                 let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                    msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
                 return commandReturnData;
@@ -231,7 +231,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
-                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor(guildData.borderColor as [number, number, number])
                 .setTitle('__**Default Role Removed:**__')
                 .setTimestamp((Date() as unknown) as Date)

@@ -623,14 +623,14 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 let msgEmbed = new Discord.MessageEmbed();
                 if (commandData.guildMember instanceof Discord.User){
                     msgEmbed
-                        .setAuthor((commandData.guildMember as Discord.User)?.username, (commandData.guildMember as Discord.User).avatarURL() as string)
+                        .setAuthor((commandData.guildMember as Discord.User)?.username, (commandData.guildMember as Discord.User).avatarURL()!)
                         .setColor([254, 254, 255])
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle('__**Registered Commands:**__');
                 }
                 else {
                     msgEmbed
-                        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
+                        .setAuthor((commandData.guildMember as Discord.GuildMember)?.user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                         .setColor([254, 254, 254])
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle('__**Registered Commands:**__');
@@ -645,7 +645,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         }
         for (let x = 0; x < msgEmbeds.length; x += 1){
             msgEmbeds[x]?.setTitle(`__**Registered Commands, (${(x + 1).toString()} of ${msgEmbeds.length}): **__`);
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbeds[x] as Discord.MessageEmbed);
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbeds[x]!);
         }
 
     return commandReturnData;

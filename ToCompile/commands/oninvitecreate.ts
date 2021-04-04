@@ -25,8 +25,8 @@ async function execute(client: Discord.Client, invite: Discord.Invite,
 
         let logs = new DiscordStuff.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
-            if ((guildData.logs[x] as DiscordStuff.Log).nameSmall === 'invitecreate') {
-                logs = guildData.logs[x] as DiscordStuff.Log;
+            if (guildData.logs[x]!.nameSmall === 'invitecreate') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -34,15 +34,15 @@ async function execute(client: Discord.Client, invite: Discord.Invite,
         const textChannel = await client.channels.fetch(logs.loggingChannelID) as Discord.TextChannel;
 
         const msgEmbed = new Discord.MessageEmbed();
-        let msgString = String('');
+        let msgString = '';
         msgString = `__**Max Uses:**__ ${invite.maxUses}\n`;
         msgString += `__**Expires At:**__ ${invite.expiresAt}\n`;
         msgString += `__**URL:**__ ${invite.url}\n`;
-        msgString += `__**Created By User:**__ <@!${(invite.inviter as Discord.User).id}> (${(invite.inviter as Discord.User).tag})`;
+        msgString += `__**Created By User:**__ <@!${invite.inviter!.id}> (${invite.inviter!.tag})`;
 
         msgEmbed
             .setTitle('__**New Invite:**__')
-            .setTimestamp((Date() as unknown) as Date)
+            .setTimestamp(Date() as unknown as Date)
             .setDescription(msgString)
             .setColor(guildData.borderColor as [number, number, number]);
         await textChannel.send(msgEmbed);
