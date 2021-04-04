@@ -236,13 +236,13 @@ exports.recurseThroughMessagePages = recurseThroughMessagePages;
  */
 function areWeInADM(commandData) {
     return __awaiter(this, void 0, void 0, function () {
-        var currentChannelType, msgString, msgEmbed, error_2;
+        var currentChannelType, msgString, msgEmbed, msg, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
+                    _a.trys.push([0, 4, , 5]);
                     currentChannelType = commandData.fromTextChannelType;
-                    if (!(currentChannelType === 'dm')) return [3 /*break*/, 2];
+                    if (!(currentChannelType === 'dm')) return [3 /*break*/, 3];
                     msgString = "------\n**Sorry, but we can't do that in a direct message!**\n------";
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
@@ -253,19 +253,25 @@ function areWeInADM(commandData) {
                         .setTitle('__**Direct Message Issue:**__');
                     return [4 /*yield*/, sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
+                    msg = _a.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 2:
                     _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             resolve(true);
                         })];
-                case 2: return [2 /*return*/, new Promise(function (resolve, reject) {
+                case 3: return [2 /*return*/, new Promise(function (resolve, reject) {
                         resolve(false);
                     })];
-                case 3:
+                case 4:
                     error_2 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
-                case 4: return [2 /*return*/];
+                case 5: return [2 /*return*/];
             }
         });
     });

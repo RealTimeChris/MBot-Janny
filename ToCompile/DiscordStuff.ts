@@ -142,7 +142,11 @@ export async function areWeInADM(commandData: CommandData): Promise<boolean> {
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Direct Message Issue:**__');
-			await sendMessageWithCorrectChannel(commandData, msgEmbed);
+			let msg = await sendMessageWithCorrectChannel(commandData, msgEmbed);
+			if (commandData.toTextChannel instanceof Discord.WebhookClient){
+				msg = new Discord.Message((commandData.guildMember as Discord.GuildMember).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+			}
+			await msg.delete({timeout: 20000});
 			
 			return new Promise((resolve, reject) => {
 				resolve(true);

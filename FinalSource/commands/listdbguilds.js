@@ -47,7 +47,6 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.execute = void 0;
 var Discord = require("discord.js");
 var DiscordStuff = require("../DiscordStuff");
 var command = new DiscordStuff.BotCommand();
@@ -205,6 +204,5 @@ function execute(commandData, discordUser) {
         });
     });
 }
-exports.execute = execute;
 command.function = execute;
 exports.default = command;
