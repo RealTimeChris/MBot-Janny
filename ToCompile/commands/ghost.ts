@@ -16,6 +16,7 @@ command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS TH
 async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
     const returnData = new DiscordStuff.CommandReturnData();
     returnData.commandName = command.name;
+    const guildData = await discordUser.getGuildDataFromDB((commandData.guild as Discord.Guild));
     try {
         const areWeInADM = await DiscordStuff.areWeInADM(commandData);
 
@@ -30,8 +31,6 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 resolve(returnData);
             });
         }
-
-        const guildData = await discordUser.getGuildDataFromDB((commandData.guild as Discord.Guild));
 
         let whatAreWeDoing;
         const userMentionRegExp = /<@!\d{18}>/;
@@ -337,7 +336,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				        .setTitle('__**Already Ghosted:**__');
                     let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                        msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                        msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                     }
                     await msg.delete({timeout: 20000});
                     return new Promise((resolve, reject) => {
@@ -348,18 +347,18 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
             guildMemberData.previousRoleIDs.push(memberRoleManager.highest.id);
             for (let x = 0; x < memberRoleManager.cache.array().length; x += 1) {
-                if ((memberRoleManager.cache.array()[x] as Discord.Role).id === memberRoleManager.highest.id) {
+                if (memberRoleManager.cache.array()[x]!.id === memberRoleManager.highest.id) {
                     continue;
                 }
-                if ((memberRoleManager.cache.array()[x] as Discord.Role).name !== '@everyone' && (memberRoleManager.cache.array()[x] as Discord.Role).name !== 'general'
-                    && (memberRoleManager.cache.array()[x] as Discord.Role).id !== memberRoleManager.highest.id) {
-                    guildMemberData.previousRoleIDs.push((memberRoleManager.cache.array()[x] as Discord.Role).id as string);
+                if (memberRoleManager.cache.array()[x]!.name !== '@everyone' && memberRoleManager.cache.array()[x]!.name !== 'general'
+                    && memberRoleManager.cache.array()[x]!.id !== memberRoleManager.highest.id) {
+                    guildMemberData.previousRoleIDs.push(memberRoleManager.cache.array()[x]!.id);
                 }
             }
 
             for (let x = 0; x < guildMemberData.previousRoleIDs.length; x += 1) {
                 try {
-                    await memberRoleManager.remove(guildMemberData.previousRoleIDs[x] as string);
+                    await memberRoleManager.remove(guildMemberData.previousRoleIDs[x]!);
                 } catch (error) {
                     if (error.message === 'Missing Permissions') {
                         console.log('Missing Permissions');
@@ -373,27 +372,27 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             }
 
             for (let x = 0; x < channelsArray.length; x += 1) {
-                const currentChannel = channelsArray[x] as Discord.GuildChannel;
+                const currentChannel = channelsArray[x]!;
 
                 const currentChannelOverwritesArray = currentChannel.permissionOverwrites.array();
 
                 for (let y = 0; y < currentChannelOverwritesArray.length; y += 1) {
-                    if ((currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).id === currentGuildMember.id) {
+                    if (currentChannelOverwritesArray[y]!.id === currentGuildMember.id) {
                         const permOWs = new DiscordStuff
-                            .PermissionOverwrites(commandData.guild as Discord.Guild);
-                        permOWs.allow = (currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).allow.toArray();
-                        permOWs.deny = (currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).deny.toArray();
+                            .PermissionOverwrites(commandData.guild!);
+                        permOWs.allow = currentChannelOverwritesArray[y]!.allow.toArray();
+                        permOWs.deny = currentChannelOverwritesArray[y]!.deny.toArray();
                         permOWs.id = currentGuildMember.id;
                         permOWs.type = 'member';
                         permOWs.channel = currentChannel;
                         guildMemberData.previousPermissionOverwrites
                             .push(permOWs);
-                        await (currentChannelOverwritesArray[y] as Discord.PermissionOverwrites).delete();
+                        await currentChannelOverwritesArray[y]!.delete();
                     }
                 }
             }
 
-            await discordUser.updateGuildMemberDataInDB(guildMemberData, (guildData.guildID as string));
+            await discordUser.updateGuildMemberDataInDB(guildMemberData, guildData.guildID);
 
             if (currentGuildMember.voice.channel) {
                 currentGuildMember.voice.kick();
@@ -401,7 +400,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
             await memberRoleManager.add(ghostedRole.id);
 
-            const msgString = `------\n**Hello! You've been REDACTED, on the server ${(commandData.guild as Discord.Guild).name},
+            const msgString = `------\n**Hello! You've been REDACTED, on the server ${commandData.guild!.name},
             for the following reason(s):	${ghostReason}\n Please, contact a moderator or admin to clear this issue up! Thanks!**\n------`;
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
@@ -430,7 +429,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         } if (whatAreWeDoing === 'remove') {
             let isItFound = false;
             for (let x = 0; x < ghostedUserArray.length; x += 1) {
-                if (currentGuildMember.id === (ghostedUserArray[x] as Discord.GuildMember).id) {
+                if (currentGuildMember.id === ghostedUserArray[x]!.id) {
                     isItFound = true;
                     break;
                 }
@@ -446,7 +445,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				        .setTitle('__**Not Ghosted:**__');
                 let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient){
-                    msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+                    msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
                 return new Promise((resolve, reject) => {
@@ -456,7 +455,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
             for (let x = 0; x < guildMemberData.previousRoleIDs.length; x += 1) {
                 try {
-                    await memberRoleManager.add((guildMemberData.previousRoleIDs[x] as string));
+                    await memberRoleManager.add(guildMemberData.previousRoleIDs[x]!);
                 } catch (error) {
                     if (error.message === 'Missing Permissions') {
                         continue;
@@ -467,11 +466,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             for (let x = 0; x < channelsArray.length; x += 1) {
                 const currentChannel = channelsArray[x];
 
-                const currentChannelOverwritesArray = (currentChannel as Discord.GuildChannel).permissionOverwrites.array();
+                const currentChannelOverwritesArray = currentChannel!.permissionOverwrites.array();
 
                 for (let z = 0; z < guildMemberData.previousPermissionOverwrites.length; z += 1) {
-                    if (((guildMemberData.previousPermissionOverwrites[z] as DiscordStuff.PermissionOverwrites)
-                        .channel as Discord. GuildChannel).id === (channelsArray[x] as Discord.GuildChannel).id) {
+                    if ((guildMemberData.previousPermissionOverwrites[z]!)
+                        .channel!.id === channelsArray[x]!.id) {
                         currentChannelOverwritesArray.push((guildMemberData.previousPermissionOverwrites[z] as unknown) as Discord.PermissionOverwrites)
                     }
                 }
@@ -504,7 +503,6 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString2)
                 .setTimestamp((Date() as unknown) as Date)
                 .setTitle('__**New Server Member Un-Ghosted:**__');
-
                 await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed2);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
@@ -516,7 +514,15 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             });
     } catch (error) {
         if (error.message === 'Missing Permissions') {
-            await (commandData.permsChannel as Discord.TextChannel).send(`<@!${(commandData.guildMember as Discord.GuildMember).id}> I need more permissions! Please promote my role rank in the server options!`);
+            const msgString =  `------\n**I need more permissions! Please promote my role rank in the server options!**\n------`;
+            const msgEmbed = new Discord.MessageEmbed();
+            msgEmbed
+                .setAuthor(((commandData.guildMember as Discord.GuildMember).user as Discord.User).username, ((commandData.guildMember as Discord.GuildMember).user as Discord.User).avatarURL() as string)
+                .setColor(guildData.borderColor as [number, number, number])
+                .setDescription(msgString)
+                .setTimestamp((Date() as unknown) as Date)
+                .setTitle('__**Permissions Issue:**__');
+            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
             console.log(error);
             return new Promise((resolve, reject) => {
                 resolve(returnData);

@@ -37,10 +37,10 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Missing Or Invalid Arguments:**__')
+				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
-				msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
 			return commandReturnData;
@@ -52,10 +52,10 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Missing Or Invalid Arguments:**__')
+				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
-				msg = new Discord.Message((commandData.guild as Discord.Guild).client, msg, commandData.fromTextChannel as Discord.TextChannel);
+				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
 			await msg.delete({timeout: 20000});
 			return commandReturnData;
@@ -64,7 +64,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 			return commandReturnData;
 		}
 
-		const guildsArray = (commandData.guildMember as Discord.GuildMember).client.guilds.cache.array();
+		const guildsArray = commandData.guildMember!.client.guilds.cache.array();
 
         const iterator = discordUser.dataBase.iterate({});
 		let areAnyFound = false;
@@ -73,7 +73,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             if (key.length === 18 && key !== discordUser.userData.userID) {
                 let isItFound = false;
                 for (let x = 0; x < guildsArray.length; x += 1) {
-                    if (key === (guildsArray[x] as Discord.Guild).id) {
+                    if (key === guildsArray[x]!.id) {
                         isItFound = true;
                     }
                 }
@@ -93,7 +93,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 					.setColor(guildData.borderColor as [number, number, number])
 					.setDescription(msgString)
 					.setTimestamp(Date() as unknown as Date)
-					.setTitle('__**Depracated Database Entries:**__')
+					.setTitle('__**Depracated Database Entries:**__');
 			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		}		
         
