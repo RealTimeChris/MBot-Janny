@@ -93,7 +93,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     }
                 }
                 if (isUserFound === false) {
-                    const msgString = `------\n**Removing user <@!${guildData.trackedUsers[x]!.userID}> from the list of tracked users!**\n------`;
+                    const msgString = `------\n**Removing user <@!${guildData.trackedUsers[x]!.userID}> (${guildData.trackedUsers[x]?.userName}) from the list of tracked users!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
 				        .setColor(guildData.borderColor as [number, number, number])
@@ -115,10 +115,10 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         const currentTextChannel = commandData.fromTextChannel as Discord.TextChannel;
 
+        const currentGuildMember = await currentGuild.members.fetch(trackedUserID);
+
         if (whatAreWeDoing === 'add') {
             try {
-                const currentGuildMember = await currentGuild.members.fetch(trackedUserID);
-
                 let currentIndex = -1;
                 for (let x = 0; x < guildData.trackedUsers.length; x += 1){
                     if (trackedUserID === guildData.trackedUsers[x]?.userID){
@@ -147,8 +147,18 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                         .setColor(guildData.borderColor as [number, number, number]);
                     await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 } else if (currentIndex >= 0) {
+                    let currentIndex = -1;
+                    for (let x = 0; x < guildData.trackedUsers.length; x += 1){
+                        if (trackedUserID === guildData.trackedUsers[x]?.userID){
+                            currentIndex = x;
+                            break;
+                        }
+                    }
+
+                    guildData.trackedUsers[currentIndex]!.channelID = commandData.fromTextChannel!.id;
+
                     const msgString = `------\n**That user is already being tracked! I will update their tracking channel though!**\n------\n__**Tracked User:**__ <@!${currentGuildMember.id}> (${currentGuildMember.user.username})
-                        __**Tracking Channel:**__ <#${guildData.trackedUsers[guildData.trackedUsers.indexOf({userID: trackedUserID} as DiscordStuff.TrackedUser)]}>\n------`;
+                        __**Tracking Channel:**__ <#${guildData.trackedUsers[currentIndex]?.channelID}>\n------`;
                     const msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -157,13 +167,11 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle("__**User Already Added:**__")
                     await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                    const currentIndex = guildData.trackedUsers.indexOf({userID: trackedUserID} as DiscordStuff.TrackedUser);
-
-                    guildData.trackedUsers[currentIndex]!.channelID = commandData.fromTextChannel!.id;
 
                     discordUser.updateGuildDataInDB(guildData);
                 }
             } catch (error) {
+                console.log(error);
                 const msgString = `------\n**Sorry, but the specified user could not be found!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -182,8 +190,6 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         }
         if (whatAreWeDoing === 'remove') {
             try {
-                const currentGuildMember = await currentGuild.members.fetch(trackedUserID);
-
                 if (commandData.args[0]!.toLowerCase() === 'remove' && guildData.trackedUsers.length >= 1) {
                     let currentIndex = -1;
                     for (let x = 0; x < guildData.trackedUsers.length; x += 1){
@@ -194,12 +200,9 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     }
                     if (currentIndex >= 0) {
                         guildData.trackedUsers.splice(currentIndex, 1);
-                        guildData.trackedUsers.splice(currentIndex, 1);
-                        guildData.trackedUsers.splice(currentIndex, 1);
-                        guildData.trackedUsers.splice(currentIndex, 1);
                         discordUser.updateGuildDataInDB(guildData);
 
-                        let msgString = `------\n__**Tracked User #:**__ ${currentIndex + 1}\n__**Their Name:**__ <@!${currentGuildMember.id}> (${currentGuildMember.user.username})\n------`;
+                        let msgString = `------\n__**Tracked User:**__ <@!${currentGuildMember.id}> (${currentGuildMember.user.username})\n------`;
 
                         if (guildData.trackedUsers.length === 0) {
                             msgString += '\nNo more users are being tracked!\n------';
@@ -247,6 +250,9 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
             if (guildData.trackedUsers.length > 0) {
                 for (let x = 0; x < guildData.trackedUsers.length; x += 1) {
+                    if (x===0){
+                        msgString = '------\n';
+                    }
                     const trackedChannelName = (commandData.guild!.client.channels
                         .resolve(guildData.trackedUsers[x]!.channelID!) as Discord.TextChannel).name;
 

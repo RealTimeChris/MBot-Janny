@@ -1033,7 +1033,6 @@ var DiscordUser = /** @class */ (function () {
                         guildData.guildID = liveDataGuildArray[x].id;
                         guildData.guildMemberCount = liveDataGuildArray[x].memberCount;
                         guildData.guildName = liveDataGuildArray[x].name;
-                        guildData.trackedUsers = [];
                         return [4 /*yield*/, this.updateGuildDataInDB(guildData)];
                     case 3:
                         _a.sent();
