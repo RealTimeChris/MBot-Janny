@@ -1,5 +1,5 @@
-// DiscordStuff.js - Implementation for my Discord bots.
-// Jan 28, 2021
+// DiscordUser.ts - Module for my "discord user" class.
+// Apr 4, 2021
 // Chris M.
 // https://github.com/RealTimeChris
 
