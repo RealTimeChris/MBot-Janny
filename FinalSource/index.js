@@ -332,7 +332,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
             case 1:
                 _c.trys.push([1, 16, , 17]);
                 commandData = new DiscordUser_1.default.CommandData();
-                if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 3];
+                if (!(msg.channel.type !== 'dm' && msg.member !== null)) return [3 /*break*/, 3];
                 return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
             case 2:
                 _c.sent();

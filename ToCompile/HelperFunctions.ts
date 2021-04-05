@@ -8,6 +8,7 @@
 import Discord = require('discord.js');
 import DiscordUser from './DiscordUser'
 import Level from 'level-ts';
+import { resolve } from 'node:path';
 
 module HelperFunctions{
     /**
@@ -117,11 +118,11 @@ module HelperFunctions{
     /**
      * Checks a user ID against an array of user IDs to see if it is present.
      */
-     export function checkForBotCommanderStatus(userID: string, commanderIDs: string[]): boolean {
+    export async function checkForBotCommanderStatus(userID: string, commanderIDs: string[]): Promise<boolean> {
         let isCommander = false;
-            for (let x = 0; x < commanderIDs.length; x += 1) {
-                if (userID === commanderIDs[x]) {
-                    isCommander = true;
+        for (let x = 0; x < commanderIDs.length; x += 1) {
+            if (userID === commanderIDs[x]) {
+                isCommander = true;
                 break;
             }
         }
@@ -169,14 +170,14 @@ module HelperFunctions{
      */
     export async function doWeHaveAdminPermission(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<boolean> {
         try {
-            const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
+            const guildData = await discordUser.getGuildDataFromDB(commandData.guild!)
             const currentChannelPermissions = (commandData.guildMember! as Discord.GuildMember).permissionsIn(commandData.permsChannel!);
 
             const permissionStrings = 'ADMINISTRATOR';
 
             const areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
 
-            const areTheyACommander = checkForBotCommanderStatus(commandData.guildMember!.id,
+            const areTheyACommander = await checkForBotCommanderStatus(commandData.guildMember!.id,
                 discordUser.userData.botCommanders);
 
             if (areTheyAnAdmin === true || areTheyACommander === true) {

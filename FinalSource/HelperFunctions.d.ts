@@ -13,7 +13,7 @@ declare module HelperFunctions {
     /**
      * Checks a user ID against an array of user IDs to see if it is present.
      */
-    function checkForBotCommanderStatus(userID: string, commanderIDs: string[]): boolean;
+    function checkForBotCommanderStatus(userID: string, commanderIDs: string[]): Promise<boolean>;
     /**
      * Checks to see if we're in a DM channel, and sends a warning message if so.
      */
@@ -31,8 +31,8 @@ declare module HelperFunctions {
     */
     function recurseThroughServerRecords(dataBase: Level, liveGuildArray: Discord.Guild[], keyNames: string[], y?: number): Promise<void>;
     /**
-        * Caches messages for each of the guilds that have an active "verification" system.
-        */
+    * Caches messages for each of the guilds that have an active "verification" system.
+    */
     function cacheMessagesForVerification(client: Discord.Client, discordUser: DiscordUser.DiscordUser): Promise<void>;
     /**
     * Updates and saves the Discord record, which contains user information.
@@ -47,7 +47,7 @@ declare module HelperFunctions {
     * Purges all of the selected messages within the given channels,
     * of each of the instance's guilds.
     */
-    function deleteMessagesIfTimeHasPassed(client: Discord.Client, guild: DiscordUser.GuildData, channelIndex: number, discordUser: DiscordUser.DiscordUser): Promise<void>;
+    function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: DiscordUser.GuildData, channelIndex: number, discordUser: DiscordUser.DiscordUser): Promise<void>;
     /**
     * Purges the actively-being-purged text channels, if enough time has passed.
     */
