@@ -172,7 +172,7 @@ module HelperFunctions{
             const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
             const currentChannelPermissions = (commandData.guildMember! as Discord.GuildMember).permissionsIn(commandData.permsChannel!);
 
-            const permissionStrings = ['ADMINISTRATOR'] as Discord.PermissionString[];
+            const permissionStrings = 'ADMINISTRATOR';
 
             const areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
 
@@ -320,8 +320,7 @@ module HelperFunctions{
         }
     }
 
-
-/**
+    /**
 	* Caches messages for each of the guilds that have an active "verification" system.
 	*/
     export async function cacheMessagesForVerification(client: Discord.Client, discordUser: DiscordUser.DiscordUser): Promise<void> {
@@ -555,27 +554,27 @@ module HelperFunctions{
     * Purges all of the selected messages within the given channels,
     * of each of the instance's guilds.
     */
-    export async function deleteMessagesIfTimeHasPassed(client: Discord.Client, guild: DiscordUser.GuildData, channelIndex: number, discordUser: DiscordUser.DiscordUser): Promise<void> {
+    export async function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: DiscordUser.GuildData, channelIndex: number, discordUser: DiscordUser.DiscordUser): Promise<void> {
         try {
-            const { numberOfMessagesToSave } = guild.deletionChannels[channelIndex]!;
-            const { channelID } = guild.deletionChannels[channelIndex]!;
-            const newGuild = guild;
+            const { numberOfMessagesToSave } = guildData.deletionChannels[channelIndex]!;
+            const { channelID } = guildData.deletionChannels[channelIndex]!;
+            const newGuildData = guildData;
             let currentChannel = new Discord.TextChannel(client.guilds
-                .resolve(newGuild.guildID)!, {});
+                .resolve(newGuildData.guildID)!, {});
             try {
                 currentChannel = await client.channels.fetch(channelID) as Discord.TextChannel;
             } catch (error) {
-                newGuild.deletionChannels.splice(channelIndex, 1);
+                newGuildData.deletionChannels.splice(channelIndex, 1);
                 console.log('Removing an "unknown channel" from list of deletion channels!');
-                await discordUser.updateGuildDataInDB(newGuild);
+                await discordUser.updateGuildDataInDB(newGuildData);
                 return new Promise(resolve => {
                     resolve();
                 });
             }
 
             const currentTime = new Date().getTime();
-            const timeDifference = currentTime - newGuild.deletionChannels[channelIndex]!.timeOfLastPurge;
-            if (newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted === true) {
+            const timeDifference = currentTime - newGuildData.deletionChannels[channelIndex]!.timeOfLastPurge;
+            if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === true) {
                 console.log(`Nope! Still being deleted! Channel: ${currentChannel.name}`);
                 return new Promise(resolve => {
                     resolve();
@@ -590,7 +589,7 @@ module HelperFunctions{
 
             console.log(`Checking for messages to delete in channel: ${currentChannel.name}`);
 
-            newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted = true;
+            newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = true;
 
             if (numberOfMessagesToSave > 0) {
                 let startingMessage;
@@ -673,14 +672,14 @@ module HelperFunctions{
                 }
                 console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
                 if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
-                    newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
+                    newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
                     return new Promise(resolve => {
                         resolve();
                     });
                 }
                 for (let y = arrayOfMessageArrays.length - 1; y >= 0; y -= 1) {
                     for (let z = arrayOfMessageArrays[y]!.length - 1; z >= 0; z -= 1) {
-                        if (newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
+                        if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
                             return new Promise(resolve => {
                                 resolve();
                             });
@@ -727,14 +726,14 @@ module HelperFunctions{
                 }
                 console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
                 if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
-                    newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
+                    newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
                     return new Promise(resolve => {
                         resolve();
                     });
                 }
                 for (let w = arrayOfMessageArrays.length - 1; w >= 0; w -= 1) {
                     for (let z = arrayOfMessageArrays[w]!.length - 1; z >= 0; z -= 1) {
-                        if (newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
+                        if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
                             return new Promise(resolve => {
                                 resolve();
                             });
@@ -746,9 +745,9 @@ module HelperFunctions{
                     }
                 }
             }
-            newGuild.deletionChannels[channelIndex]!.timeOfLastPurge = new Date().getTime();
-            newGuild.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
-            await discordUser.updateGuildDataInDB(newGuild);
+            newGuildData.deletionChannels[channelIndex]!.timeOfLastPurge = new Date().getTime();
+            newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
+            await discordUser.updateGuildDataInDB(newGuildData);
             return new Promise(resolve => {
                 resolve();
             });
