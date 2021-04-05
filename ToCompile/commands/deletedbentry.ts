@@ -6,7 +6,8 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
 class Data{
 	key: string = '';
@@ -38,7 +39,7 @@ class DeletedCounter {
 	}
 }
 
-async function onData(dbKey: string, discordUser: DiscordStuff.DiscordUser, deletedCounter: DeletedCounter): Promise<void> {
+async function onData(dbKey: string, discordUser: DiscordUser.DiscordUser, deletedCounter: DeletedCounter): Promise<void> {
 	if (deletedCounter.getData() !== undefined && dbKey !== '') {
 		if (deletedCounter.getData().key.includes(dbKey)) {
 			try{
@@ -56,22 +57,22 @@ async function onData(dbKey: string, discordUser: DiscordStuff.DiscordUser, dele
 	}
 }
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'deletedbentry';
 command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a bot's name and DBENTRYKEY is the key" +
 "to a database entry that is stored within the bot!";
 
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
 	try {
-		const commandReturnData = new DiscordStuff.CommandReturnData;
+		const commandReturnData = new DiscordUser.CommandReturnData;
 		commandReturnData.commandName = command.name;
-		const areWeInADM = await DiscordStuff.areWeInADM(commandData);
+		const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
 		if (areWeInADM){
 			return commandReturnData;
 		}
 
-		const areWeACommander = await discordUser.doWeHaveAdminPermission(commandData);
+		const areWeACommander = await HelperFunctions.doWeHaveAdminPermission(commandData, discordUser);
 
 		if (!areWeACommander) {
 			return commandReturnData;
@@ -87,7 +88,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
@@ -102,7 +103,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
@@ -120,7 +121,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
@@ -152,7 +153,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 			.setDescription(`------\n__**Number of Deleted Entries**__: ${deletedCounter.returnDeletedCount()}\n------`)
 			.setTimestamp(Date.now())
 			.setTitle('__**Deleted DB Entries:**__');
-		await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+		await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {
@@ -161,4 +162,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 	}
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

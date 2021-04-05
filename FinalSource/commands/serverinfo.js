@@ -39,10 +39,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand();
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'serverinfo';
 command.description = '!serverinfo to get info about the current server!\n!serverinfo = SERVERID to display info about that server!';
 /**
@@ -55,7 +59,7 @@ function execute(commandData, discordUser) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 30, , 31]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     idRegExp = /\d{18}/;
                     currentServerID = void 0;
@@ -67,7 +71,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -99,7 +103,7 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
                         .setColor([254, 254, 254]);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_1)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed_1)];
                 case 7:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -117,7 +121,7 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_1)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed_1)];
                 case 10:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -139,7 +143,7 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
                         .setColor([254, 254, 254]);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_2)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed_2)];
                 case 14:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -157,7 +161,7 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_2)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed_2)];
                 case 17:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -190,7 +194,7 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
                         .setColor([254, 254, 254]);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_3)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed_3)];
                 case 22:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -208,7 +212,7 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed_3)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed_3)];
                 case 25:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -276,7 +280,7 @@ function execute(commandData, discordUser) {
                             .setColor(guildData.borderColor);
                         messageEmbed.fields = fields;
                     }
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 29:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];

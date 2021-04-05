@@ -6,16 +6,17 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'ondisplaynamechange';
 command.description = "It's an automatic one!";
 
 async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMember,
-    newGuildMember: Discord.GuildMember, discordUser: DiscordStuff.DiscordUser): Promise<string> {
+    newGuildMember: Discord.GuildMember, discordUser: DiscordUser.DiscordUser): Promise<string> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
         if (!(oldGuildMember instanceof Discord.GuildMember)) {
             return command.name;
@@ -23,7 +24,7 @@ async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMemb
 
         const guildData = await discordUser.getGuildDataFromDB(oldGuildMember.guild);
 
-        let logs = new DiscordStuff.Log();
+        let logs = new DiscordUser.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
             if (guildData.logs[x]!.nameSmall === 'displaynamechange') {
                 logs = guildData.logs[x]!;
@@ -58,4 +59,4 @@ async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMemb
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

@@ -39,10 +39,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand;
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
+var command = new DiscordUser_1.default.BotCommand;
 command.name = 'ghost';
 command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS THE SERVER!\n!ghost to display a list of all currently ghosted users.\n!ghost = add, REASON, '
     + '@USERMENTION to ghost a new user.\n!ghost = remove, @USERMENTION to unghost a user.';
@@ -52,7 +56,7 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    returnData = new DiscordStuff.CommandReturnData();
+                    returnData = new DiscordUser_1.default.CommandReturnData();
                     returnData.commandName = command.name;
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
                 case 1:
@@ -60,13 +64,13 @@ function execute(commandData, discordUser) {
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 79, , 82]);
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 3:
                     areWeInADM = _a.sent();
                     if (areWeInADM) {
                         return [2 /*return*/, returnData];
                     }
-                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.doWeHaveAdminPermission(commandData, discordUser)];
                 case 4:
                     doWeHaveAdminPerms = _a.sent();
                     if (!doWeHaveAdminPerms) {
@@ -92,7 +96,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 6:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -113,7 +117,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 9:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -134,7 +138,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 12:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -155,7 +159,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 15:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -176,7 +180,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 18:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -197,7 +201,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 21:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -257,7 +261,7 @@ function execute(commandData, discordUser) {
                     _a.label = 31;
                 case 31:
                     if (!(x < channelsArray.length)) return [3 /*break*/, 36];
-                    voicePermissionOptions = new DiscordStuff.PermissionOverwrites(commandData.guild);
+                    voicePermissionOptions = new DiscordUser_1.default.PermissionOverwrites(commandData.guild);
                     voicePermissionOptions.channel = null;
                     voicePermissionOptions.id = guildData.ghostedRoleID;
                     voicePermissionOptions.type = 'role';
@@ -266,7 +270,7 @@ function execute(commandData, discordUser) {
                         'MANAGE_CHANNELS', 'MANAGE_GUILD', 'VIEW_AUDIT_LOG', 'PRIORITY_SPEAKER', 'STREAM', 'VIEW_GUILD_INSIGHTS',
                         'CONNECT', 'SPEAK', 'MUTE_MEMBERS', 'DEAFEN_MEMBERS', 'MOVE_MEMBERS', 'USE_VAD', 'CHANGE_NICKNAME', 'MANAGE_NICKNAMES',
                         'MANAGE_ROLES', 'MANAGE_WEBHOOKS', 'MANAGE_EMOJIS'];
-                    textPermissionOptions = new DiscordStuff.PermissionOverwrites(commandData.guild);
+                    textPermissionOptions = new DiscordUser_1.default.PermissionOverwrites(commandData.guild);
                     textPermissionOptions.channel = null;
                     textPermissionOptions.id = guildData.ghostedRoleID;
                     textPermissionOptions.type = 'role';
@@ -390,7 +394,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Currently Ghosted Members:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 37:
                     _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -410,7 +414,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Already Ghosted:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
                 case 40:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -473,7 +477,7 @@ function execute(commandData, discordUser) {
                 case 51:
                     if (!(y < currentChannelOverwritesArray.length)) return [3 /*break*/, 54];
                     if (!(currentChannelOverwritesArray[y].id === currentGuildMember.id)) return [3 /*break*/, 53];
-                    permOWs = new DiscordStuff
+                    permOWs = new DiscordUser_1.default
                         .PermissionOverwrites(commandData.guild);
                     permOWs.allow = currentChannelOverwritesArray[y].allow.toArray();
                     permOWs.deny = currentChannelOverwritesArray[y].deny.toArray();
@@ -521,7 +525,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString2)
                         .setTimestamp(Date())
                         .setTitle('__**New Server Member Ghosted:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed2)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed2)];
                 case 59:
                     _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -544,7 +548,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Not Ghosted:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
                 case 61:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -626,7 +630,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString2)
                         .setTimestamp(Date())
                         .setTitle('__**New Server Member Un-Ghosted:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed2)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed2)];
                 case 77:
                     _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -646,7 +650,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Permissions Issue:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 80:
                     _a.sent();
                     console.log(error_3);

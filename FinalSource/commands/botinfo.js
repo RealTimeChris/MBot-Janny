@@ -39,10 +39,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand();
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'botinfo';
 command.description = '!botinfo to display info about this bot in chat!';
 /**
@@ -56,7 +60,7 @@ function execute(commandData, discordUser) {
             switch (_c.label) {
                 case 0:
                     _c.trys.push([0, 2, , 3]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     fields = [];
                     field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
@@ -73,7 +77,7 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Bot Info:**__')
                         .setTimestamp(Date());
                     messageEmbed.fields = fields;
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 1:
                     _c.sent();
                     return [2 /*return*/, commandReturnData];

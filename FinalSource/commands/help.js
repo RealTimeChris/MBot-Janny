@@ -39,11 +39,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var commandIndex = require("../commandindex");
-var command = new DiscordStuff.BotCommand();
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'help';
 command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to get help with a specific COMMAND.';
 /**
@@ -56,7 +60,7 @@ function execute(commandData) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 14, , 15]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     commandFiles_1 = commandIndex.default.commands;
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 7];
@@ -96,7 +100,7 @@ function execute(commandData) {
                             .setColor([254, 254, 254]);
                     }
                     if (!(commandData.guildMember instanceof Discord.User)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 1:
                     _a.sent();
                     return [3 /*break*/, 6];
@@ -115,7 +119,7 @@ function execute(commandData) {
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Help:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 5:
                     _a.sent();
                     _a.label = 6;
@@ -140,7 +144,7 @@ function execute(commandData) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Command Issue:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 8:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
@@ -151,7 +155,7 @@ function execute(commandData) {
                         .setColor([254, 254, 254])
                         .setTitle("__**" + (commandName_1.charAt(0).toUpperCase() + commandName_1.slice(1)) + " Help:**__")
                         .setTimestamp(Date());
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, commandDescription_1)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, commandDescription_1)];
                 case 10:
                     _a.sent();
                     return [3 /*break*/, 13];
@@ -173,7 +177,7 @@ function execute(commandData) {
                             .setTitle("__**" + (commandName_1.charAt(0).toUpperCase() + commandName_1.slice(1)) + " Help:**__")
                             .setColor([254, 254, 254]);
                     }
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 12:
                     _a.sent();
                     _a.label = 13;

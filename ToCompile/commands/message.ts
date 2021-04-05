@@ -6,13 +6,14 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'message';
 command.description = '__**Message Usage**__: Command executes automatically upon receiving certain messages!.';
 
-async function trackIfTrackedUser(message: Discord.Message, commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<void> {
+async function trackIfTrackedUser(message: Discord.Message, commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<void> {
     try{
         if (message.guild === undefined || message.guild === null){
             return;
@@ -57,7 +58,7 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Discord
 * Selects a chosen chat message and sends it via the appropriate channel,
 * upon recieving a trigger phrase or word.
 */
-async function execute(message: Discord.Message, commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<string> {
+async function execute(message: Discord.Message, commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<string> {
     try {
         await trackIfTrackedUser(message, commandData, discordUser);
 
@@ -75,4 +76,4 @@ async function execute(message: Discord.Message, commandData: DiscordStuff.Comma
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

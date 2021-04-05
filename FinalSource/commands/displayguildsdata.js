@@ -39,10 +39,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand;
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
+var command = new DiscordUser_1.default.BotCommand;
 command.name = 'displayguildsdata';
 command.description = '!displayguildsdata to display the guild info of the bots in chat!';
 /**
@@ -53,7 +57,7 @@ function execute(commandData, discordUser) {
         var commandReturnData, currentCount_1;
         return __generator(this, function (_a) {
             try {
-                commandReturnData = new DiscordStuff.CommandReturnData();
+                commandReturnData = new DiscordUser_1.default.CommandReturnData();
                 commandReturnData.commandName = command.name;
                 currentCount_1 = 0;
                 discordUser.guildsData.forEach(function (guild) {
@@ -71,7 +75,7 @@ function execute(commandData, discordUser) {
                             .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
                             .setTimestamp(Date())
                             .setDescription(msgString);
-                        DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                        HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed);
                         currentCount_1 += 1;
                     });
                 });

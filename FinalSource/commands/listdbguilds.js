@@ -46,10 +46,14 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand();
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'listdbguilds';
 command.description = '!listdbguilds, to list guilds that this bot is no longer in!';
 function execute(commandData, discordUser) {
@@ -60,15 +64,15 @@ function execute(commandData, discordUser) {
             switch (_c.label) {
                 case 0:
                     _c.trys.push([0, 27, , 28]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _c.sent();
                     if (areWeInADM) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.doWeHaveAdminPermission(commandData, discordUser)];
                 case 2:
                     areWeAnAdmin = _c.sent();
                     if (!areWeAnAdmin) {
@@ -85,7 +89,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
                     msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -104,7 +108,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 7:
                     msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -175,7 +179,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Depracated Database Entries:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 23:
                     _c.sent();
                     _c.label = 24;
@@ -188,7 +192,7 @@ function execute(commandData, discordUser) {
                         .setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
                         .setTimestamp(Date())
                         .setTitle("__**No Spare Database Entries:**__");
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 25:
                     _c.sent();
                     _c.label = 26;

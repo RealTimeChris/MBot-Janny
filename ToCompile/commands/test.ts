@@ -6,15 +6,16 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'test';
 command.description = '!test';
 
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
 
         if (commandData.guildMember instanceof Discord.User){
@@ -25,7 +26,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Test:**__')
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
         }
         else{
             const msgString = '------\n**TEST!**\n------';
@@ -35,7 +36,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Test:**__')
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
         }
         
         return commandReturnData;
@@ -46,4 +47,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

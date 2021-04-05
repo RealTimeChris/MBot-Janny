@@ -6,18 +6,19 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require("./DiscordStuff");
+import DiscordUser from './DiscordUser';
+import HelperFunctions from './HelperFunctions';
 import config = require('../ToCompile/config.json');
 import botCommands from './commandindex';
 
-const discordUser = new DiscordStuff.DiscordUser();
+const discordUser = new DiscordUser.DiscordUser();
 const client = new Discord.Client() as any;
 
 client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	const {channel_id} = interaction;
 	const channel = await client.channels.fetch(channel_id);
 	let id_full, guild_id_full, options_full, name_full;
-	const commandData = new DiscordStuff.CommandData();
+	const commandData = new DiscordUser.CommandData();
 	if (await channel.type === 'dm'){
 		let {user:{id}, guild_id, data:{options, name}} = interaction;
 		id_full = id;
@@ -233,7 +234,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	else if (commandData.guildMember instanceof Discord.User){
 		console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember!.username}`);
 	}
-	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
+	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as DiscordUser.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
 });
 
@@ -269,7 +270,7 @@ client.on('message', async (msg: Discord.Message) => {
 		}
 
 		try{
-			const commandData = new DiscordStuff.CommandData();
+			const commandData = new DiscordUser.CommandData();
 			if (msg.channel.type !== 'dm'){
 				await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member!.id, msg.guild!.id);
 			}
@@ -284,18 +285,18 @@ client.on('message', async (msg: Discord.Message) => {
 
 			try {	
 				console.log(`Command: '${command}' entered by user: ${msg.author.username}`);
-				const cmdReturnData = await botCommands.commands.get(command)?.function(commandData, discordUser) as DiscordStuff.CommandReturnData;
+				const cmdReturnData = await botCommands.commands.get(command)?.function(commandData, discordUser) as DiscordUser.CommandReturnData;
 				console.log(`Completed Command: ${cmdReturnData.commandName}`);
 			} catch (error) {
 				console.log(error);
 				const newMsg = await msg.reply('There was an error trying to process that message!');
 				newMsg.delete({timeout: 20000});
 			}
-			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
-			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
+			await HelperFunctions.sendInviteIfTimeHasPassedAndGuildIsActive(client, discordUser);
+			await HelperFunctions.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser);
 			await discordUser.saveCacheIfTimeHasPassed(client);
-			await discordUser.sendTimedMessagesIfTimeHasPassed(client);
-			discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch((error: Error) => {
+			await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);
+			HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser).catch((error: Error) => {
 				console.log(error);
 			});
 			return;
@@ -310,7 +311,7 @@ client.on('message', async (msg: Discord.Message) => {
 		}
 		try{
 			try {
-				const commandData = new DiscordStuff.CommandData();
+				const commandData = new DiscordUser.CommandData();
 				if (msg.channel.type !== 'dm'){
 					await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member!.id, msg.guild!.id);
 				}
@@ -326,11 +327,11 @@ client.on('message', async (msg: Discord.Message) => {
 				const newMsg = await msg.reply('There was an error trying to process that message!');
 				newMsg.delete({timeout: 20000});
 			}
-			await discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client);
-			await discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client);
+			await HelperFunctions.sendInviteIfTimeHasPassedAndGuildIsActive(client, discordUser);
+			await HelperFunctions.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser);
 			await discordUser.saveCacheIfTimeHasPassed(client);
-			await discordUser.sendTimedMessagesIfTimeHasPassed(client);
-			discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch((error: Error) => {
+			await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);
+			HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser).catch((error: Error) => {
 				console.log(error);
 			});
 			return;

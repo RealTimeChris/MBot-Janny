@@ -6,18 +6,19 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name ='onguilddelete';
 command.description = "It's an automatic one!";
 
 async function execute(guild: Discord.Guild, 
-    discordUser: DiscordStuff.DiscordUser): Promise<string> {
+    discordUser: DiscordUser.DiscordUser): Promise<string> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
-        if (!(discordUser instanceof DiscordStuff.DiscordUser)) {
+        if (!(discordUser instanceof DiscordUser.DiscordUser)) {
             return command.name;
         }
 
@@ -37,4 +38,4 @@ async function execute(guild: Discord.Guild,
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

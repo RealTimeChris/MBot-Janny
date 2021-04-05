@@ -39,10 +39,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand();
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'setdeletionstatus';
 command.description = 'Use this to enable/disable message deletion/pruning in a given channel.\nIn the desired channel, type !setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE,'
     + ' enter nothing for AMOUNTOFMESSAGESTOSAVE to save none!\nAlso simply enter !setdeletionstatus to view the current list of channels being purged on the current server!';
@@ -53,15 +57,15 @@ function execute(commandData, discordUser) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 33, , 34]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _a.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.doWeHaveAdminPermission(commandData, discordUser)];
                 case 2:
                     doWeHaveAdminPerms = _a.sent();
                     if (doWeHaveAdminPerms === false) {
@@ -85,7 +89,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 5:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -104,7 +108,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 8:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -125,7 +129,7 @@ function execute(commandData, discordUser) {
                     }
                     _a.label = 11;
                 case 11:
-                    currentDeletionChannel = new DiscordStuff.DeletionChannel();
+                    currentDeletionChannel = new DiscordUser_1.default.DeletionChannel();
                     isItFound = false;
                     for (x = 0; x < guildData.deletionChannels.length; x += 1) {
                         if (commandData.permsChannel.id === guildData.deletionChannels[x].channelID) {
@@ -161,7 +165,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Current Deletion Channels:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 12:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
@@ -180,7 +184,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Channel Re-Added:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 15:
                     message = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -224,7 +228,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Enabled Channel Purging:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 24:
                     pinMessage = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -260,7 +264,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Channel Issue:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 28:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -281,7 +285,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Disabled Channel Purging:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 31:
                     _a.sent();
                     _a.label = 32;

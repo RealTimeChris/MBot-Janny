@@ -39,10 +39,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand();
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'onmessageupdate';
 command.description = "It's an automatic one!";
 function execute(client, oldMessage, newMessage, discordUser) {
@@ -52,7 +55,7 @@ function execute(client, oldMessage, newMessage, discordUser) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 8, , 9]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     if (!(newMessage instanceof Discord.Message)) {
                         return [2 /*return*/, command.name];
@@ -60,7 +63,7 @@ function execute(client, oldMessage, newMessage, discordUser) {
                     return [4 /*yield*/, discordUser.getGuildDataFromDB(newMessage.guild)];
                 case 1:
                     guildData = _a.sent();
-                    logs = new DiscordStuff.Log();
+                    logs = new DiscordUser_1.default.Log();
                     for (x = 0; x < guildData.logs.length; x += 1) {
                         if (guildData.logs[x].nameSmall === 'messageupdate') {
                             logs = guildData.logs[x];

@@ -6,26 +6,27 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand()
+const command = new DiscordUser.BotCommand()
 command.name = 'trackuser';
 command.description = '!trackuser = ADD, @USERMENTION to track the user within the current text channel.\n\t!trackuser = REMOVE, @USERMENTION to stop tracking the user\n\t!trackuser to display all of the currently tracked users.';
 
 /**
  * Deals with the setting of a user's tracking status.
  */
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
-        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
+        const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
         if (areWeInADM === true) {
             return commandReturnData;
         }
 
-        const doWeHaveAdminPermission = await discordUser.doWeHaveAdminPermission(commandData);
+        const doWeHaveAdminPermission = await HelperFunctions.doWeHaveAdminPermission(commandData, discordUser);
 
         if (doWeHaveAdminPermission === false) {
             return commandReturnData;
@@ -45,7 +46,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -60,7 +61,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -100,7 +101,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Missing User(s):**__');
-                    let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     if (commandData.toTextChannel instanceof Discord.WebhookClient){
                         msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                     }
@@ -128,7 +129,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 }
 
                 if (currentIndex === -1) {
-                    let trackedUser =  new DiscordStuff.TrackedUser();
+                    let trackedUser =  new DiscordUser.TrackedUser();
                     trackedUser.userID = currentGuildMember.user.id;
                     trackedUser.channelID = commandData.fromTextChannel!.id!;
                     trackedUser.userName = currentGuildMember.user.username;
@@ -145,7 +146,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                         .setThumbnail(currentGuildMember.user.avatarURL()!)
                         .setColor(guildData.borderColor as [number, number, number]);
-                    await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                    await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 } else if (currentIndex >= 0) {
                     let currentIndex = -1;
                     for (let x = 0; x < guildData.trackedUsers.length; x += 1){
@@ -166,7 +167,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                         .setDescription(msgString)
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle("__**User Already Added:**__")
-                    await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 
                     discordUser.updateGuildDataInDB(guildData);
                 }
@@ -179,7 +180,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**User Issue:**__');
-                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient){
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
@@ -214,7 +215,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                             .setDescription(msgString)
                             .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                             .setColor(guildData.borderColor as [number, number, number]);
-                        await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                        await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                     } else if (currentIndex === -1) {
                         const msgString = `------\n**There is noone by that ID being tracked!**\n------`;
                         let msgEmbed = new Discord.MessageEmbed()
@@ -223,7 +224,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				            .setDescription(msgString)
 				            .setTimestamp(Date() as unknown as Date)
 				            .setTitle('__**User Issue:**__');
-                        let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                        let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                         if (commandData.toTextChannel instanceof Discord.WebhookClient){
                             msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                         }
@@ -238,7 +239,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                         .setDescription(msgString)
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                         .setColor(guildData.borderColor as [number, number, number]);
-                    await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                    await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 }
             } catch (error) {
                 const msgString = `------\n**Sorry, but the specified user could not be found!**\n------`;
@@ -248,7 +249,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     .setDescription(msgString)
                     .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                     .setColor(guildData.borderColor as [number, number, number]);
-                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient){
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
@@ -283,7 +284,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                 .setColor([254, 254, 254]);
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
             return commandReturnData;
         }
         return commandReturnData;
@@ -294,4 +295,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

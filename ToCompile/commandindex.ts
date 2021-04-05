@@ -5,9 +5,9 @@
 
 'use strict';
 
-import DiscordStuff = require('./DiscordStuff');
+import DiscordUser from './DiscordUser';
 
-const commands = new Map<string, DiscordStuff.BotCommand>();
+const commands = new Map<string, DiscordUser.BotCommand>();
 import botinfo from './commands/botinfo';
 commands.set(botinfo.name, botinfo);
 import deletedbentry from './commands/deletedbentry';

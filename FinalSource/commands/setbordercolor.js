@@ -39,10 +39,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand();
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'setbordercolor';
 command.description = '__**Set Border Color Usage:**__ Sets the default color of the borders of the chat messages sent out by this bot! ' +
     '!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL where botcolor is an array of 3 color values between 0 and 255.';
@@ -53,9 +57,9 @@ function execute(commandData, discordUser) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 15, , 16]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _a.sent();
                     if (areWeInADM) {
@@ -74,7 +78,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
                 case 3:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
@@ -93,7 +97,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
                 case 6:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
@@ -107,7 +111,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
                 case 8:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
@@ -121,7 +125,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_4)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_4)];
                 case 10:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
@@ -151,7 +155,7 @@ function execute(commandData, discordUser) {
                         .setDescription("Nicely done, you've updated the default border color for this bot!\n------\n__**Border Color Values:**__ " + guildData.borderColor + "\n------")
                         .setTimestamp(Date())
                         .setTitle('__**Updated Border Color:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 14:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];

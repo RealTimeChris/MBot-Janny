@@ -39,11 +39,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var slash_commands_1 = require("slash-commands");
-var command = new DiscordStuff.BotCommand();
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'slashcommands';
 command.description = '!slashcommands';
 function execute(commandData, discordUser) {
@@ -54,7 +58,7 @@ function execute(commandData, discordUser) {
             switch (_d.label) {
                 case 0:
                     _d.trys.push([0, 7, , 8]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     interaction = new slash_commands_1.DiscordInteractions({ applicationId: discordUser.userData.clientID,
                         publicKey: discordUser.userData.publicKey,
@@ -101,7 +105,7 @@ function execute(commandData, discordUser) {
                 case 3:
                     if (!(x < msgEmbeds.length)) return [3 /*break*/, 6];
                     (_c = msgEmbeds[x]) === null || _c === void 0 ? void 0 : _c.setTitle("__**Registered Commands, (" + (x + 1).toString() + " of " + msgEmbeds.length + "): **__");
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbeds[x])];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbeds[x])];
                 case 4:
                     _d.sent();
                     _d.label = 5;

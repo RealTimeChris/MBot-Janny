@@ -6,23 +6,24 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'listdbguilds';
 command.description = '!listdbguilds, to list guilds that this bot is no longer in!';
 
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
 	try {
-		const commandReturnData = new DiscordStuff.CommandReturnData();
+		const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
-        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
+        const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
         if (areWeInADM){
             return commandReturnData;
         }
 
-		const areWeAnAdmin = await discordUser.doWeHaveAdminPermission(commandData);
+		const areWeAnAdmin = await HelperFunctions.doWeHaveAdminPermission(commandData, discordUser);
 
 		if (!areWeAnAdmin) {
 			return commandReturnData;
@@ -38,7 +39,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
@@ -53,7 +54,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-			let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
@@ -94,7 +95,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 					.setDescription(msgString)
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Depracated Database Entries:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		}		
         
 		if (!areAnyFound){
@@ -105,7 +106,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
 				.setTimestamp((Date() as unknown) as Date)
 				.setTitle("__**No Spare Database Entries:**__");
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		}
 		return commandReturnData;
 	} catch (error) {
@@ -115,4 +116,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 	}
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

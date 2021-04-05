@@ -6,23 +6,24 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'jannyoptions';
 command.description = '!jannyoptions, to display a list of options for this bot!';
 
-async function execute(commandData: DiscordStuff.CommandData,  discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData,  discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
 	try {
-		const commandReturnData = new DiscordStuff.CommandReturnData();
+		const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
-		const areWeInADM = await DiscordStuff.areWeInADM(commandData);
+		const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
 		if (areWeInADM === true) {
 			return commandReturnData;
 		}
 
-		const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
+		const doWeHaveAdminPerms = await HelperFunctions.doWeHaveAdminPermission(commandData, discordUser);
 
 		if (doWeHaveAdminPerms === false) {
 			return commandReturnData;
@@ -101,7 +102,7 @@ async function execute(commandData: DiscordStuff.CommandData,  discordUser: Disc
 		fields.push(trackUsersField);
 
 		msgEmbed.fields = fields;
-		await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+		await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {
@@ -110,4 +111,4 @@ async function execute(commandData: DiscordStuff.CommandData,  discordUser: Disc
 	}
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

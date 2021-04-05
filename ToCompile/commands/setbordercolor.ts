@@ -6,19 +6,20 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'setbordercolor';
 command.description = '__**Set Border Color Usage:**__ Sets the default color of the borders of the chat messages sent out by this bot! '+
 '!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL where botcolor is an array of 3 color values between 0 and 255.';
 
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
     try{
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
         commandReturnData.commandName = command.name;
 
-        let areWeInADM = await DiscordStuff.areWeInADM(commandData);
+        let areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
         if (areWeInADM){
             return commandReturnData;
@@ -36,7 +37,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Missing Or Invalid Arguments:**__");
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
         else if (commandData.args[0].toLowerCase() !== 'janny'){
@@ -51,7 +52,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Missing Or Invalid Arguments:**__");
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
         else if (parseInt(commandData.args[2] as string, 10) > 255 || parseInt(commandData.args[2] as string) < 0 || commandData.args[2] === undefined){
@@ -63,7 +64,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Missing Or Invalid Arguments:**__");
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
         else if (parseInt(commandData.args[3] as string, 10) > 255 || parseInt(commandData.args[3] as string) < 0 || commandData.args[3] === undefined){
@@ -75,7 +76,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Missing Or Invalid Arguments:**__");
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
         else {
@@ -103,7 +104,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             .setDescription(`Nicely done, you've updated the default border color for this bot!\n------\n__**Border Color Values:**__ ${guildData.borderColor}\n------`)
             .setTimestamp(Date() as unknown as Date)
             .setTitle('__**Updated Border Color:**__');
-        await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+        await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
         return commandReturnData;
     }
     catch(error){
@@ -114,4 +115,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

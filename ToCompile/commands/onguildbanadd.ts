@@ -6,16 +6,17 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'onguildbanadd';
 command.description = "It's an automatic one!'";
 
 async function execute(client: Discord.Client, guild: Discord.Guild, user: Discord.User,
-    discordUser: DiscordStuff.DiscordUser): Promise<string> {
+    discordUser: DiscordUser.DiscordUser): Promise<string> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
         if (!(guild instanceof Discord.Guild)) {
             return command.name;
@@ -24,7 +25,7 @@ async function execute(client: Discord.Client, guild: Discord.Guild, user: Disco
         const guildData = await discordUser.getGuildDataFromDB(guild);
 
         setTimeout(async () => {
-            let logs = new DiscordStuff.Log();
+            let logs = new DiscordUser.Log();
             for (let x = 0; x < guildData.logs.length; x += 1) {
                 if (guildData.logs[x]!.nameSmall === 'guildbanadd') {
                     logs = guildData.logs[x]!;
@@ -68,4 +69,4 @@ async function execute(client: Discord.Client, guild: Discord.Guild, user: Disco
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

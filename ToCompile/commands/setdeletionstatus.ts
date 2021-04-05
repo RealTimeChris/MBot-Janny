@@ -6,24 +6,25 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'setdeletionstatus';
 command.description = 'Use this to enable/disable message deletion/pruning in a given channel.\nIn the desired channel, type !setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE,'
 + ' enter nothing for AMOUNTOFMESSAGESTOSAVE to save none!\nAlso simply enter !setdeletionstatus to view the current list of channels being purged on the current server!';
 
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
-        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
+        const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
         if (areWeInADM === true) {
             return commandReturnData;
         }
 
-        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
+        const doWeHaveAdminPerms = await HelperFunctions.doWeHaveAdminPermission(commandData, discordUser);
 
         if (doWeHaveAdminPerms === false) {
             return commandReturnData;
@@ -44,7 +45,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -58,7 +59,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -72,7 +73,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             howManyBack = 0;
         }
 
-        let currentDeletionChannel = new DiscordStuff.DeletionChannel();
+        let currentDeletionChannel = new DiscordUser.DeletionChannel();
         let isItFound = false;
         for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
             if (commandData.permsChannel!.id === guildData.deletionChannels[x]!.channelID) {
@@ -111,7 +112,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Current Deletion Channels:**__');
 
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
         if (whatAreWeDoing === 'enable') {
@@ -125,7 +126,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Channel Re-Added:**__');
-                    let message = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    let message = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     if (commandData.toTextChannel instanceof Discord.WebhookClient){
                         message = new Discord.Message(commandData.guildMember!.client, message, commandData.fromTextChannel!);
                     }
@@ -157,7 +158,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Enabled Channel Purging:**__');
-            let pinMessage = await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+            let pinMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                pinMessage = new Discord.Message(commandData.guildMember!.client, pinMessage, commandData.fromTextChannel!);
             }
@@ -188,7 +189,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Channel Issue:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -206,7 +207,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Disabled Channel Purging:**__');
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
         }
         return commandReturnData;
     } catch (error) {
@@ -216,4 +217,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

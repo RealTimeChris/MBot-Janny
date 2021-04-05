@@ -39,10 +39,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand();
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'onguildbanadd';
 command.description = "It's an automatic one!'";
 function execute(client, guild, user, discordUser) {
@@ -53,7 +56,7 @@ function execute(client, guild, user, discordUser) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
                     if (!(guild instanceof Discord.Guild)) {
                         return [2 /*return*/, command.name];
@@ -66,7 +69,7 @@ function execute(client, guild, user, discordUser) {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    logs = new DiscordStuff.Log();
+                                    logs = new DiscordUser_1.default.Log();
                                     for (x = 0; x < guildData_1.logs.length; x += 1) {
                                         if (guildData_1.logs[x].nameSmall === 'guildbanadd') {
                                             logs = guildData_1.logs[x];

@@ -6,18 +6,19 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'ping';
 command.description = 'Simply enter !ping';
 
 /**
  * A testing function for the early implementation of the command handler.
  */
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
 
         const msgString = '------\n**Pong!**\n------';
@@ -39,7 +40,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             .setTimestamp(Date() as unknown as Date)
             .setTitle('__**Ping! Response:**__');
         }
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 
         return commandReturnData;
     } catch (error) {
@@ -49,4 +50,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

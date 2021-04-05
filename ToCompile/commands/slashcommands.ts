@@ -6,17 +6,18 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 import {DiscordInteractions} from 'slash-commands';
 import SlashCommands = require('slash-commands');
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'slashcommands';
 command.description = '!slashcommands';
 
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
     try{
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
         commandReturnData.commandName = command.name;
 
         const interaction = new DiscordInteractions({applicationId: discordUser.userData.clientID,
@@ -302,13 +303,13 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
             }
             ]
         }
-        let guildData = new DiscordStuff.GuildData();
+        let guildData = new DiscordUser.GuildData();
         let choices1: any[] = [];
         for (let x = 0; x < guildData.logs.length; x += 1){
             if (x < 10){
                 let choice = {name: '', value: ''};
-                choice.name = (guildData.logs as DiscordStuff.Log[])[x]?.nameSmall as string;
-                choice.value = (guildData.logs as DiscordStuff.Log[])[x]?.nameSmall as string;
+                choice.name = (guildData.logs as DiscordUser.Log[])[x]?.nameSmall as string;
+                choice.value = (guildData.logs as DiscordUser.Log[])[x]?.nameSmall as string;
                 choices1.push(choice);    
             }            
         }
@@ -318,8 +319,8 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         for (let x = 0; x < guildData.logs.length; x += 1){
             if (x >= 10){
                 let choice = {name: '', value: ''};
-                choice.name = (guildData.logs as DiscordStuff.Log[])[x]?.nameSmall as string;
-                choice.value = (guildData.logs as DiscordStuff.Log[])[x]?.nameSmall as string;
+                choice.name = (guildData.logs as DiscordUser.Log[])[x]?.nameSmall as string;
+                choice.value = (guildData.logs as DiscordUser.Log[])[x]?.nameSmall as string;
                 choices2.push(choice);
             }            
         }
@@ -645,7 +646,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
         }
         for (let x = 0; x < msgEmbeds.length; x += 1){
             msgEmbeds[x]?.setTitle(`__**Registered Commands, (${(x + 1).toString()} of ${msgEmbeds.length}): **__`);
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbeds[x]!);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbeds[x]!);
         }
 
     return commandReturnData;
@@ -657,4 +658,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

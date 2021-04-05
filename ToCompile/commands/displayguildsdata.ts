@@ -6,18 +6,19 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand;
+const command = new DiscordUser.BotCommand;
 command.name = 'displayguildsdata';
 command.description = '!displayguildsdata to display the guild info of the bots in chat!';
 
 /**
  * Displays all of the data for all of the guilds, either in console or in chat.
  */
-async function execute(commandData :DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData :DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
 	try {
-		const commandReturnData = new DiscordStuff.CommandReturnData();
+		const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
 		let currentCount = 0;
 		discordUser.guildsData.forEach(guild => {
@@ -37,7 +38,7 @@ async function execute(commandData :DiscordStuff.CommandData, discordUser: Disco
 					.setTimestamp(Date() as unknown as Date)
 					.setDescription(msgString);
 					
-					DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+					HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
 				currentCount += 1;
 			});			
 		});
@@ -50,4 +51,4 @@ async function execute(commandData :DiscordStuff.CommandData, discordUser: Disco
 	}
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

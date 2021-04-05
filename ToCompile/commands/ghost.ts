@@ -6,25 +6,26 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand;
+const command = new DiscordUser.BotCommand;
 command.name = 'ghost';
 command.description = ' THIS WILL COMPLETELY SILENCE AND MUTE THE USER ACROSS THE SERVER!\n!ghost to display a list of all currently ghosted users.\n!ghost = add, REASON, '
 + '@USERMENTION to ghost a new user.\n!ghost = remove, @USERMENTION to unghost a user.';
 
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
-    const returnData = new DiscordStuff.CommandReturnData();
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
+    const returnData = new DiscordUser.CommandReturnData();
     returnData.commandName = command.name;
     const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
     try {
-        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
+        const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
         if (areWeInADM){
             return returnData;
         }
 
-        const doWeHaveAdminPerms = await discordUser.doWeHaveAdminPermission(commandData);
+        const doWeHaveAdminPerms = await HelperFunctions.doWeHaveAdminPermission(commandData, discordUser);
 
         if (!doWeHaveAdminPerms) {
             return new Promise((resolve, reject) => {
@@ -49,7 +50,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -66,7 +67,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -83,7 +84,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -100,7 +101,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -117,7 +118,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -134,7 +135,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -183,7 +184,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
         if (whatAreWeDoing === 'add' || whatAreWeDoing === 'remove') {
             for (let x = 0; x < channelsArray.length; x += 1) {
-                const voicePermissionOptions = new DiscordStuff.PermissionOverwrites(commandData.guild!);
+                const voicePermissionOptions = new DiscordUser.PermissionOverwrites(commandData.guild!);
                 voicePermissionOptions.channel = null;
                 voicePermissionOptions.id = guildData.ghostedRoleID;
                 voicePermissionOptions.type = 'role';
@@ -193,7 +194,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                     'CONNECT', 'SPEAK', 'MUTE_MEMBERS', 'DEAFEN_MEMBERS', 'MOVE_MEMBERS', 'USE_VAD', 'CHANGE_NICKNAME', 'MANAGE_NICKNAMES',
                     'MANAGE_ROLES', 'MANAGE_WEBHOOKS', 'MANAGE_EMOJIS'];
 
-                const textPermissionOptions = new DiscordStuff.PermissionOverwrites(commandData.guild!);
+                const textPermissionOptions = new DiscordUser.PermissionOverwrites(commandData.guild!);
                 textPermissionOptions.channel = null;
                 textPermissionOptions.id = (guildData.ghostedRoleID as string);
                 textPermissionOptions.type = 'role';
@@ -320,7 +321,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Currently Ghosted Members:**__');
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -334,7 +335,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Already Ghosted:**__');
-                    let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     if (commandData.toTextChannel instanceof Discord.WebhookClient){
                         msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                     }
@@ -378,7 +379,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 
                 for (let y = 0; y < currentChannelOverwritesArray.length; y += 1) {
                     if (currentChannelOverwritesArray[y]!.id === currentGuildMember.id) {
-                        const permOWs = new DiscordStuff
+                        const permOWs = new DiscordUser
                             .PermissionOverwrites(commandData.guild!);
                         permOWs.allow = currentChannelOverwritesArray[y]!.allow.toArray();
                         permOWs.deny = currentChannelOverwritesArray[y]!.deny.toArray();
@@ -422,7 +423,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**New Server Member Ghosted:**__');
 
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed2);
+                await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed2);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -443,7 +444,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Not Ghosted:**__');
-                let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient){
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
@@ -503,7 +504,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString2)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**New Server Member Un-Ghosted:**__');
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed2);
+                await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed2);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
             });
@@ -522,7 +523,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Permissions Issue:**__');
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             console.log(error);
             return new Promise((resolve, reject) => {
                 resolve(returnData);
@@ -534,4 +535,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

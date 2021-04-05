@@ -6,16 +6,17 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'onmessagedeletebulk';
 command.description = "It's an automatic one!";
 
 async function execute(client: Discord.Client, collection: Discord.Collection<string, Discord.Message>,
-    discordUser: DiscordStuff.DiscordUser): Promise<string> {
+    discordUser: DiscordUser.DiscordUser): Promise<string> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
         if (!(collection instanceof Discord.Collection)) {
             return command.name;
@@ -23,7 +24,7 @@ async function execute(client: Discord.Client, collection: Discord.Collection<st
 
         const guildData = await discordUser.getGuildDataFromDB(collection.first()!.guild!);
 
-        let logs = new DiscordStuff.Log();
+        let logs = new DiscordUser.Log();
         for (let x = 0; x < guildData.logs.length; x += 1) {
             if (guildData.logs[x]!.nameSmall === 'messagedeletebulk') {
                 logs = guildData.logs[x]!;
@@ -72,4 +73,4 @@ async function execute(client: Discord.Client, collection: Discord.Collection<st
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

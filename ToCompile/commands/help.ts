@@ -6,10 +6,11 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 import commandIndex = require('../commandindex');
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 
 command.name = 'help';
 command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to get help with a specific COMMAND.';
@@ -17,9 +18,9 @@ command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to ge
 /**
  * Returns a menu of helping information for the various commands I have.
  */
-async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData): Promise<DiscordUser.CommandReturnData> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
         commandReturnData.commandName = command.name;
         const commandFiles = commandIndex.default.commands;
 
@@ -65,7 +66,7 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
             }
             
             if (commandData.guildMember instanceof Discord.User){
-                await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
             }
             else if (commandData.guildMember instanceof Discord.GuildMember){
                 const dmChannel = await commandData.guildMember.user.createDM();
@@ -77,7 +78,7 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Help:**__');
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             }
 
             return commandReturnData;
@@ -105,7 +106,7 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Command Issue:**__')
-			await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+			await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
 
@@ -116,7 +117,7 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
                 .setColor([254, 254, 254])
                 .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                 .setTimestamp(Date() as unknown as Date);
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, commandDescription as unknown as Discord.MessageEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, commandDescription as unknown as Discord.MessageEmbed);
         } 
         else {
             const messageEmbed = new Discord.MessageEmbed();
@@ -136,7 +137,7 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
                     .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
                     .setColor([254, 254, 254]);
             }
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
         }
         return commandReturnData;
     } catch (error) {
@@ -146,4 +147,4 @@ async function execute(commandData: DiscordStuff.CommandData): Promise<DiscordSt
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

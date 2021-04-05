@@ -6,16 +6,17 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'onmessagereactionadd';
 command.description = "It's an automatic one!";
 
 async function execute(messageReaction: Discord.MessageReaction, client: Discord.Client, args: string[],
-    discordUser: DiscordStuff.DiscordUser): Promise<string> {
+    discordUser: DiscordUser.DiscordUser): Promise<string> {
 	try {
-		const commandReturnData = new DiscordStuff.CommandReturnData();
+		const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
 		const guildData = await discordUser.getGuildDataFromDB(messageReaction.message.guild!);
 
@@ -66,4 +67,4 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 	}
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;

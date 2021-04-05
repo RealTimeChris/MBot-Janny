@@ -44,10 +44,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("./DiscordStuff");
+var DiscordUser_1 = __importDefault(require("./DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("./HelperFunctions"));
 var config = require("../ToCompile/config.json");
 var commandindex_1 = __importDefault(require("./commandindex"));
-var discordUser = new DiscordStuff.DiscordUser();
+var discordUser = new DiscordUser_1.default.DiscordUser();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
     var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, userID, reason, name_full_1, viewOrNot, value, logname, enableOrDisable, msgCountToPurge, value1, redChannelValue, greenChannelValue, blueChannelValue, name_full_2, role, role, quantity, name_full_3, inviteLink, message, emoji, msgName, msgName, msgContents, msgInterval, userID, userID, user, returnData;
@@ -59,7 +60,7 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 return [4 /*yield*/, client.channels.fetch(channel_id)];
             case 1:
                 channel = _d.sent();
-                commandData = new DiscordStuff.CommandData();
+                commandData = new DiscordUser_1.default.CommandData();
                 return [4 /*yield*/, channel.type];
             case 2:
                 if (!((_d.sent()) === 'dm')) return [3 /*break*/, 4];
@@ -330,7 +331,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.label = 1;
             case 1:
                 _c.trys.push([1, 16, , 17]);
-                commandData = new DiscordStuff.CommandData();
+                commandData = new DiscordUser_1.default.CommandData();
                 if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 3];
                 return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
             case 2:
@@ -363,19 +364,19 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 newMsg = _c.sent();
                 newMsg.delete({ timeout: 20000 });
                 return [3 /*break*/, 11];
-            case 11: return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
+            case 11: return [4 /*yield*/, HelperFunctions_1.default.sendInviteIfTimeHasPassedAndGuildIsActive(client, discordUser)];
             case 12:
                 _c.sent();
-                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
+                return [4 /*yield*/, HelperFunctions_1.default.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser)];
             case 13:
                 _c.sent();
                 return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
             case 14:
                 _c.sent();
-                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
+                return [4 /*yield*/, HelperFunctions_1.default.sendTimedMessagesIfTimeHasPassed(client, discordUser)];
             case 15:
                 _c.sent();
-                discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {
+                HelperFunctions_1.default.purgeMessageChannelsIfTimeHasPassed(client, discordUser).catch(function (error) {
                     console.log(error);
                 });
                 return [2 /*return*/];
@@ -396,7 +397,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.label = 20;
             case 20:
                 _c.trys.push([20, 26, , 28]);
-                commandData = new DiscordStuff.CommandData();
+                commandData = new DiscordUser_1.default.CommandData();
                 if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 22];
                 return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
             case 21:
@@ -421,19 +422,19 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 newMsg = _c.sent();
                 newMsg.delete({ timeout: 20000 });
                 return [3 /*break*/, 28];
-            case 28: return [4 /*yield*/, discordUser.sendInviteIfTimeHasPassedAndGuildIsActive(client)];
+            case 28: return [4 /*yield*/, HelperFunctions_1.default.sendInviteIfTimeHasPassedAndGuildIsActive(client, discordUser)];
             case 29:
                 _c.sent();
-                return [4 /*yield*/, discordUser.updateAndSaveDiscordRecordIfTimeHasPassed(client)];
+                return [4 /*yield*/, HelperFunctions_1.default.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser)];
             case 30:
                 _c.sent();
                 return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
             case 31:
                 _c.sent();
-                return [4 /*yield*/, discordUser.sendTimedMessagesIfTimeHasPassed(client)];
+                return [4 /*yield*/, HelperFunctions_1.default.sendTimedMessagesIfTimeHasPassed(client, discordUser)];
             case 32:
                 _c.sent();
-                discordUser.purgeMessageChannelsIfTimeHasPassed(client).catch(function (error) {
+                HelperFunctions_1.default.purgeMessageChannelsIfTimeHasPassed(client, discordUser).catch(function (error) {
                     console.log(error);
                 });
                 return [2 /*return*/];

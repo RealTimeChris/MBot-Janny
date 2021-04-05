@@ -39,10 +39,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand();
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'trackuser';
 command.description = '!trackuser = ADD, @USERMENTION to track the user within the current text channel.\n\t!trackuser = REMOVE, @USERMENTION to stop tracking the user\n\t!trackuser to display all of the currently tracked users.';
 /**
@@ -56,15 +60,15 @@ function execute(commandData, discordUser) {
             switch (_j.label) {
                 case 0:
                     _j.trys.push([0, 42, , 43]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _j.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.doWeHaveAdminPermission(commandData, discordUser)];
                 case 2:
                     doWeHaveAdminPermission = _j.sent();
                     if (doWeHaveAdminPermission === false) {
@@ -85,7 +89,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
                     msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -104,7 +108,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 7:
                     msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -149,7 +153,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing User(s):**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 11:
                     msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -182,7 +186,7 @@ function execute(commandData, discordUser) {
                         }
                     }
                     if (!(currentIndex === -1)) return [3 /*break*/, 18];
-                    trackedUser = new DiscordStuff.TrackedUser();
+                    trackedUser = new DiscordUser_1.default.TrackedUser();
                     trackedUser.userID = currentGuildMember.user.id;
                     trackedUser.channelID = commandData.fromTextChannel.id;
                     trackedUser.userName = currentGuildMember.user.username;
@@ -196,7 +200,7 @@ function execute(commandData, discordUser) {
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setThumbnail(currentGuildMember.user.avatarURL())
                         .setColor(guildData.borderColor);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 17:
                     _j.sent();
                     return [3 /*break*/, 20];
@@ -218,7 +222,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**User Already Added:**__");
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 19:
                     _j.sent();
                     discordUser.updateGuildDataInDB(guildData);
@@ -234,7 +238,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**User Issue:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 22:
                     msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -271,7 +275,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 27:
                     _j.sent();
                     return [3 /*break*/, 31];
@@ -284,7 +288,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**User Issue:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 29:
                     msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -304,7 +308,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 33:
                     _j.sent();
                     _j.label = 34;
@@ -318,7 +322,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor(guildData.borderColor);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 36:
                     msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -355,7 +359,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setColor([254, 254, 254]);
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, messageEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 40:
                     _j.sent();
                     return [2 /*return*/, commandReturnData];

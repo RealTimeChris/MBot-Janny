@@ -39,10 +39,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordStuff = require("../DiscordStuff");
-var command = new DiscordStuff.BotCommand();
+var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
+var command = new DiscordUser_1.default.BotCommand();
 command.name = 'managelogs';
 command.description = '!managelogs, to view an enabled/disabled list of possible logs!';
 function execute(commandData, discordUser) {
@@ -52,15 +56,15 @@ function execute(commandData, discordUser) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 184, , 185]);
-                    commandReturnData = new DiscordStuff.CommandReturnData();
+                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, DiscordStuff.areWeInADM(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
                     areWeInADM = _b.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    return [4 /*yield*/, discordUser.doWeHaveAdminPermission(commandData)];
+                    return [4 /*yield*/, HelperFunctions_1.default.doWeHaveAdminPermission(commandData, discordUser)];
                 case 2:
                     areWeAnAdmin = _b.sent();
                     if (areWeAnAdmin === false) {
@@ -95,7 +99,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs:**__').fields = fields;
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 4:
                     _b.sent();
                     return [3 /*break*/, 183];
@@ -108,7 +112,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 6:
                     msg = _b.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -127,7 +131,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 9:
                     msg = _b.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
@@ -177,7 +181,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
                 case 15:
                     _b.sent();
                     return [3 /*break*/, 17];
@@ -206,7 +210,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
                 case 21:
                     _b.sent();
                     return [3 /*break*/, 23];
@@ -235,7 +239,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_3)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
                 case 27:
                     _b.sent();
                     return [3 /*break*/, 29];
@@ -264,7 +268,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_4)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_4)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_4)];
                 case 33:
                     _b.sent();
                     return [3 /*break*/, 35];
@@ -293,7 +297,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_5)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_5)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_5)];
                 case 39:
                     _b.sent();
                     return [3 /*break*/, 41];
@@ -322,7 +326,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_6)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_6)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_6)];
                 case 45:
                     _b.sent();
                     return [3 /*break*/, 47];
@@ -351,7 +355,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_7)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_7)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_7)];
                 case 51:
                     _b.sent();
                     return [3 /*break*/, 53];
@@ -380,7 +384,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_8)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_8)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_8)];
                 case 57:
                     _b.sent();
                     return [3 /*break*/, 59];
@@ -409,7 +413,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_9)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_9)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_9)];
                 case 63:
                     _b.sent();
                     return [3 /*break*/, 65];
@@ -438,7 +442,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_10)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_10)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_10)];
                 case 69:
                     _b.sent();
                     return [3 /*break*/, 71];
@@ -467,7 +471,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_11)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_11)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_11)];
                 case 75:
                     _b.sent();
                     return [3 /*break*/, 77];
@@ -496,7 +500,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_12)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_12)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_12)];
                 case 81:
                     _b.sent();
                     return [3 /*break*/, 83];
@@ -525,7 +529,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_13)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_13)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_13)];
                 case 87:
                     _b.sent();
                     return [3 /*break*/, 89];
@@ -554,7 +558,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_14)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_14)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_14)];
                 case 93:
                     _b.sent();
                     return [3 /*break*/, 95];
@@ -583,7 +587,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_15)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_15)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_15)];
                 case 99:
                     _b.sent();
                     return [3 /*break*/, 101];
@@ -612,7 +616,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_16)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_16)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_16)];
                 case 105:
                     _b.sent();
                     return [3 /*break*/, 107];
@@ -641,7 +645,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_17)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_17)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_17)];
                 case 111:
                     _b.sent();
                     return [3 /*break*/, 113];
@@ -670,7 +674,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_18)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_18)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_18)];
                 case 117:
                     _b.sent();
                     return [3 /*break*/, 119];
@@ -699,7 +703,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_19)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_19)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_19)];
                 case 123:
                     _b.sent();
                     return [3 /*break*/, 125];
@@ -728,7 +732,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_20)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_20)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_20)];
                 case 129:
                     _b.sent();
                     return [3 /*break*/, 131];
@@ -757,7 +761,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_21)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_21)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_21)];
                 case 135:
                     _b.sent();
                     return [3 /*break*/, 137];
@@ -786,7 +790,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_22)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_22)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_22)];
                 case 141:
                     _b.sent();
                     return [3 /*break*/, 143];
@@ -815,7 +819,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_23)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_23)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_23)];
                 case 147:
                     _b.sent();
                     return [3 /*break*/, 149];
@@ -844,7 +848,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_24)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_24)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_24)];
                 case 153:
                     _b.sent();
                     return [3 /*break*/, 155];
@@ -873,7 +877,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_25)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_25)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_25)];
                 case 159:
                     _b.sent();
                     return [3 /*break*/, 161];
@@ -902,7 +906,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_26)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_26)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_26)];
                 case 165:
                     _b.sent();
                     return [3 /*break*/, 167];
@@ -931,7 +935,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_27)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Enabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_27)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_27)];
                 case 171:
                     _b.sent();
                     return [3 /*break*/, 173];
@@ -960,7 +964,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString_28)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs Disabled:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed_28)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_28)];
                 case 177:
                     _b.sent();
                     return [3 /*break*/, 179];
@@ -976,7 +980,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Manage Logs:**__');
-                    return [4 /*yield*/, DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 181:
                     msg = _b.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {

@@ -6,22 +6,23 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordStuff = require('../DiscordStuff');
+import DiscordUser from '../DiscordUser';
+import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordStuff.BotCommand();
+const command = new DiscordUser.BotCommand();
 command.name = 'managelogs';
 command.description = '!managelogs, to view an enabled/disabled list of possible logs!';
-async function execute(commandData: DiscordStuff.CommandData, discordUser: DiscordStuff.DiscordUser): Promise<DiscordStuff.CommandReturnData> {
+async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
     try {
-        const commandReturnData = new DiscordStuff.CommandReturnData();
+        const commandReturnData = new DiscordUser.CommandReturnData();
 		commandReturnData.commandName = command.name;
-        const areWeInADM = await DiscordStuff.areWeInADM(commandData);
+        const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
         if (areWeInADM === true) {
             return commandReturnData;
         }
 
-        const areWeAnAdmin = await discordUser.doWeHaveAdminPermission(commandData);
+        const areWeAnAdmin = await HelperFunctions.doWeHaveAdminPermission(commandData, discordUser);
 
         if (areWeAnAdmin === false) {
             return commandReturnData;
@@ -58,7 +59,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Manage Logs:**__').fields = fields;
 
-            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
            
         } else if ((commandData.args[0] as string).toString().toLowerCase() !== 'enable' && (commandData.args[0] as string).toString().toLowerCase() !== 'disable') {
             const msgString = `------\n**Please, enter enable or disable for the first argument of this command! 
@@ -69,7 +70,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -86,7 +87,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
-            let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
@@ -112,7 +113,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -132,7 +133,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -155,7 +156,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -175,7 +176,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -198,7 +199,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -218,7 +219,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -242,7 +243,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -262,7 +263,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -285,7 +286,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -305,7 +306,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -328,7 +329,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -348,7 +349,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -371,7 +372,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -391,7 +392,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -414,7 +415,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -434,7 +435,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -457,7 +458,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -477,7 +478,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -500,7 +501,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -520,7 +521,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -543,7 +544,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -563,7 +564,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -586,7 +587,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -606,7 +607,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -629,7 +630,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -649,7 +650,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -672,7 +673,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -692,7 +693,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
-                            await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                             
                             break;
                         }
@@ -707,7 +708,7 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
                         .setDescription(msgString)
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle('__**Manage Logs:**__');
-                    let msg = await DiscordStuff.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                    let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
                     if (commandData.toTextChannel instanceof Discord.WebhookClient){
                         msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                     }
@@ -723,4 +724,4 @@ async function execute(commandData: DiscordStuff.CommandData, discordUser: Disco
     }
 }
 command.function = execute;
-export default command as DiscordStuff.BotCommand;
+export default command as DiscordUser.BotCommand;
