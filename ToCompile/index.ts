@@ -271,7 +271,7 @@ client.on('message', async (msg: Discord.Message) => {
 
 		try{
 			const commandData = new DiscordUser.CommandData();
-			if (msg.channel.type !== 'dm'){
+			if (msg.channel.type !== 'dm' && msg.member !== null){
 				await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member!.id, msg.guild!.id);
 			}
 			else{

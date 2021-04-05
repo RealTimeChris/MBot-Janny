@@ -592,7 +592,7 @@ module HelperFunctions{
             newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = true;
 
             if (numberOfMessagesToSave > 0) {
-                let startingMessage;
+                let startingMessage: Discord.Message | undefined = undefined;
                 for (let x = (Math.trunc(numberOfMessagesToSave / 100)); x >= 0; x -= 1) {
                     let currentMessageLimit = 0;
                     if (x > 0) {
@@ -606,7 +606,7 @@ module HelperFunctions{
                             startingMessage = arrayOfMessagesToSave[arrayOfMessagesToSave.length - 1];
                         } else {
                             const arrayOfMessagesToSave = (await currentChannel.messages
-                                .fetch({ limit: currentMessageLimit, before: (startingMessage as Discord.Message).id })).array() as Discord.Message[];
+                                .fetch({ limit: currentMessageLimit, before: startingMessage!.id })).array();
                             if (arrayOfMessagesToSave.length === 0) {
                                 break;
                             }
@@ -624,7 +624,7 @@ module HelperFunctions{
                             startingMessage = arrayOfMessagesToSave[arrayOfMessagesToSave.length - 1];
                         } else {
                             const arrayOfMessagesToSave = (await currentChannel.messages
-                                .fetch({ limit: currentMessageLimit })).array();
+                                .fetch({ limit: currentMessageLimit, before: (startingMessage as unknown as Discord.Message)!.id })).array();
                             arrayOfMessagesToSave.splice(arrayOfMessagesToSave.length - 1, 1);
                             if (arrayOfMessagesToSave.length === 0) {
                                 break;
@@ -638,7 +638,7 @@ module HelperFunctions{
                 while (x !== 0) {
                     if (startingMessage !== undefined){
                         const arrayOfMessages = (await currentChannel.messages
-                            .fetch({ limit: 100, before: (startingMessage as Discord.Message).id })).array() as Discord.Message[];
+                            .fetch({ limit: 100, before: startingMessage.id })).array();
                             x = arrayOfMessages.length;
                         if (arrayOfMessages !== undefined && startingMessage !== undefined && x > 0) {
                             startingMessage = arrayOfMessages[arrayOfMessages.length - 1];
@@ -649,7 +649,7 @@ module HelperFunctions{
                     }	
                     else {
                         const arrayOfMessages = (await currentChannel.messages
-                            .fetch({ limit: 100})).array() as Discord.Message[];
+                            .fetch({ limit: 100})).array();
                             x = arrayOfMessages.length;
                         if (arrayOfMessages !== undefined && x > 0) {
                             startingMessage = arrayOfMessages[arrayOfMessages.length - 1];
@@ -685,7 +685,9 @@ module HelperFunctions{
                             });
                         }
                         if (!arrayOfMessageArrays[y]![z]!.pinned) {
-                            await arrayOfMessageArrays[y]![z]!.delete();
+                            if (arrayOfMessageArrays[y]![z]?.deletable){
+                                await arrayOfMessageArrays[y]![z]!.delete();
+                            }                            
                             console.log(`Deleting Message Number: ${totalMessageCount - (y * 100 + z)} of ${totalMessageCount} in channel ${currentChannel.name}.`);
                         }
                     }
