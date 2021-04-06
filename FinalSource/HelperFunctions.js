@@ -1051,10 +1051,8 @@ var HelperFunctions;
                         w -= 1;
                         return [3 /*break*/, 37];
                     case 42:
-                        console.log("SETTING IT TO FALSE NOW!");
                         newGuildData.exposeDataValues().deletionChannels[channelIndex].timeOfLastPurge = new Date().getTime();
                         newGuildData.exposeDataValues().deletionChannels[channelIndex].currentlyBeingDeleted = false;
-                        console.log(newGuildData.exposeDataValues().deletionChannels[channelIndex].currentlyBeingDeleted);
                         return [4 /*yield*/, newGuildData.writeToDataBase()];
                     case 43:
                         _b.sent();
