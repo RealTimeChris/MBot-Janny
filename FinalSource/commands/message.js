@@ -51,7 +51,7 @@ function trackIfTrackedUser(message, commandData, discordUser) {
         var _this = this;
         return __generator(this, function (_a) {
             try {
-                if (message.guild === undefined || message.guild === null) {
+                if (message.guild === undefined || message.guild === null || message.author.bot) {
                     return [2 /*return*/];
                 }
                 discordUser.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {

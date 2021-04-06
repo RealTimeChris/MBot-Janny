@@ -17,7 +17,7 @@ const command: FoundationClasses.BotCommand = {
 
 async function trackIfTrackedUser(message: Discord.Message, commandData: FoundationClasses.CommandData, discordUser: DiscordUser): Promise<void> {
     try{
-        if (message.guild === undefined || message.guild === null){
+        if (message.guild === undefined || message.guild === null || message.author.bot){
             return;
         }
         discordUser.guildsData.forEach(async (guildData) => {

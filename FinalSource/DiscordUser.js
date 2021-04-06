@@ -43,7 +43,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DiscordUser = void 0;
 var Discord = require("discord.js");
 var level_ts_1 = __importDefault(require("level-ts"));
 var GuildData_1 = __importDefault(require("./GuildData"));
@@ -415,4 +414,4 @@ var DiscordUser = /** @class */ (function () {
     };
     return DiscordUser;
 }());
-exports.DiscordUser = DiscordUser;
+exports.default = DiscordUser;

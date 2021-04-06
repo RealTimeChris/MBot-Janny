@@ -314,10 +314,13 @@ client.on('message', async (msg: Discord.Message) => {
 		try{
 			try {
 				const commandData = new FoundationClasses.CommandData();
-				if (msg.channel.type !== 'dm'){
+				if (client.users.resolve(msg.author!.id) === null) {
+					return;
+				}
+				if (msg.channel.type !== 'dm' && msg.member !== null){
 					await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member!.id, msg.guild!.id);
 				}
-				else{
+				else {
 					await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id);
 				}
 

@@ -28,7 +28,7 @@ export interface DiscordUserData {
 /**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
-export declare class DiscordUser {
+export default class DiscordUser {
     userData: DiscordUserData;
     guildsData: Map<string, GuildData>;
     guildMembersData: Map<string, GuildMemberData>;

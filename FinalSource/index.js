@@ -45,12 +45,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
 var FoundationClasses = require("./FoundationClasses");
-var DiscordUser = require("./DiscordUser");
+var DiscordUser_1 = __importDefault(require("./DiscordUser"));
 var GuildData_1 = __importDefault(require("./GuildData"));
 var commandindex_1 = __importDefault(require("./commandindex"));
 var HelperFunctions_1 = __importDefault(require("./HelperFunctions"));
 var config = require("../ToCompile/config.json");
-var discordUser = new DiscordUser.DiscordUser();
+var discordUser = new DiscordUser_1.default();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
     var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, userID, reason, name_full_1, viewOrNot, value, logname, enableOrDisable, msgCountToPurge, value1, redChannelValue, greenChannelValue, blueChannelValue, name_full_2, role, role, quantity, name_full_3, inviteLink, message, emoji, msgName, msgName, msgContents, msgInterval, userID, userID, user, returnData;
@@ -400,7 +400,10 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
             case 20:
                 _c.trys.push([20, 26, , 28]);
                 commandData = new FoundationClasses.CommandData();
-                if (!(msg.channel.type !== 'dm')) return [3 /*break*/, 22];
+                if (client.users.resolve(msg.author.id) === null) {
+                    return [2 /*return*/];
+                }
+                if (!(msg.channel.type !== 'dm' && !msg.author.bot)) return [3 /*break*/, 22];
                 return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
             case 21:
                 _c.sent();
@@ -808,7 +811,7 @@ client.on('messageDelete', function (message) { return __awaiter(void 0, void 0,
             case 1:
                 _b.sent();
                 for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'messageDelete') {
+                    if (guildData.exposeDataValues().logs[x].nameSmall === 'messagedelete') {
                         if (guildData.exposeDataValues().logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
@@ -846,7 +849,7 @@ client.on('messageDeleteBulk', function (collection) { return __awaiter(void 0, 
             case 1:
                 _b.sent();
                 for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'messageDeleteBulk') {
+                    if (guildData.exposeDataValues().logs[x].nameSmall === 'messagedeletebulk') {
                         if (guildData.exposeDataValues().logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
