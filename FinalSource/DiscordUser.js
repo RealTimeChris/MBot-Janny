@@ -43,7 +43,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Discord = require("discord.js");
 var level_ts_1 = __importDefault(require("level-ts"));
 var GuildData_1 = __importDefault(require("./GuildData"));
 var GuildMemberData_1 = __importDefault(require("./GuildMemberData"));
@@ -54,7 +53,7 @@ var config = require("./config.json");
  */
 var DiscordUser = /** @class */ (function () {
     function DiscordUser() {
-        this.userData = { userID: '', userName: '', publicKey: '', clientID: '', guildCount: 0, botToken: '',
+        this.userData = { userID: '', userName: '', publicKey: '', guildCount: 0, botToken: '',
             msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
             timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, activeInviteGuilds: [], botCommanders: [], msBetweenMessageDeletion: 0 };
         this.guildsData = new Map();
@@ -130,7 +129,6 @@ var DiscordUser = /** @class */ (function () {
                                 msBetweenMessageDeletion: config.msBetweenMessageDeletion,
                                 currencyName: config.currencyName,
                                 publicKey: config.publicKey,
-                                clientID: client.user.id,
                                 timeOfLastInvite: 0,
                                 activeInviteGuilds: [],
                                 timeOfLastRecordUpdate: 0,
@@ -208,7 +206,6 @@ var DiscordUser = /** @class */ (function () {
                         userData.msBetweenMessageDeletion = config.msBetweenMessageDeletion;
                         userData.currencyName = config.currencyName;
                         userData.publicKey = config.publicKey;
-                        userData.clientID = config.clientID;
                         userData.guildCount = client.guilds.cache.array().length;
                         userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
                         userData.prefix = config.prefix;
@@ -241,8 +238,6 @@ var DiscordUser = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 6, , 7]);
-                        liveDataGuildArray = [new Discord.Guild(client, {})];
-                        liveDataGuildArray.length = client.guilds.cache.array().length;
                         liveDataGuildArray = client.guilds.cache.array().sort();
                         x = 0;
                         _a.label = 1;

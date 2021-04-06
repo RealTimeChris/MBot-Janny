@@ -19,7 +19,6 @@ export interface DiscordUserData {
     userID: string;
     userName: string;
     publicKey: string;
-    clientID: string;
     guildCount: number;
     botToken: string;
     msBetweenCacheBackup: number;
@@ -41,7 +40,7 @@ export interface DiscordUserData {
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
 export default class DiscordUser {
-    userData: DiscordUserData = {userID: '', userName: '', publicKey:'', clientID: '', guildCount: 0, botToken: '',
+    userData: DiscordUserData = {userID: '', userName: '', publicKey:'', guildCount: 0, botToken: '',
         msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
         timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, activeInviteGuilds: [], botCommanders: [], msBetweenMessageDeletion: 0};
     guildsData = new Map<string, GuildData>();
@@ -93,7 +92,6 @@ export default class DiscordUser {
                     msBetweenMessageDeletion: config.msBetweenMessageDeletion,
                     currencyName: config.currencyName,
                     publicKey: config.publicKey,
-                    clientID: client.user!.id,
                     timeOfLastInvite: 0,
                     activeInviteGuilds: [],
                     timeOfLastRecordUpdate: 0,
@@ -150,7 +148,6 @@ export default class DiscordUser {
             userData.msBetweenMessageDeletion = config.msBetweenMessageDeletion;
             userData.currencyName = config.currencyName;
             userData.publicKey = config.publicKey;
-            userData.clientID = config.clientID;
             userData.guildCount = client.guilds.cache.array().length;
             userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
             userData.prefix = config.prefix;
@@ -173,9 +170,7 @@ export default class DiscordUser {
     */
      private async updateGuildsData(client: Discord.Client): Promise<void> {
         try {
-            let liveDataGuildArray = [new Discord.Guild(client, {})];
-            liveDataGuildArray.length = client.guilds.cache.array().length;
-            liveDataGuildArray = client.guilds.cache.array().sort();
+            const liveDataGuildArray = client.guilds.cache.array().sort();
 
             for (let x = 0; x < liveDataGuildArray.length; x += 1) {
                 console.log(`Updating the guild data, for guild number ${x}!`);

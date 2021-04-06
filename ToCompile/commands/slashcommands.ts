@@ -25,7 +25,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         };
         commandReturnData.commandName = command.name;
 
-        const interaction = new DiscordInteractions({applicationId: discordUser.userData.clientID,
+        const interaction = new DiscordInteractions({applicationId: discordUser.userData.userID,
             publicKey: discordUser.userData.publicKey,
             authToken: discordUser.userData.botToken})
 

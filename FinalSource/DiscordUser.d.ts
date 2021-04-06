@@ -8,7 +8,6 @@ export interface DiscordUserData {
     userID: string;
     userName: string;
     publicKey: string;
-    clientID: string;
     guildCount: number;
     botToken: string;
     msBetweenCacheBackup: number;
