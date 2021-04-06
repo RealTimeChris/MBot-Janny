@@ -54,8 +54,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var FoundationClasses = require("./FoundationClasses");
+var FoundationClasses_1 = __importDefault(require("./FoundationClasses"));
 /**
  * Class representing a single guild member.
  */
@@ -106,7 +109,7 @@ var GuildMemberData = /** @class */ (function (_super) {
                     case 2:
                         error_1 = _b.sent();
                         if (error_1.type === 'NotFoundError') {
-                            console.log("No entry found for user by the Id of " + this.id + " creating one!");
+                            console.log("No entry found for user by the Id of " + this.id + " with name " + this.userName + ", creating one!");
                             console.log(this);
                         }
                         return [3 /*break*/, 3];
@@ -142,5 +145,5 @@ var GuildMemberData = /** @class */ (function (_super) {
         return dataValues;
     };
     return GuildMemberData;
-}(FoundationClasses.DiscordEntity));
+}(FoundationClasses_1.default.DiscordEntity));
 exports.default = GuildMemberData;

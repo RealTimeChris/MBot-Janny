@@ -40,113 +40,116 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommandData = exports.DiscordEntity = void 0;
 var Discord = require("discord.js");
-/**
-* Base abstract class for Discord classes.
-*/
-var DiscordEntity = /** @class */ (function () {
-    function DiscordEntity() {
-    }
-    return DiscordEntity;
-}());
-exports.DiscordEntity = DiscordEntity;
-/**
- * Class representing the data that goes into a command.
- */
-var CommandData = /** @class */ (function () {
-    function CommandData() {
-        this.interaction = null;
-        this.guild = null;
-        this.guildMember = null;
-        this.fromTextChannel = null;
-        this.fromTextChannelType = '';
-        this.permsChannel = null;
-        this.toTextChannel = null;
-        this.args = [];
-    }
-    CommandData.prototype.initialize = function (client, fromTextChannelID, fromTextChannelType, interaction, guildMemberID, guildID) {
-        if (interaction === void 0) { interaction = null; }
-        if (guildMemberID === void 0) { guildMemberID = ''; }
-        if (guildID === void 0) { guildID = ''; }
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, error_1;
-            return __generator(this, function (_k) {
-                switch (_k.label) {
-                    case 0:
-                        _k.trys.push([0, 16, , 17]);
-                        this.fromTextChannelType = fromTextChannelType;
-                        _a = this;
-                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
-                    case 1:
-                        _a.fromTextChannel = (_k.sent());
-                        if (interaction !== null) {
-                            this.interaction = interaction;
-                        }
-                        if (!(guildID !== '')) return [3 /*break*/, 3];
-                        _b = this;
-                        return [4 /*yield*/, client.guilds.fetch(guildID)];
-                    case 2:
-                        _b.guild = _k.sent();
-                        _k.label = 3;
-                    case 3:
-                        if (!(guildMemberID !== '' && guildID !== '')) return [3 /*break*/, 5];
-                        _c = this;
-                        return [4 /*yield*/, this.guild.members.fetch(guildMemberID)];
-                    case 4:
-                        _c.guildMember = _k.sent();
-                        return [3 /*break*/, 7];
-                    case 5:
-                        _d = this;
-                        return [4 /*yield*/, client.users.fetch(guildMemberID)];
-                    case 6:
-                        _d.guildMember = _k.sent();
-                        _k.label = 7;
-                    case 7:
-                        if (interaction !== null && fromTextChannelType !== 'dm') {
+var FoundationClasses;
+(function (FoundationClasses) {
+    /**
+    * Base abstract class for Discord classes.
+    */
+    var DiscordEntity = /** @class */ (function () {
+        function DiscordEntity() {
+        }
+        return DiscordEntity;
+    }());
+    FoundationClasses.DiscordEntity = DiscordEntity;
+    /**
+     * Class representing the data that goes into a command.
+     */
+    var CommandData = /** @class */ (function () {
+        function CommandData() {
+            this.interaction = null;
+            this.guild = null;
+            this.guildMember = null;
+            this.fromTextChannel = null;
+            this.fromTextChannelType = '';
+            this.permsChannel = null;
+            this.toTextChannel = null;
+            this.args = [];
+        }
+        CommandData.prototype.initialize = function (client, fromTextChannelID, fromTextChannelType, interaction, guildMemberID, guildID) {
+            if (interaction === void 0) { interaction = null; }
+            if (guildMemberID === void 0) { guildMemberID = ''; }
+            if (guildID === void 0) { guildID = ''; }
+            return __awaiter(this, void 0, void 0, function () {
+                var _a, _b, _c, _d, _e, _f, _g, _h, _j, error_1;
+                return __generator(this, function (_k) {
+                    switch (_k.label) {
+                        case 0:
+                            _k.trys.push([0, 16, , 17]);
+                            this.fromTextChannelType = fromTextChannelType;
+                            _a = this;
+                            return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                        case 1:
+                            _a.fromTextChannel = (_k.sent());
+                            if (interaction !== null) {
+                                this.interaction = interaction;
+                            }
+                            if (!(guildID !== '')) return [3 /*break*/, 3];
+                            _b = this;
+                            return [4 /*yield*/, client.guilds.fetch(guildID)];
+                        case 2:
+                            _b.guild = _k.sent();
+                            _k.label = 3;
+                        case 3:
+                            if (!(guildMemberID !== '' && guildID !== '')) return [3 /*break*/, 5];
+                            _c = this;
+                            return [4 /*yield*/, this.guild.members.fetch(guildMemberID)];
+                        case 4:
+                            _c.guildMember = _k.sent();
+                            return [3 /*break*/, 7];
+                        case 5:
+                            _d = this;
+                            return [4 /*yield*/, client.users.fetch(guildMemberID)];
+                        case 6:
+                            _d.guildMember = _k.sent();
+                            _k.label = 7;
+                        case 7:
+                            if (interaction !== null && fromTextChannelType !== 'dm') {
+                                this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
+                                this.permsChannel = new Discord.GuildChannel(this.guild, this.fromTextChannel);
+                            }
+                            if (!(interaction === null && fromTextChannelType !== 'dm')) return [3 /*break*/, 10];
+                            _e = this;
+                            return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                        case 8:
+                            _e.toTextChannel = (_k.sent());
+                            _f = this;
+                            return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                        case 9:
+                            _f.permsChannel = (_k.sent());
+                            _k.label = 10;
+                        case 10:
+                            if (!(interaction !== null && fromTextChannelType === 'dm')) return [3 /*break*/, 12];
                             this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
-                            this.permsChannel = new Discord.GuildChannel(this.guild, this.fromTextChannel);
-                        }
-                        if (!(interaction === null && fromTextChannelType !== 'dm')) return [3 /*break*/, 10];
-                        _e = this;
-                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
-                    case 8:
-                        _e.toTextChannel = (_k.sent());
-                        _f = this;
-                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
-                    case 9:
-                        _f.permsChannel = (_k.sent());
-                        _k.label = 10;
-                    case 10:
-                        if (!(interaction !== null && fromTextChannelType === 'dm')) return [3 /*break*/, 12];
-                        this.toTextChannel = new Discord.WebhookClient(client.user.id, this.interaction.token);
-                        _g = this;
-                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
-                    case 11:
-                        _g.permsChannel = (_k.sent());
-                        _k.label = 12;
-                    case 12:
-                        if (!(interaction === null && fromTextChannelType === 'dm')) return [3 /*break*/, 15];
-                        _h = this;
-                        return [4 /*yield*/, this.guildMember.createDM(true)];
-                    case 13:
-                        _h.toTextChannel = _k.sent();
-                        _j = this;
-                        return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
-                    case 14:
-                        _j.permsChannel = (_k.sent());
-                        _k.label = 15;
-                    case 15: return [3 /*break*/, 17];
-                    case 16:
-                        error_1 = _k.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_1);
-                            })];
-                    case 17: return [2 /*return*/];
-                }
+                            _g = this;
+                            return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                        case 11:
+                            _g.permsChannel = (_k.sent());
+                            _k.label = 12;
+                        case 12:
+                            if (!(interaction === null && fromTextChannelType === 'dm')) return [3 /*break*/, 15];
+                            _h = this;
+                            return [4 /*yield*/, this.guildMember.createDM(true)];
+                        case 13:
+                            _h.toTextChannel = _k.sent();
+                            _j = this;
+                            return [4 /*yield*/, client.channels.fetch(fromTextChannelID)];
+                        case 14:
+                            _j.permsChannel = (_k.sent());
+                            _k.label = 15;
+                        case 15: return [3 /*break*/, 17];
+                        case 16:
+                            error_1 = _k.sent();
+                            return [2 /*return*/, new Promise(function (resolve, reject) {
+                                    reject(error_1);
+                                })];
+                        case 17: return [2 /*return*/];
+                    }
+                });
             });
-        });
-    };
-    return CommandData;
-}());
-exports.CommandData = CommandData;
+        };
+        return CommandData;
+    }());
+    FoundationClasses.CommandData = CommandData;
+})(FoundationClasses || (FoundationClasses = {}));
+exports.default = FoundationClasses;

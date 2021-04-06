@@ -6,7 +6,7 @@
 'use strict';
 
 import Discord = require('discord.js');
-import FoundationClasses = require('../FoundationClasses');
+import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
 import GuildMemberData from '../GuildMemberData';

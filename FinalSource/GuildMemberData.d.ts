@@ -1,4 +1,4 @@
-import FoundationClasses = require('./FoundationClasses');
+import FoundationClasses from './FoundationClasses';
 import Level from 'level-ts';
 /**
  * Class representing the init data for a guild member data structure.

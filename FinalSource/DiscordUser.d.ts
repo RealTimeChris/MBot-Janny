@@ -53,8 +53,8 @@ export default class DiscordUser {
     */
     private updateGuildsData;
     /**
-        * Function for updating all of the guild member's data caches,
-        */
+    * Function for updating all of the guild member's data caches,
+    */
     private updateGuildMembersData;
     /**
     * Updates the current data cache from live objects,

@@ -1,5 +1,5 @@
 import Discord = require('discord.js');
-import FoundationClasses = require('./FoundationClasses');
+import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
 import Level from 'level-ts';

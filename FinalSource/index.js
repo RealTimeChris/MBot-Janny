@@ -44,7 +44,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var FoundationClasses = require("./FoundationClasses");
+var FoundationClasses_1 = __importDefault(require("./FoundationClasses"));
 var DiscordUser_1 = __importDefault(require("./DiscordUser"));
 var GuildData_1 = __importDefault(require("./GuildData"));
 var commandindex_1 = __importDefault(require("./commandindex"));
@@ -62,7 +62,7 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 return [4 /*yield*/, client.channels.fetch(channel_id)];
             case 1:
                 channel = _d.sent();
-                commandData = new FoundationClasses.CommandData();
+                commandData = new FoundationClasses_1.default.CommandData();
                 return [4 /*yield*/, channel.type];
             case 2:
                 if (!((_d.sent()) === 'dm')) return [3 /*break*/, 4];
@@ -333,7 +333,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.label = 1;
             case 1:
                 _c.trys.push([1, 16, , 17]);
-                commandData = new FoundationClasses.CommandData();
+                commandData = new FoundationClasses_1.default.CommandData();
                 if (!(msg.channel.type !== 'dm' && msg.member !== null)) return [3 /*break*/, 3];
                 return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
             case 2:
@@ -399,7 +399,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.label = 20;
             case 20:
                 _c.trys.push([20, 26, , 28]);
-                commandData = new FoundationClasses.CommandData();
+                commandData = new FoundationClasses_1.default.CommandData();
                 if (client.users.resolve(msg.author.id) === null) {
                     return [2 /*return*/];
                 }

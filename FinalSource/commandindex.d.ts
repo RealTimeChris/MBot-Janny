@@ -1,4 +1,4 @@
-import FoundationClasses = require('./FoundationClasses');
+import FoundationClasses from './FoundationClasses';
 declare const _default: {
     commands: Map<string, FoundationClasses.BotCommand>;
 };

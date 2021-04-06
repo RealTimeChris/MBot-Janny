@@ -243,7 +243,7 @@ var DiscordUser = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         if (!(x < liveDataGuildArray.length)) return [3 /*break*/, 5];
-                        console.log("Updating the guild data, for guild number " + x + "!");
+                        console.log("Updating the guild data, for guild number " + x + ", " + liveDataGuildArray[x].name + "!");
                         guildData = new GuildData_1.default({ dataBase: this.dataBase, id: liveDataGuildArray[x].id, memberCount: liveDataGuildArray[x].memberCount, name: liveDataGuildArray[x].name });
                         return [4 /*yield*/, guildData.getFromDataBase()];
                     case 2:
@@ -274,8 +274,8 @@ var DiscordUser = /** @class */ (function () {
         });
     };
     /**
-        * Function for updating all of the guild member's data caches,
-        */
+    * Function for updating all of the guild member's data caches,
+    */
     DiscordUser.prototype.updateGuildMembersData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
             var liveDataGuildArray, x, liveDataGuildMemberArray, y, guildMemberData, error_6, userData, error_7;

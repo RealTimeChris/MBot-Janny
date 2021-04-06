@@ -5,7 +5,7 @@
 
 'use strict';
 
-import FoundationClasses = require('./FoundationClasses');
+import FoundationClasses from './FoundationClasses';
 
 const commands = new Map<string, FoundationClasses.BotCommand>();
 import botinfo from './commands/botinfo';

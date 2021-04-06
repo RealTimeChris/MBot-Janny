@@ -5,7 +5,7 @@
 
 'use strict'
 
-import FoundationClasses = require('./FoundationClasses');
+import FoundationClasses from './FoundationClasses';
 import Level from 'level-ts';
 
 /**
