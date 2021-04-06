@@ -289,13 +289,16 @@ var HelperFunctions;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 4, , 5]);
+                        _a.trys.push([0, 5, , 6]);
                         guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                        return [4 /*yield*/, guildData.getFromDataBase()];
+                    case 1:
+                        _a.sent();
                         currentChannelPermissions = commandData.guildMember.permissionsIn(commandData.permsChannel);
                         permissionStrings = 'ADMINISTRATOR';
                         areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
                         return [4 /*yield*/, checkForBotCommanderStatus(commandData.guildMember.id, discordUser.userData.botCommanders)];
-                    case 1:
+                    case 2:
                         areTheyACommander = _a.sent();
                         if (areTheyAnAdmin === true || areTheyACommander === true) {
                             return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -311,23 +314,23 @@ var HelperFunctions;
                             .setTimestamp(Date())
                             .setTitle("__**Permissions Issue:**__");
                         return [4 /*yield*/, sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                    case 2:
+                    case 3:
                         msg = _a.sent();
                         if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                             msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
                         }
                         return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                    case 3:
+                    case 4:
                         _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(false);
                             })];
-                    case 4:
+                    case 5:
                         error_3 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_3);
                             })];
-                    case 5: return [2 /*return*/];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

@@ -403,7 +403,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 if (client.users.resolve(msg.author.id) === null) {
                     return [2 /*return*/];
                 }
-                if (!(msg.channel.type !== 'dm' && !msg.author.bot)) return [3 /*break*/, 22];
+                if (!(msg.channel.type !== 'dm' && msg.member !== null)) return [3 /*break*/, 22];
                 return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
             case 21:
                 _c.sent();
