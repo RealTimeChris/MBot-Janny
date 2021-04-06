@@ -7,8 +7,8 @@
 
 import Discord = require('discord.js');
 import FoundationClasses = require('../FoundationClasses');
-import HelperFunctions from '../HelperFunctions';
 import commandIndex from '../commandindex';
+import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {
     name: 'help',

@@ -28,7 +28,6 @@ import message from './commands/message';
 commands.set(message.name, message);
 import ondisplaynamechange from './commands/ondisplaynamechange';
 commands.set(ondisplaynamechange.name, ondisplaynamechange);
-/*
 import onguildbanadd from './commands/onguildbanadd';
 commands.set(onguildbanadd.name, onguildbanadd);
 import onguildbanremove from './commands/onguildbanremove';
@@ -37,6 +36,7 @@ import onguilddelete from './commands/onguilddelete';
 commands.set(onguilddelete.name, onguilddelete);
 import onguildmemberadd from './commands/onguildmemberadd';
 commands.set(onguildmemberadd.name, onguildmemberadd);
+/*
 import onguildmemberremove from './commands/onguildmemberremove';
 commands.set(onguildmemberremove.name, onguildmemberremove);
 import oninvitecreate from './commands/oninvitecreate';

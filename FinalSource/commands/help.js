@@ -44,8 +44,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var commandindex_1 = __importDefault(require("../commandindex"));
+var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var command = {
     name: 'help',
     description: 'Help Usage: !help, or !help = COMMANDNAME, in order to get help with a specific COMMAND.',

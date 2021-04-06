@@ -44,58 +44,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var GuildData_1 = __importDefault(require("../GuildData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'onguildmemberadd';
-command.description = " It's an automatic one!";
+var command = {
+    name: 'onguildmemberadd',
+    description: " It's an automatic one!",
+    function: Function()
+};
 function execute(client, guildMember, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, guildData, logs, x, roleManager, x, textChannel, currentGuild, msgEmbed, msgString, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 10, , 11]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _a.trys.push([0, 9, , 10]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     if (!(guildMember instanceof Discord.GuildMember)) {
                         return [2 /*return*/, command.name];
                     }
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(guildMember.guild)];
-                case 1:
-                    guildData = _a.sent();
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guildMember.guild.id, name: guildMember.guild.name, memberCount: guildMember.guild.memberCount });
                     return [4 /*yield*/, HelperFunctions_1.default.applyDefaultRoles(guildData, guildMember)];
-                case 2:
+                case 1:
                     _a.sent();
-                    logs = new DiscordUser_1.default.Log();
-                    for (x = 0; x < guildData.logs.length; x += 1) {
-                        if (guildData.logs[x].nameSmall === 'guildmemberadd') {
-                            logs = guildData.logs[x];
+                    logs = void 0;
+                    for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
+                        if (guildData.exposeDataValues().logs[x].nameSmall === 'guildmemberadd') {
+                            logs = guildData.exposeDataValues().logs[x];
                             break;
                         }
                     }
-                    if (!(guildData.verificationSystem.channelID === null)) return [3 /*break*/, 6];
+                    if (!(guildData.exposeDataValues().verificationSystem.channelID === null)) return [3 /*break*/, 5];
                     roleManager = new Discord.GuildMemberRoleManager(guildMember);
                     x = 0;
-                    _a.label = 3;
+                    _a.label = 2;
+                case 2:
+                    if (!(x < guildData.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 5];
+                    return [4 /*yield*/, roleManager.add(guildData.exposeDataValues().defaultRoleIDs[x])];
                 case 3:
-                    if (!(x < guildData.defaultRoleIDs.length)) return [3 /*break*/, 6];
-                    return [4 /*yield*/, roleManager.add(guildData.defaultRoleIDs[x])];
-                case 4:
                     _a.sent();
-                    _a.label = 5;
-                case 5:
+                    _a.label = 4;
+                case 4:
                     x += 1;
-                    return [3 /*break*/, 3];
-                case 6:
+                    return [3 /*break*/, 2];
+                case 5:
                     if (logs.enabled === false) {
                         return [2 /*return*/, command.name];
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 7:
+                case 6:
                     textChannel = _a.sent();
                     return [4 /*yield*/, client.guilds.fetch(guildMember.guild.id)];
-                case 8:
+                case 7:
                     currentGuild = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = "__**Time Joined:**__ " + guildMember.joinedAt + "\n";
@@ -111,15 +113,15 @@ function execute(client, guildMember, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**New Guild Member:**__');
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 9:
+                case 8:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 10:
+                case 9:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 11: return [2 /*return*/];
+                case 10: return [2 /*return*/];
             }
         });
     });

@@ -6,10 +6,10 @@
 'use strict';
 
 import Discord = require('discord.js');
+import FoundationClasses = require('../FoundationClasses');
 import DiscordUser = require('../DiscordUser');
 import GuildData from '../GuildData';
 import GuildMemberData from '../GuildMemberData';
-import FoundationClasses = require('../FoundationClasses');
 import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {

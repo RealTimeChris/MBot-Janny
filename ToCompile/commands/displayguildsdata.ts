@@ -6,8 +6,8 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser = require('../DiscordUser');
 import FoundationClasses = require('../FoundationClasses');
+import DiscordUser = require('../DiscordUser');
 import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {
