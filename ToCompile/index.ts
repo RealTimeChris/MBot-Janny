@@ -6,10 +6,10 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from './DiscordUser';
-import HelperFunctions from './HelperFunctions';
-import config = require('../ToCompile/config.json');
+import FoundationClasses = require('./FoundationClasses');
+import DiscordUser = require('./DiscordUser');
 import botCommands from './commandindex';
+import config = require('../ToCompile/config.json');
 
 const discordUser = new DiscordUser.DiscordUser();
 const client = new Discord.Client() as any;

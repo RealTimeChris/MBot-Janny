@@ -6,9 +6,9 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from './DiscordUser'
-import Level from 'level-ts';
-import { resolve } from 'node:path';
+import FoundationClasses = require('./FoundationClasses');
+import DiscordUser = require('./DiscordUser');
+import GuildData from './GuildData';
 
 module HelperFunctions{
     /**

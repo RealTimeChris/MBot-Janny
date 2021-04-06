@@ -5,7 +5,7 @@
 
 'use strict';
 
-import DiscordUser from './DiscordUser';
+import FoundationClasses = require('./FoundationClasses');
 
 const commands = new Map<string, DiscordUser.BotCommand>();
 import botinfo from './commands/botinfo';
