@@ -194,7 +194,6 @@ export class DiscordUser {
         }
     }
 
-
     /**
         * Function for updating all of the guild member's data caches,
         */
