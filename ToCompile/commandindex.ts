@@ -42,7 +42,6 @@ import oninvitecreate from './commands/oninvitecreate';
 commands.set(oninvitecreate.name, oninvitecreate);
 import onmessagedelete from './commands/onmessagedelete';
 commands.set(onmessagedelete.name, onmessagedelete);
-/*
 import onmessagedeletebulk from './commands/onmessagedeletebulk';
 commands.set(onmessagedeletebulk.name, onmessagedeletebulk);
 import onmessagereactionadd from './commands/onmessagereactionadd';
@@ -67,6 +66,7 @@ import serverinfo from './commands/serverinfo';
 commands.set(serverinfo.name, serverinfo);
 import setbordercolor from './commands/setbordercolor';
 commands.set(setbordercolor.name, setbordercolor);
+/*
 import etdefaultrole from './commands/setdefaultrole';
 commands.set(etdefaultrole.name, etdefaultrole);
 import setdeletionstatus from './commands/setdeletionstatus';

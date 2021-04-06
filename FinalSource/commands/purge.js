@@ -44,11 +44,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var GuildData_1 = __importDefault(require("../GuildData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'purge';
-command.description = '!purge = AMOUNTTODELETE, between 1 and 100 messages!';
+var command = {
+    name: 'purge',
+    description: '!purge = AMOUNTTODELETE, between 1 and 100 messages!',
+    function: Function()
+};
 /**
  * Purges up to 100 messages from a given channel at a time.
  */
@@ -58,8 +60,10 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 11, , 12]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _a.trys.push([0, 10, , 11]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
@@ -73,57 +77,55 @@ function execute(commandData, discordUser) {
                     if (doWeHaveAdminPerms === false) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
-                case 3:
-                    guildData = _a.sent();
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     regExp = new RegExp(/\d{1,3}/);
                     if (!(commandData.args[0] === undefined || !regExp.test(commandData.args[0])
-                        || parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100)) return [3 /*break*/, 6];
+                        || parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100)) return [3 /*break*/, 5];
                     msgString_1 = '------\n**Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)**\n------';
                     msgEmbed_1 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
-                case 4:
+                case 3:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 5:
+                case 4:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 6:
+                case 5:
                     deleteCount = parseInt(commandData.args[0].toString().match(regExp)[0], 10);
                     return [4 /*yield*/, commandData.guildMember.client.channels.fetch(commandData.fromTextChannel.id)];
-                case 7:
+                case 6:
                     currentChannel = _a.sent();
                     return [4 /*yield*/, currentChannel.bulkDelete(deleteCount, true)];
-                case 8:
+                case 7:
                     _a.sent();
                     msgString = "<@!" + commandData.guildMember.id + "> I've just deleted " + deleteCount + " messages from this channel!";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Messages Purged:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 9:
+                case 8:
                     newMessage = _a.sent();
                     return [4 /*yield*/, newMessage.delete({ timeout: 5000 })];
-                case 10:
+                case 9:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 11:
+                case 10:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 12: return [2 /*return*/];
+                case 11: return [2 /*return*/];
             }
         });
     });

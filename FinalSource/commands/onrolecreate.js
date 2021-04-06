@@ -44,42 +44,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'onrolecreate';
-command.description = "It's an automatic one!";
+var GuildData_1 = __importDefault(require("../GuildData"));
+var command = {
+    name: 'onrolecreate',
+    description: "It's an automatic one!",
+    function: Function()
+};
 function execute(client, role, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, guildData, logs, x, textChannel, auditLogs, auditLogEntry, currentGuild, msgEmbed, msgString, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _a.trys.push([0, 5, , 6]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     if (!(role instanceof Discord.Role)) {
                         return [2 /*return*/, command.name];
                     }
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(role.guild)];
-                case 1:
-                    guildData = _a.sent();
-                    logs = new DiscordUser_1.default.Log();
-                    for (x = 0; x < guildData.logs.length; x += 1) {
-                        if (guildData.logs[x].nameSmall === 'rolecreate') {
-                            logs = guildData.logs[x];
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: role.guild.id,
+                        name: role.guild.name, memberCount: role.guild.memberCount });
+                    logs = void 0;
+                    for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
+                        if (guildData.exposeDataValues().logs[x].nameSmall === 'rolecreate') {
+                            logs = guildData.exposeDataValues().logs[x];
                             break;
                         }
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 2:
+                case 1:
                     textChannel = _a.sent();
                     return [4 /*yield*/, role.guild.fetchAuditLogs({ type: 'ROLE_CREATE', limit: 1 })];
-                case 3:
+                case 2:
                     auditLogs = _a.sent();
                     auditLogEntry = auditLogs.entries
                         .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
                     return [4 /*yield*/, client.guilds.fetch(role.guild.id)];
-                case 4:
+                case 3:
                     currentGuild = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = '';
@@ -92,15 +95,15 @@ function execute(client, role, discordUser) {
                         .setDescription(msgString)
                         .setColor(role.color);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 5:
+                case 4:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 6:
+                case 5:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 7: return [2 /*return*/];
+                case 6: return [2 /*return*/];
             }
         });
     });

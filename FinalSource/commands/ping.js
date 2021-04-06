@@ -44,11 +44,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var GuildData_1 = __importDefault(require("../GuildData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'ping';
-command.description = 'Simply enter !ping';
+var command = {
+    name: 'ping',
+    description: 'Simply enter !ping',
+    function: Function()
+};
 /**
  * A testing function for the early implementation of the command handler.
  */
@@ -58,40 +60,40 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 5, , 6]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _a.trys.push([0, 2, , 3]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     msgString = '------\n**Pong!**\n------';
                     msgEmbed = new Discord.MessageEmbed();
-                    if (!(commandData.guildMember instanceof Discord.GuildMember)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
+                    if (commandData.guildMember instanceof Discord.GuildMember) {
+                        guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                        msgEmbed
+                            .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                            .setColor(guildData.exposeDataValues().borderColor)
+                            .setDescription(msgString)
+                            .setTimestamp(Date())
+                            .setTitle('__**Ping! Response:**__');
+                    }
+                    else {
+                        msgEmbed
+                            .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
+                            .setColor([254, 254, 254])
+                            .setDescription(msgString)
+                            .setTimestamp(Date())
+                            .setTitle('__**Ping! Response:**__');
+                    }
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
-                    guildData = _a.sent();
-                    msgEmbed
-                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
-                        .setDescription(msgString)
-                        .setTimestamp(Date())
-                        .setTitle('__**Ping! Response:**__');
-                    return [3 /*break*/, 3];
-                case 2:
-                    msgEmbed
-                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
-                        .setColor([254, 254, 254])
-                        .setDescription(msgString)
-                        .setTimestamp(Date())
-                        .setTitle('__**Ping! Response:**__');
-                    _a.label = 3;
-                case 3: return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 4:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 5:
+                case 2:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 6: return [2 /*return*/];
+                case 3: return [2 /*return*/];
             }
         });
     });

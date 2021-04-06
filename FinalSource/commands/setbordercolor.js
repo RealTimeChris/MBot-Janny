@@ -44,20 +44,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var GuildData_1 = __importDefault(require("../GuildData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'setbordercolor';
-command.description = '__**Set Border Color Usage:**__ Sets the default color of the borders of the chat messages sent out by this bot! ' +
-    '!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL where botcolor is an array of 3 color values between 0 and 255.';
+var command = {
+    name: 'setbordercolor',
+    description: '__**Set Border Color Usage:**__ Sets the default color of the borders of the chat messages sent out by this bot! ' +
+        '!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL where botcolor is an array of 3 color values between 0 and 255.',
+    function: Function()
+};
 function execute(commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, areWeInADM, guildData, borderColor, msgString, msgEmbed_1, msgString, msgEmbed_2, msgString, msgEmbed_3, msgString, msgEmbed_4, msgEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 15, , 16]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _a.trys.push([0, 14, , 15]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
@@ -65,71 +69,69 @@ function execute(commandData, discordUser) {
                     if (areWeInADM) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
-                case 2:
-                    guildData = _a.sent();
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     borderColor = [];
-                    if (!(commandData.args[0] === undefined || (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'gamehouse' && commandData.args[0] !== 'musichouse'))) return [3 /*break*/, 4];
+                    if (!(commandData.args[0] === undefined || (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'gamehouse' && commandData.args[0] !== 'musichouse'))) return [3 /*break*/, 3];
                     msgString = "------\n**Please, enter a bot's name as the first argument to this command! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------";
                     msgEmbed_1 = new Discord.MessageEmbed();
                     msgEmbed_1
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
-                case 3:
+                case 2:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 4:
+                case 3:
                     if (commandData.args[0].toLowerCase() !== 'janny') {
                         return [2 /*return*/, commandReturnData];
                     }
-                    _a.label = 5;
-                case 5:
-                    if (!(parseInt(commandData.args[1], 10) > 255 || parseInt(commandData.args[1]) < 0 || commandData.args[1] === undefined)) return [3 /*break*/, 7];
+                    _a.label = 4;
+                case 4:
+                    if (!(parseInt(commandData.args[1], 10) > 255 || parseInt(commandData.args[1]) < 0 || commandData.args[1] === undefined)) return [3 /*break*/, 6];
                     msgString = "------\n**Please, enter a red-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------";
                     msgEmbed_2 = new Discord.MessageEmbed();
                     msgEmbed_2
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
-                case 6:
+                case 5:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 7:
-                    if (!(parseInt(commandData.args[2], 10) > 255 || parseInt(commandData.args[2]) < 0 || commandData.args[2] === undefined)) return [3 /*break*/, 9];
+                case 6:
+                    if (!(parseInt(commandData.args[2], 10) > 255 || parseInt(commandData.args[2]) < 0 || commandData.args[2] === undefined)) return [3 /*break*/, 8];
                     msgString = "------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------";
                     msgEmbed_3 = new Discord.MessageEmbed();
                     msgEmbed_3
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
-                case 8:
+                case 7:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 9:
-                    if (!(parseInt(commandData.args[3], 10) > 255 || parseInt(commandData.args[3]) < 0 || commandData.args[3] === undefined)) return [3 /*break*/, 11];
+                case 8:
+                    if (!(parseInt(commandData.args[3], 10) > 255 || parseInt(commandData.args[3]) < 0 || commandData.args[3] === undefined)) return [3 /*break*/, 10];
                     msgString = "------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------";
                     msgEmbed_4 = new Discord.MessageEmbed();
                     msgEmbed_4
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_4)];
-                case 10:
+                case 9:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 11:
+                case 10:
                     borderColor[0] = parseInt(commandData.args[1], 10);
                     if (borderColor[0] === 255) {
                         borderColor[0] = 254;
@@ -142,29 +144,29 @@ function execute(commandData, discordUser) {
                     if (borderColor[2] === 255) {
                         borderColor[2] = 254;
                     }
-                    _a.label = 12;
+                    _a.label = 11;
+                case 11:
+                    guildData.exposeDataValues().borderColor = borderColor;
+                    return [4 /*yield*/, guildData.writeToDataBase()];
                 case 12:
-                    guildData.borderColor = borderColor;
-                    return [4 /*yield*/, discordUser.updateGuildDataInDB(guildData)];
-                case 13:
                     _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
-                        .setDescription("Nicely done, you've updated the default border color for this bot!\n------\n__**Border Color Values:**__ " + guildData.borderColor + "\n------")
+                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setDescription("Nicely done, you've updated the default border color for this bot!\n------\n__**Border Color Values:**__ " + guildData.exposeDataValues().borderColor + "\n------")
                         .setTimestamp(Date())
                         .setTitle('__**Updated Border Color:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 14:
+                case 13:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 15:
+                case 14:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 16: return [2 /*return*/];
+                case 15: return [2 /*return*/];
             }
         });
     });

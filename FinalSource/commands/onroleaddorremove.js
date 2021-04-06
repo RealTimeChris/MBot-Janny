@@ -44,29 +44,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'onroleaddorremove';
-command.description = "It's an automatic one!";
+var GuildData_1 = __importDefault(require("../GuildData"));
+var command = {
+    name: 'onroleaddorremove',
+    description: "It's an automatic one!",
+    function: Function()
+};
 function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, guildData, logs, x, newRoleCollection, newRole, textChannel, auditLogs, auditLogEntry, finalString, messageEmbed, finalString, messageEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 7, , 8]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _a.trys.push([0, 6, , 7]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     if (!(oldGuildMemberRoleManager instanceof Discord.GuildMemberRoleManager)) {
                         return [2 /*return*/, command.name];
                     }
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(newGuildMember.guild)];
-                case 1:
-                    guildData = _a.sent();
-                    logs = new DiscordUser_1.default.Log();
-                    for (x = 0; x < guildData.logs.length; x += 1) {
-                        if (guildData.logs[x].nameSmall === 'roleaddorremove') {
-                            logs = guildData.logs[x];
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newGuildMember.guild.id,
+                        name: newGuildMember.guild.name, memberCount: newGuildMember.guild.memberCount });
+                    logs = void 0;
+                    for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
+                        if (guildData.exposeDataValues().logs[x].nameSmall === 'roleaddorremove') {
+                            logs = guildData.exposeDataValues().logs[x];
                             break;
                         }
                     }
@@ -75,11 +78,11 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                     newRole = newRoleCollection.first();
                     textChannel = client.channels.resolve(logs.loggingChannelID);
                     return [4 /*yield*/, newGuildMember.guild.fetchAuditLogs({ type: 'MEMBER_ROLE_UPDATE', limit: 1 })];
-                case 2:
+                case 1:
                     auditLogs = _a.sent();
                     auditLogEntry = auditLogs.entries
                         .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
-                    if (!(collectionSizeDifference > 0)) return [3 /*break*/, 4];
+                    if (!(collectionSizeDifference > 0)) return [3 /*break*/, 3];
                     finalString = "__**Role Lost:**__ <@&" + newRole.id + "> (" + newRole.name + ")\n";
                     finalString += "__**Role Taken By:**__ <@!" + auditLogEntry.executor.id + "> (" + auditLogEntry.executor.tag + ")\n";
                     finalString += "__**User:**__ <@!" + newGuildMember.user.id + ">\n";
@@ -93,11 +96,11 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                         .setThumbnail(newGuildMember.user.avatarURL())
                         .setDescription(finalString);
                     return [4 /*yield*/, textChannel.send(messageEmbed)];
-                case 3:
+                case 2:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 4:
-                    if (!(collectionSizeDifference < 0)) return [3 /*break*/, 6];
+                case 3:
+                    if (!(collectionSizeDifference < 0)) return [3 /*break*/, 5];
                     finalString = "__**Role Gained:**__ <@&" + newRole.id + "> (" + newRole.name + ")\n";
                     finalString += "__**Role Given By:**__ <@!" + auditLogEntry.executor.id + "> (" + auditLogEntry.executor.tag + ")\n";
                     finalString += "__**User:**__ <@!" + newGuildMember.user.id + ">\n";
@@ -111,16 +114,16 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                         .setThumbnail(newGuildMember.user.avatarURL())
                         .setDescription(finalString);
                     return [4 /*yield*/, textChannel.send(messageEmbed)];
-                case 5:
+                case 4:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 6: return [2 /*return*/, command.name];
-                case 7:
+                case 5: return [2 /*return*/, command.name];
+                case 6:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 8: return [2 /*return*/];
+                case 7: return [2 /*return*/];
             }
         });
     });
