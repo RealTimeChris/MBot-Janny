@@ -53,7 +53,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
     private deletionChannels:FoundationClasses.DeletionChannel[] = [];
     private defaultRoleIDs: string[] = [];
 
-    async getFromDataBase(){
+    async getFromDataBase(): Promise<void> {
         try{
             const guildData = await this.dataBase?.get(this.dataBaseKey) as GuildData;
             this.borderColor = guildData.borderColor;
@@ -74,7 +74,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             }
         }
     }
-    async writeToDataBase(){
+    async writeToDataBase(): Promise<void> {
         if (this.guildName === ''){
             const error = new Error();
             error.name = "Non-Initialized Structure";
@@ -83,7 +83,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
         }
         await this.dataBase?.put(this.dataBaseKey, this);
     }
-    exposeDataValues(){
+    exposeDataValues(): GuildDataValues {
         const dataValues: GuildDataValues = {id: this.id, borderColor: this.borderColor, deletionChannels: this.deletionChannels,
             defaultRoleIDs: this.defaultRoleIDs, ghostedRoleID: this.ghostedRoleID, logs: this.logs, timedMessages: this.timedMessages, verificationSystem: this.verificationSystem,
             guildName: this.guildName, memberCount: this.memberCount, trackedUsers: this.trackedUsers};
