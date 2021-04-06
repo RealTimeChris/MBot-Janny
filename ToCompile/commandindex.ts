@@ -36,13 +36,13 @@ import onguilddelete from './commands/onguilddelete';
 commands.set(onguilddelete.name, onguilddelete);
 import onguildmemberadd from './commands/onguildmemberadd';
 commands.set(onguildmemberadd.name, onguildmemberadd);
-/*
 import onguildmemberremove from './commands/onguildmemberremove';
 commands.set(onguildmemberremove.name, onguildmemberremove);
 import oninvitecreate from './commands/oninvitecreate';
 commands.set(oninvitecreate.name, oninvitecreate);
 import onmessagedelete from './commands/onmessagedelete';
 commands.set(onmessagedelete.name, onmessagedelete);
+/*
 import onmessagedeletebulk from './commands/onmessagedeletebulk';
 commands.set(onmessagedeletebulk.name, onmessagedeletebulk);
 import onmessagereactionadd from './commands/onmessagereactionadd';

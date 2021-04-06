@@ -44,88 +44,91 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'onmessagereactionadd';
-command.description = "It's an automatic one!";
+var GuildData_1 = __importDefault(require("../GuildData"));
+var command = {
+    name: 'onmessagereactionadd',
+    description: "It's an automatic one!",
+    function: Function()
+};
 function execute(messageReaction, client, args, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, guildData, userID, x, currentGuild, currentGuildMember, currentGuildMemberRoleManager, y, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 13, , 14]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _a.trys.push([0, 12, , 13]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(messageReaction.message.guild)];
-                case 1:
-                    guildData = _a.sent();
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: messageReaction.message.guild.id,
+                        name: messageReaction.message.guild.name, memberCount: messageReaction.message.guild.memberCount });
                     if (messageReaction instanceof Discord.MessageReaction === false) {
                         return [2 /*return*/, command.name];
                     }
                     userID = (messageReaction.users.cache
                         .array()[messageReaction.users.cache.array().length - 1]).id;
                     x = 0;
-                    _a.label = 2;
+                    _a.label = 1;
+                case 1:
+                    if (!(x < discordUser.guildsData.size)) return [3 /*break*/, 11];
+                    if (messageReaction.message.guild.id !== guildData.exposeDataValues().id) {
+                        if (x === discordUser.guildsData.size - 1) {
+                            return [3 /*break*/, 11];
+                        }
+                        return [3 /*break*/, 10];
+                    }
+                    if (messageReaction.message.channel.id !== guildData.exposeDataValues().verificationSystem.channelID) {
+                        if (x === discordUser.guildsData.size - 1) {
+                            return [3 /*break*/, 11];
+                        }
+                        return [3 /*break*/, 10];
+                    }
+                    if (messageReaction.message.id !== guildData.exposeDataValues().verificationSystem.messageID) {
+                        if (x === discordUser.guildsData.size - 1) {
+                            return [3 /*break*/, 11];
+                        }
+                        return [3 /*break*/, 10];
+                    }
+                    if (!(messageReaction.emoji.name === guildData.exposeDataValues()
+                        .verificationSystem.emoji && userID !== client.user.id)) return [3 /*break*/, 8];
+                    return [4 /*yield*/, client.guilds.fetch(guildData.exposeDataValues().id)];
                 case 2:
-                    if (!(x < discordUser.guildsData.size)) return [3 /*break*/, 12];
-                    if (messageReaction.message.guild.id !== guildData.guildID) {
-                        if (x === discordUser.guildsData.size - 1) {
-                            return [3 /*break*/, 12];
-                        }
-                        return [3 /*break*/, 11];
-                    }
-                    if (messageReaction.message.channel.id !== guildData.verificationSystem.channelID) {
-                        if (x === discordUser.guildsData.size - 1) {
-                            return [3 /*break*/, 12];
-                        }
-                        return [3 /*break*/, 11];
-                    }
-                    if (messageReaction.message.id !== guildData.verificationSystem.messageID) {
-                        if (x === discordUser.guildsData.size - 1) {
-                            return [3 /*break*/, 12];
-                        }
-                        return [3 /*break*/, 11];
-                    }
-                    if (!(messageReaction.emoji.name === guildData
-                        .verificationSystem.emoji && userID !== client.user.id)) return [3 /*break*/, 9];
-                    return [4 /*yield*/, client.guilds.fetch(guildData.guildID)];
-                case 3:
                     currentGuild = _a.sent();
                     currentGuildMember = currentGuild.members.resolve(userID);
                     currentGuildMemberRoleManager = new Discord
                         .GuildMemberRoleManager(currentGuildMember);
                     y = 0;
-                    _a.label = 4;
+                    _a.label = 3;
+                case 3:
+                    if (!(y < guildData.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 7];
+                    return [4 /*yield*/, currentGuildMemberRoleManager.add(guildData.exposeDataValues().defaultRoleIDs[y])];
                 case 4:
-                    if (!(y < guildData.defaultRoleIDs.length)) return [3 /*break*/, 8];
-                    return [4 /*yield*/, currentGuildMemberRoleManager.add(guildData.defaultRoleIDs[y])];
+                    _a.sent();
+                    return [4 /*yield*/, messageReaction.users.remove(userID)];
                 case 5:
                     _a.sent();
-                    return [4 /*yield*/, messageReaction.users.remove(userID)];
+                    _a.label = 6;
                 case 6:
-                    _a.sent();
-                    _a.label = 7;
-                case 7:
                     y += 1;
-                    return [3 /*break*/, 4];
-                case 8: return [3 /*break*/, 11];
-                case 9:
-                    if (!(userID !== client.user.id)) return [3 /*break*/, 11];
+                    return [3 /*break*/, 3];
+                case 7: return [3 /*break*/, 10];
+                case 8:
+                    if (!(userID !== client.user.id)) return [3 /*break*/, 10];
                     return [4 /*yield*/, messageReaction.users.remove(userID)];
-                case 10:
+                case 9:
                     _a.sent();
-                    _a.label = 11;
-                case 11:
+                    _a.label = 10;
+                case 10:
                     x += 1;
-                    return [3 /*break*/, 2];
-                case 12: return [2 /*return*/, command.name];
-                case 13:
+                    return [3 /*break*/, 1];
+                case 11: return [2 /*return*/, command.name];
+                case 12:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 14: return [2 /*return*/];
+                case 13: return [2 /*return*/];
             }
         });
     });

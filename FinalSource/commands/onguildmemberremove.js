@@ -44,45 +44,47 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'onguildmemberremove';
-command.description = "It's an automatic one!";
+var GuildData_1 = __importDefault(require("../GuildData"));
+var command = {
+    name: 'onguildmemberremove',
+    description: "It's an automatic one!",
+    function: Function()
+};
 function execute(client, guildMember, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, guildData, logs, x, textChannel, currentGuild, auditLog, augitLogEntry, msgEmbed, msgString, msgString, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 9, , 10]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _a.trys.push([0, 8, , 9]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     if (!(guildMember instanceof Discord.GuildMember)) {
                         return [2 /*return*/, command.name];
                     }
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(guildMember.guild)];
-                case 1:
-                    guildData = _a.sent();
-                    logs = new DiscordUser_1.default.Log();
-                    for (x = 0; x < guildData.logs.length; x += 1) {
-                        if (guildData.logs[x].nameSmall === 'guildmemberremove') {
-                            logs = guildData.logs[x];
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guildMember.guild.id, name: guildMember.guild.name, memberCount: guildMember.guild.memberCount });
+                    logs = void 0;
+                    for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
+                        if (guildData.exposeDataValues().logs[x].nameSmall === 'guildmemberremove') {
+                            logs = guildData.exposeDataValues().logs[x];
                             break;
                         }
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 2:
+                case 1:
                     textChannel = _a.sent();
                     return [4 /*yield*/, client.guilds.fetch(guildMember.guild.id)];
-                case 3:
+                case 2:
                     currentGuild = _a.sent();
                     return [4 /*yield*/, guildMember.guild.fetchAuditLogs({ type: 'MEMBER_KICK', limit: 1 })];
-                case 4:
+                case 3:
                     auditLog = _a.sent();
                     augitLogEntry = auditLog.entries
                         .find(function (auditLogs) { return Date.now() - auditLogs.createdTimestamp < 5000; });
                     msgEmbed = new Discord.MessageEmbed();
-                    if (!(augitLogEntry !== undefined)) return [3 /*break*/, 6];
+                    if (!(augitLogEntry !== undefined)) return [3 /*break*/, 5];
                     msgString = "__**Kicked By:**__ <@!" + augitLogEntry.executor.id + "> (" + augitLogEntry.executor.tag + ")\n";
                     msgString += "__**Member Count**__: " + currentGuild.memberCount + "\n";
                     msgString += "__**User:**__ <@!" + guildMember.id + ">\n";
@@ -96,10 +98,10 @@ function execute(client, guildMember, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Guild Member Kicked:**__');
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 5:
+                case 4:
                     _a.sent();
-                    return [3 /*break*/, 8];
-                case 6:
+                    return [3 /*break*/, 7];
+                case 5:
                     msgString = "__**Member Count**__: " + currentGuild.memberCount + "\n";
                     msgString += "__**User:**__ <@!" + guildMember.id + ">\n";
                     msgString += "__**User Tag:**__ " + guildMember.user.tag + "\n";
@@ -112,16 +114,16 @@ function execute(client, guildMember, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Guild Member Left:**__');
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 7:
+                case 6:
                     _a.sent();
-                    _a.label = 8;
-                case 8: return [2 /*return*/, command.name];
-                case 9:
+                    _a.label = 7;
+                case 7: return [2 /*return*/, command.name];
+                case 8:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 10: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });

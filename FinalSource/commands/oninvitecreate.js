@@ -44,34 +44,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'oninvitecreate';
-command.description = "It's an automatic one!";
+var GuildData_1 = __importDefault(require("../GuildData"));
+var command = {
+    name: 'oninvitecreate',
+    description: "It's an automatic one!",
+    function: Function()
+};
 function execute(client, invite, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, guildData, logs, x, textChannel, msgEmbed, msgString, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 4, , 5]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _a.trys.push([0, 3, , 4]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     if (!(invite instanceof Discord.Invite)) {
                         return [2 /*return*/, command.name];
                     }
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(invite.guild)];
-                case 1:
-                    guildData = _a.sent();
-                    logs = new DiscordUser_1.default.Log();
-                    for (x = 0; x < guildData.logs.length; x += 1) {
-                        if (guildData.logs[x].nameSmall === 'invitecreate') {
-                            logs = guildData.logs[x];
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: invite.guild.id, name: invite.guild.name, memberCount: invite.guild.memberCount });
+                    logs = void 0;
+                    for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
+                        if (guildData.exposeDataValues().logs[x].nameSmall === 'invitecreate') {
+                            logs = guildData.exposeDataValues().logs[x];
                             break;
                         }
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 2:
+                case 1:
                     textChannel = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = '';
@@ -83,17 +85,17 @@ function execute(client, invite, discordUser) {
                         .setTitle('__**New Invite:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString)
-                        .setColor(guildData.borderColor);
+                        .setColor(guildData.exposeDataValues().borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 3:
+                case 2:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 4:
+                case 3:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 5: return [2 /*return*/];
+                case 4: return [2 /*return*/];
             }
         });
     });
