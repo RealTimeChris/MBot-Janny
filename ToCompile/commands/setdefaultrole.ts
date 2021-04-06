@@ -7,7 +7,7 @@
 
 import Discord = require('discord.js');
 import FoundationClasses = require('../FoundationClasses');
-import DiscordUser = require('../DiscordUser');
+import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
 import HelperFunctions from '../HelperFunctions';
 
@@ -18,7 +18,7 @@ const command: FoundationClasses.BotCommand = {
     function: Function()
 };
 
-async function execute(commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<FoundationClasses.CommandReturnData> {
+async function execute(commandData: FoundationClasses.CommandData, discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name

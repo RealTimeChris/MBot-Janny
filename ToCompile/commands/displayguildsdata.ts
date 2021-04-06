@@ -7,7 +7,7 @@
 
 import Discord = require('discord.js');
 import FoundationClasses = require('../FoundationClasses');
-import DiscordUser = require('../DiscordUser');
+import DiscordUser from '../DiscordUser';
 import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {
@@ -19,7 +19,7 @@ const command: FoundationClasses.BotCommand = {
 /**
  * Displays all of the data for all of the guilds, either in console or in chat.
  */
-async function execute(commandData : FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<FoundationClasses.CommandReturnData> {
+async function execute(commandData : FoundationClasses.CommandData, discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
 	try {
 		const commandReturnData: FoundationClasses.CommandReturnData = {
 			commandName: command.name

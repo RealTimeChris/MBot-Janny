@@ -7,13 +7,13 @@
 
 import Discord = require('discord.js');
 import FoundationClasses = require('./FoundationClasses');
-import DiscordUser = require('./DiscordUser');
+import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
 import botCommands from './commandindex';
 import HelperFunctions from './HelperFunctions';
 import config = require('../ToCompile/config.json');
 
-const discordUser = new DiscordUser.DiscordUser();
+const discordUser = new DiscordUser();
 const client = new Discord.Client() as any;
 
 client.ws.on('INTERACTION_CREATE', async (interaction: any) => {

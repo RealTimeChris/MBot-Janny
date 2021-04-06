@@ -7,7 +7,7 @@
 
 import Discord = require('discord.js');
 import FoundationClasses = require('../FoundationClasses');
-import commandIndex from '../commandindex';
+import botCommands from '../commandindex';
 import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {
@@ -25,7 +25,7 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
             commandName: command.name
         };
         commandReturnData.commandName = command.name;
-        const commandFiles = commandIndex.commands;
+        const commandFiles = botCommands.commands;
 
         if (commandData.args[0] === undefined) {
             const commandNames: string[] = [];

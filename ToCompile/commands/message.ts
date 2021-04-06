@@ -7,7 +7,7 @@
 
 import Discord = require('discord.js');
 import FoundationClasses = require('../FoundationClasses');
-import DiscordUser = require('../DiscordUser');
+import DiscordUser from '../DiscordUser';
 
 const command: FoundationClasses.BotCommand = {
     name: 'message',
@@ -15,7 +15,7 @@ const command: FoundationClasses.BotCommand = {
     function: Function()
 };
 
-async function trackIfTrackedUser(message: Discord.Message, commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<void> {
+async function trackIfTrackedUser(message: Discord.Message, commandData: FoundationClasses.CommandData, discordUser: DiscordUser): Promise<void> {
     try{
         if (message.guild === undefined || message.guild === null){
             return;
@@ -60,7 +60,7 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
 * Selects a chosen chat message and sends it via the appropriate channel,
 * upon recieving a trigger phrase or word.
 */
-async function execute(message: Discord.Message, commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<string> {
+async function execute(message: Discord.Message, commandData: FoundationClasses.CommandData, discordUser: DiscordUser): Promise<string> {
     try {
         await trackIfTrackedUser(message, commandData, discordUser);
 

@@ -7,7 +7,7 @@
 
 import Discord = require('discord.js');
 import FoundationClasses = require('../FoundationClasses');
-import DiscordUser = require('../DiscordUser');
+import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
 
 const command: FoundationClasses.BotCommand = {
@@ -17,7 +17,7 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(client: Discord.Client, guild: Discord.Guild, user: Discord.User,
-    discordUser: DiscordUser.DiscordUser): Promise<string> {
+    discordUser: DiscordUser): Promise<string> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
@@ -29,7 +29,7 @@ async function execute(client: Discord.Client, guild: Discord.Guild, user: Disco
 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount});
         await guildData.getFromDataBase();
-        
+
         setTimeout(async () => {
             let logs: FoundationClasses.Log;
             for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {

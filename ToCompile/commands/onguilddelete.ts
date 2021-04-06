@@ -7,7 +7,7 @@
 
 import Discord = require('discord.js');
 import FoundationClasses = require('../FoundationClasses');
-import DiscordUser = require('../DiscordUser');
+import DiscordUser from '../DiscordUser';
 
 const command: FoundationClasses.BotCommand = {
     name: 'onguilddelete',
@@ -16,13 +16,13 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(guild: Discord.Guild, 
-    discordUser: DiscordUser.DiscordUser): Promise<string> {
+    discordUser: DiscordUser): Promise<string> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
 		commandReturnData.commandName = command.name;
-        if (!(discordUser instanceof DiscordUser.DiscordUser)) {
+        if (!(discordUser instanceof DiscordUser)) {
             return command.name;
         }
 

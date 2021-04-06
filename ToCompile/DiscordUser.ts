@@ -40,7 +40,7 @@ export interface DiscordUserData {
 /**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
-export class DiscordUser {
+export default class DiscordUser {
     userData: DiscordUserData = {userID: '', userName: '', publicKey:'', clientID: '', guildCount: 0, botToken: '',
         msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
         timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, activeInviteGuilds: [], botCommanders: [], msBetweenMessageDeletion: 0};

@@ -7,7 +7,7 @@
 
 import Discord = require('discord.js');
 import FoundationClasses = require('./FoundationClasses');
-import DiscordUser = require('./DiscordUser');
+import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
 import Level from 'level-ts';
 
@@ -169,7 +169,7 @@ module HelperFunctions{
     /**
      * Checks if we have admin permissions in the current channel.
      */
-    export async function doWeHaveAdminPermission(commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<boolean> {
+    export async function doWeHaveAdminPermission(commandData: FoundationClasses.CommandData, discordUser: DiscordUser): Promise<boolean> {
         try {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
             const currentChannelPermissions = (commandData.guildMember! as Discord.GuildMember).permissionsIn(commandData.permsChannel!);
@@ -328,8 +328,8 @@ module HelperFunctions{
     /**
 	* Caches messages for each of the guilds that have an active "verification" system.
 	*/
-    export async function cacheMessagesForVerification(client: Discord.Client, discordUser: DiscordUser.DiscordUser): Promise<void> {
-		discordUser.guildsData.forEach(async guildData => {
+    export async function cacheMessagesForVerification(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
+		discordUser.guildsData.forEach(async (guildData: GuildData) => {
 			const newGuildData = guildData;
 			try {
 				if (newGuildData.exposeDataValues().verificationSystem!.channelID != '') {
@@ -377,7 +377,7 @@ module HelperFunctions{
     /**
     * Updates and saves the Discord record, which contains user information.
     */
-    export async function updateAndSaveDiscordRecordIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser.DiscordUser): Promise<void> {
+    export async function updateAndSaveDiscordRecordIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
         try {
             const currentTime = new Date().getTime();
 
@@ -412,7 +412,7 @@ module HelperFunctions{
     * Sends out an invite to a user from a selected list of users,
     * if the server has been nuked/deleted.
     */
-    export async function sendInviteIfTimeHasPassedAndGuildIsActive(client: Discord.Client, discordUser: DiscordUser.DiscordUser): Promise<void> {
+    export async function sendInviteIfTimeHasPassedAndGuildIsActive(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
         try {
             if (discordUser.userData.activeInviteGuilds.length === 0) {
                 return new Promise((resolve, reject) => {
@@ -564,7 +564,7 @@ module HelperFunctions{
     * Purges all of the selected messages within the given channels,
     * of each of the instance's guilds.
     */
-    export async function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: GuildData, channelIndex: number, discordUser: DiscordUser.DiscordUser): Promise<void> {
+    export async function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: GuildData, channelIndex: number, discordUser: DiscordUser): Promise<void> {
         try {
             const { numberOfMessagesToSave } = guildData.exposeDataValues().deletionChannels![channelIndex]!;
             const { channelID } = guildData.exposeDataValues().deletionChannels![channelIndex]!;
@@ -773,7 +773,7 @@ module HelperFunctions{
     /**
     * Purges the actively-being-purged text channels, if enough time has passed.
     */
-    export async function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser.DiscordUser): Promise<void> {
+    export async function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
         try {
             discordUser.guildsData.forEach(async (guild: GuildData) => {
                 if (guild.exposeDataValues().deletionChannels!.length > 0) {
@@ -797,7 +797,7 @@ module HelperFunctions{
     /**
     * Sends out the timed messages within each server, if enough time has passed.
     */
-    export async function sendTimedMessagesIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser.DiscordUser): Promise<void> {
+    export async function sendTimedMessagesIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
         try {
             discordUser.guildsData.forEach(async guildData => {
                 for (let y = 0; y < guildData.exposeDataValues().timedMessages!.length; y += 1) {
