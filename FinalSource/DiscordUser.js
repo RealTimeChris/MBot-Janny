@@ -254,6 +254,7 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, guildData.getFromDataBase()];
                     case 2:
                         _a.sent();
+                        console.log(guildData);
                         return [4 /*yield*/, guildData.writeToDataBase()];
                     case 3:
                         _a.sent();
@@ -305,6 +306,7 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, guildMemberData.getFromDataBase()];
                     case 5:
                         _a.sent();
+                        console.log(guildMemberData);
                         return [4 /*yield*/, guildMemberData.writeToDataBase()];
                     case 6:
                         _a.sent();
