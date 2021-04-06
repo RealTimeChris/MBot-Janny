@@ -194,8 +194,8 @@ export default class DiscordUser {
     }
 
     /**
-        * Function for updating all of the guild member's data caches,
-        */
+    * Function for updating all of the guild member's data caches,
+    */
     private async updateGuildMembersData(client: Discord.Client): Promise<void> {
         try {
             const liveDataGuildArray = client.guilds.cache.array();
