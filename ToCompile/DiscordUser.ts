@@ -181,6 +181,10 @@ export class DiscordUser {
                 console.log(`Updating the guild data, for guild number ${x}!`);
                 const guildData = new GuildData({dataBase: this.dataBase, id: liveDataGuildArray[x]!.id, memberCount: liveDataGuildArray[x]!.memberCount, name: liveDataGuildArray[x]!.name});
                 await guildData.getFromDataBase();
+                for (let x = 0; x < guildData.exposeDataValues().deletionChannels!.length ; x += 1){
+                    guildData.exposeDataValues().deletionChannels![x]!.currentlyBeingDeleted = false;
+                    guildData.exposeDataValues().deletionChannels![x]!.timeOfLastPurge = 0;
+                }                
                 await guildData.writeToDataBase();
                 this.guildsData.set(liveDataGuildArray[x]!.id, guildData);
             }

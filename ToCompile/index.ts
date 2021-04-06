@@ -591,7 +591,7 @@ client.on('messageDelete', async (message: Discord.Message) => {
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: message.guild!.id, name: message.guild!.name, memberCount: message.guild!.memberCount});
 		await guildData.getFromDataBase();
 		for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-			if (guildData.exposeDataValues().logs![x]!.nameSmall === 'messageDelete') {
+			if (guildData.exposeDataValues().logs![x]!.nameSmall === 'messagedelete') {
 				if (guildData.exposeDataValues().logs![x]!.enabled === false) {
 					return;
 				}
@@ -617,7 +617,7 @@ client.on('messageDeleteBulk', async (collection: Discord.Collection<string, Dis
 	const guildData = new GuildData({dataBase: discordUser.dataBase, id: collection.first()!.guild!.id, name: collection.first()!.guild!.name, memberCount: collection.first()!.guild!.memberCount});
 	await guildData.getFromDataBase();
 	for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'messageDeleteBulk') {
+		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'messagedeletebulk') {
 			if (guildData.exposeDataValues().logs![x]!.enabled === false) {
 				return;
 			}
@@ -727,4 +727,3 @@ client.on('userUpdate', async (oldUser: Discord.User, newUser: Discord.User) => 
 });
 
 client.login(config.botToken);
-

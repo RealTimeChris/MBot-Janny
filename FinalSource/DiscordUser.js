@@ -237,7 +237,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateGuildsData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var liveDataGuildArray, x, guildData, error_5;
+            var liveDataGuildArray, x, guildData, x_1, error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -254,6 +254,10 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, guildData.getFromDataBase()];
                     case 2:
                         _a.sent();
+                        for (x_1 = 0; x_1 < guildData.exposeDataValues().deletionChannels.length; x_1 += 1) {
+                            guildData.exposeDataValues().deletionChannels[x_1].currentlyBeingDeleted = false;
+                            guildData.exposeDataValues().deletionChannels[x_1].timeOfLastPurge = 0;
+                        }
                         return [4 /*yield*/, guildData.writeToDataBase()];
                     case 3:
                         _a.sent();
