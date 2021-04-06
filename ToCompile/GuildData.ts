@@ -26,7 +26,6 @@ export interface GuildDataValues {
     borderColor?: [number, number, number];
     guildName?: string;
     memberCount?: number;
-    gameChannelIDs?: string[];
     trackedUsers?: FoundationClasses.TrackedUser[];
     ghostedRoleID?: string;
     timedMessages?: FoundationClasses.TimedMessage[];

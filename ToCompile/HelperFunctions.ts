@@ -172,6 +172,8 @@ module HelperFunctions{
     export async function doWeHaveAdminPermission(commandData: FoundationClasses.CommandData, discordUser: DiscordUser): Promise<boolean> {
         try {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+            await guildData.getFromDataBase();
+
             const currentChannelPermissions = (commandData.guildMember! as Discord.GuildMember).permissionsIn(commandData.permsChannel!);
 
             const permissionStrings = 'ADMINISTRATOR';
