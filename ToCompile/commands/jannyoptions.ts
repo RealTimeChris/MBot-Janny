@@ -6,16 +6,22 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from '../DiscordUser';
+import DiscordUser = require('../DiscordUser');
+import GuildData from '../GuildData';
+import FoundationClasses = require('../FoundationClasses');
 import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordUser.BotCommand();
-command.name = 'jannyoptions';
-command.description = '!jannyoptions, to display a list of options for this bot!';
+const command: FoundationClasses.BotCommand = {
+	name: 'jannyoptions',
+	description: '!jannyoptions, to display a list of options for this bot!',
+	function: Function()
+};
 
-async function execute(commandData: DiscordUser.CommandData,  discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
+async function execute(commandData: FoundationClasses.CommandData,  discordUser: DiscordUser.DiscordUser): Promise<FoundationClasses.CommandReturnData> {
 	try {
-		const commandReturnData = new DiscordUser.CommandReturnData();
+		const commandReturnData: FoundationClasses.CommandReturnData = {
+			commandName: command.name
+		};
 		commandReturnData.commandName = command.name;
 		const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
@@ -29,20 +35,20 @@ async function execute(commandData: DiscordUser.CommandData,  discordUser: Disco
 			return commandReturnData;
 		}
 
-		const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
+		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 
 		const msgEmbed = new Discord.MessageEmbed();
 		msgEmbed
 			.setAuthor((commandData.guildMember as Discord.GuildMember).client.user!.username, (commandData.guildMember as Discord.GuildMember).client.user!.avatarURL()!)
 			.setTimestamp(Date() as unknown as Date)
 			.setTitle('__**Janny Options:**__')
-			.setColor(guildData.borderColor as [number, number, number])
+			.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 			.setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
 
 		const fields = [];
 		let resultIcon = '❌';
-		for (let x = 0; x < guildData.logs.length; x += 1) {
-			if (guildData.logs[x]!.enabled === true) {
+		for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+			if (guildData.exposeDataValues().logs![x]!.enabled === true) {
 				resultIcon = '✅';
 				break;
 			}
@@ -52,7 +58,7 @@ async function execute(commandData: DiscordUser.CommandData,  discordUser: Disco
 		fields.push(logsField);
 
 		resultIcon = '❌';
-		if (guildData.defaultRoleIDs.length > 0) {
+		if (guildData.exposeDataValues().defaultRoleIDs!.length > 0) {
 			resultIcon = '✅';
 		}
 		const defaultRolesField = { name: '__**Default Roles:**__', value: `__Active:__ ${resultIcon}\n
@@ -60,7 +66,7 @@ async function execute(commandData: DiscordUser.CommandData,  discordUser: Disco
 		fields.push(defaultRolesField);
 
 		resultIcon = '❌';
-		if (guildData.deletionChannels.length > 0) {
+		if (guildData.exposeDataValues().deletionChannels!.length > 0) {
 			resultIcon = '✅';
 		}
 		const deletionChannelsField = { name: '__**Delete Messages From Channels:**__', value: `__Active:__ ${resultIcon}\n
@@ -78,7 +84,7 @@ async function execute(commandData: DiscordUser.CommandData,  discordUser: Disco
 		fields.push(replacementServerInviteField);
 
 		resultIcon = '❌';
-		if (guildData.verificationSystem.channelID != '') {
+		if (guildData.exposeDataValues().verificationSystem!.channelID != '') {
 			resultIcon = '✅';
 		}
 		const requireServerVerificationField = { name: '__**Require Server Verification:**__', value: `__Active:__ ${resultIcon}\n
@@ -86,7 +92,7 @@ async function execute(commandData: DiscordUser.CommandData,  discordUser: Disco
 		fields.push(requireServerVerificationField);
 
 		resultIcon = '❌';
-		if (guildData.timedMessages.length > 0) {
+		if (guildData.exposeDataValues().timedMessages!.length > 0) {
 			resultIcon = '✅';
 		}
 		const timedMessagesField = { name: '__**Send Out Timed Messages:**__', value: `__Active:__ ${resultIcon}\n
@@ -94,7 +100,7 @@ async function execute(commandData: DiscordUser.CommandData,  discordUser: Disco
 		fields.push(timedMessagesField);
 		
 		resultIcon = '❌';
-		if (guildData.trackedUsers.length > 0) {
+		if (guildData.exposeDataValues().trackedUsers!.length > 0) {
 			resultIcon = '✅';
 		}
 		const trackUsersField = { name: "__**Track User's Messages:**__", value: `__Active:__ ${resultIcon}\n
@@ -111,4 +117,4 @@ async function execute(commandData: DiscordUser.CommandData,  discordUser: Disco
 	}
 }
 command.function = execute;
-export default command as DiscordUser.BotCommand;
+export default command as FoundationClasses.BotCommand;

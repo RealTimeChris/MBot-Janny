@@ -6,23 +6,26 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from '../DiscordUser';
+import FoundationClasses = require('../FoundationClasses');
 import HelperFunctions from '../HelperFunctions';
-import commandIndex = require('../commandindex');
+import commandIndex from '../commandindex';
 
-const command = new DiscordUser.BotCommand();
-
-command.name = 'help';
-command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to get help with a specific COMMAND.';
+const command: FoundationClasses.BotCommand = {
+    name: 'help',
+    description: 'Help Usage: !help, or !help = COMMANDNAME, in order to get help with a specific COMMAND.',
+    function: Function()
+};
 
 /**
  * Returns a menu of helping information for the various commands I have.
  */
-async function execute(commandData: DiscordUser.CommandData): Promise<DiscordUser.CommandReturnData> {
+async function execute(commandData: FoundationClasses.CommandData): Promise<FoundationClasses.CommandReturnData> {
     try {
-        const commandReturnData = new DiscordUser.CommandReturnData();
+        const commandReturnData: FoundationClasses.CommandReturnData = {
+            commandName: command.name
+        };
         commandReturnData.commandName = command.name;
-        const commandFiles = commandIndex.default.commands;
+        const commandFiles = commandIndex.commands;
 
         if (commandData.args[0] === undefined) {
             const commandNames: string[] = [];
@@ -147,4 +150,4 @@ async function execute(commandData: DiscordUser.CommandData): Promise<DiscordUse
     }
 }
 command.function = execute;
-export default command as DiscordUser.BotCommand;
+export default command as FoundationClasses.BotCommand;

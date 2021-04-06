@@ -6,19 +6,24 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from '../DiscordUser';
+import FoundationClasses = require('../FoundationClasses');
+import DiscordUser = require('../DiscordUser');
 import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordUser.BotCommand();
-command.name = 'botinfo';
-command.description = '!botinfo to display info about this bot in chat!';
+const command: FoundationClasses.BotCommand = {
+    name: 'botinfo',
+    description: '!botinfo to display info about this bot in chat!',
+    function: Function()
+};
 
  /**
  * Displays the data about the currend user.
  */ 
-async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
+async function execute(commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<FoundationClasses.CommandReturnData> {
    try {
-       const commandReturnData = new DiscordUser.CommandReturnData();
+       const commandReturnData: FoundationClasses.CommandReturnData = {
+           commandName: command.name
+       };
        commandReturnData.commandName = command.name;
        const fields: Discord.EmbedField[] = [];
        const field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
@@ -45,4 +50,4 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
    }
 }
 command.function = execute;
-export default command as DiscordUser.BotCommand;
+export default command as FoundationClasses.BotCommand;

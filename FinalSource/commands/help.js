@@ -44,12 +44,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
-var commandIndex = require("../commandindex");
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'help';
-command.description = 'Help Usage: !help, or !help = COMMANDNAME, in order to get help with a specific COMMAND.';
+var commandindex_1 = __importDefault(require("../commandindex"));
+var command = {
+    name: 'help',
+    description: 'Help Usage: !help, or !help = COMMANDNAME, in order to get help with a specific COMMAND.',
+    function: Function()
+};
 /**
  * Returns a menu of helping information for the various commands I have.
  */
@@ -60,9 +61,11 @@ function execute(commandData) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 14, , 15]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
-                    commandFiles_1 = commandIndex.default.commands;
+                    commandFiles_1 = commandindex_1.default.commands;
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 7];
                     commandNames_1 = [];
                     commandFiles_1.forEach(function (value, key, map) {

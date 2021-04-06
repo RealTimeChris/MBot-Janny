@@ -6,7 +6,9 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from '../DiscordUser';
+import DiscordUser = require('../DiscordUser');
+import GuildData from '../GuildData';
+import FoundationClasses = require('../FoundationClasses');
 import HelperFunctions from '../HelperFunctions';
 
 class Data{
@@ -57,14 +59,18 @@ async function onData(dbKey: string, discordUser: DiscordUser.DiscordUser, delet
 	}
 }
 
-const command = new DiscordUser.BotCommand();
-command.name = 'deletedbentry';
-command.description = "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a bot's name and DBENTRYKEY is the key" +
-"to a database entry that is stored within the bot!";
+const command: FoundationClasses.BotCommand = {
+	name: 'deletedbentry',
+	description: "!deletedbentry = BOTNAME, DBENTRYKEY, where BOTNAME is a bot's name and DBENTRYKEY is the key" +
+	"to a database entry that is stored within the bot!",
+	function: Function()
+};
 
-async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
+async function execute(commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<FoundationClasses.CommandReturnData> {
 	try {
-		const commandReturnData = new DiscordUser.CommandReturnData;
+		const commandReturnData: FoundationClasses.CommandReturnData = {
+			commandName: command.name
+		};
 		commandReturnData.commandName = command.name;
 		const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
@@ -78,13 +84,13 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 			return commandReturnData;
 		}
 
-		const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
+		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 
 		if (commandData.args[0] === undefined) {
 			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -99,7 +105,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -117,7 +123,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 			const msgString = `------\n**Please, enter a DB key to search for!**\n------`;
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -149,7 +155,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 		const msgEmbed = new Discord.MessageEmbed();
 		msgEmbed
 			.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-			.setColor(guildData.borderColor as [number, number, number])
+			.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 			.setDescription(`------\n__**Number of Deleted Entries**__: ${deletedCounter.returnDeletedCount()}\n------`)
 			.setTimestamp(Date.now())
 			.setTitle('__**Deleted DB Entries:**__');
@@ -162,4 +168,4 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 	}
 }
 command.function = execute;
-export default command as DiscordUser.BotCommand;
+export default command as FoundationClasses.BotCommand;

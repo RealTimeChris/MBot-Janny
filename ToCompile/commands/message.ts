@@ -6,25 +6,27 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from '../DiscordUser';
-import HelperFunctions from '../HelperFunctions';
+import DiscordUser = require('../DiscordUser');
+import FoundationClasses = require('../FoundationClasses');
 
-const command = new DiscordUser.BotCommand();
-command.name = 'message';
-command.description = '__**Message Usage**__: Command executes automatically upon receiving certain messages!.';
+const command: FoundationClasses.BotCommand = {
+    name: 'message',
+    description: '__**Message Usage**__: Command executes automatically upon receiving certain messages!.',
+    function: Function()
+};
 
-async function trackIfTrackedUser(message: Discord.Message, commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<void> {
+async function trackIfTrackedUser(message: Discord.Message, commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<void> {
     try{
         if (message.guild === undefined || message.guild === null){
             return;
         }
         discordUser.guildsData.forEach(async (guildData) => {
-            for (let x = 0; x < guildData.trackedUsers.length; x += 1){
+            for (let x = 0; x < guildData.exposeDataValues().trackedUsers!.length; x += 1){
                 const user = message.author;
                 let msgStringContent;
                 let isItFound = false;
                 let index;
-                    if (user.id === guildData.trackedUsers[x]?.userID){
+                    if (user.id === guildData.exposeDataValues().trackedUsers![x]?.userID){
                         msgStringContent = `__**Tracked User:**__ <@!${user.id}> (${user.username})\n__**On Server:**__ ${message.guild!.name}
                             \n__**In Channel:**__ <#${message.channel.id}> (${(message.channel as Discord.TextChannel).name})\n__**Message ID**__ ${message.id}\n__**What They Said:**__ ${message.content}`;
                         isItFound = true;
@@ -41,7 +43,7 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Discord
                         .setDescription(msgStringContent)
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle("__**Tracked User Message:**__");
-                    const currentTextChannel = await commandData.guildMember!.client.channels.fetch(guildData.trackedUsers[index as number]?.channelID!) as Discord.TextChannel;
+                    const currentTextChannel = await commandData.guildMember!.client.channels.fetch(guildData.exposeDataValues().trackedUsers![index as number]?.channelID!) as Discord.TextChannel;
                     await currentTextChannel.send(msgEmbed);
                 }
             }
@@ -58,7 +60,7 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Discord
 * Selects a chosen chat message and sends it via the appropriate channel,
 * upon recieving a trigger phrase or word.
 */
-async function execute(message: Discord.Message, commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<string> {
+async function execute(message: Discord.Message, commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<string> {
     try {
         await trackIfTrackedUser(message, commandData, discordUser);
 
@@ -76,4 +78,4 @@ async function execute(message: Discord.Message, commandData: DiscordUser.Comman
     }
 }
 command.function = execute;
-export default command as DiscordUser.BotCommand;
+export default command as FoundationClasses.BotCommand;

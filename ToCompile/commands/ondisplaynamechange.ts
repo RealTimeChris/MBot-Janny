@@ -6,33 +6,38 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from '../DiscordUser';
-import HelperFunctions from '../HelperFunctions';
+import DiscordUser = require('../DiscordUser');
+import GuildData from '../GuildData';
+import FoundationClasses = require('../FoundationClasses');
 
-const command = new DiscordUser.BotCommand();
-command.name = 'ondisplaynamechange';
-command.description = "It's an automatic one!";
+const command: FoundationClasses.BotCommand = {
+    name: 'ondisplaynamechange',
+    description: "It's an automatic one!",
+    function: Function()
+};
 
 async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMember,
     newGuildMember: Discord.GuildMember, discordUser: DiscordUser.DiscordUser): Promise<string> {
     try {
-        const commandReturnData = new DiscordUser.CommandReturnData();
+        const commandReturnData: FoundationClasses.CommandReturnData = {
+            commandName: command.name
+        };
 		commandReturnData.commandName = command.name;
         if (!(oldGuildMember instanceof Discord.GuildMember)) {
             return command.name;
         }
 
-        const guildData = await discordUser.getGuildDataFromDB(oldGuildMember.guild);
+        const guildData = new GuildData({dataBase: discordUser.dataBase, id: oldGuildMember.guild!.id, name: oldGuildMember.guild!.name, memberCount: oldGuildMember.guild!.memberCount});
 
-        let logs = new DiscordUser.Log();
-        for (let x = 0; x < guildData.logs.length; x += 1) {
-            if (guildData.logs[x]!.nameSmall === 'displaynamechange') {
-                logs = guildData.logs[x]!;
+        let logs: FoundationClasses.Log;
+        for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+            if (guildData.exposeDataValues().logs![x]!.nameSmall === 'displaynamechange') {
+                logs = guildData.exposeDataValues().logs![x]!;
                 break;
             }
         }
 
-        const textChannel = await client.channels.fetch(logs.loggingChannelID) as Discord.TextChannel;
+        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
         let msgString = '';
         msgString = `__**New Displayname:**__ ${newGuildMember.displayName}\n`;
@@ -59,4 +64,4 @@ async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMemb
     }
 }
 command.function = execute;
-export default command as DiscordUser.BotCommand;
+export default command as FoundationClasses.BotCommand;

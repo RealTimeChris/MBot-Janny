@@ -7,7 +7,7 @@
 
 import FoundationClasses = require('./FoundationClasses');
 
-const commands = new Map<string, DiscordUser.BotCommand>();
+const commands = new Map<string, FoundationClasses.BotCommand>();
 import botinfo from './commands/botinfo';
 commands.set(botinfo.name, botinfo);
 import deletedbentry from './commands/deletedbentry';
@@ -28,6 +28,7 @@ import message from './commands/message';
 commands.set(message.name, message);
 import ondisplaynamechange from './commands/ondisplaynamechange';
 commands.set(ondisplaynamechange.name, ondisplaynamechange);
+/*
 import onguildbanadd from './commands/onguildbanadd';
 commands.set(onguildbanadd.name, onguildbanadd);
 import onguildbanremove from './commands/onguildbanremove';
@@ -84,5 +85,5 @@ import trackuser from './commands/trackuser';
 commands.set(trackuser.name, trackuser);
 import userinfo from './commands/userinfo';
 commands.set(userinfo.name, userinfo);
-
+*/
 export default {commands};

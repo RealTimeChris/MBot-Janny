@@ -6,15 +6,22 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from '../DiscordUser';
+import DiscordUser = require('../DiscordUser');
+import GuildData from '../GuildData';
+import FoundationClasses = require('../FoundationClasses');
 import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordUser.BotCommand();
-command.name = 'managelogs';
-command.description = '!managelogs, to view an enabled/disabled list of possible logs!';
-async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
+const command: FoundationClasses.BotCommand = {
+    name: 'managelogs',
+    description: '!managelogs, to view an enabled/disabled list of possible logs!',
+    function: Function()
+};
+
+async function execute(commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     try {
-        const commandReturnData = new DiscordUser.CommandReturnData();
+        const commandReturnData: FoundationClasses.CommandReturnData = {
+            commandName: command.name
+        };
 		commandReturnData.commandName = command.name;
         const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
@@ -28,22 +35,22 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
             return commandReturnData;
         }
 
-        const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
+        const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 
         if (commandData.args[0] as string === undefined) {
             const fields = [];
-            for (let x = 0; x < guildData.logs.length; x += 1) {
-                if (commandData.guildMember!.client.channels.resolve(guildData.logs[x]!.loggingChannelID) === null) {
-                    guildData.logs[x]!.loggingChannelID = '';
-                    guildData.logs[x]!.loggingChannelName = '';
-                    guildData.logs[x]!.enabled = false;
+            for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                if (commandData.guildMember!.client.channels.resolve(guildData.exposeDataValues().logs![x]!.loggingChannelID) === null) {
+                    guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                    guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                    guildData.exposeDataValues().logs![x]!.enabled = false;
                 }
-                if (guildData.logs[x]!.enabled === false) {
-                    const field = { name: `__**${guildData.logs[x]!.name}**__`, value: '__Enabled:__ ❌', inline: true };
+                if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+                    const field = { name: `__**${guildData.exposeDataValues().logs![x]!.name}**__`, value: '__Enabled:__ ❌', inline: true };
                     fields.push(field);
-                } else if (guildData.logs[x]!.enabled === true) {
-                    const field = { name: `__**${guildData.logs[x]!.name}**__`, value: `__Enabled:__ ✅
-                        \n__Logging Channel:__ <#${guildData.logs[x]!.loggingChannelID}>`, inline: true };
+                } else if (guildData.exposeDataValues().logs![x]!.enabled === true) {
+                    const field = { name: `__**${guildData.exposeDataValues().logs![x]!.name}**__`, value: `__Enabled:__ ✅
+                        \n__Logging Channel:__ <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>`, inline: true };
                     fields.push(field);
                 }
             }
@@ -54,7 +61,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 <enable/disable>, <logname>\nFor example, '!managelogs = enable, guildbanadd'.**'`;
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Manage Logs:**__').fields = fields;
@@ -66,7 +73,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
             (!managelogs = <enable/disable>, <logname>)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -83,7 +90,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
             (!managelogs = <enable/disable>, <logname>)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -99,17 +106,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
             switch (((commandData.args[1] as string) as string).toLowerCase()) {
             case 'guildbanadd':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -119,17 +126,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if ((commandData.args[1] as string).toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if ((commandData.args[1] as string).toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();    
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -142,17 +149,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'guildbanremove':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if ((commandData.args[1] as string).toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if ((commandData.args[1] as string).toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -162,17 +169,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                             .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -185,17 +192,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'guildmemberadd':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -205,17 +212,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if ((commandData.args[1] as string).toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if ((commandData.args[1] as string).toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -228,18 +235,18 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'guildmemberremove':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}' in channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------'`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}' in channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------'`;
                             
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -249,17 +256,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -272,17 +279,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'displaynamechange':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -292,17 +299,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -315,17 +322,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'nicknamechange':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -335,17 +342,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -358,17 +365,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'roleaddorremove':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -378,17 +385,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -401,17 +408,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'invitecreate':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -421,17 +428,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -444,17 +451,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'messagedelete':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -464,17 +471,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -487,17 +494,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'messagedeletebulk':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -507,17 +514,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.enabled = true;
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -530,17 +537,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'messageupdate':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -550,17 +557,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -573,17 +580,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'rolecreate':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -593,17 +600,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -616,17 +623,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'roledelete':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -636,17 +643,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.enabled = false;
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -659,17 +666,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 break;
             case 'usernamechange':
                 if (commandData.args[0]!.toString().toLowerCase() === 'enable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = commandData.permsChannel!.id;
-                            guildData.logs[x]!.loggingChannelName = commandData.permsChannel!.name;
-                            guildData.logs[x]!.enabled = true;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = commandData.permsChannel!.id;
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = commandData.permsChannel!.name;
+                            guildData.exposeDataValues().logs![x]!.enabled = true;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.logs[x]!.name}'.\nIn channel <#${guildData.logs[x]!.loggingChannelID}>.**\n------`;
+                            const msgString = `------\n**Nicely done! You've enabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.\nIn channel <#${guildData.exposeDataValues().logs![x]!.loggingChannelID}>.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Enabled:**__');
@@ -679,17 +686,17 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                         }
                     }
                 } else if ((commandData.args[0] as string).toString().toLowerCase() === 'disable') {
-                    for (let x = 0; x < guildData.logs.length; x += 1) {
-                        if (commandData.args[1]!.toLowerCase() === guildData.logs[x]!.nameSmall) {
-                            guildData.logs[x]!.loggingChannelID = '';
-                            guildData.logs[x]!.loggingChannelName = '';
-                            guildData.logs[x]!.enabled = false;
-                            await discordUser.updateGuildDataInDB(guildData);
+                    for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
+                        if (commandData.args[1]!.toLowerCase() === guildData.exposeDataValues().logs![x]!.nameSmall) {
+                            guildData.exposeDataValues().logs![x]!.loggingChannelID = '';
+                            guildData.exposeDataValues().logs![x]!.loggingChannelName = '';
+                            guildData.exposeDataValues().logs![x]!.enabled = false;
+                            await guildData.writeToDataBase();
                             const msgEmbed = new Discord.MessageEmbed();
-                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.logs[x]!.name}'.**\n------`;
+                            const msgString = `------\n**Nicely done! You've disabled logging for '${guildData.exposeDataValues().logs![x]!.name}'.**\n------`;
                             msgEmbed
                                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                                .setColor(guildData.borderColor as [number, number, number])
+                                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                                 .setDescription(msgString)
                                 .setTimestamp(Date() as unknown as Date)
                                 .setTitle('__**Manage Logs Disabled:**__');
@@ -704,7 +711,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
                 const msgString = 'Please enter a proper log name!';
                 let msgEmbed = new Discord.MessageEmbed()
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                        .setColor(guildData.borderColor as [number, number, number])
+                        .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                         .setDescription(msgString)
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle('__**Manage Logs:**__');
@@ -724,4 +731,4 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
     }
 }
 command.function = execute;
-export default command as DiscordUser.BotCommand;
+export default command as FoundationClasses.BotCommand;

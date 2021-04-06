@@ -6,16 +6,22 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from '../DiscordUser';
+import DiscordUser = require('../DiscordUser');
+import GuildData from '../GuildData';
+import FoundationClasses = require('../FoundationClasses');
 import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordUser.BotCommand();
-command.name = 'listdbguilds';
-command.description = '!listdbguilds, to list guilds that this bot is no longer in!';
+const command: FoundationClasses.BotCommand = {
+	name: 'listdbguilds',
+	description: '!listdbguilds, to list guilds that this bot is no longer in!',
+	function: Function()
+};
 
-async function execute(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
+async function execute(commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<FoundationClasses.CommandReturnData> {
 	try {
-		const commandReturnData = new DiscordUser.CommandReturnData();
+		const commandReturnData: FoundationClasses.CommandReturnData = {
+			commandName: command.name
+		};
 		commandReturnData.commandName = command.name;
         const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
@@ -29,13 +35,13 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 			return commandReturnData;
 		}
 
-		const guildData = await discordUser.getGuildDataFromDB(commandData.guild!);
+		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
 
 		if (commandData.args[0] === undefined) {
 			const msgString = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -50,7 +56,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 			const msgString = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -91,7 +97,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 			await iterator.end();
 			let msgEmbed = new Discord.MessageEmbed()
 					.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-					.setColor(guildData.borderColor as [number, number, number])
+					.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 					.setDescription(msgString)
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Depracated Database Entries:**__');
@@ -102,7 +108,7 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 			const msgEmbed = new Discord.MessageEmbed();
 			msgEmbed
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
 				.setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
 				.setTimestamp((Date() as unknown) as Date)
 				.setTitle("__**No Spare Database Entries:**__");
@@ -116,4 +122,4 @@ async function execute(commandData: DiscordUser.CommandData, discordUser: Discor
 	}
 }
 command.function = execute;
-export default command as DiscordUser.BotCommand;
+export default command as FoundationClasses.BotCommand;

@@ -1,11 +1,13 @@
 import Discord = require('discord.js');
-import DiscordUser from './DiscordUser';
+import FoundationClasses = require('./FoundationClasses');
+import DiscordUser = require('./DiscordUser');
+import GuildData from './GuildData';
 import Level from 'level-ts';
 declare module HelperFunctions {
     /**
     * Functino for sending out a message, using the appropriate channel.
     */
-    function sendMessageWithCorrectChannel(commandData: DiscordUser.CommandData, messageContents: String | Discord.MessageEmbed, atUserID?: string | null): Promise<Discord.Message>;
+    function sendMessageWithCorrectChannel(commandData: FoundationClasses.CommandData, messageContents: String | Discord.MessageEmbed, atUserID?: string | null): Promise<Discord.Message>;
     /**
      * Recurses through a succession of messages.
      */
@@ -17,15 +19,15 @@ declare module HelperFunctions {
     /**
      * Checks to see if we're in a DM channel, and sends a warning message if so.
      */
-    function areWeInADM(commandData: DiscordUser.CommandData): Promise<boolean>;
+    function areWeInADM(commandData: FoundationClasses.CommandData): Promise<boolean>;
     /**
      * Checks if we have admin permissions in the current channel.
      */
-    function doWeHaveAdminPermission(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<boolean>;
+    function doWeHaveAdminPermission(commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<boolean>;
     /**
     * Applies default roles to a new guild member.
     */
-    function applyDefaultRoles(guildData: DiscordUser.GuildData, guildMember: Discord.GuildMember): Promise<void>;
+    function applyDefaultRoles(guildData: GuildData, guildMember: Discord.GuildMember): Promise<void>;
     /**
     * Takes a server record and a live guild object and either updates or adds it to the records.
     */
@@ -47,7 +49,7 @@ declare module HelperFunctions {
     * Purges all of the selected messages within the given channels,
     * of each of the instance's guilds.
     */
-    function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: DiscordUser.GuildData, channelIndex: number, discordUser: DiscordUser.DiscordUser): Promise<void>;
+    function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: GuildData, channelIndex: number, discordUser: DiscordUser.DiscordUser): Promise<void>;
     /**
     * Purges the actively-being-purged text channels, if enough time has passed.
     */

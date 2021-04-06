@@ -39,15 +39,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'message';
-command.description = '__**Message Usage**__: Command executes automatically upon receiving certain messages!.';
+var command = {
+    name: 'message',
+    description: '__**Message Usage**__: Command executes automatically upon receiving certain messages!.',
+    function: Function()
+};
 function trackIfTrackedUser(message, commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
@@ -65,12 +63,12 @@ function trackIfTrackedUser(message, commandData, discordUser) {
                                 x = 0;
                                 _c.label = 1;
                             case 1:
-                                if (!(x < guildData.trackedUsers.length)) return [3 /*break*/, 6];
+                                if (!(x < guildData.exposeDataValues().trackedUsers.length)) return [3 /*break*/, 6];
                                 user = message.author;
                                 msgStringContent = void 0;
                                 isItFound = false;
                                 index = void 0;
-                                if (user.id === ((_a = guildData.trackedUsers[x]) === null || _a === void 0 ? void 0 : _a.userID)) {
+                                if (user.id === ((_a = guildData.exposeDataValues().trackedUsers[x]) === null || _a === void 0 ? void 0 : _a.userID)) {
                                     msgStringContent = "__**Tracked User:**__ <@!" + user.id + "> (" + user.username + ")\n__**On Server:**__ " + message.guild.name + "\n                            \n__**In Channel:**__ <#" + message.channel.id + "> (" + message.channel.name + ")\n__**Message ID**__ " + message.id + "\n__**What They Said:**__ " + message.content;
                                     isItFound = true;
                                     index = x;
@@ -85,7 +83,7 @@ function trackIfTrackedUser(message, commandData, discordUser) {
                                     .setDescription(msgStringContent)
                                     .setTimestamp(Date())
                                     .setTitle("__**Tracked User Message:**__");
-                                return [4 /*yield*/, commandData.guildMember.client.channels.fetch((_b = guildData.trackedUsers[index]) === null || _b === void 0 ? void 0 : _b.channelID)];
+                                return [4 /*yield*/, commandData.guildMember.client.channels.fetch((_b = guildData.exposeDataValues().trackedUsers[index]) === null || _b === void 0 ? void 0 : _b.channelID)];
                             case 3:
                                 currentTextChannel = _c.sent();
                                 return [4 /*yield*/, currentTextChannel.send(msgEmbed)];

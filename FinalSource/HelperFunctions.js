@@ -44,7 +44,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("./DiscordUser"));
+var GuildData_1 = __importDefault(require("./GuildData"));
 var HelperFunctions;
 (function (HelperFunctions) {
     /**
@@ -289,15 +289,13 @@ var HelperFunctions;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 5, , 6]);
-                        return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
-                    case 1:
-                        guildData = _a.sent();
+                        _a.trys.push([0, 4, , 5]);
+                        guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                         currentChannelPermissions = commandData.guildMember.permissionsIn(commandData.permsChannel);
                         permissionStrings = 'ADMINISTRATOR';
                         areTheyAnAdmin = currentChannelPermissions.has(permissionStrings);
                         return [4 /*yield*/, checkForBotCommanderStatus(commandData.guildMember.id, discordUser.userData.botCommanders)];
-                    case 2:
+                    case 1:
                         areTheyACommander = _a.sent();
                         if (areTheyAnAdmin === true || areTheyACommander === true) {
                             return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -308,28 +306,28 @@ var HelperFunctions;
                         msgEmbed = new Discord.MessageEmbed();
                         msgEmbed
                             .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                            .setColor(guildData.borderColor)
+                            .setColor(guildData.exposeDataValues().borderColor)
                             .setDescription(msgString)
                             .setTimestamp(Date())
                             .setTitle("__**Permissions Issue:**__");
                         return [4 /*yield*/, sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                    case 3:
+                    case 2:
                         msg = _a.sent();
                         if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                             msg = new Discord.Message(commandData.guildMember.client, msg, commandData.fromTextChannel);
                         }
                         return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                    case 4:
+                    case 3:
                         _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve(false);
                             })];
-                    case 5:
+                    case 4:
                         error_3 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_3);
                             })];
-                    case 6: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -348,14 +346,14 @@ var HelperFunctions;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 6, , 7]);
-                        if (!(guildData.verificationSystem.channelID === null)) return [3 /*break*/, 5];
+                        if (!(guildData.exposeDataValues().verificationSystem.channelID === null)) return [3 /*break*/, 5];
                         guildMemberRoleManager = new Discord.GuildMemberRoleManager(guildMember);
                         x = 0;
                         _a.label = 2;
                     case 2:
-                        if (!(x < guildData.defaultRoleIDs.length)) return [3 /*break*/, 5];
+                        if (!(x < guildData.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 5];
                         currentIndex = x;
-                        return [4 /*yield*/, guildMemberRoleManager.add(guildData.defaultRoleIDs[x])];
+                        return [4 /*yield*/, guildMemberRoleManager.add(guildData.exposeDataValues().defaultRoleIDs[x])];
                     case 3:
                         _a.sent();
                         _a.label = 4;
@@ -367,7 +365,7 @@ var HelperFunctions;
                         })];
                     case 6:
                         error_4 = _a.sent();
-                        guildData.defaultRoleIDs.splice(currentIndex, 1);
+                        guildData.exposeDataValues().defaultRoleIDs.splice(currentIndex, 1);
                         applyDefaultRoles(guildData, guildMember);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_4);
@@ -418,17 +416,18 @@ var HelperFunctions;
                                 }
                             }
                             if (areTheyFoundInFile === false) {
-                                userRecord = new DiscordUser_1.default.UserRecord();
-                                userRecord.lastKnownUserTag = membersArray[z].user.tag;
-                                userRecord.lastKnownUsername = membersArray[z].user.username;
-                                userRecord.userID = membersArray[z].id;
+                                userRecord = {
+                                    lastKnownUserTag: membersArray[z].user.tag,
+                                    lastKnownUsername: membersArray[z].user.username,
+                                    userID: membersArray[z].id,
+                                };
                                 fileObject.userRecords.push(userRecord);
                                 console.log("Adding New User Record: " + userRecord.lastKnownUserTag + " of server: " + fileObject.serverName);
                             }
                         }
                         serverRecordKey = liveGuildArray[y].id + " + Record";
                         dataBase.put(serverRecordKey, fileObject);
-                        console.log(fileObject);
+                        //console.log(fileObject);
                         yNew += 1;
                         return [4 /*yield*/, recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, yNew)];
                     case 3:
@@ -439,22 +438,24 @@ var HelperFunctions;
                     case 4:
                         error_5 = _c.sent();
                         if (!(error_5.type === 'NotFoundError')) return [3 /*break*/, 8];
-                        serverRecord = new DiscordUser_1.default.ServerRecord();
-                        serverRecord.serverName = liveGuildArray[y].name;
-                        serverRecord.serverID = liveGuildArray[y].id;
-                        serverRecord.replacementServerInvite = '';
-                        serverRecord.userRecords = [];
+                        serverRecord = {
+                            serverName: liveGuildArray[y].name,
+                            serverID: liveGuildArray[y].id,
+                            replacementServerInvite: '',
+                            userRecords: []
+                        };
                         console.log("Adding New Server Record: " + serverRecord.serverName);
-                        console.log("Saving the JSON file for discordUser Discord server for the first time: " + serverRecord.serverName);
+                        console.log("Saving the JSON file for FoundationClasses Discord server for the first time: " + serverRecord.serverName);
                         return [4 /*yield*/, liveGuildArray[y].members.fetch()];
                     case 5:
                         guildMembersCollection = _c.sent();
                         membersArray = guildMembersCollection.array().sort();
                         for (z = 0; z < membersArray.length; z += 1) {
-                            userRecord = new DiscordUser_1.default.UserRecord();
-                            userRecord.lastKnownUserTag = membersArray[z].user.tag;
-                            userRecord.lastKnownUsername = membersArray[z].user.username;
-                            userRecord.userID = membersArray[z].id;
+                            userRecord = {
+                                lastKnownUsername: membersArray[z].user.username,
+                                lastKnownUserTag: membersArray[z].user.tag,
+                                userID: membersArray[z].id
+                            };
                             serverRecord.userRecords.push(userRecord);
                             console.log("Adding New User Record: " + userRecord.lastKnownUserTag + " of server: " + serverRecord.serverName);
                         }
@@ -462,9 +463,10 @@ var HelperFunctions;
                         return [4 /*yield*/, dataBase.put(serverRecordKey, serverRecord)];
                     case 6:
                         _c.sent();
-                        console.log(serverRecord);
+                        //console.log(serverRecord);
                         return [4 /*yield*/, recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y)];
                     case 7:
+                        //console.log(serverRecord);
                         _c.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve();
@@ -494,18 +496,18 @@ var HelperFunctions;
                                 _a.label = 1;
                             case 1:
                                 _a.trys.push([1, 11, , 13]);
-                                if (!(newGuildData.verificationSystem.channelID != '')) return [3 /*break*/, 10];
-                                return [4 /*yield*/, client.guilds.fetch(newGuildData.guildID)];
+                                if (!(newGuildData.exposeDataValues().verificationSystem.channelID != '')) return [3 /*break*/, 10];
+                                return [4 /*yield*/, client.guilds.fetch(newGuildData.exposeDataValues().id)];
                             case 2:
                                 currentGuild = _a.sent();
                                 currentChannel = currentGuild.channels
-                                    .resolve(newGuildData.verificationSystem.channelID);
+                                    .resolve(newGuildData.exposeDataValues().verificationSystem.channelID);
                                 if (!(currentChannel === null)) return [3 /*break*/, 4];
-                                console.log('null Channel! Purging from the values! For Guild: ' + newGuildData.guildName);
-                                newGuildData.verificationSystem.channelID = '';
-                                newGuildData.verificationSystem.messageID = '';
-                                newGuildData.verificationSystem.emoji = '';
-                                return [4 /*yield*/, discordUser.updateGuildDataInDB(newGuildData)];
+                                console.log('null Channel! Purging from the values! For Guild: ' + newGuildData.exposeDataValues().guildName);
+                                newGuildData.exposeDataValues().verificationSystem.channelID = '';
+                                newGuildData.exposeDataValues().verificationSystem.messageID = '';
+                                newGuildData.exposeDataValues().verificationSystem.emoji = '';
+                                return [4 /*yield*/, guildData.writeToDataBase()];
                             case 3:
                                 _a.sent();
                                 return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -514,15 +516,15 @@ var HelperFunctions;
                             case 4:
                                 msgManager = new Discord.MessageManager(currentChannel);
                                 return [4 /*yield*/, msgManager
-                                        .fetch(newGuildData.verificationSystem.messageID)];
+                                        .fetch(newGuildData.exposeDataValues().verificationSystem.messageID)];
                             case 5:
                                 oldVerificationMessage = _a.sent();
                                 newMsgEmbed = oldVerificationMessage.embeds[0];
                                 return [4 /*yield*/, currentChannel.send(newMsgEmbed)];
                             case 6:
                                 newVerificationMessage = _a.sent();
-                                newGuildData.verificationSystem.messageID = newVerificationMessage.id;
-                                return [4 /*yield*/, discordUser.updateGuildDataInDB(newGuildData)];
+                                newGuildData.exposeDataValues().verificationSystem.messageID = newVerificationMessage.id;
+                                return [4 /*yield*/, guildData.writeToDataBase()];
                             case 7:
                                 _a.sent();
                                 return [4 /*yield*/, newVerificationMessage
@@ -539,10 +541,10 @@ var HelperFunctions;
                             case 11:
                                 error_6 = _a.sent();
                                 console.log('Looks like the channel or the message no longer exists! Purging the verification system values!');
-                                newGuildData.verificationSystem.channelID = '';
-                                newGuildData.verificationSystem.messageID = '';
-                                newGuildData.verificationSystem.emoji = '';
-                                return [4 /*yield*/, discordUser.updateGuildDataInDB(newGuildData)];
+                                newGuildData.exposeDataValues().verificationSystem.channelID = '';
+                                newGuildData.exposeDataValues().verificationSystem.messageID = '';
+                                newGuildData.exposeDataValues().verificationSystem.emoji = '';
+                                return [4 /*yield*/, guildData.writeToDataBase()];
                             case 12:
                                 _a.sent();
                                 return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -656,7 +658,7 @@ var HelperFunctions;
                         userID = currentFileObject.userRecords[0].userID;
                         guildName = currentFileObject.serverName;
                         inviteLink = currentFileObject.replacementServerInvite;
-                        inviteString = "Hello, it is my understanding that you were a member of " + guildName + ".\nIf you would like to continue along with us, then please go ahead and join discordUser new server! Enjoy!\n" + inviteLink;
+                        inviteString = "Hello, it is my understanding that you were a member of " + guildName + ".\nIf you would like to continue along with us, then please go ahead and join the new server! Enjoy!\n" + inviteLink;
                         currentUser = client.users.resolve(userID);
                         wereTheyAvailable = false;
                         _a.label = 6;
@@ -676,10 +678,11 @@ var HelperFunctions;
                         return [3 /*break*/, 10];
                     case 10:
                         if (!(wereTheyAvailable === true)) return [3 /*break*/, 20];
-                        savedUser = new DiscordUser_1.default.UserRecord();
-                        savedUser.userID = currentFileObject.userRecords[0].userID;
-                        savedUser.lastKnownUserTag = currentFileObject.userRecords[0].lastKnownUserTag;
-                        savedUser.lastKnownUsername = currentFileObject.userRecords[0].lastKnownUsername;
+                        savedUser = {
+                            userID: currentFileObject.userRecords[0].userID,
+                            lastKnownUserTag: currentFileObject.userRecords[0].lastKnownUserTag,
+                            lastKnownUsername: currentFileObject.userRecords[0].lastKnownUsername
+                        };
                         currentFileObject.userRecords.splice(0, 1);
                         if (!(currentFileObject.userRecords.length === 0)) return [3 /*break*/, 11];
                         discordUser.dataBase.del(fileKey);
@@ -705,10 +708,12 @@ var HelperFunctions;
                         return [3 /*break*/, 19];
                     case 17:
                         error_10 = _a.sent();
-                        serverRecord = new DiscordUser_1.default.ServerRecord();
-                        serverRecord.replacementServerInvite = currentFileObject.replacementServerInvite;
-                        serverRecord.serverID = currentFileObject.serverID;
-                        serverRecord.serverName = currentFileObject.serverName;
+                        serverRecord = {
+                            replacementServerInvite: currentFileObject.replacementServerInvite,
+                            serverID: currentFileObject.serverID,
+                            serverName: currentFileObject.serverName,
+                            userRecords: []
+                        };
                         serverRecord.userRecords.push(savedUser);
                         availableFileString = JSON.stringify(serverRecord);
                         return [4 /*yield*/, discordUser.dataBase.put(availableFileKey, availableFileString)];
@@ -719,10 +724,11 @@ var HelperFunctions;
                             })];
                     case 19: return [3 /*break*/, 28];
                     case 20:
-                        deletedUser = new DiscordUser_1.default.UserRecord();
-                        deletedUser.userID = currentFileObject.userRecords[0].userID;
-                        deletedUser.lastKnownUserTag = currentFileObject.userRecords[0].lastKnownUserTag;
-                        deletedUser.lastKnownUsername = currentFileObject.userRecords[0].lastKnownUsername;
+                        deletedUser = {
+                            userID: currentFileObject.userRecords[0].userID,
+                            lastKnownUsername: currentFileObject.userRecords[0].lastKnownUsername,
+                            lastKnownUserTag: currentFileObject.userRecords[0].lastKnownUserTag
+                        };
                         currentFileObject.userRecords.splice(0, 1);
                         if (!(currentFileObject.userRecords.length === 0)) return [3 /*break*/, 21];
                         discordUser.dataBase.del(fileKey);
@@ -746,10 +752,12 @@ var HelperFunctions;
                         return [3 /*break*/, 28];
                     case 27:
                         error_11 = _a.sent();
-                        serverRecord = new DiscordUser_1.default.ServerRecord();
-                        serverRecord.replacementServerInvite = currentFileObject.replacementServerInvite;
-                        serverRecord.serverID = currentFileObject.serverID;
-                        serverRecord.serverName = currentFileObject.serverName;
+                        serverRecord = {
+                            replacementServerInvite: currentFileObject.replacementServerInvite,
+                            serverName: currentFileObject.serverName,
+                            serverID: currentFileObject.serverID,
+                            userRecords: []
+                        };
                         serverRecord.userRecords.push(deletedUser);
                         discordUser.dataBase.put(notAvailableFileKey, serverRecord);
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -790,11 +798,11 @@ var HelperFunctions;
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 44, , 45]);
-                        numberOfMessagesToSave = guildData.deletionChannels[channelIndex].numberOfMessagesToSave;
-                        channelID = guildData.deletionChannels[channelIndex].channelID;
+                        numberOfMessagesToSave = guildData.exposeDataValues().deletionChannels[channelIndex].numberOfMessagesToSave;
+                        channelID = guildData.exposeDataValues().deletionChannels[channelIndex].channelID;
                         newGuildData = guildData;
                         currentChannel = new Discord.TextChannel(client.guilds
-                            .resolve(newGuildData.guildID), {});
+                            .resolve(newGuildData.exposeDataValues().id), {});
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 5]);
@@ -804,9 +812,9 @@ var HelperFunctions;
                         return [3 /*break*/, 5];
                     case 3:
                         error_13 = _b.sent();
-                        newGuildData.deletionChannels.splice(channelIndex, 1);
+                        newGuildData.exposeDataValues().deletionChannels.splice(channelIndex, 1);
                         console.log('Removing an "unknown channel" from list of deletion channels!');
-                        return [4 /*yield*/, discordUser.updateGuildDataInDB(newGuildData)];
+                        return [4 /*yield*/, newGuildData.writeToDataBase()];
                     case 4:
                         _b.sent();
                         return [2 /*return*/, new Promise(function (resolve) {
@@ -814,8 +822,8 @@ var HelperFunctions;
                             })];
                     case 5:
                         currentTime = new Date().getTime();
-                        timeDifference = currentTime - newGuildData.deletionChannels[channelIndex].timeOfLastPurge;
-                        if (newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted === true) {
+                        timeDifference = currentTime - newGuildData.exposeDataValues().deletionChannels[channelIndex].timeOfLastPurge;
+                        if (newGuildData.exposeDataValues().deletionChannels[channelIndex].currentlyBeingDeleted === true) {
                             console.log("Nope! Still being deleted! Channel: " + currentChannel.name);
                             return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
@@ -828,7 +836,7 @@ var HelperFunctions;
                                 })];
                         }
                         console.log("Checking for messages to delete in channel: " + currentChannel.name);
-                        newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted = true;
+                        newGuildData.exposeDataValues().deletionChannels[channelIndex].currentlyBeingDeleted = true;
                         if (!(numberOfMessagesToSave > 0)) return [3 /*break*/, 30];
                         startingMessage = undefined;
                         x_1 = (Math.trunc(numberOfMessagesToSave / 100));
@@ -933,7 +941,7 @@ var HelperFunctions;
                         }
                         console.log("Total of " + totalMessageCount + " in channel: " + currentChannel.name);
                         if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
-                            newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted = false;
+                            newGuildData.exposeDataValues().deletionChannels[channelIndex].currentlyBeingDeleted = false;
                             return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
@@ -946,7 +954,7 @@ var HelperFunctions;
                         _b.label = 24;
                     case 24:
                         if (!(z >= 0)) return [3 /*break*/, 28];
-                        if (newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted === false) {
+                        if (newGuildData.exposeDataValues().deletionChannels[channelIndex].currentlyBeingDeleted === false) {
                             return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
@@ -1012,7 +1020,7 @@ var HelperFunctions;
                         }
                         console.log("Total of " + totalMessageCount + " in channel: " + currentChannel.name);
                         if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
-                            newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted = false;
+                            newGuildData.exposeDataValues().deletionChannels[channelIndex].currentlyBeingDeleted = false;
                             return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
@@ -1025,7 +1033,7 @@ var HelperFunctions;
                         _b.label = 38;
                     case 38:
                         if (!(z >= 0)) return [3 /*break*/, 41];
-                        if (newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted === false) {
+                        if (newGuildData.exposeDataValues().deletionChannels[channelIndex].currentlyBeingDeleted === false) {
                             return [2 /*return*/, new Promise(function (resolve) {
                                     resolve();
                                 })];
@@ -1043,9 +1051,9 @@ var HelperFunctions;
                         w -= 1;
                         return [3 /*break*/, 37];
                     case 42:
-                        newGuildData.deletionChannels[channelIndex].timeOfLastPurge = new Date().getTime();
-                        newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted = false;
-                        return [4 /*yield*/, discordUser.updateGuildDataInDB(newGuildData)];
+                        newGuildData.exposeDataValues().deletionChannels[channelIndex].timeOfLastPurge = new Date().getTime();
+                        newGuildData.exposeDataValues().deletionChannels[channelIndex].currentlyBeingDeleted = false;
+                        return [4 /*yield*/, newGuildData.writeToDataBase()];
                     case 43:
                         _b.sent();
                         return [2 /*return*/, new Promise(function (resolve) {
@@ -1073,8 +1081,8 @@ var HelperFunctions;
                     discordUser.guildsData.forEach(function (guild) { return __awaiter(_this, void 0, void 0, function () {
                         var y;
                         return __generator(this, function (_a) {
-                            if (guild.deletionChannels.length > 0) {
-                                for (y = 0; y < guild.deletionChannels.length; y += 1) {
+                            if (guild.exposeDataValues().deletionChannels.length > 0) {
+                                for (y = 0; y < guild.exposeDataValues().deletionChannels.length; y += 1) {
                                     deleteMessagesIfTimeHasPassed(client, guild, y, discordUser).catch(function (error) {
                                         console.log(error);
                                     });
@@ -1113,28 +1121,28 @@ var HelperFunctions;
                                     y = 0;
                                     _a.label = 1;
                                 case 1:
-                                    if (!(y < guildData.timedMessages.length)) return [3 /*break*/, 7];
+                                    if (!(y < guildData.exposeDataValues().timedMessages.length)) return [3 /*break*/, 7];
                                     newGuildData = guildData;
                                     currentTime = new Date().getTime();
-                                    if (!((currentTime - newGuildData.timedMessages[y].timeOfLastSend)
-                                        > newGuildData.timedMessages[y].msBetweenSends)) return [3 /*break*/, 5];
-                                    guild = client.guilds.resolve(newGuildData.guildID);
+                                    if (!((currentTime - newGuildData.exposeDataValues().timedMessages[y].timeOfLastSend)
+                                        > newGuildData.exposeDataValues().timedMessages[y].msBetweenSends)) return [3 /*break*/, 5];
+                                    guild = client.guilds.resolve(newGuildData.exposeDataValues().id);
                                     textChannel = new Discord.TextChannel(guild, {});
-                                    return [4 /*yield*/, client.channels.fetch(newGuildData.timedMessages[y].textChannelID)];
+                                    return [4 /*yield*/, client.channels.fetch(newGuildData.exposeDataValues().timedMessages[y].textChannelID)];
                                 case 2:
                                     textChannel = (_a.sent());
-                                    return [4 /*yield*/, textChannel.send(newGuildData.timedMessages[y].messageContent)];
+                                    return [4 /*yield*/, textChannel.send(newGuildData.exposeDataValues().timedMessages[y].messageContent)];
                                 case 3:
                                     _a.sent();
-                                    newGuildData.timedMessages[y].timeOfLastSend = new Date().getTime();
-                                    return [4 /*yield*/, discordUser.updateGuildDataInDB(newGuildData)];
+                                    newGuildData.exposeDataValues().timedMessages[y].timeOfLastSend = new Date().getTime();
+                                    return [4 /*yield*/, newGuildData.writeToDataBase()];
                                 case 4:
                                     _a.sent();
                                     return [3 /*break*/, 7];
                                 case 5:
-                                    timeDifference = currentTime - newGuildData.timedMessages[y].timeOfLastSend;
-                                    timeRemaining = newGuildData.timedMessages[y].msBetweenSends - timeDifference;
-                                    console.log(newGuildData.timedMessages[y].name + " has " + timeRemaining + "ms left until it can be sent!");
+                                    timeDifference = currentTime - newGuildData.exposeDataValues().timedMessages[y].timeOfLastSend;
+                                    timeRemaining = newGuildData.exposeDataValues().timedMessages[y].msBetweenSends - timeDifference;
+                                    console.log(newGuildData.exposeDataValues().timedMessages[y].name + " has " + timeRemaining + "ms left until it can be sent!");
                                     _a.label = 6;
                                 case 6:
                                     y += 1;

@@ -44,11 +44,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'botinfo';
-command.description = '!botinfo to display info about this bot in chat!';
+var command = {
+    name: 'botinfo',
+    description: '!botinfo to display info about this bot in chat!',
+    function: Function()
+};
 /**
 * Displays the data about the currend user.
 */
@@ -60,7 +61,9 @@ function execute(commandData, discordUser) {
             switch (_c.label) {
                 case 0:
                     _c.trys.push([0, 2, , 3]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     fields = [];
                     field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };

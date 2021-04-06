@@ -1,5 +1,5 @@
-import DiscordUser from './DiscordUser';
+import FoundationClasses = require('./FoundationClasses');
 declare const _default: {
-    commands: Map<string, DiscordUser.BotCommand>;
+    commands: Map<string, FoundationClasses.BotCommand>;
 };
 export default _default;

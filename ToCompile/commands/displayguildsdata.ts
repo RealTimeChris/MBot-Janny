@@ -6,28 +6,34 @@
 'use strict';
 
 import Discord = require('discord.js');
-import DiscordUser from '../DiscordUser';
+import DiscordUser = require('../DiscordUser');
+import GuildData from '../GuildData';
+import FoundationClasses = require('../FoundationClasses');
 import HelperFunctions from '../HelperFunctions';
 
-const command = new DiscordUser.BotCommand;
-command.name = 'displayguildsdata';
-command.description = '!displayguildsdata to display the guild info of the bots in chat!';
+const command: FoundationClasses.BotCommand = {
+	name: 'displayguildsdata',
+	description: '!displayguildsdata to display the guild info of the bots in chat!',
+	function: Function()
+};
 
 /**
  * Displays all of the data for all of the guilds, either in console or in chat.
  */
-async function execute(commandData :DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<DiscordUser.CommandReturnData> {
+async function execute(commandData : FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<FoundationClasses.CommandReturnData> {
 	try {
-		const commandReturnData = new DiscordUser.CommandReturnData();
+		const commandReturnData: FoundationClasses.CommandReturnData = {
+			commandName: command.name
+		};
 		commandReturnData.commandName = command.name;
 		let currentCount = 0;
 		discordUser.guildsData.forEach(guild => {
 			let msgString = '';
-			msgString += `__Guild Name:__ ${guild.guildName}\n`;
-			msgString += `__Guild ID:__ ${guild.guildID}\n`;
-			msgString += `__Member Count:__ ${guild.guildMemberCount}\n`;
+			msgString += `__Guild Name:__ ${guild.exposeDataValues().guildName}\n`;
+			msgString += `__Guild ID:__ ${guild.exposeDataValues().id}\n`;
+			msgString += `__Member Count:__ ${guild.exposeDataValues().memberCount}\n`;
 
-			commandData.guildMember?.client.guilds.fetch(guild.guildID).then(guild => {
+			commandData.guildMember?.client.guilds.fetch(guild.exposeDataValues().id!).then(guild => {
 				msgString += `__Created:__ ${guild.createdAt}\n`;
 				msgString += `__Guild Owner:__ <@!${guild.owner!.id}> (${guild.owner!.user.tag})\n`;
 	
@@ -51,4 +57,4 @@ async function execute(commandData :DiscordUser.CommandData, discordUser: Discor
 	}
 }
 command.function = execute;
-export default command as DiscordUser.BotCommand;
+export default command as FoundationClasses.BotCommand;

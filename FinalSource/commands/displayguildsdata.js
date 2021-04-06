@@ -44,11 +44,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
-var command = new DiscordUser_1.default.BotCommand;
-command.name = 'displayguildsdata';
-command.description = '!displayguildsdata to display the guild info of the bots in chat!';
+var command = {
+    name: 'displayguildsdata',
+    description: '!displayguildsdata to display the guild info of the bots in chat!',
+    function: Function()
+};
 /**
  * Displays all of the data for all of the guilds, either in console or in chat.
  */
@@ -57,16 +58,18 @@ function execute(commandData, discordUser) {
         var commandReturnData, currentCount_1;
         return __generator(this, function (_a) {
             try {
-                commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                commandReturnData = {
+                    commandName: command.name
+                };
                 commandReturnData.commandName = command.name;
                 currentCount_1 = 0;
                 discordUser.guildsData.forEach(function (guild) {
                     var _a;
                     var msgString = '';
-                    msgString += "__Guild Name:__ " + guild.guildName + "\n";
-                    msgString += "__Guild ID:__ " + guild.guildID + "\n";
-                    msgString += "__Member Count:__ " + guild.guildMemberCount + "\n";
-                    (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(guild.guildID).then(function (guild) {
+                    msgString += "__Guild Name:__ " + guild.exposeDataValues().guildName + "\n";
+                    msgString += "__Guild ID:__ " + guild.exposeDataValues().id + "\n";
+                    msgString += "__Member Count:__ " + guild.exposeDataValues().memberCount + "\n";
+                    (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(guild.exposeDataValues().id).then(function (guild) {
                         msgString += "__Created:__ " + guild.createdAt + "\n";
                         msgString += "__Guild Owner:__ <@!" + guild.owner.id + "> (" + guild.owner.user.tag + ")\n";
                         var messageEmbed = new Discord.MessageEmbed()

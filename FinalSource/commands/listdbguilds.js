@@ -51,11 +51,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var DiscordUser_1 = __importDefault(require("../DiscordUser"));
+var GuildData_1 = __importDefault(require("../GuildData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
-var command = new DiscordUser_1.default.BotCommand();
-command.name = 'listdbguilds';
-command.description = '!listdbguilds, to list guilds that this bot is no longer in!';
+var command = {
+    name: 'listdbguilds',
+    description: '!listdbguilds, to list guilds that this bot is no longer in!',
+    function: Function()
+};
 function execute(commandData, discordUser) {
     var e_1, _a;
     return __awaiter(this, void 0, void 0, function () {
@@ -63,8 +65,10 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    _c.trys.push([0, 27, , 28]);
-                    commandReturnData = new DiscordUser_1.default.CommandReturnData();
+                    _c.trys.push([0, 26, , 27]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
@@ -78,47 +82,45 @@ function execute(commandData, discordUser) {
                     if (!areWeAnAdmin) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    return [4 /*yield*/, discordUser.getGuildDataFromDB(commandData.guild)];
-                case 3:
-                    guildData = _c.sent();
-                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 6];
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                    if (!(commandData.args[0] === undefined)) return [3 /*break*/, 5];
                     msgString_1 = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 4:
+                case 3:
                     msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 5:
+                case 4:
                     _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 6:
-                    if (!(commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 9];
+                case 5:
+                    if (!(commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'musichouse' && commandData.args[0].toLowerCase() !== 'gamehouse')) return [3 /*break*/, 8];
                     msgString_2 = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 7:
+                case 6:
                     msg = _c.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 8:
+                case 7:
                     _c.sent();
                     return [2 /*return*/, commandReturnData];
-                case 9:
+                case 8:
                     if (commandData.args[0].toLowerCase() !== 'janny') {
                         return [2 /*return*/, commandReturnData];
                     }
@@ -126,14 +128,14 @@ function execute(commandData, discordUser) {
                     iterator = discordUser.dataBase.iterate({});
                     areAnyFound = false;
                     msgString = '------\n';
-                    _c.label = 10;
-                case 10:
-                    _c.trys.push([10, 15, 16, 21]);
+                    _c.label = 9;
+                case 9:
+                    _c.trys.push([9, 14, 15, 20]);
                     iterator_1 = __asyncValues(iterator);
-                    _c.label = 11;
-                case 11: return [4 /*yield*/, iterator_1.next()];
-                case 12:
-                    if (!(iterator_1_1 = _c.sent(), !iterator_1_1.done)) return [3 /*break*/, 14];
+                    _c.label = 10;
+                case 10: return [4 /*yield*/, iterator_1.next()];
+                case 11:
+                    if (!(iterator_1_1 = _c.sent(), !iterator_1_1.done)) return [3 /*break*/, 13];
                     _b = iterator_1_1.value, key = _b.key, value = _b.value;
                     if (key.length === 18 && key !== discordUser.userData.userID) {
                         isItFound = false;
@@ -148,61 +150,61 @@ function execute(commandData, discordUser) {
                             msgString += "__**Key:**__ " + key + " __**Guild ID:**__ " + newValue.guildID + " __**Guild Name:**__ " + newValue.guildName + "\n";
                         }
                     }
-                    _c.label = 13;
-                case 13: return [3 /*break*/, 11];
-                case 14: return [3 /*break*/, 21];
-                case 15:
+                    _c.label = 12;
+                case 12: return [3 /*break*/, 10];
+                case 13: return [3 /*break*/, 20];
+                case 14:
                     e_1_1 = _c.sent();
                     e_1 = { error: e_1_1 };
-                    return [3 /*break*/, 21];
-                case 16:
-                    _c.trys.push([16, , 19, 20]);
-                    if (!(iterator_1_1 && !iterator_1_1.done && (_a = iterator_1.return))) return [3 /*break*/, 18];
+                    return [3 /*break*/, 20];
+                case 15:
+                    _c.trys.push([15, , 18, 19]);
+                    if (!(iterator_1_1 && !iterator_1_1.done && (_a = iterator_1.return))) return [3 /*break*/, 17];
                     return [4 /*yield*/, _a.call(iterator_1)];
-                case 17:
+                case 16:
                     _c.sent();
-                    _c.label = 18;
-                case 18: return [3 /*break*/, 20];
-                case 19:
+                    _c.label = 17;
+                case 17: return [3 /*break*/, 19];
+                case 18:
                     if (e_1) throw e_1.error;
                     return [7 /*endfinally*/];
-                case 20: return [7 /*endfinally*/];
-                case 21:
-                    if (!areAnyFound) return [3 /*break*/, 24];
+                case 19: return [7 /*endfinally*/];
+                case 20:
+                    if (!areAnyFound) return [3 /*break*/, 23];
                     msgString += '\n------';
                     return [4 /*yield*/, iterator.end()];
-                case 22:
+                case 21:
                     _c.sent();
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Depracated Database Entries:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 23:
+                case 22:
                     _c.sent();
-                    _c.label = 24;
-                case 24:
-                    if (!!areAnyFound) return [3 /*break*/, 26];
+                    _c.label = 23;
+                case 23:
+                    if (!!areAnyFound) return [3 /*break*/, 25];
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.borderColor)
+                        .setColor(guildData.exposeDataValues().borderColor)
                         .setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
                         .setTimestamp(Date())
                         .setTitle("__**No Spare Database Entries:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 25:
+                case 24:
                     _c.sent();
-                    _c.label = 26;
-                case 26: return [2 /*return*/, commandReturnData];
-                case 27:
+                    _c.label = 25;
+                case 25: return [2 /*return*/, commandReturnData];
+                case 26:
                     error_1 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 28: return [2 /*return*/];
+                case 27: return [2 /*return*/];
             }
         });
     });

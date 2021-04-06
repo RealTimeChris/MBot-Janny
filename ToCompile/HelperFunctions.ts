@@ -9,12 +9,13 @@ import Discord = require('discord.js');
 import FoundationClasses = require('./FoundationClasses');
 import DiscordUser = require('./DiscordUser');
 import GuildData from './GuildData';
+import Level from 'level-ts';
 
 module HelperFunctions{
     /**
     * Functino for sending out a message, using the appropriate channel.
     */
-    export async function sendMessageWithCorrectChannel(commandData: DiscordUser.CommandData, messageContents: String | Discord.MessageEmbed, atUserID: string | null = null): Promise<Discord.Message>{
+    export async function sendMessageWithCorrectChannel(commandData: FoundationClasses.CommandData, messageContents: String | Discord.MessageEmbed, atUserID: string | null = null): Promise<Discord.Message>{
         try{
             let returnMessage: Discord.Message;
             if (commandData.toTextChannel instanceof Discord.WebhookClient){
@@ -132,7 +133,7 @@ module HelperFunctions{
     /**
      * Checks to see if we're in a DM channel, and sends a warning message if so.
      */
-    export async function areWeInADM(commandData: DiscordUser.CommandData): Promise<boolean> {
+    export async function areWeInADM(commandData: FoundationClasses.CommandData): Promise<boolean> {
         try { 
             const currentChannelType = commandData.fromTextChannelType;
 
@@ -168,9 +169,9 @@ module HelperFunctions{
     /**
      * Checks if we have admin permissions in the current channel.
      */
-    export async function doWeHaveAdminPermission(commandData: DiscordUser.CommandData, discordUser: DiscordUser.DiscordUser): Promise<boolean> {
+    export async function doWeHaveAdminPermission(commandData: FoundationClasses.CommandData, discordUser: DiscordUser.DiscordUser): Promise<boolean> {
         try {
-            const guildData = await discordUser.getGuildDataFromDB(commandData.guild!)
+            const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
             const currentChannelPermissions = (commandData.guildMember! as Discord.GuildMember).permissionsIn(commandData.permsChannel!);
 
             const permissionStrings = 'ADMINISTRATOR';
@@ -190,7 +191,7 @@ module HelperFunctions{
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Permissions Issue:**__");
@@ -212,22 +213,22 @@ module HelperFunctions{
     /**
     * Applies default roles to a new guild member.
     */
-    export async function applyDefaultRoles(guildData: DiscordUser.GuildData, guildMember: Discord.GuildMember): Promise<void> {
+    export async function applyDefaultRoles(guildData: GuildData, guildMember: Discord.GuildMember): Promise<void> {
         let currentIndex = 0;
         try {
-            if (guildData.verificationSystem.channelID === null) {
+            if (guildData.exposeDataValues().verificationSystem!.channelID === null) {
                 const guildMemberRoleManager = new Discord.GuildMemberRoleManager(guildMember);
 
-                for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
+                for (let x = 0; x < guildData.exposeDataValues().defaultRoleIDs!.length; x += 1) {
                     currentIndex = x;
-                    await guildMemberRoleManager.add(guildData.defaultRoleIDs[x]!);
+                    await guildMemberRoleManager.add(guildData.exposeDataValues().defaultRoleIDs![x]!);
                 }
             }
             return new Promise((resolve, reject) => {
                 resolve();
             });
         } catch (error) {
-            guildData.defaultRoleIDs.splice(currentIndex, 1);
+            guildData.exposeDataValues().defaultRoleIDs!.splice(currentIndex, 1);
             applyDefaultRoles(guildData, guildMember);
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -269,17 +270,18 @@ module HelperFunctions{
                     }
                 }
                 if (areTheyFoundInFile === false) {
-                    const userRecord = new DiscordUser.UserRecord();
-                    userRecord.lastKnownUserTag = membersArray[z]!.user.tag;
-                    userRecord.lastKnownUsername = membersArray[z]!.user.username;
-                    userRecord.userID = membersArray[z]!.id;
+                    const userRecord: FoundationClasses.UserRecord = {
+                        lastKnownUserTag: membersArray[z]!.user.tag,
+                        lastKnownUsername: membersArray[z]!.user.username,
+                        userID: membersArray[z]!.id,
+                    };
                     fileObject.userRecords.push(userRecord);
                     console.log(`Adding New User Record: ${userRecord.lastKnownUserTag} of server: ${fileObject.serverName}`);
                 }
             }
             const serverRecordKey = `${liveGuildArray[y]!.id} + Record`;
             dataBase.put(serverRecordKey, fileObject);
-            console.log(fileObject);
+            //console.log(fileObject);
             yNew += 1;
             await recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, yNew);
             return new Promise((resolve, reject) => {
@@ -287,29 +289,31 @@ module HelperFunctions{
             });
         } catch (error) {
             if (error.type === 'NotFoundError') {
-                const serverRecord = new DiscordUser.ServerRecord();
-                serverRecord.serverName = liveGuildArray[y]!.name;
-                serverRecord.serverID = liveGuildArray[y]!.id;
-                serverRecord.replacementServerInvite = '';
-                serverRecord.userRecords = [];
+                const serverRecord: FoundationClasses.ServerRecord = {
+                    serverName: liveGuildArray[y]!.name,
+                    serverID: liveGuildArray[y]!.id,
+                    replacementServerInvite: '',
+                    userRecords: []
+                };
                 console.log(`Adding New Server Record: ${serverRecord.serverName}`);
-                console.log(`Saving the JSON file for discordUser Discord server for the first time: ${serverRecord.serverName}`);
+                console.log(`Saving the JSON file for FoundationClasses Discord server for the first time: ${serverRecord.serverName}`);
 
                 const guildMembersCollection = await liveGuildArray[y]!.members.fetch();
 
                 const membersArray = guildMembersCollection.array().sort();
 
                 for (let z = 0; z < membersArray.length; z += 1) {
-                    const userRecord = new DiscordUser.UserRecord();
-                    userRecord.lastKnownUserTag = membersArray[z]!.user.tag;
-                    userRecord.lastKnownUsername = membersArray[z]!.user.username;
-                    userRecord.userID = membersArray[z]!.id;
+                    const userRecord: FoundationClasses.UserRecord = {
+                        lastKnownUsername: membersArray[z]!.user.username,
+                        lastKnownUserTag: membersArray[z]!.user.tag,
+                        userID: membersArray[z]!.id
+                    };
                     serverRecord.userRecords.push(userRecord);
                     console.log(`Adding New User Record: ${userRecord.lastKnownUserTag} of server: ${serverRecord.serverName}`);
                 }
                 const serverRecordKey = `${liveGuildArray[y]!.id} + Record`;
                 await dataBase.put(serverRecordKey, serverRecord);
-                console.log(serverRecord);
+                //console.log(serverRecord);
                 await recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y);
                 return new Promise((resolve, reject) => {
                     resolve();
@@ -328,27 +332,27 @@ module HelperFunctions{
 		discordUser.guildsData.forEach(async guildData => {
 			const newGuildData = guildData;
 			try {
-				if (newGuildData.verificationSystem.channelID != '') {
-					const currentGuild = await client.guilds.fetch(newGuildData.guildID!);
+				if (newGuildData.exposeDataValues().verificationSystem!.channelID != '') {
+					const currentGuild = await client.guilds.fetch(newGuildData.exposeDataValues().id!);
 					const currentChannel = currentGuild.channels
-						.resolve(newGuildData.verificationSystem.channelID) as Discord.TextChannel;
+						.resolve(newGuildData.exposeDataValues().verificationSystem!.channelID) as Discord.TextChannel;
 					if (currentChannel === null){
-						console.log('null Channel! Purging from the values! For Guild: ' + newGuildData.guildName);
-						newGuildData.verificationSystem.channelID = '';
-						newGuildData.verificationSystem.messageID = '';
-						newGuildData.verificationSystem.emoji = '';
-						await discordUser.updateGuildDataInDB(newGuildData);
+						console.log('null Channel! Purging from the values! For Guild: ' + newGuildData.exposeDataValues().guildName);
+						newGuildData.exposeDataValues().verificationSystem!.channelID = '';
+						newGuildData.exposeDataValues().verificationSystem!.messageID = '';
+						newGuildData.exposeDataValues().verificationSystem!.emoji = '';
+						await guildData.writeToDataBase();
 						return new Promise((resolve, reject) => {
 							resolve();
 						})
 					}
 					const msgManager = new Discord.MessageManager(currentChannel);
 					const oldVerificationMessage = await msgManager
-						.fetch(newGuildData.verificationSystem.messageID);
+						.fetch(newGuildData.exposeDataValues().verificationSystem!.messageID);
 					const newMsgEmbed = oldVerificationMessage.embeds[0];
 					const newVerificationMessage = await currentChannel.send(newMsgEmbed!);
-					newGuildData.verificationSystem.messageID = newVerificationMessage.id;
-					await discordUser.updateGuildDataInDB(newGuildData);
+					newGuildData.exposeDataValues().verificationSystem!.messageID = newVerificationMessage.id;
+					await guildData.writeToDataBase();
 					await newVerificationMessage
 						.react((oldVerificationMessage.reactions.cache.first()!).emoji.name);
 					await oldVerificationMessage.delete();
@@ -359,10 +363,10 @@ module HelperFunctions{
 				return discordUser.userData.userID;
 			} catch (error) {
 				console.log('Looks like the channel or the message no longer exists! Purging the verification system values!');
-				newGuildData.verificationSystem.channelID = '';
-				newGuildData.verificationSystem.messageID = '';
-				newGuildData.verificationSystem.emoji = '';
-				await discordUser.updateGuildDataInDB(newGuildData);
+				newGuildData.exposeDataValues().verificationSystem!.channelID = '';
+				newGuildData.exposeDataValues().verificationSystem!.messageID = '';
+				newGuildData.exposeDataValues().verificationSystem!.emoji = '';
+				await guildData.writeToDataBase();
 				return new Promise((resolve, reject) => {
 					reject(error);
 				});
@@ -433,7 +437,7 @@ module HelperFunctions{
 
                 fileKey = `${discordUser.userData.activeInviteGuilds[x]} + Record`;
 
-                let currentFileObject: DiscordUser.ServerRecord;
+                let currentFileObject: FoundationClasses.ServerRecord;
                 try {
                     currentFileObject = await discordUser.dataBase.get(fileKey);
                 } catch (error) {
@@ -453,7 +457,7 @@ module HelperFunctions{
                 const guildName = currentFileObject.serverName;
                 const inviteLink = currentFileObject.replacementServerInvite;
                 const inviteString = `Hello, it is my understanding that you were a member of ${guildName
-                }.\nIf you would like to continue along with us, then please go ahead and join discordUser new server! Enjoy!\n${inviteLink}`;
+                }.\nIf you would like to continue along with us, then please go ahead and join the new server! Enjoy!\n${inviteLink}`;
 
                 const currentUser = client.users.resolve(userID);
                 let wereTheyAvailable = false;
@@ -467,10 +471,11 @@ module HelperFunctions{
                 }
 
                 if (wereTheyAvailable === true) {
-                    const savedUser = new DiscordUser.UserRecord();
-                    savedUser.userID = currentFileObject.userRecords[0]!.userID;
-                    savedUser.lastKnownUserTag = currentFileObject.userRecords[0]!.lastKnownUserTag;
-                    savedUser.lastKnownUsername = currentFileObject.userRecords[0]!.lastKnownUsername;
+                    const savedUser: FoundationClasses.UserRecord = {
+                        userID: currentFileObject.userRecords[0]!.userID,
+                        lastKnownUserTag: currentFileObject.userRecords[0]!.lastKnownUserTag,
+                        lastKnownUsername: currentFileObject.userRecords[0]!.lastKnownUsername
+                    };
                     currentFileObject.userRecords.splice(0, 1);
 
                     if (currentFileObject.userRecords.length === 0) {
@@ -491,12 +496,13 @@ module HelperFunctions{
 
                         await discordUser.dataBase.put(availableFileKey, availableFileString);
                     } catch (error) {
-                        const serverRecord = new DiscordUser.ServerRecord();
-                        serverRecord.replacementServerInvite = currentFileObject.replacementServerInvite;
-                        serverRecord.serverID = currentFileObject.serverID;
-                        serverRecord.serverName = currentFileObject.serverName;
+                        const serverRecord: FoundationClasses.ServerRecord = {
+                            replacementServerInvite: currentFileObject.replacementServerInvite,
+                            serverID: currentFileObject.serverID,
+                            serverName: currentFileObject.serverName,
+                            userRecords: []
+                        };
                         serverRecord.userRecords.push(savedUser);
-
                         availableFileString = JSON.stringify(serverRecord);
 
                         await discordUser.dataBase.put(availableFileKey, availableFileString);
@@ -505,10 +511,11 @@ module HelperFunctions{
                         });
                     }
                 } else {
-                    const deletedUser = new DiscordUser.UserRecord();
-                    deletedUser.userID = currentFileObject.userRecords[0]!.userID;
-                    deletedUser.lastKnownUserTag = currentFileObject.userRecords[0]!.lastKnownUserTag;
-                    deletedUser.lastKnownUsername = currentFileObject.userRecords[0]!.lastKnownUsername;
+                    const deletedUser: FoundationClasses.UserRecord = {
+                        userID: currentFileObject.userRecords[0]!.userID,
+                        lastKnownUsername: currentFileObject.userRecords[0]!.lastKnownUsername,
+                        lastKnownUserTag: currentFileObject.userRecords[0]!.lastKnownUserTag
+                    };
                     currentFileObject.userRecords.splice(0, 1);
 
                     if (currentFileObject.userRecords.length === 0) {
@@ -526,10 +533,12 @@ module HelperFunctions{
 
                         await discordUser.dataBase.put(notAvailableFileKey, notAvailableFileObject);
                     } catch (error) {
-                        const serverRecord = new DiscordUser.ServerRecord();
-                        serverRecord.replacementServerInvite = currentFileObject.replacementServerInvite;
-                        serverRecord.serverID = currentFileObject.serverID;
-                        serverRecord.serverName = currentFileObject.serverName;
+                        const serverRecord: FoundationClasses.ServerRecord = {
+                            replacementServerInvite: currentFileObject.replacementServerInvite,
+                            serverName: currentFileObject.serverName,
+                            serverID: currentFileObject.serverID,
+                            userRecords: []
+                        };
                         serverRecord.userRecords.push(deletedUser);
 
                         discordUser.dataBase.put(notAvailableFileKey, serverRecord);
@@ -555,27 +564,27 @@ module HelperFunctions{
     * Purges all of the selected messages within the given channels,
     * of each of the instance's guilds.
     */
-    export async function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: DiscordUser.GuildData, channelIndex: number, discordUser: DiscordUser.DiscordUser): Promise<void> {
+    export async function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: GuildData, channelIndex: number, discordUser: DiscordUser.DiscordUser): Promise<void> {
         try {
-            const { numberOfMessagesToSave } = guildData.deletionChannels[channelIndex]!;
-            const { channelID } = guildData.deletionChannels[channelIndex]!;
+            const { numberOfMessagesToSave } = guildData.exposeDataValues().deletionChannels![channelIndex]!;
+            const { channelID } = guildData.exposeDataValues().deletionChannels![channelIndex]!;
             const newGuildData = guildData;
             let currentChannel = new Discord.TextChannel(client.guilds
-                .resolve(newGuildData.guildID)!, {});
+                .resolve(newGuildData.exposeDataValues().id!)!, {});
             try {
                 currentChannel = await client.channels.fetch(channelID) as Discord.TextChannel;
             } catch (error) {
-                newGuildData.deletionChannels.splice(channelIndex, 1);
+                newGuildData.exposeDataValues().deletionChannels!.splice(channelIndex, 1);
                 console.log('Removing an "unknown channel" from list of deletion channels!');
-                await discordUser.updateGuildDataInDB(newGuildData);
+                await newGuildData.writeToDataBase();
                 return new Promise(resolve => {
                     resolve();
                 });
             }
 
             const currentTime = new Date().getTime();
-            const timeDifference = currentTime - newGuildData.deletionChannels[channelIndex]!.timeOfLastPurge;
-            if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === true) {
+            const timeDifference = currentTime - newGuildData.exposeDataValues().deletionChannels![channelIndex]!.timeOfLastPurge;
+            if (newGuildData.exposeDataValues().deletionChannels![channelIndex]!.currentlyBeingDeleted === true) {
                 console.log(`Nope! Still being deleted! Channel: ${currentChannel.name}`);
                 return new Promise(resolve => {
                     resolve();
@@ -590,7 +599,7 @@ module HelperFunctions{
 
             console.log(`Checking for messages to delete in channel: ${currentChannel.name}`);
 
-            newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = true;
+            newGuildData.exposeDataValues().deletionChannels![channelIndex]!.currentlyBeingDeleted = true;
 
             if (numberOfMessagesToSave > 0) {
                 let startingMessage: Discord.Message | undefined = undefined;
@@ -673,14 +682,14 @@ module HelperFunctions{
                 }
                 console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
                 if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
-                    newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
+                    newGuildData.exposeDataValues().deletionChannels![channelIndex]!.currentlyBeingDeleted = false;
                     return new Promise(resolve => {
                         resolve();
                     });
                 }
                 for (let y = arrayOfMessageArrays.length - 1; y >= 0; y -= 1) {
                     for (let z = arrayOfMessageArrays[y]!.length - 1; z >= 0; z -= 1) {
-                        if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
+                        if (newGuildData.exposeDataValues().deletionChannels![channelIndex]!.currentlyBeingDeleted === false) {
                             return new Promise(resolve => {
                                 resolve();
                             });
@@ -729,14 +738,14 @@ module HelperFunctions{
                 }
                 console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
                 if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
-                    newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
+                    newGuildData.exposeDataValues().deletionChannels![channelIndex]!.currentlyBeingDeleted = false;
                     return new Promise(resolve => {
                         resolve();
                     });
                 }
                 for (let w = arrayOfMessageArrays.length - 1; w >= 0; w -= 1) {
                     for (let z = arrayOfMessageArrays[w]!.length - 1; z >= 0; z -= 1) {
-                        if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
+                        if (newGuildData.exposeDataValues().deletionChannels![channelIndex]!.currentlyBeingDeleted === false) {
                             return new Promise(resolve => {
                                 resolve();
                             });
@@ -748,9 +757,9 @@ module HelperFunctions{
                     }
                 }
             }
-            newGuildData.deletionChannels[channelIndex]!.timeOfLastPurge = new Date().getTime();
-            newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
-            await discordUser.updateGuildDataInDB(newGuildData);
+            newGuildData.exposeDataValues().deletionChannels![channelIndex]!.timeOfLastPurge = new Date().getTime();
+            newGuildData.exposeDataValues().deletionChannels![channelIndex]!.currentlyBeingDeleted = false;
+            await newGuildData.writeToDataBase();
             return new Promise(resolve => {
                 resolve();
             });
@@ -766,9 +775,9 @@ module HelperFunctions{
     */
     export async function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser.DiscordUser): Promise<void> {
         try {
-            discordUser.guildsData.forEach(async guild => {
-                if (guild.deletionChannels.length > 0) {
-                    for (let y = 0; y < guild.deletionChannels.length; y += 1) {
+            discordUser.guildsData.forEach(async (guild: GuildData) => {
+                if (guild.exposeDataValues().deletionChannels!.length > 0) {
+                    for (let y = 0; y < guild.exposeDataValues().deletionChannels!.length; y += 1) {
                         deleteMessagesIfTimeHasPassed(client, guild, y, discordUser).catch(error => {
                             console.log(error);
                         });
@@ -791,22 +800,22 @@ module HelperFunctions{
     export async function sendTimedMessagesIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser.DiscordUser): Promise<void> {
         try {
             discordUser.guildsData.forEach(async guildData => {
-                for (let y = 0; y < guildData.timedMessages.length; y += 1) {
+                for (let y = 0; y < guildData.exposeDataValues().timedMessages!.length; y += 1) {
                     const newGuildData = guildData;
                     const currentTime = new Date().getTime();
-                    if ((currentTime - newGuildData.timedMessages[y]!.timeOfLastSend)
-                        > newGuildData.timedMessages[y]!.msBetweenSends) {
-                        const guild = client.guilds.resolve(newGuildData.guildID);
+                    if ((currentTime - newGuildData.exposeDataValues().timedMessages![y]!.timeOfLastSend)
+                        > newGuildData.exposeDataValues().timedMessages![y]!.msBetweenSends) {
+                        const guild = client.guilds.resolve(newGuildData.exposeDataValues().id!);
                         let textChannel = new Discord.TextChannel(guild!, {});
-                        textChannel = await client.channels.fetch(newGuildData.timedMessages[y]!.textChannelID) as Discord.TextChannel;
-                        await textChannel.send(newGuildData.timedMessages[y]!.messageContent);
-                        newGuildData.timedMessages[y]!.timeOfLastSend = new Date().getTime();
-                        await discordUser.updateGuildDataInDB(newGuildData);
+                        textChannel = await client.channels.fetch(newGuildData.exposeDataValues().timedMessages![y]!.textChannelID) as Discord.TextChannel;
+                        await textChannel.send(newGuildData.exposeDataValues().timedMessages![y]!.messageContent);
+                        newGuildData.exposeDataValues().timedMessages![y]!.timeOfLastSend = new Date().getTime();
+                        await newGuildData.writeToDataBase();
                         break;
                     } else {
-                        const timeDifference = currentTime - newGuildData.timedMessages[y]!.timeOfLastSend;
-                        const timeRemaining = newGuildData.timedMessages[y]!.msBetweenSends - timeDifference;
-                        console.log(`${newGuildData.timedMessages[y]!.name} has ${timeRemaining}ms left until it can be sent!`);
+                        const timeDifference = currentTime - newGuildData.exposeDataValues().timedMessages![y]!.timeOfLastSend;
+                        const timeRemaining = newGuildData.exposeDataValues().timedMessages![y]!.msBetweenSends - timeDifference;
+                        console.log(`${newGuildData.exposeDataValues().timedMessages![y]!.name} has ${timeRemaining}ms left until it can be sent!`);
                     }
                 }
             });
