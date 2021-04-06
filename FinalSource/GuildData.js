@@ -156,6 +156,7 @@ var GuildData = /** @class */ (function (_super) {
                         error_1 = _b.sent();
                         if (error_1.type === 'NotFoundError') {
                             console.log("No entry found for guild by the Id of " + this.id + " creating one!");
+                            console.log(this);
                         }
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];

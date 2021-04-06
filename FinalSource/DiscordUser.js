@@ -301,7 +301,7 @@ var DiscordUser = /** @class */ (function () {
                     case 4:
                         _a.trys.push([4, 7, , 8]);
                         guildMemberData = new GuildMemberData_1.default({ dataBase: this.dataBase, id: liveDataGuildMemberArray[y].id, guildId: liveDataGuildArray[x].id,
-                            userName: liveDataGuildMemberArray[x].user.username, displayName: liveDataGuildMemberArray[x].displayName });
+                            userName: liveDataGuildMemberArray[y].user.username, displayName: liveDataGuildMemberArray[y].displayName });
                         return [4 /*yield*/, guildMemberData.getFromDataBase()];
                     case 5:
                         _a.sent();

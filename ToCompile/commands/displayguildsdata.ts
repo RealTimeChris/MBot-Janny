@@ -7,7 +7,6 @@
 
 import Discord = require('discord.js');
 import DiscordUser = require('../DiscordUser');
-import GuildData from '../GuildData';
 import FoundationClasses = require('../FoundationClasses');
 import HelperFunctions from '../HelperFunctions';
 
