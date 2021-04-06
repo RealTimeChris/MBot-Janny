@@ -25,6 +25,7 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 		commandReturnData.commandName = command.name;
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: messageReaction.message.guild!.id,
             name: messageReaction.message.guild!.name, memberCount: messageReaction.message.guild!.memberCount});
+		await guildData.getFromDataBase();
 
 		if (messageReaction instanceof Discord.MessageReaction === false) {
 			return command.name;

@@ -56,7 +56,7 @@ function execute(client, oldMessage, newMessage, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 7, , 8]);
+                    _a.trys.push([0, 8, , 9]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -66,6 +66,9 @@ function execute(client, oldMessage, newMessage, discordUser) {
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newMessage.guild.id,
                         name: newMessage.guild.name, memberCount: newMessage.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 1:
+                    _a.sent();
                     logs = void 0;
                     for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
                         if (guildData.exposeDataValues().logs[x].nameSmall === 'messageupdate') {
@@ -74,7 +77,7 @@ function execute(client, oldMessage, newMessage, discordUser) {
                         }
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 1:
+                case 2:
                     textChannel = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = '';
@@ -88,27 +91,27 @@ function execute(client, oldMessage, newMessage, discordUser) {
                         .setDescription(msgString)
                         .setColor(guildData.exposeDataValues().borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 2:
+                case 3:
                     _a.sent();
                     x = 0;
-                    _a.label = 3;
-                case 3:
-                    if (!(x < newMessage.embeds.length)) return [3 /*break*/, 6];
+                    _a.label = 4;
+                case 4:
+                    if (!(x < newMessage.embeds.length)) return [3 /*break*/, 7];
                     msgEmbed2 = newMessage.embeds[0];
                     return [4 /*yield*/, textChannel.send('Message Content!', { embed: msgEmbed2 })];
-                case 4:
-                    _a.sent();
-                    _a.label = 5;
                 case 5:
+                    _a.sent();
+                    _a.label = 6;
+                case 6:
                     x += 1;
-                    return [3 /*break*/, 3];
-                case 6: return [2 /*return*/, command.name];
-                case 7:
+                    return [3 /*break*/, 4];
+                case 7: return [2 /*return*/, command.name];
+                case 8:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 8: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });

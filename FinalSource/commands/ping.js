@@ -60,40 +60,43 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 5, , 6]);
                     commandReturnData = {
                         commandName: command.name
                     };
                     commandReturnData.commandName = command.name;
                     msgString = '------\n**Pong!**\n------';
                     msgEmbed = new Discord.MessageEmbed();
-                    if (commandData.guildMember instanceof Discord.GuildMember) {
-                        guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
-                        msgEmbed
-                            .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                            .setColor(guildData.exposeDataValues().borderColor)
-                            .setDescription(msgString)
-                            .setTimestamp(Date())
-                            .setTitle('__**Ping! Response:**__');
-                    }
-                    else {
-                        msgEmbed
-                            .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
-                            .setColor([254, 254, 254])
-                            .setDescription(msgString)
-                            .setTimestamp(Date())
-                            .setTitle('__**Ping! Response:**__');
-                    }
-                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                    if (!(commandData.guildMember instanceof Discord.GuildMember)) return [3 /*break*/, 2];
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
                 case 1:
                     _a.sent();
-                    return [2 /*return*/, commandReturnData];
+                    msgEmbed
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Ping! Response:**__');
+                    return [3 /*break*/, 3];
                 case 2:
+                    msgEmbed
+                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL())
+                        .setColor([254, 254, 254])
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle('__**Ping! Response:**__');
+                    _a.label = 3;
+                case 3: return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                case 4:
+                    _a.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 5:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 3: return [2 /*return*/];
+                case 6: return [2 /*return*/];
             }
         });
     });

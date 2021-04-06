@@ -32,6 +32,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
         
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+        await guildData.getFromDataBase();
 
         const borderColor: number[] = [];
         if (commandData.args[0] === undefined || (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'gamehouse' && commandData.args[0] !== 'musichouse')){

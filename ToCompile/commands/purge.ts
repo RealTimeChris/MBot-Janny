@@ -39,6 +39,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		}
 
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+		await guildData.getFromDataBase();
 
 		const regExp = new RegExp(/\d{1,3}/);
 		if (commandData.args[0] === undefined || !regExp.test(commandData.args[0])

@@ -58,7 +58,7 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 14, , 15]);
+                    _a.trys.push([0, 15, , 16]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -70,8 +70,11 @@ function execute(commandData, discordUser) {
                         return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 2:
+                    _a.sent();
                     borderColor = [];
-                    if (!(commandData.args[0] === undefined || (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'gamehouse' && commandData.args[0] !== 'musichouse'))) return [3 /*break*/, 3];
+                    if (!(commandData.args[0] === undefined || (commandData.args[0].toLowerCase() !== 'janny' && commandData.args[0].toLowerCase() !== 'gamehouse' && commandData.args[0] !== 'musichouse'))) return [3 /*break*/, 4];
                     msgString = "------\n**Please, enter a bot's name as the first argument to this command! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------";
                     msgEmbed_1 = new Discord.MessageEmbed();
                     msgEmbed_1
@@ -81,16 +84,16 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
-                case 2:
+                case 3:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 3:
+                case 4:
                     if (commandData.args[0].toLowerCase() !== 'janny') {
                         return [2 /*return*/, commandReturnData];
                     }
-                    _a.label = 4;
-                case 4:
-                    if (!(parseInt(commandData.args[1], 10) > 255 || parseInt(commandData.args[1]) < 0 || commandData.args[1] === undefined)) return [3 /*break*/, 6];
+                    _a.label = 5;
+                case 5:
+                    if (!(parseInt(commandData.args[1], 10) > 255 || parseInt(commandData.args[1]) < 0 || commandData.args[1] === undefined)) return [3 /*break*/, 7];
                     msgString = "------\n**Please, enter a red-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------";
                     msgEmbed_2 = new Discord.MessageEmbed();
                     msgEmbed_2
@@ -100,11 +103,11 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
-                case 5:
+                case 6:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 6:
-                    if (!(parseInt(commandData.args[2], 10) > 255 || parseInt(commandData.args[2]) < 0 || commandData.args[2] === undefined)) return [3 /*break*/, 8];
+                case 7:
+                    if (!(parseInt(commandData.args[2], 10) > 255 || parseInt(commandData.args[2]) < 0 || commandData.args[2] === undefined)) return [3 /*break*/, 9];
                     msgString = "------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------";
                     msgEmbed_3 = new Discord.MessageEmbed();
                     msgEmbed_3
@@ -114,11 +117,11 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
-                case 7:
+                case 8:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 8:
-                    if (!(parseInt(commandData.args[3], 10) > 255 || parseInt(commandData.args[3]) < 0 || commandData.args[3] === undefined)) return [3 /*break*/, 10];
+                case 9:
+                    if (!(parseInt(commandData.args[3], 10) > 255 || parseInt(commandData.args[3]) < 0 || commandData.args[3] === undefined)) return [3 /*break*/, 11];
                     msgString = "------\n**Please, enter a green-channel value between 0 and 255! (!setbordercolor = BOTNAME, BOTCOLORREDCHANNEL, BOTCOLORGREENCHANNEL, BOTCOLORBLUECHANNEL)**\n------";
                     msgEmbed_4 = new Discord.MessageEmbed();
                     msgEmbed_4
@@ -128,10 +131,10 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_4)];
-                case 9:
+                case 10:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 10:
+                case 11:
                     borderColor[0] = parseInt(commandData.args[1], 10);
                     if (borderColor[0] === 255) {
                         borderColor[0] = 254;
@@ -144,11 +147,11 @@ function execute(commandData, discordUser) {
                     if (borderColor[2] === 255) {
                         borderColor[2] = 254;
                     }
-                    _a.label = 11;
-                case 11:
+                    _a.label = 12;
+                case 12:
                     guildData.exposeDataValues().borderColor = borderColor;
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 12:
+                case 13:
                     _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
@@ -158,15 +161,15 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Updated Border Color:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 13:
+                case 14:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 14:
+                case 15:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 15: return [2 /*return*/];
+                case 16: return [2 /*return*/];
             }
         });
     });

@@ -57,7 +57,7 @@ function execute(client, guildMember, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 9, , 10]);
+                    _a.trys.push([0, 10, , 11]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -66,8 +66,11 @@ function execute(client, guildMember, discordUser) {
                         return [2 /*return*/, command.name];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guildMember.guild.id, name: guildMember.guild.name, memberCount: guildMember.guild.memberCount });
-                    return [4 /*yield*/, HelperFunctions_1.default.applyDefaultRoles(guildData, guildMember)];
+                    return [4 /*yield*/, guildData.getFromDataBase()];
                 case 1:
+                    _a.sent();
+                    return [4 /*yield*/, HelperFunctions_1.default.applyDefaultRoles(guildData, guildMember)];
+                case 2:
                     _a.sent();
                     logs = void 0;
                     for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
@@ -76,28 +79,28 @@ function execute(client, guildMember, discordUser) {
                             break;
                         }
                     }
-                    if (!(guildData.exposeDataValues().verificationSystem.channelID === null)) return [3 /*break*/, 5];
+                    if (!(guildData.exposeDataValues().verificationSystem.channelID === null)) return [3 /*break*/, 6];
                     roleManager = new Discord.GuildMemberRoleManager(guildMember);
                     x = 0;
-                    _a.label = 2;
-                case 2:
-                    if (!(x < guildData.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 5];
-                    return [4 /*yield*/, roleManager.add(guildData.exposeDataValues().defaultRoleIDs[x])];
+                    _a.label = 3;
                 case 3:
-                    _a.sent();
-                    _a.label = 4;
+                    if (!(x < guildData.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 6];
+                    return [4 /*yield*/, roleManager.add(guildData.exposeDataValues().defaultRoleIDs[x])];
                 case 4:
-                    x += 1;
-                    return [3 /*break*/, 2];
+                    _a.sent();
+                    _a.label = 5;
                 case 5:
+                    x += 1;
+                    return [3 /*break*/, 3];
+                case 6:
                     if (logs.enabled === false) {
                         return [2 /*return*/, command.name];
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 6:
+                case 7:
                     textChannel = _a.sent();
                     return [4 /*yield*/, client.guilds.fetch(guildMember.guild.id)];
-                case 7:
+                case 8:
                     currentGuild = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = "__**Time Joined:**__ " + guildMember.joinedAt + "\n";
@@ -113,15 +116,15 @@ function execute(client, guildMember, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**New Guild Member:**__');
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 8:
+                case 9:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 9:
+                case 10:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 10: return [2 /*return*/];
+                case 11: return [2 /*return*/];
             }
         });
     });

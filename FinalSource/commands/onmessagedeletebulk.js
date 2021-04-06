@@ -56,7 +56,7 @@ function execute(client, collection, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 9, , 10]);
+                    _a.trys.push([0, 10, , 11]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -66,6 +66,9 @@ function execute(client, collection, discordUser) {
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: collection.first().guild.id,
                         name: collection.first().guild.name, memberCount: collection.first().guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 1:
+                    _a.sent();
                     logs = void 0;
                     for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
                         if (guildData.exposeDataValues().logs[x].nameSmall === 'messagedeletebulk') {
@@ -74,7 +77,7 @@ function execute(client, collection, discordUser) {
                         }
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 1:
+                case 2:
                     textChannel = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = '';
@@ -85,15 +88,15 @@ function execute(client, collection, discordUser) {
                         .setDescription(msgString)
                         .setColor(guildData.exposeDataValues().borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 2:
+                case 3:
                     _a.sent();
                     keyArray = collection.keyArray();
                     x = 0;
-                    _a.label = 3;
-                case 3:
-                    if (!(x < keyArray.length)) return [3 /*break*/, 8];
+                    _a.label = 4;
+                case 4:
+                    if (!(x < keyArray.length)) return [3 /*break*/, 9];
                     currentMessage = collection.get(keyArray[x]);
-                    if (!(currentMessage.content !== '')) return [3 /*break*/, 5];
+                    if (!(currentMessage.content !== '')) return [3 /*break*/, 6];
                     msgString2 = "__**Message Author:**__ <@!" + currentMessage.author.id + "> (" + currentMessage.author.tag + ")\n";
                     msgString2 += "__**Message Id:**__ " + currentMessage.id + "\n";
                     msgString2 += "__**Message Content:**__ " + currentMessage.content;
@@ -103,26 +106,26 @@ function execute(client, collection, discordUser) {
                         .setDescription(msgString2)
                         .setColor(guildData.exposeDataValues().borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 4:
-                    _a.sent();
-                    _a.label = 5;
                 case 5:
-                    if (!(currentMessage.embeds.length > 0)) return [3 /*break*/, 7];
+                    _a.sent();
+                    _a.label = 6;
+                case 6:
+                    if (!(currentMessage.embeds.length > 0)) return [3 /*break*/, 8];
                     msgEmbed2 = currentMessage.embeds[0];
                     return [4 /*yield*/, textChannel.send("Message Content: " + (x + 1) + " of " + keyArray.length, { embed: msgEmbed2 })];
-                case 6:
-                    _a.sent();
-                    _a.label = 7;
                 case 7:
+                    _a.sent();
+                    _a.label = 8;
+                case 8:
                     x += 1;
-                    return [3 /*break*/, 3];
-                case 8: return [2 /*return*/, command.name];
-                case 9:
+                    return [3 /*break*/, 4];
+                case 9: return [2 /*return*/, command.name];
+                case 10:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 10: return [2 /*return*/];
+                case 11: return [2 /*return*/];
             }
         });
     });

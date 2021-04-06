@@ -52,65 +52,70 @@ var command = {
 };
 function execute(client, guild, user, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, guildData_1;
+        var commandReturnData, guildData_1, error_1;
         var _this = this;
         return __generator(this, function (_a) {
-            try {
-                commandReturnData = {
-                    commandName: command.name
-                };
-                commandReturnData.commandName = command.name;
-                if (!(guild instanceof Discord.Guild)) {
-                    return [2 /*return*/, command.name];
-                }
-                guildData_1 = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount });
-                setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                    var logs, x, textChannel, auditLogs, auditLogEntry, msgString, msgEmbed;
-                    return __generator(this, function (_a) {
-                        switch (_a.label) {
-                            case 0:
-                                for (x = 0; x < guildData_1.exposeDataValues().logs.length; x += 1) {
-                                    if (guildData_1.exposeDataValues().logs[x].nameSmall === 'guildbanadd') {
-                                        logs = guildData_1.exposeDataValues().logs[x];
-                                        break;
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
+                    commandReturnData.commandName = command.name;
+                    if (!(guild instanceof Discord.Guild)) {
+                        return [2 /*return*/, command.name];
+                    }
+                    guildData_1 = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount });
+                    return [4 /*yield*/, guildData_1.getFromDataBase()];
+                case 1:
+                    _a.sent();
+                    setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
+                        var logs, x, textChannel, auditLogs, auditLogEntry, msgString, msgEmbed;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    for (x = 0; x < guildData_1.exposeDataValues().logs.length; x += 1) {
+                                        if (guildData_1.exposeDataValues().logs[x].nameSmall === 'guildbanadd') {
+                                            logs = guildData_1.exposeDataValues().logs[x];
+                                            break;
+                                        }
                                     }
-                                }
-                                textChannel = guild.channels.resolve(logs.loggingChannelID);
-                                return [4 /*yield*/, guild.fetchAuditLogs({ type: 'MEMBER_BAN_ADD', limit: 1 })];
-                            case 1:
-                                auditLogs = _a.sent();
-                                auditLogEntry = auditLogs.entries
-                                    .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
-                                msgString = '';
-                                msgString += "__**Banned By:**__ <@!" + auditLogEntry.executor.id + "> \n                (" + auditLogEntry.executor.tag + ")\n";
-                                msgString += "__**Reason:**__ " + auditLogEntry.reason + "\n";
-                                msgString += "__**Time of Ban:**__ " + Date() + "\n";
-                                msgString += "__**User:**__ <@!" + user.id + ">\n";
-                                msgString += "__**User Tag:**__ " + user.tag + "\n";
-                                msgString += "__**Username:**__ " + user.username + "\n";
-                                msgString += "__**User ID:**__ " + user.id + "\n";
-                                msgEmbed = new Discord.MessageEmbed();
-                                msgEmbed
-                                    .setColor([255, 0, 0])
-                                    .setThumbnail(user.avatarURL())
-                                    .setTimestamp(Date())
-                                    .setTitle('__**User Banned:**__')
-                                    .setDescription(msgString);
-                                return [4 /*yield*/, textChannel.send(msgEmbed)];
-                            case 2:
-                                _a.sent();
-                                return [2 /*return*/];
-                        }
-                    });
-                }); }, 500);
-                return [2 /*return*/, command.name];
+                                    textChannel = guild.channels.resolve(logs.loggingChannelID);
+                                    return [4 /*yield*/, guild.fetchAuditLogs({ type: 'MEMBER_BAN_ADD', limit: 1 })];
+                                case 1:
+                                    auditLogs = _a.sent();
+                                    auditLogEntry = auditLogs.entries
+                                        .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
+                                    msgString = '';
+                                    msgString += "__**Banned By:**__ <@!" + auditLogEntry.executor.id + "> \n                (" + auditLogEntry.executor.tag + ")\n";
+                                    msgString += "__**Reason:**__ " + auditLogEntry.reason + "\n";
+                                    msgString += "__**Time of Ban:**__ " + Date() + "\n";
+                                    msgString += "__**User:**__ <@!" + user.id + ">\n";
+                                    msgString += "__**User Tag:**__ " + user.tag + "\n";
+                                    msgString += "__**Username:**__ " + user.username + "\n";
+                                    msgString += "__**User ID:**__ " + user.id + "\n";
+                                    msgEmbed = new Discord.MessageEmbed();
+                                    msgEmbed
+                                        .setColor([255, 0, 0])
+                                        .setThumbnail(user.avatarURL())
+                                        .setTimestamp(Date())
+                                        .setTitle('__**User Banned:**__')
+                                        .setDescription(msgString);
+                                    return [4 /*yield*/, textChannel.send(msgEmbed)];
+                                case 2:
+                                    _a.sent();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); }, 500);
+                    return [2 /*return*/, command.name];
+                case 2:
+                    error_1 = _a.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 3: return [2 /*return*/];
             }
-            catch (error) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        reject(error);
-                    })];
-            }
-            return [2 /*return*/];
         });
     });
 }

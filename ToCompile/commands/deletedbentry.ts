@@ -85,6 +85,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		}
 
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+		await guildData.getFromDataBase();
 
 		if (commandData.args[0] === undefined) {
 			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;

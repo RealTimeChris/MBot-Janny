@@ -13,7 +13,7 @@ import Level from 'level-ts';
 
 module HelperFunctions{
     /**
-    * Functino for sending out a message, using the appropriate channel.
+    * Function for sending out a message, using the appropriate channel.
     */
     export async function sendMessageWithCorrectChannel(commandData: FoundationClasses.CommandData, messageContents: String | Discord.MessageEmbed, atUserID: string | null = null): Promise<Discord.Message>{
         try{

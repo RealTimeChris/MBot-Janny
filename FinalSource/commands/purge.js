@@ -60,7 +60,7 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 10, , 11]);
+                    _a.trys.push([0, 11, , 12]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -78,9 +78,12 @@ function execute(commandData, discordUser) {
                         return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 3:
+                    _a.sent();
                     regExp = new RegExp(/\d{1,3}/);
                     if (!(commandData.args[0] === undefined || !regExp.test(commandData.args[0])
-                        || parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100)) return [3 /*break*/, 5];
+                        || parseInt(commandData.args[0], 10) <= 0 || parseInt(commandData.args[0], 10) > 100)) return [3 /*break*/, 6];
                     msgString_1 = '------\n**Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)**\n------';
                     msgEmbed_1 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -89,22 +92,22 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
-                case 3:
+                case 4:
                     msg = _a.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 4:
+                case 5:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 5:
+                case 6:
                     deleteCount = parseInt(commandData.args[0].toString().match(regExp)[0], 10);
                     return [4 /*yield*/, commandData.guildMember.client.channels.fetch(commandData.fromTextChannel.id)];
-                case 6:
+                case 7:
                     currentChannel = _a.sent();
                     return [4 /*yield*/, currentChannel.bulkDelete(deleteCount, true)];
-                case 7:
+                case 8:
                     _a.sent();
                     msgString = "<@!" + commandData.guildMember.id + "> I've just deleted " + deleteCount + " messages from this channel!";
                     msgEmbed = new Discord.MessageEmbed()
@@ -114,18 +117,18 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Messages Purged:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 8:
+                case 9:
                     newMessage = _a.sent();
                     return [4 /*yield*/, newMessage.delete({ timeout: 5000 })];
-                case 9:
+                case 10:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 10:
+                case 11:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 11: return [2 /*return*/];
+                case 12: return [2 /*return*/];
             }
         });
     });

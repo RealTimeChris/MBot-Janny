@@ -57,7 +57,7 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 5, , 6]);
+                    _a.trys.push([0, 6, , 7]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -75,6 +75,9 @@ function execute(commandData, discordUser) {
                         return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 3:
+                    _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.client.user.username, commandData.guildMember.client.user.avatarURL())
@@ -107,7 +110,7 @@ function execute(commandData, discordUser) {
                     resultIcon = '❌';
                     serverRecordKey = commandData.guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
-                case 3:
+                case 4:
                     serverRecordObject = _a.sent();
                     if (serverRecordObject.replacementServerInvite !== '') {
                         resultIcon = '✅';
@@ -134,15 +137,15 @@ function execute(commandData, discordUser) {
                     fields.push(trackUsersField);
                     msgEmbed.fields = fields;
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 4:
+                case 5:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
-                case 5:
+                case 6:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 6: return [2 /*return*/];
+                case 7: return [2 /*return*/];
             }
         });
     });

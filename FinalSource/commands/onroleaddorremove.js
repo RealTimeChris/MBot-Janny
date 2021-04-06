@@ -56,7 +56,7 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
+                    _a.trys.push([0, 7, , 8]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -66,6 +66,9 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newGuildMember.guild.id,
                         name: newGuildMember.guild.name, memberCount: newGuildMember.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 1:
+                    _a.sent();
                     logs = void 0;
                     for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
                         if (guildData.exposeDataValues().logs[x].nameSmall === 'roleaddorremove') {
@@ -78,11 +81,11 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                     newRole = newRoleCollection.first();
                     textChannel = client.channels.resolve(logs.loggingChannelID);
                     return [4 /*yield*/, newGuildMember.guild.fetchAuditLogs({ type: 'MEMBER_ROLE_UPDATE', limit: 1 })];
-                case 1:
+                case 2:
                     auditLogs = _a.sent();
                     auditLogEntry = auditLogs.entries
                         .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
-                    if (!(collectionSizeDifference > 0)) return [3 /*break*/, 3];
+                    if (!(collectionSizeDifference > 0)) return [3 /*break*/, 4];
                     finalString = "__**Role Lost:**__ <@&" + newRole.id + "> (" + newRole.name + ")\n";
                     finalString += "__**Role Taken By:**__ <@!" + auditLogEntry.executor.id + "> (" + auditLogEntry.executor.tag + ")\n";
                     finalString += "__**User:**__ <@!" + newGuildMember.user.id + ">\n";
@@ -96,11 +99,11 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                         .setThumbnail(newGuildMember.user.avatarURL())
                         .setDescription(finalString);
                     return [4 /*yield*/, textChannel.send(messageEmbed)];
-                case 2:
+                case 3:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 3:
-                    if (!(collectionSizeDifference < 0)) return [3 /*break*/, 5];
+                case 4:
+                    if (!(collectionSizeDifference < 0)) return [3 /*break*/, 6];
                     finalString = "__**Role Gained:**__ <@&" + newRole.id + "> (" + newRole.name + ")\n";
                     finalString += "__**Role Given By:**__ <@!" + auditLogEntry.executor.id + "> (" + auditLogEntry.executor.tag + ")\n";
                     finalString += "__**User:**__ <@!" + newGuildMember.user.id + ">\n";
@@ -114,16 +117,16 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                         .setThumbnail(newGuildMember.user.avatarURL())
                         .setDescription(finalString);
                     return [4 /*yield*/, textChannel.send(messageEmbed)];
-                case 4:
+                case 5:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 5: return [2 /*return*/, command.name];
-                case 6:
+                case 6: return [2 /*return*/, command.name];
+                case 7:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 7: return [2 /*return*/];
+                case 8: return [2 /*return*/];
             }
         });
     });

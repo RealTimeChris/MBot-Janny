@@ -56,11 +56,14 @@ function execute(client, guild, user, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
+                    _a.trys.push([0, 4, , 5]);
                     if (!(guild instanceof Discord.Guild)) {
                         return [2 /*return*/, command.name];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 1:
+                    _a.sent();
                     logs = void 0;
                     for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
                         if (guildData.exposeDataValues().logs[x].nameSmall === 'guildbanremove') {
@@ -70,7 +73,7 @@ function execute(client, guild, user, discordUser) {
                     }
                     textChannel = guild.channels.resolve(logs.loggingChannelID);
                     return [4 /*yield*/, guild.fetchAuditLogs({ type: 'MEMBER_BAN_REMOVE', limit: 1 })];
-                case 1:
+                case 2:
                     auditLogs = _a.sent();
                     auditLogEntry = auditLogs.entries
                         .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
@@ -89,15 +92,15 @@ function execute(client, guild, user, discordUser) {
                         .setTitle('__**User Unbanned:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 2:
+                case 3:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 3:
+                case 4:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 4: return [2 /*return*/];
+                case 5: return [2 /*return*/];
             }
         });
     });

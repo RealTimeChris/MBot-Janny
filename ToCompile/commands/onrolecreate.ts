@@ -29,6 +29,7 @@ async function execute(client: Discord.Client, role: Discord.Role,
 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild!.id,
             name: role.guild!.name, memberCount: role.guild!.memberCount});
+        await guildData.getFromDataBase();
 
         let logs: FoundationClasses.Log;
         for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {

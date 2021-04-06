@@ -56,79 +56,82 @@ function execute(messageReaction, client, args, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 12, , 13]);
+                    _a.trys.push([0, 13, , 14]);
                     commandReturnData = {
                         commandName: command.name
                     };
                     commandReturnData.commandName = command.name;
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: messageReaction.message.guild.id,
                         name: messageReaction.message.guild.name, memberCount: messageReaction.message.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 1:
+                    _a.sent();
                     if (messageReaction instanceof Discord.MessageReaction === false) {
                         return [2 /*return*/, command.name];
                     }
                     userID = (messageReaction.users.cache
                         .array()[messageReaction.users.cache.array().length - 1]).id;
                     x = 0;
-                    _a.label = 1;
-                case 1:
-                    if (!(x < discordUser.guildsData.size)) return [3 /*break*/, 11];
+                    _a.label = 2;
+                case 2:
+                    if (!(x < discordUser.guildsData.size)) return [3 /*break*/, 12];
                     if (messageReaction.message.guild.id !== guildData.exposeDataValues().id) {
                         if (x === discordUser.guildsData.size - 1) {
-                            return [3 /*break*/, 11];
+                            return [3 /*break*/, 12];
                         }
-                        return [3 /*break*/, 10];
+                        return [3 /*break*/, 11];
                     }
                     if (messageReaction.message.channel.id !== guildData.exposeDataValues().verificationSystem.channelID) {
                         if (x === discordUser.guildsData.size - 1) {
-                            return [3 /*break*/, 11];
+                            return [3 /*break*/, 12];
                         }
-                        return [3 /*break*/, 10];
+                        return [3 /*break*/, 11];
                     }
                     if (messageReaction.message.id !== guildData.exposeDataValues().verificationSystem.messageID) {
                         if (x === discordUser.guildsData.size - 1) {
-                            return [3 /*break*/, 11];
+                            return [3 /*break*/, 12];
                         }
-                        return [3 /*break*/, 10];
+                        return [3 /*break*/, 11];
                     }
                     if (!(messageReaction.emoji.name === guildData.exposeDataValues()
-                        .verificationSystem.emoji && userID !== client.user.id)) return [3 /*break*/, 8];
+                        .verificationSystem.emoji && userID !== client.user.id)) return [3 /*break*/, 9];
                     return [4 /*yield*/, client.guilds.fetch(guildData.exposeDataValues().id)];
-                case 2:
+                case 3:
                     currentGuild = _a.sent();
                     currentGuildMember = currentGuild.members.resolve(userID);
                     currentGuildMemberRoleManager = new Discord
                         .GuildMemberRoleManager(currentGuildMember);
                     y = 0;
-                    _a.label = 3;
-                case 3:
-                    if (!(y < guildData.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 7];
-                    return [4 /*yield*/, currentGuildMemberRoleManager.add(guildData.exposeDataValues().defaultRoleIDs[y])];
+                    _a.label = 4;
                 case 4:
-                    _a.sent();
-                    return [4 /*yield*/, messageReaction.users.remove(userID)];
+                    if (!(y < guildData.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 8];
+                    return [4 /*yield*/, currentGuildMemberRoleManager.add(guildData.exposeDataValues().defaultRoleIDs[y])];
                 case 5:
                     _a.sent();
-                    _a.label = 6;
-                case 6:
-                    y += 1;
-                    return [3 /*break*/, 3];
-                case 7: return [3 /*break*/, 10];
-                case 8:
-                    if (!(userID !== client.user.id)) return [3 /*break*/, 10];
                     return [4 /*yield*/, messageReaction.users.remove(userID)];
-                case 9:
+                case 6:
                     _a.sent();
-                    _a.label = 10;
+                    _a.label = 7;
+                case 7:
+                    y += 1;
+                    return [3 /*break*/, 4];
+                case 8: return [3 /*break*/, 11];
+                case 9:
+                    if (!(userID !== client.user.id)) return [3 /*break*/, 11];
+                    return [4 /*yield*/, messageReaction.users.remove(userID)];
                 case 10:
+                    _a.sent();
+                    _a.label = 11;
+                case 11:
                     x += 1;
-                    return [3 /*break*/, 1];
-                case 11: return [2 /*return*/, command.name];
-                case 12:
+                    return [3 /*break*/, 2];
+                case 12: return [2 /*return*/, command.name];
+                case 13:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 13: return [2 /*return*/];
+                case 14: return [2 /*return*/];
             }
         });
     });

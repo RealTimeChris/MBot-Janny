@@ -48,7 +48,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         let guildData: GuildData;
         if (commandData.guildMember instanceof Discord.GuildMember){
-            const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+            guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+            await guildData.getFromDataBase();
         }
 
         if (commandData.args[0] === undefined && (commandData.permsChannel as Discord.Channel).type !== 'dm') {

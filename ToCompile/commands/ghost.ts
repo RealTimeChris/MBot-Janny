@@ -25,6 +25,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
     };
     returnData.commandName = command.name;
     const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
+    await guildData.getFromDataBase();
     try {
         const areWeInADM = await HelperFunctions.areWeInADM(commandData);
 
@@ -168,6 +169,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         const guildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, displayName: (commandData.guildMember as Discord.GuildMember).displayName,
             id: commandData.guildMember?.id!, guildId: commandData.guild!.id, userName: (commandData.guildMember as Discord.GuildMember).user.username});
+        await guildMemberData.getFromDataBase();
 
         const channelsArray = commandData.guild!.channels.cache.array();
 

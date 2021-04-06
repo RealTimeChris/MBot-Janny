@@ -56,7 +56,7 @@ function execute(client, role, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 5, , 6]);
+                    _a.trys.push([0, 6, , 7]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -66,6 +66,9 @@ function execute(client, role, discordUser) {
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: role.guild.id,
                         name: role.guild.name, memberCount: role.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 1:
+                    _a.sent();
                     logs = void 0;
                     for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
                         if (guildData.exposeDataValues().logs[x].nameSmall === 'rolecreate') {
@@ -74,15 +77,15 @@ function execute(client, role, discordUser) {
                         }
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 1:
+                case 2:
                     textChannel = _a.sent();
                     return [4 /*yield*/, role.guild.fetchAuditLogs({ type: 'ROLE_CREATE', limit: 1 })];
-                case 2:
+                case 3:
                     auditLogs = _a.sent();
                     auditLogEntry = auditLogs.entries
                         .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
                     return [4 /*yield*/, client.guilds.fetch(role.guild.id)];
-                case 3:
+                case 4:
                     currentGuild = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = '';
@@ -95,15 +98,15 @@ function execute(client, role, discordUser) {
                         .setDescription(msgString)
                         .setColor(role.color);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 4:
+                case 5:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 5:
+                case 6:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 6: return [2 /*return*/];
+                case 7: return [2 /*return*/];
             }
         });
     });

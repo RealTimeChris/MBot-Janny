@@ -56,7 +56,7 @@ function execute(client, guildMember, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 8, , 9]);
+                    _a.trys.push([0, 9, , 10]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -65,6 +65,9 @@ function execute(client, guildMember, discordUser) {
                         return [2 /*return*/, command.name];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guildMember.guild.id, name: guildMember.guild.name, memberCount: guildMember.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 1:
+                    _a.sent();
                     logs = void 0;
                     for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
                         if (guildData.exposeDataValues().logs[x].nameSmall === 'guildmemberremove') {
@@ -73,18 +76,18 @@ function execute(client, guildMember, discordUser) {
                         }
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 1:
+                case 2:
                     textChannel = _a.sent();
                     return [4 /*yield*/, client.guilds.fetch(guildMember.guild.id)];
-                case 2:
+                case 3:
                     currentGuild = _a.sent();
                     return [4 /*yield*/, guildMember.guild.fetchAuditLogs({ type: 'MEMBER_KICK', limit: 1 })];
-                case 3:
+                case 4:
                     auditLog = _a.sent();
                     augitLogEntry = auditLog.entries
                         .find(function (auditLogs) { return Date.now() - auditLogs.createdTimestamp < 5000; });
                     msgEmbed = new Discord.MessageEmbed();
-                    if (!(augitLogEntry !== undefined)) return [3 /*break*/, 5];
+                    if (!(augitLogEntry !== undefined)) return [3 /*break*/, 6];
                     msgString = "__**Kicked By:**__ <@!" + augitLogEntry.executor.id + "> (" + augitLogEntry.executor.tag + ")\n";
                     msgString += "__**Member Count**__: " + currentGuild.memberCount + "\n";
                     msgString += "__**User:**__ <@!" + guildMember.id + ">\n";
@@ -98,10 +101,10 @@ function execute(client, guildMember, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Guild Member Kicked:**__');
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 4:
-                    _a.sent();
-                    return [3 /*break*/, 7];
                 case 5:
+                    _a.sent();
+                    return [3 /*break*/, 8];
+                case 6:
                     msgString = "__**Member Count**__: " + currentGuild.memberCount + "\n";
                     msgString += "__**User:**__ <@!" + guildMember.id + ">\n";
                     msgString += "__**User Tag:**__ " + guildMember.user.tag + "\n";
@@ -114,16 +117,16 @@ function execute(client, guildMember, discordUser) {
                         .setTimestamp(Date())
                         .setTitle('__**Guild Member Left:**__');
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 6:
+                case 7:
                     _a.sent();
-                    _a.label = 7;
-                case 7: return [2 /*return*/, command.name];
-                case 8:
+                    _a.label = 8;
+                case 8: return [2 /*return*/, command.name];
+                case 9:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 9: return [2 /*return*/];
+                case 10: return [2 /*return*/];
             }
         });
     });

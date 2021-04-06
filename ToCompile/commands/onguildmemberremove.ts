@@ -9,7 +9,6 @@ import Discord = require('discord.js');
 import FoundationClasses = require('../FoundationClasses');
 import DiscordUser = require('../DiscordUser');
 import GuildData from '../GuildData';
-import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {
     name: 'onguildmemberremove',
@@ -29,6 +28,7 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
         }
 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guildMember.guild.id, name: guildMember.guild.name, memberCount: guildMember.guild.memberCount});
+        await guildData.getFromDataBase();
 
         let logs: FoundationClasses.Log;
         for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {

@@ -48,7 +48,7 @@ var GuildData_1 = __importDefault(require("./GuildData"));
 var HelperFunctions;
 (function (HelperFunctions) {
     /**
-    * Functino for sending out a message, using the appropriate channel.
+    * Function for sending out a message, using the appropriate channel.
     */
     function sendMessageWithCorrectChannel(commandData, messageContents, atUserID) {
         if (atUserID === void 0) { atUserID = null; }

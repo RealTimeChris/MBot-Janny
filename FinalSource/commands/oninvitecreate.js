@@ -56,7 +56,7 @@ function execute(client, invite, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
+                    _a.trys.push([0, 4, , 5]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -65,6 +65,9 @@ function execute(client, invite, discordUser) {
                         return [2 /*return*/, command.name];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: invite.guild.id, name: invite.guild.name, memberCount: invite.guild.memberCount });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 1:
+                    _a.sent();
                     logs = void 0;
                     for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
                         if (guildData.exposeDataValues().logs[x].nameSmall === 'invitecreate') {
@@ -73,7 +76,7 @@ function execute(client, invite, discordUser) {
                         }
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
-                case 1:
+                case 2:
                     textChannel = _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = '';
@@ -87,15 +90,15 @@ function execute(client, invite, discordUser) {
                         .setDescription(msgString)
                         .setColor(guildData.exposeDataValues().borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
-                case 2:
+                case 3:
                     _a.sent();
                     return [2 /*return*/, command.name];
-                case 3:
+                case 4:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 4: return [2 /*return*/];
+                case 5: return [2 /*return*/];
             }
         });
     });

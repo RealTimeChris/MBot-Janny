@@ -29,6 +29,7 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
         }
 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guildMember.guild.id, name: guildMember.guild.name, memberCount: guildMember.guild.memberCount});
+        await guildData.getFromDataBase();
 
         await HelperFunctions.applyDefaultRoles(guildData, guildMember);
 

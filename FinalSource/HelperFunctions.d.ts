@@ -5,7 +5,7 @@ import GuildData from './GuildData';
 import Level from 'level-ts';
 declare module HelperFunctions {
     /**
-    * Functino for sending out a message, using the appropriate channel.
+    * Function for sending out a message, using the appropriate channel.
     */
     function sendMessageWithCorrectChannel(commandData: FoundationClasses.CommandData, messageContents: String | Discord.MessageEmbed, atUserID?: string | null): Promise<Discord.Message>;
     /**
