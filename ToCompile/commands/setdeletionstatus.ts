@@ -80,7 +80,13 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             howManyBack = 0;
         }
 
-        let currentDeletionChannel: FoundationClasses.DeletionChannel;
+        let currentDeletionChannel: FoundationClasses.DeletionChannel = {
+            numberOfMessagesToSave: howManyBack,
+            channelID: commandData.permsChannel!.id,
+            timeOfLastPurge: 0,
+            currentlyBeingDeleted: false,
+            deletionMessageID: ''
+        };
         let isItFound = false;
         for (let x = 0; x < guildData.exposeDataValues().deletionChannels!.length; x += 1) {
             if (commandData.permsChannel!.id === guildData.exposeDataValues().deletionChannels![x]!.channelID) {

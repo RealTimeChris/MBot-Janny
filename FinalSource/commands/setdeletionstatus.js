@@ -134,7 +134,13 @@ function execute(commandData, discordUser) {
                     }
                     _a.label = 11;
                 case 11:
-                    currentDeletionChannel = void 0;
+                    currentDeletionChannel = {
+                        numberOfMessagesToSave: howManyBack,
+                        channelID: commandData.permsChannel.id,
+                        timeOfLastPurge: 0,
+                        currentlyBeingDeleted: false,
+                        deletionMessageID: ''
+                    };
                     isItFound = false;
                     for (x = 0; x < guildData.exposeDataValues().deletionChannels.length; x += 1) {
                         if (commandData.permsChannel.id === guildData.exposeDataValues().deletionChannels[x].channelID) {

@@ -757,8 +757,10 @@ module HelperFunctions{
                     }
                 }
             }
+            console.log("SETTING IT TO FALSE NOW!");
             newGuildData.exposeDataValues().deletionChannels![channelIndex]!.timeOfLastPurge = new Date().getTime();
             newGuildData.exposeDataValues().deletionChannels![channelIndex]!.currentlyBeingDeleted = false;
+            console.log(newGuildData.exposeDataValues().deletionChannels![channelIndex]!.currentlyBeingDeleted);
             await newGuildData.writeToDataBase();
             return new Promise(resolve => {
                 resolve();

@@ -66,7 +66,6 @@ import serverinfo from './commands/serverinfo';
 commands.set(serverinfo.name, serverinfo);
 import setbordercolor from './commands/setbordercolor';
 commands.set(setbordercolor.name, setbordercolor);
-/*
 import etdefaultrole from './commands/setdefaultrole';
 commands.set(etdefaultrole.name, etdefaultrole);
 import setdeletionstatus from './commands/setdeletionstatus';
@@ -85,5 +84,5 @@ import trackuser from './commands/trackuser';
 commands.set(trackuser.name, trackuser);
 import userinfo from './commands/userinfo';
 commands.set(userinfo.name, userinfo);
-*/
+
 export default {commands};
