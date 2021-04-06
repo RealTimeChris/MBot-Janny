@@ -167,8 +167,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         const currentGuildMember = await commandData.guild!.members.fetch(userID as string);
 
-        const guildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, displayName: (commandData.guildMember as Discord.GuildMember).displayName,
-            id: commandData.guildMember?.id!, guildId: commandData.guild!.id, userName: (commandData.guildMember as Discord.GuildMember).user.username});
+        const guildMemberData = new GuildMemberData({dataBase: discordUser.dataBase, displayName: currentGuildMember.displayName,
+            id: currentGuildMember.id, guildId: commandData.guild!.id, userName: currentGuildMember.user.username});
         await guildMemberData.getFromDataBase();
 
         const channelsArray = commandData.guild!.channels.cache.array();
@@ -426,7 +426,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const dmChannel = await currentGuildMember.createDM(true);
             dmChannel.send(msgEmbed);
 
-            const msgString2 = `------\n__Hello! You've ghosted the following member__: <@!${guildMemberData.exposeDataValues().id}> (${guildMemberData.exposeDataValues().userName})\n------`;
+            const msgString2 = `------\n__Hello! You've ghosted the following member__: <@!${currentGuildMember.id}> (${currentGuildMember.user.username})\n------`;
             const msgEmbed2 = new Discord.MessageEmbed();
             msgEmbed2
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -508,7 +508,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const dmChannel = await currentGuildMember.createDM(true);
             dmChannel.send(msgEmbed);
 
-            const msgString2 = `------\n__Hello! You've un-ghosted the following member__: <@!${guildMemberData.exposeDataValues().id}> (${guildMemberData.exposeDataValues().userName})\n------`;
+            const msgString2 = `------\n__Hello! You've un-ghosted the following member__: <@!${currentGuildMember.id}> (${currentGuildMember.user.username})\n------`;
             const msgEmbed2 = new Discord.MessageEmbed();
             msgEmbed2
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
