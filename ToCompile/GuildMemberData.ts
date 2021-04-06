@@ -54,7 +54,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
         }
         catch(error){
             if (error.type === 'NotFoundError') {
-                console.log("No entry found for user by the Id of " + this.id + " creating one!");
+                console.log(`No entry found for user by the Id of ${this.id} with name ${this.userName}, creating one!`);
                 console.log(this);
             }
         }

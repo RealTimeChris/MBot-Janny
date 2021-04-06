@@ -173,7 +173,7 @@ export default class DiscordUser {
             const liveDataGuildArray = client.guilds.cache.array().sort();
 
             for (let x = 0; x < liveDataGuildArray.length; x += 1) {
-                console.log(`Updating the guild data, for guild number ${x}!`);
+                console.log(`Updating the guild data, for guild number ${x}, ${liveDataGuildArray[x]!.name}!`);
                 const guildData = new GuildData({dataBase: this.dataBase, id: liveDataGuildArray[x]!.id, memberCount: liveDataGuildArray[x]!.memberCount, name: liveDataGuildArray[x]!.name});
                 await guildData.getFromDataBase();
                 for (let x = 0; x < guildData.exposeDataValues().deletionChannels!.length ; x += 1){

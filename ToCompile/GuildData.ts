@@ -69,7 +69,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
         }
         catch(error){
             if (error.type === 'NotFoundError') {
-                console.log("No entry found for guild by the Id of " + this.id + " creating one!");
+                console.log(`No entry found for guild by the Id of ${this.id} with name of ${this.guildName}, creating one!`);
                 console.log(this);
             }
         }
