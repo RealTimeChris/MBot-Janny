@@ -40,9 +40,9 @@ export interface DiscordUserData {
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
 export default class DiscordUser {
-    userData: DiscordUserData = {userID: '', userName: '', publicKey:'', guildCount: 0, botToken: '',
+    userData: DiscordUserData = {activeInviteGuilds: [], userID: '', userName: '', publicKey:'', guildCount: 0, botToken: '',
         msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
-        timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, activeInviteGuilds: [], botCommanders: [], msBetweenMessageDeletion: 0};
+        timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, botCommanders: [], msBetweenMessageDeletion: 0};
     dataBase: any;
 
     /**
@@ -55,7 +55,6 @@ export default class DiscordUser {
             this.userData = await this.getUserDataFromDB(client);
             this.userData.dataBaseFilePath = dataBaseFilePath;
             this.userData.startupCall = true;
-            await this.updateUserDataInDB(this.userData);
             console.log(`Logged in as ${client.user!.tag}!`);
             await this.updateDataCacheAndSaveToFile(client);
             await HelperFunctions.cacheMessagesForVerification(client, this);
@@ -150,6 +149,7 @@ export default class DiscordUser {
             userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
             userData.prefix = config.prefix;
             userData.timeOfLastUpdateAndSave = new Date().getTime();
+            userData.startupCall = this.userData.startupCall;
             userData.userID = client.user!.id;
             userData.userName = client.user!.username;
             await this.updateUserDataInDB(userData);

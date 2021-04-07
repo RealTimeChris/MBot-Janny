@@ -70,9 +70,8 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
         super();
         const IdRegExp = /\d{17,18}/;
         this.dataBase = initData.dataBase;
-        this.id = initData.id;
-        this.dataBaseKey = this.id;
-        this.guildName = initData.name;
+        this.guildName = initData.name.trim();
+        this.id = initData.id.trim();
         this.memberCount = initData.memberCount;
         if (!IdRegExp.test(this.id)){
             const error = new Error();
@@ -81,6 +80,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             this.dataBase.del(this.dataBaseKey);
             throw error;
         }
+        this.dataBaseKey = this.id;
         this.logs[0] = {name: '', nameSmall:'', enabled: false, loggingChannelID: '', loggingChannelName: ''};
         this.logs[0]!.name = 'Guild Ban Add';
         this.logs[0]!.nameSmall = 'guildbanadd';
@@ -120,6 +120,5 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
         this.logs[12] = {name: '', nameSmall:'', enabled: false, loggingChannelID: '', loggingChannelName: ''};
         this.logs[12]!.name = 'Username Change';
         this.logs[12]!.nameSmall = 'usernamechange';
-        GuildData.guildsData.set(this.dataBaseKey, this);
     }
 }

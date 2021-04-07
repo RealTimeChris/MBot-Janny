@@ -66,21 +66,20 @@ var GuildMemberData = /** @class */ (function (_super) {
     __extends(GuildMemberData, _super);
     function GuildMemberData(initData) {
         var _this = _super.call(this) || this;
-        _this.id = '';
-        _this.guildId = '';
         _this.dataBase = null;
         _this.dataBaseKey = '';
-        _this.userName = '';
         _this.displayName = '';
-        _this.previousRoleIDs = [];
+        _this.guildId = '';
+        _this.id = '';
+        _this.userName = '';
         _this.previousPermissionOverwrites = [];
+        _this.previousRoleIDs = [];
         var IdRegExp = /\d{17,18}/;
         _this.dataBase = initData.dataBase;
-        _this.id = initData.id.trim();
-        _this.guildId = initData.guildId.trim();
-        _this.userName = initData.userName.trim();
         _this.displayName = initData.displayName.trim();
-        _this.dataBaseKey = _this.guildId + " + " + _this.id;
+        _this.guildId = initData.guildId.trim();
+        _this.id = initData.id.trim();
+        _this.userName = initData.userName.trim();
         if (!IdRegExp.test(_this.id) || !IdRegExp.test(_this.guildId)) {
             var error = new Error();
             error.name = "Guild Member Id and/or Guild Id Issue";
@@ -88,7 +87,7 @@ var GuildMemberData = /** @class */ (function (_super) {
             _this.dataBase.del(_this.dataBaseKey);
             throw error;
         }
-        GuildMemberData.guildMembersData.set(_this.dataBaseKey, _this);
+        _this.dataBaseKey = _this.guildId + " + " + _this.id;
         return _this;
     }
     GuildMemberData.prototype.getFromDataBase = function () {

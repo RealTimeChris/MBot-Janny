@@ -53,9 +53,9 @@ var config = require("./config.json");
  */
 var DiscordUser = /** @class */ (function () {
     function DiscordUser() {
-        this.userData = { userID: '', userName: '', publicKey: '', guildCount: 0, botToken: '',
+        this.userData = { activeInviteGuilds: [], userID: '', userName: '', publicKey: '', guildCount: 0, botToken: '',
             msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
-            timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, activeInviteGuilds: [], botCommanders: [], msBetweenMessageDeletion: 0 };
+            timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, botCommanders: [], msBetweenMessageDeletion: 0 };
     }
     /**
     * Initializes the instance of Discord, within the DiscordUser class.
@@ -66,7 +66,7 @@ var DiscordUser = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _b.trys.push([0, 5, , 6]);
+                        _b.trys.push([0, 4, , 5]);
                         dataBaseFilePath = config.dataBaseFilePath + " + " + client.user.id;
                         this.dataBase = new level_ts_1.default(dataBaseFilePath);
                         _a = this;
@@ -75,25 +75,22 @@ var DiscordUser = /** @class */ (function () {
                         _a.userData = _b.sent();
                         this.userData.dataBaseFilePath = dataBaseFilePath;
                         this.userData.startupCall = true;
-                        return [4 /*yield*/, this.updateUserDataInDB(this.userData)];
-                    case 2:
-                        _b.sent();
                         console.log("Logged in as " + client.user.tag + "!");
                         return [4 /*yield*/, this.updateDataCacheAndSaveToFile(client)];
-                    case 3:
+                    case 2:
                         _b.sent();
                         return [4 /*yield*/, HelperFunctions_1.default.cacheMessagesForVerification(client, this)];
-                    case 4:
+                    case 3:
                         _b.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 resolve();
                             })];
-                    case 5:
+                    case 4:
                         error_1 = _b.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_1);
                             })];
-                    case 6: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -208,6 +205,7 @@ var DiscordUser = /** @class */ (function () {
                         userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
                         userData.prefix = config.prefix;
                         userData.timeOfLastUpdateAndSave = new Date().getTime();
+                        userData.startupCall = this.userData.startupCall;
                         userData.userID = client.user.id;
                         userData.userName = client.user.username;
                         return [4 /*yield*/, this.updateUserDataInDB(userData)];

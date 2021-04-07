@@ -14,10 +14,10 @@ import Level from 'level-ts';
  */
 export interface GuildMemberDataInitData {
     dataBase: Level;
-    id: string;
-    guildId: string;
-    userName: string;
     displayName: string;
+    guildId: string;
+    id: string;
+    userName: string;
 }
 
 /**
@@ -25,14 +25,15 @@ export interface GuildMemberDataInitData {
  */
 export default class GuildMemberData extends FoundationClasses.DiscordEntity {
     public static guildMembersData: Map<string, GuildMemberData> = new Map<string, GuildMemberData>();
-    readonly id: string = '';
-    readonly guildId: string = '';
     readonly dataBase: Level | null = null;
     readonly dataBaseKey: string = '';
-    readonly userName: string = '';
     readonly displayName: string = '';
-    previousRoleIDs: string[] = [];
+    readonly guildId: string = '';
+    readonly id: string = '';
+    readonly userName: string = '';
     previousPermissionOverwrites: FoundationClasses.PermissionOverwrites[] = [];
+    previousRoleIDs: string[] = [];
+    
     async getFromDataBase(){
         try{
             const guildMemberData = await this.dataBase?.get(this.dataBaseKey) as GuildMemberData;
@@ -60,11 +61,10 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
         super();
         const IdRegExp = /\d{17,18}/;
         this.dataBase = initData.dataBase;
-        this.id = initData.id.trim();
-        this.guildId = initData.guildId.trim();
-        this.userName = initData.userName.trim();
         this.displayName = initData.displayName.trim();
-        this.dataBaseKey = this.guildId + " + " + this.id;
+        this.guildId = initData.guildId.trim();
+        this.id = initData.id.trim();
+        this.userName = initData.userName.trim();
         if (!IdRegExp.test(this.id)|| !IdRegExp.test(this.guildId)){
             const error = new Error();
             error.name = "Guild Member Id and/or Guild Id Issue";
@@ -72,6 +72,6 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             this.dataBase.del(this.dataBaseKey);
             throw error;
         }
-        GuildMemberData.guildMembersData.set(this.dataBaseKey, this);
+        this.dataBaseKey = this.guildId + " + " + this.id;
     }
 }

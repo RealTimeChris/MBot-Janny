@@ -6,24 +6,24 @@ import Level from 'level-ts';
  */
 export interface GuildMemberDataInitData {
     dataBase: Level;
-    id: string;
-    guildId: string;
-    userName: string;
     displayName: string;
+    guildId: string;
+    id: string;
+    userName: string;
 }
 /**
  * Class representing a single guild member.
  */
 export default class GuildMemberData extends FoundationClasses.DiscordEntity {
     static guildMembersData: Map<string, GuildMemberData>;
-    readonly id: string;
-    readonly guildId: string;
     readonly dataBase: Level | null;
     readonly dataBaseKey: string;
-    readonly userName: string;
     readonly displayName: string;
-    previousRoleIDs: string[];
+    readonly guildId: string;
+    readonly id: string;
+    readonly userName: string;
     previousPermissionOverwrites: FoundationClasses.PermissionOverwrites[];
+    previousRoleIDs: string[];
     getFromDataBase(): Promise<void>;
     writeToDataBase(): Promise<void>;
     constructor(initData: GuildMemberDataInitData);

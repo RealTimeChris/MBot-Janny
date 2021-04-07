@@ -81,9 +81,8 @@ var GuildData = /** @class */ (function (_super) {
         _this.verificationSystem = { channelID: '', emoji: '', messageID: '' };
         var IdRegExp = /\d{17,18}/;
         _this.dataBase = initData.dataBase;
-        _this.id = initData.id;
-        _this.dataBaseKey = _this.id;
-        _this.guildName = initData.name;
+        _this.guildName = initData.name.trim();
+        _this.id = initData.id.trim();
         _this.memberCount = initData.memberCount;
         if (!IdRegExp.test(_this.id)) {
             var error = new Error();
@@ -92,6 +91,7 @@ var GuildData = /** @class */ (function (_super) {
             _this.dataBase.del(_this.dataBaseKey);
             throw error;
         }
+        _this.dataBaseKey = _this.id;
         _this.logs[0] = { name: '', nameSmall: '', enabled: false, loggingChannelID: '', loggingChannelName: '' };
         _this.logs[0].name = 'Guild Ban Add';
         _this.logs[0].nameSmall = 'guildbanadd';
@@ -131,7 +131,6 @@ var GuildData = /** @class */ (function (_super) {
         _this.logs[12] = { name: '', nameSmall: '', enabled: false, loggingChannelID: '', loggingChannelName: '' };
         _this.logs[12].name = 'Username Change';
         _this.logs[12].nameSmall = 'usernamechange';
-        GuildData.guildsData.set(_this.dataBaseKey, _this);
         return _this;
     }
     GuildData.prototype.getFromDataBase = function () {
