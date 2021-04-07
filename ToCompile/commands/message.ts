@@ -46,7 +46,6 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle("__**Tracked User Message:**__");
                 const currentTextChannel = commandData.guildMember!.client.channels.resolve(guildData.trackedUsers[index as number]?.channelID!) as Discord.TextChannel;
-                console.log("SENDING IN CHANNEL:" + currentTextChannel + 'of guild ' +commandData.guild?.client.guilds.resolve(currentTextChannel.guild)!.name);
                 currentTextChannel.send(msgEmbed);
             }
         });

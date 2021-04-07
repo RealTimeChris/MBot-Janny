@@ -58,7 +58,7 @@ function trackIfTrackedUser(message, commandData, discordUser) {
                     return [2 /*return*/];
                 }
                 GuildData_1.default.guildsData.forEach(function (guildData) {
-                    var _a, _b, _c;
+                    var _a, _b;
                     var msgStringContent;
                     var user = message.author;
                     var isItFound = false;
@@ -82,7 +82,6 @@ function trackIfTrackedUser(message, commandData, discordUser) {
                             .setTimestamp(Date())
                             .setTitle("__**Tracked User Message:**__");
                         var currentTextChannel = commandData.guildMember.client.channels.resolve((_b = guildData.trackedUsers[index]) === null || _b === void 0 ? void 0 : _b.channelID);
-                        console.log("SENDING IN CHANNEL:" + currentTextChannel + 'of guild ' + ((_c = commandData.guild) === null || _c === void 0 ? void 0 : _c.client.guilds.resolve(currentTextChannel.guild).name));
                         currentTextChannel.send(msgEmbed);
                     }
                 });
