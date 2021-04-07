@@ -6,6 +6,7 @@
 'use strict';
 
 import Discord = require('discord.js');
+
 module FoundationClasses{
     /**
      * Class representing permission overwrites for Discord.

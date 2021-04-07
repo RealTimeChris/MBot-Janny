@@ -228,22 +228,23 @@ var DiscordUser = /** @class */ (function () {
     * Updates the cache of guild data.}
     */
     DiscordUser.prototype.updateGuildsData = function (client) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var liveDataGuildArray, x, guildData, x_1, error_5;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 6, , 7]);
+                        _b.trys.push([0, 6, , 7]);
                         liveDataGuildArray = client.guilds.cache.array().sort();
                         x = 0;
-                        _a.label = 1;
+                        _b.label = 1;
                     case 1:
                         if (!(x < liveDataGuildArray.length)) return [3 /*break*/, 5];
-                        console.log("Updating the guild data, for guild number " + x + ", " + liveDataGuildArray[x].name + "!");
+                        console.log("Updating the guild data, for guild #" + x + ": " + ((_a = liveDataGuildArray[x]) === null || _a === void 0 ? void 0 : _a.name) + "!");
                         guildData = new GuildData_1.default({ dataBase: this.dataBase, id: liveDataGuildArray[x].id, memberCount: liveDataGuildArray[x].memberCount, name: liveDataGuildArray[x].name });
                         return [4 /*yield*/, guildData.getFromDataBase()];
                     case 2:
-                        _a.sent();
+                        _b.sent();
                         if (this.userData.startupCall === true) {
                             for (x_1 = 0; x_1 < guildData.deletionChannels.length; x_1 += 1) {
                                 guildData.deletionChannels[x_1].currentlyBeingDeleted = false;
@@ -252,8 +253,8 @@ var DiscordUser = /** @class */ (function () {
                         }
                         return [4 /*yield*/, guildData.writeToDataBase()];
                     case 3:
-                        _a.sent();
-                        _a.label = 4;
+                        _b.sent();
+                        _b.label = 4;
                     case 4:
                         x += 1;
                         return [3 /*break*/, 1];
@@ -261,7 +262,7 @@ var DiscordUser = /** @class */ (function () {
                             resolve();
                         })];
                     case 6:
-                        error_5 = _a.sent();
+                        error_5 = _b.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_5);
                             })];
