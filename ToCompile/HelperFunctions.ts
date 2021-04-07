@@ -46,7 +46,7 @@ module HelperFunctions{
                 returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);
             }
 
-            return returnMessage! as Discord.Message;
+            return returnMessage!;
         }
         catch(error){
             return new Promise((resolve, reject) => {
