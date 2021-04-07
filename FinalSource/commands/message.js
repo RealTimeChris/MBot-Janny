@@ -50,7 +50,7 @@ var command = {
     description: '__**Message Usage**__: Command executes automatically upon receiving certain messages!.',
     function: Function()
 };
-function trackIfTrackedUser(message, commandData, discordUser) {
+function trackIfTrackedUser(message, commandData) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             try {
@@ -99,14 +99,14 @@ function trackIfTrackedUser(message, commandData, discordUser) {
 * Selects a chosen chat message and sends it via the appropriate channel,
 * upon recieving a trigger phrase or word.
 */
-function execute(message, commandData, discordUser) {
+function execute(message, commandData) {
     return __awaiter(this, void 0, void 0, function () {
         var number, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
-                    return [4 /*yield*/, trackIfTrackedUser(message, commandData, discordUser)];
+                    return [4 /*yield*/, trackIfTrackedUser(message, commandData)];
                 case 1:
                     _a.sent();
                     number = Math.random() * 100;
