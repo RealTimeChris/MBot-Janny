@@ -14,8 +14,8 @@ import Level from 'level-ts';
 export interface GuildDataInitData {
     dataBase: Level;
     id: string;
-    name: string;
     memberCount: number;
+    name: string;
 }
 
 /**
@@ -23,19 +23,20 @@ export interface GuildDataInitData {
  */
 export default class GuildData extends FoundationClasses.DiscordEntity {
     public static guildsData: Map<string, GuildData> = new Map<string, GuildData>();
-    readonly id: string = '';
     readonly dataBase: Level | null = null;
     readonly dataBaseKey: string = '';
     readonly guildName: string = '';
+    readonly id: string = '';
     readonly memberCount: number = 0;
     borderColor: [number, number, number] = [254, 254, 254];
-    trackedUsers: FoundationClasses.TrackedUser[] = [];
-    ghostedRoleID: string = '';
-    timedMessages: FoundationClasses.TimedMessage[] = [];
-    logs: FoundationClasses.Log[] = [];
-    verificationSystem: FoundationClasses.VerificationSystem = {channelID: '', emoji: '', messageID: ''};
-    deletionChannels:FoundationClasses.DeletionChannel[] = [];
     defaultRoleIDs: string[] = [];
+    deletionChannels:FoundationClasses.DeletionChannel[] = [];
+    ghostedRoleID: string = '';
+    logs: FoundationClasses.Log[] = [];
+    timedMessages: FoundationClasses.TimedMessage[] = [];
+    trackedUsers: FoundationClasses.TrackedUser[] = [];
+    verificationSystem: FoundationClasses.VerificationSystem = {channelID: '', emoji: '', messageID: ''};
+    
     async getFromDataBase(): Promise<void> {
         try{
             const guildData = await this.dataBase?.get(this.dataBaseKey) as GuildData;

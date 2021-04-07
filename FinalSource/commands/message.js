@@ -59,31 +59,31 @@ function trackIfTrackedUser(message, commandData, discordUser) {
                 }
                 GuildData_1.default.guildsData.forEach(function (guildData) {
                     var _a, _b, _c;
+                    var msgStringContent;
+                    var user = message.author;
+                    var isItFound = false;
+                    var index;
                     for (var x = 0; x < guildData.trackedUsers.length; x += 1) {
-                        var user = message.author;
-                        var msgStringContent = void 0;
-                        var isItFound = false;
-                        var index = void 0;
                         if (user.id === ((_a = guildData.trackedUsers[x]) === null || _a === void 0 ? void 0 : _a.userID)) {
-                            msgStringContent = "__**Tracked User:**__ <@!" + user.id + "> (" + user.username + ")\n__**On Server:**__ " + message.guild.name + "\n                            \n__**In Channel:**__ <#" + message.channel.id + "> (" + message.channel.name + ")\n__**Message ID**__ " + message.id + "\n__**What They Said:**__ " + message.content;
+                            msgStringContent = "__**Tracked User:**__ <@!" + user.id + "> (" + user.username + ")\n__**On Server:**__ " + message.guild.name + "\n                        \n__**In Channel:**__ <#" + message.channel.id + "> (" + message.channel.name + ")\n__**Message ID**__ " + message.id + "\n__**What They Said:**__ " + message.content;
                             isItFound = true;
                             index = x;
                         }
-                        if (isItFound === false) {
-                            return;
-                        }
-                        else {
-                            var msgEmbed = new Discord.MessageEmbed();
-                            msgEmbed
-                                .setAuthor(user.username, user.avatarURL())
-                                .setColor([254, 254, 254])
-                                .setDescription(msgStringContent)
-                                .setTimestamp(Date())
-                                .setTitle("__**Tracked User Message:**__");
-                            var currentTextChannel = commandData.guildMember.client.channels.resolve((_b = guildData.trackedUsers[index]) === null || _b === void 0 ? void 0 : _b.channelID);
-                            console.log("SENDING IN CHANNEL:" + currentTextChannel + 'of guild ' + ((_c = commandData.guild) === null || _c === void 0 ? void 0 : _c.client.guilds.resolve(currentTextChannel.guild).name));
-                            currentTextChannel.send(msgEmbed);
-                        }
+                    }
+                    if (isItFound === false) {
+                        return;
+                    }
+                    else {
+                        var msgEmbed = new Discord.MessageEmbed();
+                        msgEmbed
+                            .setAuthor(user.username, user.avatarURL())
+                            .setColor([254, 254, 254])
+                            .setDescription(msgStringContent)
+                            .setTimestamp(Date())
+                            .setTitle("__**Tracked User Message:**__");
+                        var currentTextChannel = commandData.guildMember.client.channels.resolve((_b = guildData.trackedUsers[index]) === null || _b === void 0 ? void 0 : _b.channelID);
+                        console.log("SENDING IN CHANNEL:" + currentTextChannel + 'of guild ' + ((_c = commandData.guild) === null || _c === void 0 ? void 0 : _c.client.guilds.resolve(currentTextChannel.guild).name));
+                        currentTextChannel.send(msgEmbed);
                     }
                 });
             }

@@ -89,15 +89,14 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
 
         if (guildData.trackedUsers !== undefined) {
-            for (let x = 0; x < guildData.trackedUsers!.length; x += 1) {
+            for (let x = 0; x < guildData.trackedUsers.length; x += 1) {
                 let isUserFound = false;
                 const currentGuild = commandData.guild!;
                 if (currentGuild != null) {
-                    for (let z = 0; z < currentGuild.memberCount; z += 1) {
-                        const currentUser = currentGuild.members.resolve(guildData.trackedUsers![x]!.userID);
-                        if (currentUser != null) {
-                            isUserFound = true;
-                        }
+                    const currentUser = currentGuild.members.resolve(guildData.trackedUsers[x]!.userID);
+                    if (currentUser != null) {
+                        isUserFound = true;
+                        continue;
                     }
                 }
                 if (isUserFound === false) {
@@ -112,9 +111,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     if (commandData.toTextChannel instanceof Discord.WebhookClient){
                         msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                     }
-                    await msg.delete({timeout: 20000});
-                    guildData.trackedUsers!.splice(x, 1);
+                    guildData.trackedUsers.splice(x, 1);
                     await guildData.writeToDataBase();
+                    await msg.delete({timeout: 20000});
                 }
             }
         }
@@ -129,7 +128,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             try {
                 let currentIndex = -1;
                 for (let x = 0; x < guildData.trackedUsers.length; x += 1){
-                    if (trackedUserID === guildData.trackedUsers![x]?.userID){
+                    if (trackedUserID === guildData.trackedUsers[x]?.userID){
                         currentIndex = x;
                         break;
                     }
@@ -141,7 +140,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                         userID: currentGuildMember.user.id.trim(),
                         channelID: commandData.fromTextChannel!.id!
                     };
-                    guildData.trackedUsers!.push(trackedUser);
+                    guildData.trackedUsers.push(trackedUser);
 
                     await guildData.writeToDataBase();
 
@@ -157,17 +156,17 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 } else if (currentIndex >= 0) {
                     let currentIndex = -1;
-                    for (let x = 0; x < guildData.trackedUsers!.length; x += 1){
-                        if (trackedUserID === guildData.trackedUsers![x]!.userID){
+                    for (let x = 0; x < guildData.trackedUsers.length; x += 1){
+                        if (trackedUserID === guildData.trackedUsers[x]!.userID){
                             currentIndex = x;
                             break;
                         }
                     }
 
-                    guildData.trackedUsers![currentIndex]!.channelID = commandData.fromTextChannel!.id;
+                    guildData.trackedUsers[currentIndex]!.channelID = commandData.fromTextChannel!.id;
 
                     const msgString = `------\n**That user is already being tracked! I will update their tracking channel though!**\n------\n__**Tracked User:**__ <@!${currentGuildMember.id}> (${currentGuildMember.user.username})
-                        __**Tracking Channel:**__ <#${guildData.trackedUsers![currentIndex]?.channelID}>\n------`;
+                        __**Tracking Channel:**__ <#${guildData.trackedUsers[currentIndex]?.channelID}>\n------`;
                     const msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -199,21 +198,21 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
         if (whatAreWeDoing === 'remove') {
             try {
-                if (commandData.args[0]!.toLowerCase() === 'remove' && guildData.trackedUsers!.length >= 1) {
+                if (commandData.args[0]!.toLowerCase() === 'remove' && guildData.trackedUsers.length >= 1) {
                     let currentIndex = -1;
-                    for (let x = 0; x < guildData.trackedUsers!.length; x += 1){
-                        if (trackedUserID === guildData.trackedUsers![x]?.userID){
+                    for (let x = 0; x < guildData.trackedUsers.length; x += 1){
+                        if (trackedUserID === guildData.trackedUsers[x]?.userID){
                             currentIndex = x;
                             break;
                         }
                     }
                     if (currentIndex >= 0) {
-                        guildData.trackedUsers!.splice(currentIndex, 1);
+                        guildData.trackedUsers.splice(currentIndex, 1);
                         await guildData.writeToDataBase();
 
                         let msgString = `------\n__**Tracked User:**__ <@!${currentGuildMember.id}> (${currentGuildMember.user.username})\n------`;
 
-                        if (guildData.trackedUsers!.length === 0) {
+                        if (guildData.trackedUsers.length === 0) {
                             msgString += '\nNo more users are being tracked!\n------';
                         }
 
@@ -238,7 +237,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                         }
                         await msg.delete({timeout: 20000});
                     }
-                } else if ((commandData.args[0] as string).toLowerCase() === 'remove' && guildData.trackedUsers!.length === 0) {
+                } else if ((commandData.args[0] as string).toLowerCase() === 'remove' && guildData.trackedUsers.length === 0) {
                     const msgString = '------\n**There is noone to remove from the tracked users!**\n------';
 
                     const messageEmbed = new Discord.MessageEmbed()
@@ -268,17 +267,17 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         if (commandData.args[0] === undefined) {
             let msgString = '';
 
-            if (guildData.trackedUsers!.length > 0) {
-                for (let x = 0; x < guildData.trackedUsers!.length; x += 1) {
+            if (guildData.trackedUsers.length > 0) {
+                for (let x = 0; x < guildData.trackedUsers.length; x += 1) {
                     if (x===0){
                         msgString = '------\n';
                     }
                     const trackedChannelName = (commandData.guild!.client.channels
-                        .resolve(guildData.trackedUsers![x]!.channelID!) as Discord.TextChannel).name;
+                        .resolve(guildData.trackedUsers[x]!.channelID!) as Discord.TextChannel).name;
 
-                    msgString += `__**Tracked User Name #${x + 1}:**__ <@!${guildData.trackedUsers![x]?.userID}> (${guildData.trackedUsers![x]?.userName})\n`;
-                    msgString += `__**In Channel:**__ <#${guildData.trackedUsers![x]?.channelID}> (${trackedChannelName})\n------`;
-                    if (x < guildData.trackedUsers!.length - 1){
+                    msgString += `__**Tracked User Name #${x + 1}:**__ <@!${guildData.trackedUsers[x]?.userID}> (${guildData.trackedUsers[x]?.userName})\n`;
+                    msgString += `__**In Channel:**__ <#${guildData.trackedUsers[x]?.channelID}> (${trackedChannelName})\n------`;
+                    if (x < guildData.trackedUsers.length - 1){
                         msgString += '\n';
                     }
                 }

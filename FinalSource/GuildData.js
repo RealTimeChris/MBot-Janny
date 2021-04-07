@@ -66,19 +66,19 @@ var GuildData = /** @class */ (function (_super) {
     __extends(GuildData, _super);
     function GuildData(initData) {
         var _this = _super.call(this) || this;
-        _this.id = '';
         _this.dataBase = null;
         _this.dataBaseKey = '';
         _this.guildName = '';
+        _this.id = '';
         _this.memberCount = 0;
         _this.borderColor = [254, 254, 254];
-        _this.trackedUsers = [];
-        _this.ghostedRoleID = '';
-        _this.timedMessages = [];
-        _this.logs = [];
-        _this.verificationSystem = { channelID: '', emoji: '', messageID: '' };
-        _this.deletionChannels = [];
         _this.defaultRoleIDs = [];
+        _this.deletionChannels = [];
+        _this.ghostedRoleID = '';
+        _this.logs = [];
+        _this.timedMessages = [];
+        _this.trackedUsers = [];
+        _this.verificationSystem = { channelID: '', emoji: '', messageID: '' };
         var IdRegExp = /\d{17,18}/;
         _this.dataBase = initData.dataBase;
         _this.id = initData.id;

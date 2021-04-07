@@ -57,7 +57,7 @@ var command = {
 function execute(commandData, discordUser) {
     var _a, _b, _c, _d, _e, _f, _g;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPermission, guildData, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, msgString, msgEmbed, msg, msgString, msgEmbed, msg, argOne, trackedUserIDOne, x, isUserFound, currentGuild_1, z, currentUser, msgString, msgEmbed, msg, currentGuild, currentTextChannel, currentGuildMember, currentIndex, x, trackedUser, msgString, messageEmbed, currentIndex_1, x, msgString, msgEmbed, error_1, msgString, msgEmbed, msg, currentIndex, x, msgString, messageEmbed, msgString, msgEmbed, msg, msgString, messageEmbed, error_2, msgString, messageEmbed, msg, msgString, x, trackedChannelName, messageEmbed, error_3;
+        var commandReturnData, areWeInADM, doWeHaveAdminPermission, guildData, userMentionRegExp, idRegExp, whatAreWeDoing, trackedUserID, msgString, msgEmbed, msg, msgString, msgEmbed, msg, argOne, trackedUserIDOne, x, isUserFound, currentGuild_1, currentUser, msgString, msgEmbed, msg, currentGuild, currentTextChannel, currentGuildMember, currentIndex, x, trackedUser, msgString, messageEmbed, currentIndex_1, x, msgString, msgEmbed, error_1, msgString, msgEmbed, msg, currentIndex, x, msgString, messageEmbed, msgString, msgEmbed, msg, msgString, messageEmbed, error_2, msgString, messageEmbed, msg, msgString, x, trackedChannelName, messageEmbed, error_3;
         return __generator(this, function (_h) {
             switch (_h.label) {
                 case 0:
@@ -143,11 +143,10 @@ function execute(commandData, discordUser) {
                     isUserFound = false;
                     currentGuild_1 = commandData.guild;
                     if (currentGuild_1 != null) {
-                        for (z = 0; z < currentGuild_1.memberCount; z += 1) {
-                            currentUser = currentGuild_1.members.resolve(guildData.trackedUsers[x].userID);
-                            if (currentUser != null) {
-                                isUserFound = true;
-                            }
+                        currentUser = currentGuild_1.members.resolve(guildData.trackedUsers[x].userID);
+                        if (currentUser != null) {
+                            isUserFound = true;
+                            return [3 /*break*/, 14];
                         }
                     }
                     if (!(isUserFound === false)) return [3 /*break*/, 14];
@@ -164,11 +163,11 @@ function execute(commandData, discordUser) {
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
-                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 12:
-                    _h.sent();
                     guildData.trackedUsers.splice(x, 1);
                     return [4 /*yield*/, guildData.writeToDataBase()];
+                case 12:
+                    _h.sent();
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 13:
                     _h.sent();
                     _h.label = 14;

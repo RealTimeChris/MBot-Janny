@@ -3,24 +3,24 @@ import Discord = require('discord.js');
  * Class representing a single instance of "Discord".
  */
 export interface DiscordUserData {
-    userID: string;
-    userName: string;
-    publicKey: string;
-    guildCount: number;
-    botToken: string;
-    msBetweenCacheBackup: number;
-    currencyName: string;
-    timeOfLastUpdateAndSave: number;
-    prefix: string;
-    dataBaseFilePath: string;
-    msBetweenRecordUpdates: number;
-    timeOfLastRecordUpdate: number;
-    msBetweenInvites: number;
-    timeOfLastInvite: number;
-    msBetweenMessageDeletion: number;
-    startupCall: boolean;
     activeInviteGuilds: string[];
     botCommanders: string[];
+    botToken: string;
+    currencyName: string;
+    dataBaseFilePath: string;
+    guildCount: number;
+    msBetweenCacheBackup: number;
+    msBetweenInvites: number;
+    msBetweenMessageDeletion: number;
+    msBetweenRecordUpdates: number;
+    prefix: string;
+    publicKey: string;
+    startupCall: boolean;
+    timeOfLastInvite: number;
+    timeOfLastRecordUpdate: number;
+    timeOfLastUpdateAndSave: number;
+    userID: string;
+    userName: string;
 }
 /**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.

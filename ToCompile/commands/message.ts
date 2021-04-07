@@ -22,32 +22,32 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
             return;
         }
         GuildData.guildsData.forEach((guildData) => {
+            let msgStringContent;
+            const user = message.author;
+            let isItFound = false;
+            let index;
             for (let x = 0; x < guildData.trackedUsers.length; x += 1){
-                const user = message.author;
-                let msgStringContent;
-                let isItFound = false;
-                let index;
-                    if (user.id === guildData.trackedUsers[x]?.userID){
-                        msgStringContent = `__**Tracked User:**__ <@!${user.id}> (${user.username})\n__**On Server:**__ ${message.guild!.name}
-                            \n__**In Channel:**__ <#${message.channel.id}> (${(message.channel as Discord.TextChannel).name})\n__**Message ID**__ ${message.id}\n__**What They Said:**__ ${message.content}`;
-                        isItFound = true;
-                        index = x;
-                    }
-                if (isItFound === false){
-                    return;
-                }
-                else {
-                    const msgEmbed = new Discord.MessageEmbed()
-                    msgEmbed
-                        .setAuthor(user.username, user.avatarURL()!)
-                        .setColor([254, 254, 254])
-                        .setDescription(msgStringContent)
-                        .setTimestamp(Date() as unknown as Date)
-                        .setTitle("__**Tracked User Message:**__");
-                    const currentTextChannel = commandData.guildMember!.client.channels.resolve(guildData.trackedUsers[index as number]?.channelID!) as Discord.TextChannel;
-                    console.log("SENDING IN CHANNEL:" + currentTextChannel + 'of guild ' +commandData.guild?.client.guilds.resolve(currentTextChannel.guild)!.name);
-                    currentTextChannel.send(msgEmbed);
-                }
+                if (user.id === guildData.trackedUsers[x]?.userID){
+                    msgStringContent = `__**Tracked User:**__ <@!${user.id}> (${user.username})\n__**On Server:**__ ${message.guild!.name}
+                        \n__**In Channel:**__ <#${message.channel.id}> (${(message.channel as Discord.TextChannel).name})\n__**Message ID**__ ${message.id}\n__**What They Said:**__ ${message.content}`;
+                    isItFound = true;
+                    index = x;
+                }   
+            }
+            if (isItFound === false){
+                return;
+            }
+            else {
+                const msgEmbed = new Discord.MessageEmbed()
+                msgEmbed
+                    .setAuthor(user.username, user.avatarURL()!)
+                    .setColor([254, 254, 254])
+                    .setDescription(msgStringContent)
+                    .setTimestamp(Date() as unknown as Date)
+                    .setTitle("__**Tracked User Message:**__");
+                const currentTextChannel = commandData.guildMember!.client.channels.resolve(guildData.trackedUsers[index as number]?.channelID!) as Discord.TextChannel;
+                console.log("SENDING IN CHANNEL:" + currentTextChannel + 'of guild ' +commandData.guild?.client.guilds.resolve(currentTextChannel.guild)!.name);
+                currentTextChannel.send(msgEmbed);
             }
         });
     }
