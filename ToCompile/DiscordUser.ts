@@ -15,7 +15,7 @@ import config = require('./config.json');
 /**
  * Class representing a single instance of "Discord".
  */
-export interface DiscordUserData {
+interface DiscordUserData {
     activeInviteGuilds: string[];
     botCommanders: string[];
     botToken: string;
