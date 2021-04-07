@@ -84,7 +84,7 @@ function execute(commandData, discordUser) {
                     _j.sent();
                     _j.label = 3;
                 case 3:
-                    if (((_f = commandData.args[0]) === null || _f === void 0 ? void 0 : _f.toLowerCase()) !== 'musichouse') {
+                    if (((_f = commandData.args[0]) === null || _f === void 0 ? void 0 : _f.toLowerCase()) !== 'janny') {
                         return [2 /*return*/, commandReturnData];
                     }
                     commandReturnData.commandName = command.name;
