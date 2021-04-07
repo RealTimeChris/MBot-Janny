@@ -515,9 +515,9 @@ client.on('guildBanAdd', function (guild, user) { return __awaiter(void 0, void 
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _b.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'guildbanadd') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'guildbanadd') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -553,9 +553,9 @@ client.on('guildBanRemove', function (guild, user) { return __awaiter(void 0, vo
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _b.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'guildbanremove') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'guildbanremove') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -591,9 +591,9 @@ client.on('guildMemberAdd', function (member) { return __awaiter(void 0, void 0,
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _b.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'guildmemberadd') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'guildmemberadd') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -629,9 +629,9 @@ client.on('guildMemberRemove', function (member) { return __awaiter(void 0, void
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _b.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'guildmemberremove') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'guildmemberremove') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -668,9 +668,9 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _d.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'guildmemberupdate') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'guildmemberupdate') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -697,9 +697,9 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 6:
                 _d.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'nicknamechange') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'nicknamechange') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -732,10 +732,10 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 11:
                 _d.sent();
-                console.log(guildData.exposeDataValues().logs);
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'roleaddorremove') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                console.log(guildData.logs);
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'roleaddorremove') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -771,9 +771,9 @@ client.on('inviteCreate', function (invite) { return __awaiter(void 0, void 0, v
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _b.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'invitecreate') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'invitecreate') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -810,9 +810,9 @@ client.on('messageDelete', function (message) { return __awaiter(void 0, void 0,
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _b.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'messagedelete') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'messagedelete') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -848,9 +848,9 @@ client.on('messageDeleteBulk', function (collection) { return __awaiter(void 0, 
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _b.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'messagedeletebulk') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'messagedeletebulk') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -886,9 +886,9 @@ client.on('roleCreate', function (role) { return __awaiter(void 0, void 0, void 
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _b.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'rolecreate') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'rolecreate') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -924,9 +924,9 @@ client.on('roleDelete', function (role) { return __awaiter(void 0, void 0, void 
                 return [4 /*yield*/, guildData.getFromDataBase()];
             case 1:
                 _b.sent();
-                for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                    if (guildData.exposeDataValues().logs[x].nameSmall === 'roledelete') {
-                        if (guildData.exposeDataValues().logs[x].enabled === false) {
+                for (x = 0; x < guildData.logs.length; x += 1) {
+                    if (guildData.logs[x].nameSmall === 'roledelete') {
+                        if (guildData.logs[x].enabled === false) {
                             return [2 /*return*/];
                         }
                     }
@@ -979,9 +979,9 @@ client.on('userUpdate', function (oldUser, newUser) { return __awaiter(void 0, v
                 z = 0;
                 _b.label = 5;
             case 5:
-                if (!(z < guildData.exposeDataValues().logs.length)) return [3 /*break*/, 11];
-                if (!(guildData.exposeDataValues().logs[z].nameSmall === 'userupdate')) return [3 /*break*/, 10];
-                if (!(guildData.exposeDataValues().logs[z].enabled === false)) return [3 /*break*/, 6];
+                if (!(z < guildData.logs.length)) return [3 /*break*/, 11];
+                if (!(guildData.logs[z].nameSmall === 'userupdate')) return [3 /*break*/, 10];
+                if (!(guildData.logs[z].enabled === false)) return [3 /*break*/, 6];
                 return [2 /*return*/];
             case 6:
                 command = 'onusernamechange';

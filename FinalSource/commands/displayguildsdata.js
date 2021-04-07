@@ -66,10 +66,10 @@ function execute(commandData, discordUser) {
                 discordUser.guildsData.forEach(function (guild) {
                     var _a;
                     var msgString = '';
-                    msgString += "__Guild Name:__ " + guild.exposeDataValues().guildName + "\n";
-                    msgString += "__Guild ID:__ " + guild.exposeDataValues().id + "\n";
-                    msgString += "__Member Count:__ " + guild.exposeDataValues().memberCount + "\n";
-                    (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(guild.exposeDataValues().id).then(function (guild) {
+                    msgString += "__Guild Name:__ " + guild.guildName + "\n";
+                    msgString += "__Guild ID:__ " + guild.id + "\n";
+                    msgString += "__Member Count:__ " + guild.memberCount + "\n";
+                    (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(guild.id).then(function (guild) {
                         msgString += "__Created:__ " + guild.createdAt + "\n";
                         msgString += "__Guild Owner:__ <@!" + guild.owner.id + "> (" + guild.owner.user.tag + ")\n";
                         var messageEmbed = new Discord.MessageEmbed()

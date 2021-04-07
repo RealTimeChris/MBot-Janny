@@ -65,9 +65,9 @@ function execute(client, guild, user, discordUser) {
                 case 1:
                     _a.sent();
                     logs = void 0;
-                    for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                        if (guildData.exposeDataValues().logs[x].nameSmall === 'guildbanremove') {
-                            logs = guildData.exposeDataValues().logs[x];
+                    for (x = 0; x < guildData.logs.length; x += 1) {
+                        if (guildData.logs[x].nameSmall === 'guildbanremove') {
+                            logs = guildData.logs[x];
                             break;
                         }
                     }

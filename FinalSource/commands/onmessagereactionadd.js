@@ -75,27 +75,26 @@ function execute(messageReaction, client, args, discordUser) {
                     _a.label = 2;
                 case 2:
                     if (!(x < discordUser.guildsData.size)) return [3 /*break*/, 12];
-                    if (messageReaction.message.guild.id !== guildData.exposeDataValues().id) {
+                    if (messageReaction.message.guild.id !== guildData.id) {
                         if (x === discordUser.guildsData.size - 1) {
                             return [3 /*break*/, 12];
                         }
                         return [3 /*break*/, 11];
                     }
-                    if (messageReaction.message.channel.id !== guildData.exposeDataValues().verificationSystem.channelID) {
+                    if (messageReaction.message.channel.id !== guildData.verificationSystem.channelID) {
                         if (x === discordUser.guildsData.size - 1) {
                             return [3 /*break*/, 12];
                         }
                         return [3 /*break*/, 11];
                     }
-                    if (messageReaction.message.id !== guildData.exposeDataValues().verificationSystem.messageID) {
+                    if (messageReaction.message.id !== guildData.verificationSystem.messageID) {
                         if (x === discordUser.guildsData.size - 1) {
                             return [3 /*break*/, 12];
                         }
                         return [3 /*break*/, 11];
                     }
-                    if (!(messageReaction.emoji.name === guildData.exposeDataValues()
-                        .verificationSystem.emoji && userID !== client.user.id)) return [3 /*break*/, 9];
-                    return [4 /*yield*/, client.guilds.fetch(guildData.exposeDataValues().id)];
+                    if (!(messageReaction.emoji.name === guildData.verificationSystem.emoji && userID !== client.user.id)) return [3 /*break*/, 9];
+                    return [4 /*yield*/, client.guilds.fetch(guildData.id)];
                 case 3:
                     currentGuild = _a.sent();
                     currentGuildMember = currentGuild.members.resolve(userID);
@@ -104,8 +103,8 @@ function execute(messageReaction, client, args, discordUser) {
                     y = 0;
                     _a.label = 4;
                 case 4:
-                    if (!(y < guildData.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 8];
-                    return [4 /*yield*/, currentGuildMemberRoleManager.add(guildData.exposeDataValues().defaultRoleIDs[y])];
+                    if (!(y < guildData.defaultRoleIDs.length)) return [3 /*break*/, 8];
+                    return [4 /*yield*/, currentGuildMemberRoleManager.add(guildData.defaultRoleIDs[y])];
                 case 5:
                     _a.sent();
                     return [4 /*yield*/, messageReaction.users.remove(userID)];

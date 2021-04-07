@@ -125,7 +125,7 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__')
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed_1)];
                 case 10:
                     msg = _a.sent();
@@ -165,7 +165,7 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__')
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed_2)];
                 case 17:
                     msg = _a.sent();
@@ -216,7 +216,7 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Server Issue:**__')
                         .setTimestamp(Date())
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed_3)];
                 case 25:
                     msg = _a.sent();
@@ -282,7 +282,7 @@ function execute(commandData, discordUser) {
                             .setTitle('__**Server Info:**__')
                             .setTimestamp(Date())
                             .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                            .setColor(guildData.exposeDataValues().borderColor);
+                            .setColor(guildData.borderColor);
                         messageEmbed.fields = fields;
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];

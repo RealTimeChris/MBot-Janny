@@ -249,9 +249,9 @@ var DiscordUser = /** @class */ (function () {
                     case 2:
                         _a.sent();
                         if (this.userData.startupCall === true) {
-                            for (x_1 = 0; x_1 < guildData.exposeDataValues().deletionChannels.length; x_1 += 1) {
-                                guildData.exposeDataValues().deletionChannels[x_1].currentlyBeingDeleted = false;
-                                guildData.exposeDataValues().deletionChannels[x_1].timeOfLastPurge = 0;
+                            for (x_1 = 0; x_1 < guildData.deletionChannels.length; x_1 += 1) {
+                                guildData.deletionChannels[x_1].currentlyBeingDeleted = false;
+                                guildData.deletionChannels[x_1].timeOfLastPurge = 0;
                             }
                         }
                         return [4 /*yield*/, guildData.writeToDataBase()];

@@ -21,18 +21,6 @@ export interface GuildMemberDataInitData {
 }
 
 /**
- * Class representing the values contained within a single guild member.
- */
-export interface GuildMemberDataValues {
-    id?: string;
-    guildId?: string;
-    userName?: string;
-    displayName?: string;
-    previousRoleIDs?: string[];
-    previousPermissionOverwrites?: FoundationClasses.PermissionOverwrites[];
-}
-
-/**
  * Class representing a single guild member.
  */
 export default class GuildMemberData extends FoundationClasses.DiscordEntity {

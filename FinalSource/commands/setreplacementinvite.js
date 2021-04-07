@@ -91,7 +91,7 @@ function execute(commandData, discordUser) {
                     msgString = '------\n**Sorry, but your current guild could not be found!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Server Issue:**__');
@@ -113,7 +113,7 @@ function execute(commandData, discordUser) {
                     msgString = '------\n**Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -150,7 +150,7 @@ function execute(commandData, discordUser) {
                     }
                     messageEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Replacement Invite Link:**__')
                         .setDescription(msgString);
@@ -173,7 +173,7 @@ function execute(commandData, discordUser) {
                         + ("\n------\n__**Link:**__ " + serverRecordObject.replacementServerInvite + "\n------");
                     messageEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Replacement Invite Link Updated:**__')
                         .setDescription(msgString);

@@ -69,12 +69,12 @@ var GuildData = /** @class */ (function (_super) {
         _this.id = '';
         _this.dataBase = null;
         _this.dataBaseKey = '';
-        _this.borderColor = [254, 254, 254];
+        _this.guildName = '';
         _this.memberCount = 0;
+        _this.borderColor = [254, 254, 254];
         _this.trackedUsers = [];
         _this.ghostedRoleID = '';
         _this.timedMessages = [];
-        _this.guildName = '';
         _this.logs = [];
         _this.verificationSystem = { channelID: '', emoji: '', messageID: '' };
         _this.deletionChannels = [];
@@ -145,8 +145,6 @@ var GuildData = /** @class */ (function (_super) {
                     case 1:
                         guildData = _b.sent();
                         this.borderColor = guildData.borderColor;
-                        this.guildName = guildData.guildName;
-                        this.memberCount = guildData.memberCount;
                         this.defaultRoleIDs = guildData.defaultRoleIDs;
                         this.deletionChannels = guildData.deletionChannels;
                         this.ghostedRoleID = guildData.ghostedRoleID;
@@ -187,12 +185,6 @@ var GuildData = /** @class */ (function (_super) {
                 }
             });
         });
-    };
-    GuildData.prototype.exposeDataValues = function () {
-        var dataValues = { id: this.id, borderColor: this.borderColor, deletionChannels: this.deletionChannels,
-            defaultRoleIDs: this.defaultRoleIDs, ghostedRoleID: this.ghostedRoleID, logs: this.logs, timedMessages: this.timedMessages, verificationSystem: this.verificationSystem,
-            guildName: this.guildName, memberCount: this.memberCount, trackedUsers: this.trackedUsers };
-        return dataValues;
     };
     return GuildData;
 }(FoundationClasses_1.default.DiscordEntity));

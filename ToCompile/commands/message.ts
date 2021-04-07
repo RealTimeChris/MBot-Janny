@@ -21,12 +21,17 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
             return;
         }
         discordUser.guildsData.forEach(async (guildData) => {
+            console.log("WE'RE HERE WE'RE HERE!");
             for (let x = 0; x < guildData.trackedUsers.length; x += 1){
+                console.log("LOOK WE'RE ALSO HERE!");
                 const user = message.author;
                 let msgStringContent;
                 let isItFound = false;
                 let index;
+                console.log(user.id);
+                console.log(guildData.trackedUsers[x]?.userID);
                     if (user.id === guildData.trackedUsers[x]?.userID){
+                        console.log("FINALLY WE'RE HERE TOO!");
                         msgStringContent = `__**Tracked User:**__ <@!${user.id}> (${user.username})\n__**On Server:**__ ${message.guild!.name}
                             \n__**In Channel:**__ <#${message.channel.id}> (${(message.channel as Discord.TextChannel).name})\n__**Message ID**__ ${message.id}\n__**What They Said:**__ ${message.content}`;
                         isItFound = true;

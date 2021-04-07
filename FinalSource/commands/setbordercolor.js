@@ -79,7 +79,7 @@ function execute(commandData, discordUser) {
                     msgEmbed_1 = new Discord.MessageEmbed();
                     msgEmbed_1
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
@@ -98,7 +98,7 @@ function execute(commandData, discordUser) {
                     msgEmbed_2 = new Discord.MessageEmbed();
                     msgEmbed_2
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
@@ -112,7 +112,7 @@ function execute(commandData, discordUser) {
                     msgEmbed_3 = new Discord.MessageEmbed();
                     msgEmbed_3
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
@@ -126,7 +126,7 @@ function execute(commandData, discordUser) {
                     msgEmbed_4 = new Discord.MessageEmbed();
                     msgEmbed_4
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**Missing Or Invalid Arguments:**__");
@@ -149,15 +149,15 @@ function execute(commandData, discordUser) {
                     }
                     _a.label = 12;
                 case 12:
-                    guildData.exposeDataValues().borderColor = borderColor;
+                    guildData.borderColor = borderColor;
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 13:
                     _a.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
-                        .setDescription("Nicely done, you've updated the default border color for this bot!\n------\n__**Border Color Values:**__ " + guildData.exposeDataValues().borderColor + "\n------")
+                        .setColor(guildData.borderColor)
+                        .setDescription("Nicely done, you've updated the default border color for this bot!\n------\n__**Border Color Values:**__ " + guildData.borderColor + "\n------")
                         .setTimestamp(Date())
                         .setTitle('__**Updated Border Color:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];

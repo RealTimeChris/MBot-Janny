@@ -70,9 +70,9 @@ function execute(client, collection, discordUser) {
                 case 1:
                     _a.sent();
                     logs = void 0;
-                    for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                        if (guildData.exposeDataValues().logs[x].nameSmall === 'messagedeletebulk') {
-                            logs = guildData.exposeDataValues().logs[x];
+                    for (x = 0; x < guildData.logs.length; x += 1) {
+                        if (guildData.logs[x].nameSmall === 'messagedeletebulk') {
+                            logs = guildData.logs[x];
                             break;
                         }
                     }
@@ -86,7 +86,7 @@ function execute(client, collection, discordUser) {
                         .setTitle('__**Messages Bulk Deleted:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString)
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();
@@ -104,7 +104,7 @@ function execute(client, collection, discordUser) {
                         .setTitle("__**Deleted Message: " + (x + 1) + " of " + keyArray.length + "**__")
                         .setTimestamp(Date())
                         .setDescription(msgString2)
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 5:
                     _a.sent();

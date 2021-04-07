@@ -90,7 +90,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -109,7 +109,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter a valud usermention! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -135,26 +135,26 @@ function execute(commandData, discordUser) {
                         trackedUserIDOne = argOne.match(idRegExp)[0];
                         trackedUserID = trackedUserIDOne;
                     }
-                    if (!(guildData.exposeDataValues().trackedUsers !== undefined)) return [3 /*break*/, 15];
+                    if (!(guildData.trackedUsers !== undefined)) return [3 /*break*/, 15];
                     x = 0;
                     _h.label = 10;
                 case 10:
-                    if (!(x < guildData.exposeDataValues().trackedUsers.length)) return [3 /*break*/, 15];
+                    if (!(x < guildData.trackedUsers.length)) return [3 /*break*/, 15];
                     isUserFound = false;
                     currentGuild_1 = commandData.guild;
                     if (currentGuild_1 != null) {
                         for (z = 0; z < currentGuild_1.memberCount; z += 1) {
-                            currentUser = currentGuild_1.members.resolve(guildData.exposeDataValues().trackedUsers[x].userID);
+                            currentUser = currentGuild_1.members.resolve(guildData.trackedUsers[x].userID);
                             if (currentUser != null) {
                                 isUserFound = true;
                             }
                         }
                     }
                     if (!(isUserFound === false)) return [3 /*break*/, 14];
-                    msgString = "------\n**Removing user <@!" + guildData.exposeDataValues().trackedUsers[x].userID + "> (" + ((_a = guildData.exposeDataValues().trackedUsers[x]) === null || _a === void 0 ? void 0 : _a.userName) + ") from the list of tracked users!**\n------";
+                    msgString = "------\n**Removing user <@!" + guildData.trackedUsers[x].userID + "> (" + ((_a = guildData.trackedUsers[x]) === null || _a === void 0 ? void 0 : _a.userName) + ") from the list of tracked users!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing User(s):**__');
@@ -167,7 +167,7 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 12:
                     _h.sent();
-                    guildData.exposeDataValues().trackedUsers.splice(x, 1);
+                    guildData.trackedUsers.splice(x, 1);
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 13:
                     _h.sent();
@@ -186,8 +186,8 @@ function execute(commandData, discordUser) {
                 case 17:
                     _h.trys.push([17, 24, , 27]);
                     currentIndex = -1;
-                    for (x = 0; x < guildData.exposeDataValues().trackedUsers.length; x += 1) {
-                        if (trackedUserID === ((_b = guildData.exposeDataValues().trackedUsers[x]) === null || _b === void 0 ? void 0 : _b.userID)) {
+                    for (x = 0; x < guildData.trackedUsers.length; x += 1) {
+                        if (trackedUserID === ((_b = guildData.trackedUsers[x]) === null || _b === void 0 ? void 0 : _b.userID)) {
                             currentIndex = x;
                             break;
                         }
@@ -198,7 +198,7 @@ function execute(commandData, discordUser) {
                         userID: currentGuildMember.user.id,
                         channelID: commandData.fromTextChannel.id
                     };
-                    guildData.exposeDataValues().trackedUsers.push(trackedUser);
+                    guildData.trackedUsers.push(trackedUser);
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 18:
                     _h.sent();
@@ -209,7 +209,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
                         .setThumbnail(currentGuildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 19:
                     _h.sent();
@@ -217,18 +217,18 @@ function execute(commandData, discordUser) {
                 case 20:
                     if (!(currentIndex >= 0)) return [3 /*break*/, 23];
                     currentIndex_1 = -1;
-                    for (x = 0; x < guildData.exposeDataValues().trackedUsers.length; x += 1) {
-                        if (trackedUserID === guildData.exposeDataValues().trackedUsers[x].userID) {
+                    for (x = 0; x < guildData.trackedUsers.length; x += 1) {
+                        if (trackedUserID === guildData.trackedUsers[x].userID) {
                             currentIndex_1 = x;
                             break;
                         }
                     }
-                    guildData.exposeDataValues().trackedUsers[currentIndex_1].channelID = commandData.fromTextChannel.id;
-                    msgString = "------\n**That user is already being tracked! I will update their tracking channel though!**\n------\n__**Tracked User:**__ <@!" + currentGuildMember.id + "> (" + currentGuildMember.user.username + ")\n                        __**Tracking Channel:**__ <#" + ((_c = guildData.exposeDataValues().trackedUsers[currentIndex_1]) === null || _c === void 0 ? void 0 : _c.channelID) + ">\n------";
+                    guildData.trackedUsers[currentIndex_1].channelID = commandData.fromTextChannel.id;
+                    msgString = "------\n**That user is already being tracked! I will update their tracking channel though!**\n------\n__**Tracked User:**__ <@!" + currentGuildMember.id + "> (" + currentGuildMember.user.username + ")\n                        __**Tracking Channel:**__ <#" + ((_c = guildData.trackedUsers[currentIndex_1]) === null || _c === void 0 ? void 0 : _c.channelID) + ">\n------";
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle("__**User Already Added:**__");
@@ -246,7 +246,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Sorry, but the specified user could not be found!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**User Issue:**__');
@@ -266,21 +266,21 @@ function execute(commandData, discordUser) {
                     _h.label = 29;
                 case 29:
                     _h.trys.push([29, 39, , 42]);
-                    if (!(commandData.args[0].toLowerCase() === 'remove' && guildData.exposeDataValues().trackedUsers.length >= 1)) return [3 /*break*/, 36];
+                    if (!(commandData.args[0].toLowerCase() === 'remove' && guildData.trackedUsers.length >= 1)) return [3 /*break*/, 36];
                     currentIndex = -1;
-                    for (x = 0; x < guildData.exposeDataValues().trackedUsers.length; x += 1) {
-                        if (trackedUserID === ((_d = guildData.exposeDataValues().trackedUsers[x]) === null || _d === void 0 ? void 0 : _d.userID)) {
+                    for (x = 0; x < guildData.trackedUsers.length; x += 1) {
+                        if (trackedUserID === ((_d = guildData.trackedUsers[x]) === null || _d === void 0 ? void 0 : _d.userID)) {
                             currentIndex = x;
                             break;
                         }
                     }
                     if (!(currentIndex >= 0)) return [3 /*break*/, 32];
-                    guildData.exposeDataValues().trackedUsers.splice(currentIndex, 1);
+                    guildData.trackedUsers.splice(currentIndex, 1);
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 30:
                     _h.sent();
                     msgString = "------\n__**Tracked User:**__ <@!" + currentGuildMember.id + "> (" + currentGuildMember.user.username + ")\n------";
-                    if (guildData.exposeDataValues().trackedUsers.length === 0) {
+                    if (guildData.trackedUsers.length === 0) {
                         msgString += '\nNo more users are being tracked!\n------';
                     }
                     messageEmbed = new Discord.MessageEmbed()
@@ -288,7 +288,7 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Removed Tracked User:**__')
                         .setDescription(msgString)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 31:
                     _h.sent();
@@ -298,7 +298,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**There is noone by that ID being tracked!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**User Issue:**__');
@@ -314,14 +314,14 @@ function execute(commandData, discordUser) {
                     _h.label = 35;
                 case 35: return [3 /*break*/, 38];
                 case 36:
-                    if (!(commandData.args[0].toLowerCase() === 'remove' && guildData.exposeDataValues().trackedUsers.length === 0)) return [3 /*break*/, 38];
+                    if (!(commandData.args[0].toLowerCase() === 'remove' && guildData.trackedUsers.length === 0)) return [3 /*break*/, 38];
                     msgString = '------\n**There is noone to remove from the tracked users!**\n------';
                     messageEmbed = new Discord.MessageEmbed()
                         .setTimestamp(Date())
                         .setTitle('__**No Tracked Users:**__')
                         .setDescription(msgString)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 37:
                     _h.sent();
@@ -335,7 +335,7 @@ function execute(commandData, discordUser) {
                         .setTitle('__**User Issue:**__')
                         .setDescription(msgString)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
                 case 40:
                     msg = _h.sent();
@@ -350,16 +350,16 @@ function execute(commandData, discordUser) {
                 case 43:
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 45];
                     msgString = '';
-                    if (guildData.exposeDataValues().trackedUsers.length > 0) {
-                        for (x = 0; x < guildData.exposeDataValues().trackedUsers.length; x += 1) {
+                    if (guildData.trackedUsers.length > 0) {
+                        for (x = 0; x < guildData.trackedUsers.length; x += 1) {
                             if (x === 0) {
                                 msgString = '------\n';
                             }
                             trackedChannelName = commandData.guild.client.channels
-                                .resolve(guildData.exposeDataValues().trackedUsers[x].channelID).name;
-                            msgString += "__**Tracked User Name #" + (x + 1) + ":**__ <@!" + ((_e = guildData.exposeDataValues().trackedUsers[x]) === null || _e === void 0 ? void 0 : _e.userID) + "> (" + ((_f = guildData.exposeDataValues().trackedUsers[x]) === null || _f === void 0 ? void 0 : _f.userName) + ")\n";
-                            msgString += "__**In Channel:**__ <#" + ((_g = guildData.exposeDataValues().trackedUsers[x]) === null || _g === void 0 ? void 0 : _g.channelID) + "> (" + trackedChannelName + ")\n------";
-                            if (x < guildData.exposeDataValues().trackedUsers.length - 1) {
+                                .resolve(guildData.trackedUsers[x].channelID).name;
+                            msgString += "__**Tracked User Name #" + (x + 1) + ":**__ <@!" + ((_e = guildData.trackedUsers[x]) === null || _e === void 0 ? void 0 : _e.userID) + "> (" + ((_f = guildData.trackedUsers[x]) === null || _f === void 0 ? void 0 : _f.userName) + ")\n";
+                            msgString += "__**In Channel:**__ <#" + ((_g = guildData.trackedUsers[x]) === null || _g === void 0 ? void 0 : _g.channelID) + "> (" + trackedChannelName + ")\n------";
+                            if (x < guildData.trackedUsers.length - 1) {
                                 msgString += '\n';
                             }
                         }

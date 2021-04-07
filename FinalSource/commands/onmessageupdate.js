@@ -70,9 +70,9 @@ function execute(client, oldMessage, newMessage, discordUser) {
                 case 1:
                     _a.sent();
                     logs = void 0;
-                    for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                        if (guildData.exposeDataValues().logs[x].nameSmall === 'messageupdate') {
-                            logs = guildData.exposeDataValues().logs[x];
+                    for (x = 0; x < guildData.logs.length; x += 1) {
+                        if (guildData.logs[x].nameSmall === 'messageupdate') {
+                            logs = guildData.logs[x];
                             break;
                         }
                     }
@@ -89,7 +89,7 @@ function execute(client, oldMessage, newMessage, discordUser) {
                         .setTitle('__**Message Updated:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString)
-                        .setColor(guildData.exposeDataValues().borderColor);
+                        .setColor(guildData.borderColor);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();

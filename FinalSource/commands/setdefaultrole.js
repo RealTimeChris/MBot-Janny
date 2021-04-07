@@ -93,7 +93,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.exposeDataValues().borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -112,7 +112,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.exposeDataValues().borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -160,7 +160,7 @@ function execute(commandData, discordUser) {
                                 case 0:
                                     isItFoundReal = roleArray_1.map(function (role) {
                                         var isItFound = false;
-                                        if (role.id === guildData_1.exposeDataValues().defaultRoleIDs[x]) {
+                                        if (role.id === guildData_1.defaultRoleIDs[x]) {
                                             isItFound = true;
                                             return isItFound;
                                         }
@@ -174,7 +174,7 @@ function execute(commandData, discordUser) {
                                     }
                                     if (!(isItFoundFinal === false)) return [3 /*break*/, 2];
                                     console.log('Removing a missing guild role from the list of defaults.');
-                                    guildData_1.exposeDataValues().defaultRoleIDs.splice(x, 1);
+                                    guildData_1.defaultRoleIDs.splice(x, 1);
                                     return [4 /*yield*/, guildData_1.writeToDataBase()];
                                 case 1:
                                     _d.sent();
@@ -186,7 +186,7 @@ function execute(commandData, discordUser) {
                     x = 0;
                     _c.label = 15;
                 case 15:
-                    if (!(x < guildData_1.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 18];
+                    if (!(x < guildData_1.defaultRoleIDs.length)) return [3 /*break*/, 18];
                     return [5 /*yield**/, _loop_1(x)];
                 case 16:
                     _c.sent();
@@ -197,9 +197,9 @@ function execute(commandData, discordUser) {
                 case 18:
                     if (!(whatAreWeDoing === 'view')) return [3 /*break*/, 20];
                     msgString_1 = '';
-                    if (guildData_1.exposeDataValues().defaultRoleIDs.length > 0) {
+                    if (guildData_1.defaultRoleIDs.length > 0) {
                         msgString_1 = '\n------\n';
-                        guildData_1.exposeDataValues().defaultRoleIDs.map(function (roleID) {
+                        guildData_1.defaultRoleIDs.map(function (roleID) {
                             roleArray_1.map(function (role) {
                                 if (roleID === role.id) {
                                     msgString_1 += "<@&" + role.id + ">\n";
@@ -216,7 +216,7 @@ function execute(commandData, discordUser) {
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.exposeDataValues().borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setTitle('__**Default Roles:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString_1);
@@ -225,7 +225,7 @@ function execute(commandData, discordUser) {
                     _c.sent();
                     return [2 /*return*/, commandReturnData];
                 case 20:
-                    currentRole_1 = new Discord.Role(commandData.guildMember.client, {}, commandData.guildMember.client.guilds.resolve(guildData_1.exposeDataValues().id));
+                    currentRole_1 = new Discord.Role(commandData.guildMember.client, {}, commandData.guildMember.client.guilds.resolve(guildData_1.id));
                     isItFound_1 = false;
                     roleArray_1.map(function (role) {
                         if (role.name === roleName_1) {
@@ -238,7 +238,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.exposeDataValues().borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Role Issue:**__');
@@ -257,12 +257,12 @@ function execute(commandData, discordUser) {
                     x = 0;
                     _c.label = 24;
                 case 24:
-                    if (!(x < guildData_1.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 28];
-                    if (!(currentRole_1.id === guildData_1.exposeDataValues().defaultRoleIDs[x])) return [3 /*break*/, 27];
+                    if (!(x < guildData_1.defaultRoleIDs.length)) return [3 /*break*/, 28];
+                    if (!(currentRole_1.id === guildData_1.defaultRoleIDs[x])) return [3 /*break*/, 27];
                     msgString_2 = "------\n**Hey! It looks like you've already added that role!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.exposeDataValues().borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Role Issue:**__');
@@ -280,7 +280,7 @@ function execute(commandData, discordUser) {
                     x += 1;
                     return [3 /*break*/, 24];
                 case 28:
-                    guildData_1.exposeDataValues().defaultRoleIDs.push(currentRole_1.id);
+                    guildData_1.defaultRoleIDs.push(currentRole_1.id);
                     return [4 /*yield*/, guildData_1.writeToDataBase()];
                 case 29:
                     _c.sent();
@@ -288,7 +288,7 @@ function execute(commandData, discordUser) {
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.exposeDataValues().borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setTitle('__**New Default Role Added:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString);
@@ -302,9 +302,9 @@ function execute(commandData, discordUser) {
                     x = 0;
                     _c.label = 32;
                 case 32:
-                    if (!(x < guildData_1.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 35];
-                    if (!(currentRole_1.id === guildData_1.exposeDataValues().defaultRoleIDs[x])) return [3 /*break*/, 34];
-                    guildData_1.exposeDataValues().defaultRoleIDs.splice(x, 1);
+                    if (!(x < guildData_1.defaultRoleIDs.length)) return [3 /*break*/, 35];
+                    if (!(currentRole_1.id === guildData_1.defaultRoleIDs[x])) return [3 /*break*/, 34];
+                    guildData_1.defaultRoleIDs.splice(x, 1);
                     return [4 /*yield*/, guildData_1.writeToDataBase()];
                 case 33:
                     _c.sent();
@@ -318,7 +318,7 @@ function execute(commandData, discordUser) {
                     msgString_3 = "------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.exposeDataValues().borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setDescription(msgString_3)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -337,7 +337,7 @@ function execute(commandData, discordUser) {
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData_1.exposeDataValues().borderColor)
+                        .setColor(guildData_1.borderColor)
                         .setTitle('__**Default Role Removed:**__')
                         .setTimestamp(Date())
                         .setDescription(msgString);

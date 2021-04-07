@@ -74,9 +74,9 @@ function execute(client, guild, user, discordUser) {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    for (x = 0; x < guildData_1.exposeDataValues().logs.length; x += 1) {
-                                        if (guildData_1.exposeDataValues().logs[x].nameSmall === 'guildbanadd') {
-                                            logs = guildData_1.exposeDataValues().logs[x];
+                                    for (x = 0; x < guildData_1.logs.length; x += 1) {
+                                        if (guildData_1.logs[x].nameSmall === 'guildbanadd') {
+                                            logs = guildData_1.logs[x];
                                             break;
                                         }
                                     }

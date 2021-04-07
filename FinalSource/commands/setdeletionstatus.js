@@ -90,7 +90,7 @@ function execute(commandData, discordUser) {
                     msgString = "------\n**Please enter either 'enable' or 'disable'! (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -109,7 +109,7 @@ function execute(commandData, discordUser) {
                     msgString = '------\n**Please enter a valid number of messages back to save! (0 to 10000) (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -142,9 +142,9 @@ function execute(commandData, discordUser) {
                         deletionMessageID: ''
                     };
                     isItFound = false;
-                    for (x = 0; x < guildData.exposeDataValues().deletionChannels.length; x += 1) {
-                        if (commandData.permsChannel.id === guildData.exposeDataValues().deletionChannels[x].channelID) {
-                            currentDeletionChannel = guildData.exposeDataValues().deletionChannels[x];
+                    for (x = 0; x < guildData.deletionChannels.length; x += 1) {
+                        if (commandData.permsChannel.id === guildData.deletionChannels[x].channelID) {
+                            currentDeletionChannel = guildData.deletionChannels[x];
                             isItFound = true;
                         }
                     }
@@ -160,9 +160,9 @@ function execute(commandData, discordUser) {
                     if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 13];
                     msgString = '';
                     msgString = '\n------\n';
-                    if (guildData.exposeDataValues().deletionChannels.length > 0) {
-                        for (x = 0; x < guildData.exposeDataValues().deletionChannels.length; x += 1) {
-                            msgString += "__**Channel:**__ <#" + guildData.exposeDataValues().deletionChannels[x].channelID + ">, __**Messages To Save:**__ \n                    " + guildData.exposeDataValues().deletionChannels[x].numberOfMessagesToSave + "\n";
+                    if (guildData.deletionChannels.length > 0) {
+                        for (x = 0; x < guildData.deletionChannels.length; x += 1) {
+                            msgString += "__**Channel:**__ <#" + guildData.deletionChannels[x].channelID + ">, __**Messages To Save:**__ \n                    " + guildData.deletionChannels[x].numberOfMessagesToSave + "\n";
                         }
                     }
                     else {
@@ -172,7 +172,7 @@ function execute(commandData, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Current Deletion Channels:**__');
@@ -186,12 +186,12 @@ function execute(commandData, discordUser) {
                     x = 0;
                     _a.label = 14;
                 case 14:
-                    if (!(x < guildData.exposeDataValues().deletionChannels.length)) return [3 /*break*/, 23];
-                    if (!(guildData.exposeDataValues().deletionChannels[x].channelID === currentDeletionChannel.channelID)) return [3 /*break*/, 22];
+                    if (!(x < guildData.deletionChannels.length)) return [3 /*break*/, 23];
+                    if (!(guildData.deletionChannels[x].channelID === currentDeletionChannel.channelID)) return [3 /*break*/, 22];
                     msgString_1 = '------\n**This channel has already been added! I will update your number of saved messages though!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Channel Re-Added:**__');
@@ -224,7 +224,7 @@ function execute(commandData, discordUser) {
                     }
                     return [3 /*break*/, 21];
                 case 21:
-                    guildData.exposeDataValues().deletionChannels[x] = currentDeletionChannel;
+                    guildData.deletionChannels[x] = currentDeletionChannel;
                     isItFound = true;
                     _a.label = 22;
                 case 22:
@@ -235,7 +235,7 @@ function execute(commandData, discordUser) {
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Enabled Channel Purging:**__');
@@ -250,7 +250,7 @@ function execute(commandData, discordUser) {
                     _a.sent();
                     currentDeletionChannel.deletionMessageID = pinMessage.id;
                     if (isItFound === false) {
-                        guildData.exposeDataValues().deletionChannels.push(currentDeletionChannel);
+                        guildData.deletionChannels.push(currentDeletionChannel);
                     }
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 26:
@@ -260,8 +260,8 @@ function execute(commandData, discordUser) {
                     if (!(whatAreWeDoing === 'disable')) return [3 /*break*/, 33];
                     isItFound = false;
                     deletionChannelIndex = 0;
-                    for (x = 0; x < guildData.exposeDataValues().deletionChannels.length; x += 1) {
-                        if (guildData.exposeDataValues().deletionChannels[x].channelID === currentDeletionChannel.channelID) {
+                    for (x = 0; x < guildData.deletionChannels.length; x += 1) {
+                        if (guildData.deletionChannels[x].channelID === currentDeletionChannel.channelID) {
                             isItFound = true;
                             deletionChannelIndex = x;
                             break;
@@ -271,7 +271,7 @@ function execute(commandData, discordUser) {
                     msgString_2 = '------\n**Sorry, but this channel could not be found in the list of active deletion channels!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Channel Issue:**__');
@@ -286,7 +286,7 @@ function execute(commandData, discordUser) {
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 30:
-                    guildData.exposeDataValues().deletionChannels.splice(deletionChannelIndex, 1);
+                    guildData.deletionChannels.splice(deletionChannelIndex, 1);
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 31:
                     _a.sent();
@@ -294,7 +294,7 @@ function execute(commandData, discordUser) {
                     messageEmbed = new Discord.MessageEmbed();
                     messageEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Disabled Channel Purging:**__');

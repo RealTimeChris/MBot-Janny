@@ -103,8 +103,6 @@ var GuildMemberData = /** @class */ (function (_super) {
                         guildMemberData = _b.sent();
                         this.previousPermissionOverwrites = guildMemberData.previousPermissionOverwrites;
                         this.previousRoleIDs = guildMemberData.previousRoleIDs;
-                        this.displayName = guildMemberData.displayName;
-                        this.userName = guildMemberData.userName;
                         return [3 /*break*/, 3];
                     case 2:
                         error_1 = _b.sent();
@@ -138,11 +136,6 @@ var GuildMemberData = /** @class */ (function (_super) {
                 }
             });
         });
-    };
-    GuildMemberData.prototype.exposeDataValues = function () {
-        var dataValues = { userName: this.userName, displayName: this.displayName, id: this.id,
-            guildId: this.guildId, previousRoleIDs: this.previousRoleIDs, previousPermissionOverwrites: this.previousPermissionOverwrites };
-        return dataValues;
     };
     return GuildMemberData;
 }(FoundationClasses_1.default.DiscordEntity));

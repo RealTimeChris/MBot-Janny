@@ -90,7 +90,7 @@ function execute(commandData, discordUser) {
                     msgString_1 = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -109,7 +109,7 @@ function execute(commandData, discordUser) {
                     msgString_2 = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -180,7 +180,7 @@ function execute(commandData, discordUser) {
                     _c.sent();
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date())
                         .setTitle('__**Depracated Database Entries:**__');
@@ -193,7 +193,7 @@ function execute(commandData, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
                         .setTimestamp(Date())
                         .setTitle("__**No Spare Database Entries:**__");

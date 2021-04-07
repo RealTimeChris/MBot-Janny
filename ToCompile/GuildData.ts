@@ -19,27 +19,10 @@ export interface GuildDataInitData {
 }
 
 /**
- * Class representing the data contained within a single guild.
- */
-export interface GuildDataValues {
-    id?: string;
-    borderColor?: [number, number, number];
-    guildName?: string;
-    memberCount?: number;
-    trackedUsers?: FoundationClasses.TrackedUser[];
-    ghostedRoleID?: string;
-    timedMessages?: FoundationClasses.TimedMessage[];
-    logs?: FoundationClasses.Log[];
-    verificationSystem?: FoundationClasses.VerificationSystem;
-    deletionChannels?: FoundationClasses.DeletionChannel[];
-    defaultRoleIDs?: string[];
-}
-
-/**
  * Class representing a single guild/server.
  */
 export default class GuildData extends FoundationClasses.DiscordEntity {
-    protected readonly id: string = '';
+    readonly id: string = '';
     readonly dataBase: Level | null = null;
     readonly dataBaseKey: string = '';
     readonly guildName: string = '';

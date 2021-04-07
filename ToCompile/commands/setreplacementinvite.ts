@@ -46,7 +46,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const msgString = '------\n**Sorry, but your current guild could not be found!**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
                     .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                    .setColor(guildData!.exposeDataValues().borderColor as [number, number, number])
+                    .setColor(guildData!.borderColor as [number, number, number])
                     .setDescription(msgString)
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Server Issue:**__');
@@ -67,7 +67,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = '------\n**Please, enter a valid new server invite link! (!setreplacementinvite = REPLACEMENTINVITELINK)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData!.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData!.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -101,7 +101,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
             const messageEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData!.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData!.borderColor as [number, number, number])
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Replacement Invite Link:**__')
                 .setDescription(msgString);
@@ -124,7 +124,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
             const messageEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData!.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData!.borderColor as [number, number, number])
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Replacement Invite Link Updated:**__')
                 .setDescription(msgString);

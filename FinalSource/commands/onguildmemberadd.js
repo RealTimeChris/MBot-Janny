@@ -73,19 +73,19 @@ function execute(client, guildMember, discordUser) {
                 case 2:
                     _a.sent();
                     logs = void 0;
-                    for (x = 0; x < guildData.exposeDataValues().logs.length; x += 1) {
-                        if (guildData.exposeDataValues().logs[x].nameSmall === 'guildmemberadd') {
-                            logs = guildData.exposeDataValues().logs[x];
+                    for (x = 0; x < guildData.logs.length; x += 1) {
+                        if (guildData.logs[x].nameSmall === 'guildmemberadd') {
+                            logs = guildData.logs[x];
                             break;
                         }
                     }
-                    if (!(guildData.exposeDataValues().verificationSystem.channelID === null)) return [3 /*break*/, 6];
+                    if (!(guildData.verificationSystem.channelID === null)) return [3 /*break*/, 6];
                     roleManager = new Discord.GuildMemberRoleManager(guildMember);
                     x = 0;
                     _a.label = 3;
                 case 3:
-                    if (!(x < guildData.exposeDataValues().defaultRoleIDs.length)) return [3 /*break*/, 6];
-                    return [4 /*yield*/, roleManager.add(guildData.exposeDataValues().defaultRoleIDs[x])];
+                    if (!(x < guildData.defaultRoleIDs.length)) return [3 /*break*/, 6];
+                    return [4 /*yield*/, roleManager.add(guildData.defaultRoleIDs[x])];
                 case 4:
                     _a.sent();
                     _a.label = 5;

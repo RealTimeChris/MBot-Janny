@@ -88,7 +88,7 @@ function execute(commandData, discordUser) {
                     msgString_1 = "------\n**Please enter either 'enable' or 'disable' as the first argument! (!setverificationsystem = ENABLE, VERIFICATIONMESSAGE, REACTIONEMOJI, or !setverificationsystem = DISABLE)**\n------";
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_1)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -107,7 +107,7 @@ function execute(commandData, discordUser) {
                     msgString_2 = '------\n**Please, enter a greeting message for the verification system!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_2)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -126,7 +126,7 @@ function execute(commandData, discordUser) {
                     msgString_3 = '------\n**Please, enter a valid emoji for them to react with!**\n------';
                     msgEmbed = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_3)
                         .setTimestamp(Date())
                         .setTitle('__**Missing Or Invalid Arguments:**__');
@@ -151,32 +151,32 @@ function execute(commandData, discordUser) {
                 case 14:
                     msgString = '';
                     if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 25];
-                    if (!(guildData.exposeDataValues().verificationSystem.messageID !== '')) return [3 /*break*/, 21];
+                    if (!(guildData.verificationSystem.messageID !== '')) return [3 /*break*/, 21];
                     _a.label = 15;
                 case 15:
                     _a.trys.push([15, 17, , 20]);
-                    messageManager = new Discord.MessageManager(commandData.guildMember.client.channels.resolve(guildData.exposeDataValues().verificationSystem.channelID));
-                    return [4 /*yield*/, messageManager.fetch(guildData.exposeDataValues().verificationSystem.messageID)];
+                    messageManager = new Discord.MessageManager(commandData.guildMember.client.channels.resolve(guildData.verificationSystem.channelID));
+                    return [4 /*yield*/, messageManager.fetch(guildData.verificationSystem.messageID)];
                 case 16:
                     newMessage = _a.sent();
-                    msgString = "------\n__**Channel:**__ <#" + guildData.exposeDataValues().verificationSystem.channelID + ">\n";
+                    msgString = "------\n__**Channel:**__ <#" + guildData.verificationSystem.channelID + ">\n";
                     msgString += "__**Message Content:**__ " + newMessage.embeds[0].description + "\n";
-                    msgString += "__**Emoji:**__ " + guildData.exposeDataValues().verificationSystem.emoji + "\n------";
+                    msgString += "__**Emoji:**__ " + guildData.verificationSystem.emoji + "\n------";
                     return [3 /*break*/, 20];
                 case 17:
                     error_1 = _a.sent();
                     console.log(error_1);
                     msgString = '------\n__The verification system is currently disabled.__\n------\n';
-                    guildData.exposeDataValues().verificationSystem.channelID = '';
-                    guildData.exposeDataValues().verificationSystem.messageID = '';
-                    guildData.exposeDataValues().verificationSystem.emoji = '';
+                    guildData.verificationSystem.channelID = '';
+                    guildData.verificationSystem.messageID = '';
+                    guildData.verificationSystem.emoji = '';
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 18:
                     _a.sent();
                     msgEmbed_1 = new Discord.MessageEmbed();
                     msgEmbed_1
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Verification System:**__')
                         .setDescription(msgString);
@@ -187,9 +187,9 @@ function execute(commandData, discordUser) {
                 case 20: return [3 /*break*/, 23];
                 case 21:
                     msgString = '------\n__The verification system is currently disabled.__\n------\n';
-                    guildData.exposeDataValues().verificationSystem.channelID = '';
-                    guildData.exposeDataValues().verificationSystem.messageID = '';
-                    guildData.exposeDataValues().verificationSystem.emoji = '';
+                    guildData.verificationSystem.channelID = '';
+                    guildData.verificationSystem.messageID = '';
+                    guildData.verificationSystem.emoji = '';
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 22:
                     _a.sent();
@@ -198,7 +198,7 @@ function execute(commandData, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Verification System:**__')
                         .setDescription(msgString);
@@ -209,12 +209,12 @@ function execute(commandData, discordUser) {
                 case 25:
                     if (!(whatAreWeDoing === 'disable')) return [3 /*break*/, 33];
                     currentChannel = commandData.guildMember.client.channels
-                        .resolve(guildData.exposeDataValues().verificationSystem.channelID);
-                    if (!(guildData.exposeDataValues().verificationSystem.channelID == '' || currentChannel === null)) return [3 /*break*/, 29];
+                        .resolve(guildData.verificationSystem.channelID);
+                    if (!(guildData.verificationSystem.channelID == '' || currentChannel === null)) return [3 /*break*/, 29];
                     msgString_4 = '------\n**Sorry, it looks as though it is already disabled!**\n------';
                     msgEmbed_2 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_4)
                         .setTimestamp(Date())
                         .setTitle('__**Existence Issue:**__');
@@ -227,21 +227,21 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 27:
                     _a.sent();
-                    guildData.exposeDataValues().verificationSystem.channelID = '';
-                    guildData.exposeDataValues().verificationSystem.messageID = '';
-                    guildData.exposeDataValues().verificationSystem.emoji = '';
+                    guildData.verificationSystem.channelID = '';
+                    guildData.verificationSystem.messageID = '';
+                    guildData.verificationSystem.emoji = '';
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 28:
                     _a.sent();
                     return [2 /*return*/, commandReturnData];
                 case 29:
                     messageManager = new Discord.MessageManager(currentChannel);
-                    return [4 /*yield*/, messageManager.delete(guildData.exposeDataValues().verificationSystem.messageID)];
+                    return [4 /*yield*/, messageManager.delete(guildData.verificationSystem.messageID)];
                 case 30:
                     _a.sent();
-                    guildData.exposeDataValues().verificationSystem.channelID = '';
-                    guildData.exposeDataValues().verificationSystem.messageID = '';
-                    guildData.exposeDataValues().verificationSystem.emoji = '';
+                    guildData.verificationSystem.channelID = '';
+                    guildData.verificationSystem.messageID = '';
+                    guildData.verificationSystem.emoji = '';
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 31:
                     _a.sent();
@@ -249,7 +249,7 @@ function execute(commandData, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Set Verification System:**__')
                         .setDescription(msgString);
@@ -259,11 +259,11 @@ function execute(commandData, discordUser) {
                     return [2 /*return*/, commandReturnData];
                 case 33:
                     if (!(whatAreWeDoing === 'enable')) return [3 /*break*/, 41];
-                    if (!(guildData.exposeDataValues().defaultRoleIDs.length === 0)) return [3 /*break*/, 36];
+                    if (!(guildData.defaultRoleIDs.length === 0)) return [3 /*break*/, 36];
                     msgString_5 = '------\n**Please, first set a default role to be applied to the new member! Using !setdefaultrole.**\n------';
                     msgEmbed_3 = new Discord.MessageEmbed()
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString_5)
                         .setTimestamp(Date())
                         .setTitle('__**Role Issue:**__');
@@ -279,7 +279,7 @@ function execute(commandData, discordUser) {
                     return [2 /*return*/, commandReturnData];
                 case 36:
                     msgEmbed2 = new Discord.MessageEmbed()
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setDescription(commandData.args[1])
                         .setTimestamp(Date());
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed2)];
@@ -291,10 +291,10 @@ function execute(commandData, discordUser) {
                     return [4 /*yield*/, newMessage.react(commandData.args[2])];
                 case 38:
                     _a.sent();
-                    guildData.exposeDataValues().verificationSystem.channelID = commandData.fromTextChannel.id;
-                    guildData.exposeDataValues().verificationSystem.messageID = newMessage.id;
+                    guildData.verificationSystem.channelID = commandData.fromTextChannel.id;
+                    guildData.verificationSystem.messageID = newMessage.id;
                     argTwo = commandData.args[2];
-                    guildData.exposeDataValues().verificationSystem.emoji = argTwo;
+                    guildData.verificationSystem.emoji = argTwo;
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 39:
                     _a.sent();
@@ -302,7 +302,7 @@ function execute(commandData, discordUser) {
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
-                        .setColor(guildData.exposeDataValues().borderColor)
+                        .setColor(guildData.borderColor)
                         .setTimestamp(Date())
                         .setTitle('__**Set Verification System:**__')
                         .setDescription(msgString);
