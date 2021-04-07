@@ -197,6 +197,7 @@ var DiscordUser = /** @class */ (function () {
                         userData.msBetweenRecordUpdates = config.msBetweenRecordUpdates;
                         userData.prefix = config.prefix;
                         userData.publicKey = config.publicKey;
+                        userData.startupCall = this.userData.startupCall;
                         userData.timeOfLastUpdateAndSave = new Date().getTime();
                         userData.userID = client.user.id;
                         userData.userName = client.user.username;
