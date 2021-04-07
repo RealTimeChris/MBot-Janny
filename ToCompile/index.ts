@@ -9,7 +9,6 @@ import Discord = require('discord.js');
 import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
-import GuildMemberData from './GuildMemberData';
 import botCommands from './commandindex';
 import HelperFunctions from './HelperFunctions';
 import config = require('../ToCompile/config.json');
@@ -235,7 +234,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 		console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember.user.username}`);
 	}
 	else if (commandData.guildMember instanceof Discord.User){
-		console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember!.username}`);
+		console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember.username}`);
 	}
 	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as FoundationClasses.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
@@ -251,6 +250,10 @@ client.once('ready', async () => {
 });
 
 client.on('message', async (msg: Discord.Message) => {
+	if (client.users.resolve(msg.author.id) === null) {
+		console.log('Non-found user! Better escape!');
+		return;
+	}
 	if (msg.author.id === (client.user as Discord.User).id) {
 		console.log('Better not track our own messages!');
 		return;
@@ -315,9 +318,6 @@ client.on('message', async (msg: Discord.Message) => {
 		try{
 			try {
 				const commandData = new FoundationClasses.CommandData();
-				if (client.users.resolve(msg.author.id) === null) {
-					return;
-				}
 				if (msg.channel.type !== 'dm' && msg.member !== null){
 					await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild!.id);
 				}
