@@ -3,7 +3,7 @@
 // Chris M.
 // https://github.com/RealTimeChris
 
-'use strict'
+'use strict';
 
 import FoundationClasses from './FoundationClasses';
 import Level from 'level-ts';
@@ -25,12 +25,12 @@ export interface GuildMemberDataInitData {
  */
 export default class GuildMemberData extends FoundationClasses.DiscordEntity {
     public static guildMembersData: Map<string, GuildMemberData> = new Map<string, GuildMemberData>();
-    readonly dataBase: Level | null = null;
-    readonly dataBaseKey: string = '';
-    readonly displayName: string = '';
-    readonly guildId: string = '';
-    readonly id: string = '';
-    readonly userName: string = '';
+    readonly dataBase: Level;
+    readonly dataBaseKey: string;
+    readonly displayName: string;
+    readonly guildId: string;
+    readonly id: string;
+    readonly userName: string;
     previousPermissionOverwrites: FoundationClasses.PermissionOverwrites[] = [];
     previousRoleIDs: string[] = [];
     
@@ -69,7 +69,6 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             const error = new Error();
             error.name = "Guild Member Id and/or Guild Id Issue";
             error.message = "You've passed an invalid guild member Id and/or guild Id to the constructor:\n" + this.id + "\n" + this.guildId;
-            this.dataBase.del(this.dataBaseKey);
             throw error;
         }
         this.dataBaseKey = this.guildId + " + " + this.id;

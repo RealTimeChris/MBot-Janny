@@ -66,11 +66,6 @@ var GuildData = /** @class */ (function (_super) {
     __extends(GuildData, _super);
     function GuildData(initData) {
         var _this = _super.call(this) || this;
-        _this.dataBase = null;
-        _this.dataBaseKey = '';
-        _this.guildName = '';
-        _this.id = '';
-        _this.memberCount = 0;
         _this.borderColor = [254, 254, 254];
         _this.defaultRoleIDs = [];
         _this.deletionChannels = [];
@@ -88,7 +83,6 @@ var GuildData = /** @class */ (function (_super) {
             var error = new Error();
             error.name = "Guild Id Issue";
             error.message = "You've passed an invalid guild Id to the constructor:\n" + _this.id;
-            _this.dataBase.del(_this.dataBaseKey);
             throw error;
         }
         _this.dataBaseKey = _this.id;

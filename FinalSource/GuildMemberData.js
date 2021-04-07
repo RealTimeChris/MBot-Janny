@@ -66,12 +66,6 @@ var GuildMemberData = /** @class */ (function (_super) {
     __extends(GuildMemberData, _super);
     function GuildMemberData(initData) {
         var _this = _super.call(this) || this;
-        _this.dataBase = null;
-        _this.dataBaseKey = '';
-        _this.displayName = '';
-        _this.guildId = '';
-        _this.id = '';
-        _this.userName = '';
         _this.previousPermissionOverwrites = [];
         _this.previousRoleIDs = [];
         var IdRegExp = /\d{17,18}/;
@@ -84,7 +78,6 @@ var GuildMemberData = /** @class */ (function (_super) {
             var error = new Error();
             error.name = "Guild Member Id and/or Guild Id Issue";
             error.message = "You've passed an invalid guild member Id and/or guild Id to the constructor:\n" + _this.id + "\n" + _this.guildId;
-            _this.dataBase.del(_this.dataBaseKey);
             throw error;
         }
         _this.dataBaseKey = _this.guildId + " + " + _this.id;
@@ -129,7 +122,6 @@ var GuildMemberData = /** @class */ (function (_super) {
                             error.message = "You've forgotten to initialize the GuildMemberData structure!";
                             throw error;
                         }
-                        console.log('Updating database values for guild member: ' + this.userName);
                         return [4 /*yield*/, ((_a = this.dataBase) === null || _a === void 0 ? void 0 : _a.put(this.dataBaseKey, this))];
                     case 1:
                         _b.sent();

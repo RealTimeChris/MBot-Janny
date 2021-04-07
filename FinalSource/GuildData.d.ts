@@ -14,7 +14,7 @@ export interface GuildDataInitData {
  */
 export default class GuildData extends FoundationClasses.DiscordEntity {
     static guildsData: Map<string, GuildData>;
-    readonly dataBase: Level | null;
+    readonly dataBase: Level;
     readonly dataBaseKey: string;
     readonly guildName: string;
     readonly id: string;

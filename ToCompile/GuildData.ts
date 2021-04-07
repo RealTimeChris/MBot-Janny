@@ -23,11 +23,11 @@ export interface GuildDataInitData {
  */
 export default class GuildData extends FoundationClasses.DiscordEntity {
     public static guildsData: Map<string, GuildData> = new Map<string, GuildData>();
-    readonly dataBase: Level | null = null;
-    readonly dataBaseKey: string = '';
-    readonly guildName: string = '';
-    readonly id: string = '';
-    readonly memberCount: number = 0;
+    readonly dataBase: Level;
+    readonly dataBaseKey: string;
+    readonly guildName: string;
+    readonly id: string;
+    readonly memberCount: number;
     borderColor: [number, number, number] = [254, 254, 254];
     defaultRoleIDs: string[] = [];
     deletionChannels:FoundationClasses.DeletionChannel[] = [];
@@ -78,7 +78,6 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             const error = new Error();
             error.name = "Guild Id Issue";
             error.message = "You've passed an invalid guild Id to the constructor:\n" + this.id;
-            this.dataBase.del(this.dataBaseKey);
             throw error;
         }
         this.dataBaseKey = this.id;
