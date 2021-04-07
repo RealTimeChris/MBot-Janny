@@ -9,7 +9,7 @@ import Discord = require('discord.js');
 import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
-import botCommands from './commandindex';
+import botCommands from './CommandIndex';
 import HelperFunctions from './HelperFunctions';
 import config = require('../ToCompile/config.json');
 
@@ -236,7 +236,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	else if (commandData.guildMember instanceof Discord.User){
 		console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember.username}`);
 	}
-	const returnData = await botCommands.commands.get(nameSolid)?.function(commandData, discordUser) as FoundationClasses.CommandReturnData;
+	const returnData = await botCommands.get(nameSolid)?.function(commandData, discordUser) as FoundationClasses.CommandReturnData;
 	console.log(`Completed Command: ${returnData.commandName}`);
 });
 
@@ -271,7 +271,7 @@ client.on('message', async (msg: Discord.Message) => {
 			}
 		}
 
-		if (!botCommands.commands.has(command)){
+		if (!botCommands.has(command)){
 			return;
 		}
 
@@ -291,7 +291,7 @@ client.on('message', async (msg: Discord.Message) => {
 
 			try {	
 				console.log(`Command: '${command}' entered by user: ${msg.author.username}`);
-				const cmdReturnData = await botCommands.commands.get(command)?.function(commandData, discordUser) as FoundationClasses.CommandReturnData;
+				const cmdReturnData = await botCommands.get(command)?.function(commandData, discordUser) as FoundationClasses.CommandReturnData;
 				console.log(`Completed Command: ${cmdReturnData.commandName}`);
 			} catch (error) {
 				console.log(error);
@@ -312,7 +312,7 @@ client.on('message', async (msg: Discord.Message) => {
 		}
 	} else if (msg.author.id !== client.user.id) {
 		const command = 'message';
-		if (!botCommands.commands.has(command)) {
+		if (!botCommands.has(command)) {
 			return;
 		}
 		try{
@@ -326,7 +326,7 @@ client.on('message', async (msg: Discord.Message) => {
 				}
 
 				console.log(`Standard message entered: ${msg.author.username}`);
-				const cmdName = await botCommands.commands.get(command)?.function(msg, commandData, discordUser);
+				const cmdName = await botCommands.get(command)?.function(msg, commandData, discordUser);
 				console.log(`Completed Command: ${cmdName}`);
 			} catch (error) {
 				console.log(error);
@@ -351,12 +351,12 @@ client.on('message', async (msg: Discord.Message) => {
 client.on('messageReactionAdd', async (messageReaction: Discord.MessageReaction, user: Discord.User) => {
 	const command = 'onmessagereactionadd';
 
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await (botCommands.commands.get(command)?.function(messageReaction, client, user, discordUser));
+		const cmdName = await (botCommands.get(command)?.function(messageReaction, client, user, discordUser));
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -367,12 +367,12 @@ client.on('messageReactionAdd', async (messageReaction: Discord.MessageReaction,
 client.on('guildDelete', async (guild: Discord.Guild) => {
 	const command = 'onguilddelete';
 
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(guild, discordUser);
+		const cmdName = await botCommands.get(command)?.function(guild, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -392,12 +392,12 @@ client.on('guildBanAdd', async (guild: Discord.Guild, user: Discord.User) => {
 	}
 	const command = 'onguildbanadd';
 
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(client, guild, user, discordUser);
+		const cmdName = await botCommands.get(command)?.function(client, guild, user, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -417,12 +417,12 @@ client.on('guildBanRemove', async (guild: Discord.Guild, user: Discord.User) => 
 	}
 	const command = 'onguildbanremove';
 
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(client, guild, user, discordUser);
+		const cmdName = await botCommands.get(command)?.function(client, guild, user, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -442,12 +442,12 @@ client.on('guildMemberAdd', async (member: Discord.GuildMember) => {
 	}
 	const command = 'onguildmemberadd';
 
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(client, member, discordUser);
+		const cmdName = await botCommands.get(command)?.function(client, member, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -466,12 +466,12 @@ client.on('guildMemberRemove', async (member: Discord.GuildMember) => {
 		}
 	}
 	const command = 'onguildmemberremove';
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(client, member, discordUser);
+		const cmdName = await botCommands.get(command)?.function(client, member, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -491,12 +491,12 @@ client.on('guildMemberUpdate', async (oldGuildMember: Discord.GuildMember, newGu
 			}
 		}
 		const command = 'ondisplaynamechange';
-		if (!botCommands.commands.has(command)) {
+		if (!botCommands.has(command)) {
 			return;
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await (botCommands.commands.get(command)?.function(client, oldGuildMember,
+			const cmdName = await (botCommands.get(command)?.function(client, oldGuildMember,
 				newGuildMember, discordUser));
 			console.log(`Completed Command: ${cmdName}`);
 			return;
@@ -515,12 +515,12 @@ client.on('guildMemberUpdate', async (oldGuildMember: Discord.GuildMember, newGu
 			}
 		}
 		const command = 'onnicknamechange';
-		if (!botCommands.commands.has(command)) {
+		if (!botCommands.has(command)) {
 			return;
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await (botCommands.commands.get(command)?.function(client, oldGuildMember,
+			const cmdName = await (botCommands.get(command)?.function(client, oldGuildMember,
 				newGuildMember, discordUser));
 			console.log(`Completed Command: ${cmdName}`);
 			return;
@@ -550,12 +550,12 @@ client.on('guildMemberUpdate', async (oldGuildMember: Discord.GuildMember, newGu
 		}
 		const command = 'onroleaddorremove';
 
-		if (!botCommands.commands.has(command)) {
+		if (!botCommands.has(command)) {
 			return;
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await (botCommands.commands.get(command)?.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager,
+			const cmdName = await (botCommands.get(command)?.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager,
 					newGuildMember, collectionSizeDifference, discordUser));
 			console.log(`Completed Command: ${cmdName}`);
 			return;
@@ -577,12 +577,12 @@ client.on('inviteCreate', async (invite: Discord.Invite) => {
 	}
 	const command = 'oninvitecreate';
 
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(client, invite, discordUser);
+		const cmdName = await botCommands.get(command)?.function(client, invite, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -603,12 +603,12 @@ client.on('messageDelete', async (message: Discord.Message) => {
 		}
 		const command = 'onmessagedelete';
 	
-		if (!botCommands.commands.has(command)) {
+		if (!botCommands.has(command)) {
 			return;
 		}
 		try {
 			console.log(`Command: '${command}' entered by system.`);
-			const cmdName = await botCommands.commands.get(command)?.function(client, message, discordUser);
+			const cmdName = await botCommands.get(command)?.function(client, message, discordUser);
 			console.log(`Completed Command: ${cmdName}`);
 			return;
 		} catch (error) {
@@ -629,12 +629,12 @@ client.on('messageDeleteBulk', async (collection: Discord.Collection<string, Dis
 	}
 	const command = 'onmessagedeletebulk';
 
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(client, collection, discordUser);
+		const cmdName = await botCommands.get(command)?.function(client, collection, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -654,12 +654,12 @@ client.on('roleCreate', async (role: Discord.Role) => {
 	}
 	const command = 'onrolecreate';
 
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(client, role, discordUser);
+		const cmdName = await botCommands.get(command)?.function(client, role, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -679,12 +679,12 @@ client.on('roleDelete', async (role: Discord.Role) => {
 	}
 	const command = 'onroledelete';
 
-	if (!botCommands.commands.has(command)) {
+	if (!botCommands.has(command)) {
 		return;
 	}
 	try {
 		console.log(`Command: '${command}' entered by system.`);
-		const cmdName = await botCommands.commands.get(command)?.function(client, role, discordUser);
+		const cmdName = await botCommands.get(command)?.function(client, role, discordUser);
 		console.log(`Completed Command: ${cmdName}`);
 		return;
 	} catch (error) {
@@ -708,12 +708,12 @@ client.on('userUpdate', async (oldUser: Discord.User, newUser: Discord.User) => 
 							} else {
 								const command = 'onusernamechange';
 
-								if (!botCommands.commands.has(command)) {
+								if (!botCommands.has(command)) {
 									return;
 								}
 								try {
 									console.log(`Command: '${command}' entered by system.`);
-									const cmdName = await (botCommands.commands.get(command)?.function(client, oldUser,
+									const cmdName = await (botCommands.get(command)?.function(client, oldUser,
 										newUser, guildArray[x], discordUser));
 									console.log(`Completed Command: ${cmdName}`);
 									break;

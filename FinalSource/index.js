@@ -47,7 +47,7 @@ var Discord = require("discord.js");
 var FoundationClasses_1 = __importDefault(require("./FoundationClasses"));
 var DiscordUser_1 = __importDefault(require("./DiscordUser"));
 var GuildData_1 = __importDefault(require("./GuildData"));
-var commandindex_1 = __importDefault(require("./commandindex"));
+var CommandIndex_1 = __importDefault(require("./CommandIndex"));
 var HelperFunctions_1 = __importDefault(require("./HelperFunctions"));
 var config = require("../ToCompile/config.json");
 var discordUser = new DiscordUser_1.default();
@@ -275,7 +275,7 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                 else if (commandData.guildMember instanceof Discord.User) {
                     console.log("Command: '" + nameSolid + "' entered by user: " + commandData.guildMember.username);
                 }
-                return [4 /*yield*/, ((_c = commandindex_1.default.commands.get(nameSolid)) === null || _c === void 0 ? void 0 : _c.function(commandData, discordUser))];
+                return [4 /*yield*/, ((_c = CommandIndex_1.default.get(nameSolid)) === null || _c === void 0 ? void 0 : _c.function(commandData, discordUser))];
             case 8:
                 returnData = _d.sent();
                 console.log("Completed Command: " + returnData.commandName);
@@ -331,7 +331,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                         args[x] = args[x].trim();
                     }
                 }
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _c.label = 1;
@@ -357,7 +357,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
             case 7:
                 _c.trys.push([7, 9, , 11]);
                 console.log("Command: '" + command + "' entered by user: " + msg.author.username);
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(commandData, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(commandData, discordUser))];
             case 8:
                 cmdReturnData = _c.sent();
                 console.log("Completed Command: " + cmdReturnData.commandName);
@@ -394,7 +394,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
             case 18:
                 if (!(msg.author.id !== client.user.id)) return [3 /*break*/, 34];
                 command = 'message';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _c.label = 19;
@@ -415,7 +415,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.label = 24;
             case 24:
                 console.log("Standard message entered: " + msg.author.username);
-                return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(command)) === null || _b === void 0 ? void 0 : _b.function(msg, commandData, discordUser))];
+                return [4 /*yield*/, ((_b = CommandIndex_1.default.get(command)) === null || _b === void 0 ? void 0 : _b.function(msg, commandData, discordUser))];
             case 25:
                 cmdName = _c.sent();
                 console.log("Completed Command: " + cmdName);
@@ -459,14 +459,14 @@ client.on('messageReactionAdd', function (messageReaction, user) { return __awai
         switch (_b.label) {
             case 0:
                 command = 'onmessagereactionadd';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 3, , 4]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(messageReaction, client, user, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(messageReaction, client, user, discordUser))];
             case 2:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -486,14 +486,14 @@ client.on('guildDelete', function (guild) { return __awaiter(void 0, void 0, voi
         switch (_b.label) {
             case 0:
                 command = 'onguilddelete';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 3, , 4]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(guild, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(guild, discordUser))];
             case 2:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -524,14 +524,14 @@ client.on('guildBanAdd', function (guild, user) { return __awaiter(void 0, void 
                     }
                 }
                 command = 'onguildbanadd';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 2;
             case 2:
                 _b.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, guild, user, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, guild, user, discordUser))];
             case 3:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -562,14 +562,14 @@ client.on('guildBanRemove', function (guild, user) { return __awaiter(void 0, vo
                     }
                 }
                 command = 'onguildbanremove';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 2;
             case 2:
                 _b.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, guild, user, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, guild, user, discordUser))];
             case 3:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -600,14 +600,14 @@ client.on('guildMemberAdd', function (member) { return __awaiter(void 0, void 0,
                     }
                 }
                 command = 'onguildmemberadd';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 2;
             case 2:
                 _b.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, member, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, member, discordUser))];
             case 3:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -638,14 +638,14 @@ client.on('guildMemberRemove', function (member) { return __awaiter(void 0, void
                     }
                 }
                 command = 'onguildmemberremove';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 2;
             case 2:
                 _b.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, member, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, member, discordUser))];
             case 3:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -677,14 +677,14 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                     }
                 }
                 command = 'ondisplaynamechange';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _d.label = 2;
             case 2:
                 _d.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, oldGuildMember, newGuildMember, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, oldGuildMember, newGuildMember, discordUser))];
             case 3:
                 cmdName = _d.sent();
                 console.log("Completed Command: " + cmdName);
@@ -706,14 +706,14 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                     }
                 }
                 command = 'onnicknamechange';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _d.label = 7;
             case 7:
                 _d.trys.push([7, 9, , 10]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_b = commandindex_1.default.commands.get(command)) === null || _b === void 0 ? void 0 : _b.function(client, oldGuildMember, newGuildMember, discordUser))];
+                return [4 /*yield*/, ((_b = CommandIndex_1.default.get(command)) === null || _b === void 0 ? void 0 : _b.function(client, oldGuildMember, newGuildMember, discordUser))];
             case 8:
                 cmdName = _d.sent();
                 console.log("Completed Command: " + cmdName);
@@ -742,14 +742,14 @@ client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { retur
                     }
                 }
                 command = 'onroleaddorremove';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _d.label = 12;
             case 12:
                 _d.trys.push([12, 14, , 15]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_c = commandindex_1.default.commands.get(command)) === null || _c === void 0 ? void 0 : _c.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser))];
+                return [4 /*yield*/, ((_c = CommandIndex_1.default.get(command)) === null || _c === void 0 ? void 0 : _c.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser))];
             case 13:
                 cmdName = _d.sent();
                 console.log("Completed Command: " + cmdName);
@@ -780,14 +780,14 @@ client.on('inviteCreate', function (invite) { return __awaiter(void 0, void 0, v
                     }
                 }
                 command = 'oninvitecreate';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 2;
             case 2:
                 _b.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, invite, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, invite, discordUser))];
             case 3:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -819,14 +819,14 @@ client.on('messageDelete', function (message) { return __awaiter(void 0, void 0,
                     }
                 }
                 command = 'onmessagedelete';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 2;
             case 2:
                 _b.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, message, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, message, discordUser))];
             case 3:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -857,14 +857,14 @@ client.on('messageDeleteBulk', function (collection) { return __awaiter(void 0, 
                     }
                 }
                 command = 'onmessagedeletebulk';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 2;
             case 2:
                 _b.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, collection, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, collection, discordUser))];
             case 3:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -895,14 +895,14 @@ client.on('roleCreate', function (role) { return __awaiter(void 0, void 0, void 
                     }
                 }
                 command = 'onrolecreate';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 2;
             case 2:
                 _b.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, role, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, role, discordUser))];
             case 3:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -933,14 +933,14 @@ client.on('roleDelete', function (role) { return __awaiter(void 0, void 0, void 
                     }
                 }
                 command = 'onroledelete';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 2;
             case 2:
                 _b.trys.push([2, 4, , 5]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, role, discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, role, discordUser))];
             case 3:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);
@@ -986,14 +986,14 @@ client.on('userUpdate', function (oldUser, newUser) { return __awaiter(void 0, v
                 return [2 /*return*/];
             case 6:
                 command = 'onusernamechange';
-                if (!commandindex_1.default.commands.has(command)) {
+                if (!CommandIndex_1.default.has(command)) {
                     return [2 /*return*/];
                 }
                 _b.label = 7;
             case 7:
                 _b.trys.push([7, 9, , 10]);
                 console.log("Command: '" + command + "' entered by system.");
-                return [4 /*yield*/, ((_a = commandindex_1.default.commands.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, oldUser, newUser, guildArray[x], discordUser))];
+                return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, oldUser, newUser, guildArray[x], discordUser))];
             case 8:
                 cmdName = _b.sent();
                 console.log("Completed Command: " + cmdName);

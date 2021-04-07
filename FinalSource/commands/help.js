@@ -44,7 +44,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
-var commandindex_1 = __importDefault(require("../commandindex"));
+var CommandIndex_1 = __importDefault(require("../CommandIndex"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var command = {
     name: 'help',
@@ -65,7 +65,7 @@ function execute(commandData) {
                         commandName: command.name
                     };
                     commandReturnData.commandName = command.name;
-                    commandFiles_1 = commandindex_1.default.commands;
+                    commandFiles_1 = CommandIndex_1.default;
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 7];
                     commandNames_1 = [];
                     commandFiles_1.forEach(function (value, key, map) {
