@@ -23,19 +23,19 @@ export interface GuildDataInitData {
  */
 export default class GuildData extends FoundationClasses.DiscordEntity {
     public static readonly guildsData: Map<string, GuildData> = new Map<string, GuildData>();
-    readonly dataBase: Level;
-    readonly dataBaseKey: string;
-    readonly guildName: string;
-    readonly id: string;
-    readonly memberCount: number;
-    borderColor: [number, number, number] = [254, 254, 254];
-    defaultRoleIDs: string[] = [];
-    deletionChannels:FoundationClasses.DeletionChannel[] = [];
-    ghostedRoleID: string = '';
-    logs: FoundationClasses.Log[] = [];
-    timedMessages: FoundationClasses.TimedMessage[] = [];
-    trackedUsers: FoundationClasses.TrackedUser[] = [];
-    verificationSystem: FoundationClasses.VerificationSystem = {channelID: '', emoji: '', messageID: ''};
+    public readonly dataBase: Level;
+    public readonly dataBaseKey: string;
+    public readonly guildName: string;
+    public readonly id: string;
+    public readonly memberCount: number;
+    public borderColor: [number, number, number] = [254, 254, 254];
+    public defaultRoleIDs: string[] = [];
+    public deletionChannels:FoundationClasses.DeletionChannel[] = [];
+    public ghostedRoleID: string = '';
+    public logs: FoundationClasses.Log[] = [];
+    public timedMessages: FoundationClasses.TimedMessage[] = [];
+    public trackedUsers: FoundationClasses.TrackedUser[] = [];
+    public verificationSystem: FoundationClasses.VerificationSystem = {channelID: '', emoji: '', messageID: ''};
     
     async getFromDataBase(): Promise<void> {
         try{

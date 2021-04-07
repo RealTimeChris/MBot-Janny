@@ -46,9 +46,7 @@ module HelperFunctions{
                 returnMessage = await commandData.toTextChannel.send(messageContents as string | Discord.MessageEmbed);
             }
 
-            return new Promise((resolve, reject) => {
-                resolve(returnMessage);
-            });
+            return returnMessage! as Discord.Message;
         }
         catch(error){
             return new Promise((resolve, reject) => {
@@ -106,9 +104,7 @@ module HelperFunctions{
                     await message.reactions.removeAll();
                 }
             });
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -152,13 +148,9 @@ module HelperFunctions{
                 }
                 await msg.delete({timeout: 20000});
                 
-                return new Promise((resolve, reject) => {
-                    resolve(true);
-                });
+                return true;
             }
-            return new Promise((resolve, reject) => {
-                resolve(false);
-            });
+            return false;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -184,9 +176,7 @@ module HelperFunctions{
                 discordUser.userData.botCommanders);
 
             if (areTheyAnAdmin === true || areTheyACommander === true) {
-                return new Promise((resolve, reject) => {
-                    resolve(true);
-                });
+                return true;
             }
 
             const msgString = `------\n**Sorry, but you don't have the permissions required for that!**\n------`
@@ -202,9 +192,7 @@ module HelperFunctions{
                 msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout:20000});
-            return new Promise((resolve, reject) => {
-                resolve(false);
-            });
+            return false;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -226,9 +214,7 @@ module HelperFunctions{
                     await guildMemberRoleManager.add(guildData.defaultRoleIDs[x]!);
                 }
             }
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             guildData.defaultRoleIDs.splice(currentIndex, 1);
             applyDefaultRoles(guildData, guildMember);
@@ -286,9 +272,7 @@ module HelperFunctions{
             //console.log(fileObject);
             yNew += 1;
             await recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, yNew);
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             if (error.type === 'NotFoundError') {
                 const serverRecord: FoundationClasses.ServerRecord = {
@@ -298,7 +282,6 @@ module HelperFunctions{
                     userRecords: []
                 };
                 console.log(`Adding New Server Record: ${serverRecord.serverName}`);
-                console.log(`Saving the JSON file for FoundationClasses Discord server for the first time: ${serverRecord.serverName}`);
 
                 const guildMembersCollection = await liveGuildArray[y]!.members.fetch();
 
@@ -317,9 +300,7 @@ module HelperFunctions{
                 await dataBase.put(serverRecordKey, serverRecord);
                 //console.log(serverRecord);
                 await recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y);
-                return new Promise((resolve, reject) => {
-                    resolve();
-                });
+                return;
             }
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -344,9 +325,7 @@ module HelperFunctions{
 						newGuildData.verificationSystem.messageID = '';
 						newGuildData.verificationSystem.emoji = '';
 						await guildData.writeToDataBase();
-						return new Promise((resolve, reject) => {
-							resolve();
-						})
+						return;
 					}
 					const msgManager = new Discord.MessageManager(currentChannel);
 					const oldVerificationMessage = await msgManager
@@ -358,9 +337,7 @@ module HelperFunctions{
 					await newVerificationMessage
 						.react((oldVerificationMessage.reactions.cache.first()!).emoji.name);
 					await oldVerificationMessage.delete();
-					return new Promise((resolve, reject) => {
-						resolve();
-					});
+					return;
 				}
 				return discordUser.userData.userID;
 			} catch (error) {
@@ -400,9 +377,7 @@ module HelperFunctions{
             } else {
                 console.log(`Time until next record update and backup: ${discordUser.userData.msBetweenRecordUpdates - timeDifference}ms`);
             }
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -429,9 +404,7 @@ module HelperFunctions{
             if (timeDifference < discordUser.userData.msBetweenInvites) {
                 const timeRemaining = discordUser.userData.msBetweenInvites - timeDifference;
                 console.log(`Time until next invite can be sent out: ${timeRemaining}ms`);
-                return new Promise((resolve, reject) => {
-                    resolve();
-                });
+                return;
             }
 
             for (let x = 0; x < discordUser.userData.activeInviteGuilds.length; x += 1) {
@@ -508,9 +481,7 @@ module HelperFunctions{
                         availableFileString = JSON.stringify(serverRecord);
 
                         await discordUser.dataBase.put(availableFileKey, availableFileString);
-                        return new Promise((resolve, reject) => {
-                            resolve();
-                        });
+                        return;
                     }
                 } else {
                     const deletedUser: FoundationClasses.UserRecord = {
@@ -544,9 +515,7 @@ module HelperFunctions{
                         serverRecord.userRecords.push(deletedUser);
 
                         discordUser.dataBase.put(notAvailableFileKey, serverRecord);
-                        return new Promise((resolve, reject) => {
-                            resolve();
-                        });
+                        return;
                     }
                 }
                 discordUser.userData.timeOfLastInvite = new Date().getTime();
@@ -579,24 +548,18 @@ module HelperFunctions{
                 newGuildData.deletionChannels.splice(channelIndex, 1);
                 console.log('Removing an "unknown channel" from list of deletion channels!');
                 await newGuildData.writeToDataBase();
-                return new Promise(resolve => {
-                    resolve();
-                });
+                return;
             }
 
             const currentTime = new Date().getTime();
             const timeDifference = currentTime - newGuildData.deletionChannels[channelIndex]!.timeOfLastPurge;
             if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === true) {
                 console.log(`Nope! Still being deleted! Channel: ${currentChannel.name}`);
-                return new Promise(resolve => {
-                    resolve();
-                });
+                return;
             }
             if (timeDifference < discordUser.userData.msBetweenMessageDeletion) {
                 console.log(`Nope! Still ${discordUser.userData.msBetweenMessageDeletion - timeDifference}ms left until we can purge! Channel: ${currentChannel.name}`);
-                return new Promise(resolve => {
-                    resolve();
-                });
+                return;
             }
 
             console.log(`Checking for messages to delete in channel: ${currentChannel.name}`);
@@ -685,16 +648,12 @@ module HelperFunctions{
                 console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
                 if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
                     newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
-                    return new Promise(resolve => {
-                        resolve();
-                    });
+                    return;
                 }
                 for (let y = arrayOfMessageArrays.length - 1; y >= 0; y -= 1) {
                     for (let z = arrayOfMessageArrays[y]!.length - 1; z >= 0; z -= 1) {
                         if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
-                            return new Promise(resolve => {
-                                resolve();
-                            });
+                            return;
                         }
                         if (!arrayOfMessageArrays[y]![z]!.pinned) {
                             if (arrayOfMessageArrays[y]![z]?.deletable){
@@ -741,16 +700,12 @@ module HelperFunctions{
                 console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
                 if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
                     newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
-                    return new Promise(resolve => {
-                        resolve();
-                    });
+                    return; 
                 }
                 for (let w = arrayOfMessageArrays.length - 1; w >= 0; w -= 1) {
                     for (let z = arrayOfMessageArrays[w]!.length - 1; z >= 0; z -= 1) {
                         if (newGuildData.deletionChannels![channelIndex]!.currentlyBeingDeleted === false) {
-                            return new Promise(resolve => {
-                                resolve();
-                            });
+                            return;
                         }
                         if (!arrayOfMessageArrays[w]![z]!.pinned) {
                             await arrayOfMessageArrays[w]![z]!.delete();
@@ -762,9 +717,7 @@ module HelperFunctions{
             newGuildData.deletionChannels[channelIndex]!.timeOfLastPurge = new Date().getTime();
             newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
             await newGuildData.writeToDataBase();
-            return new Promise(resolve => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -786,9 +739,7 @@ module HelperFunctions{
                     }
                 }
             });
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -821,9 +772,7 @@ module HelperFunctions{
                     }
                 }
             });
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);

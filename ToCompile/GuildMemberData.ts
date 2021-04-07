@@ -10,7 +10,6 @@ import Level from 'level-ts';
 
 /**
  * Class representing the init data for a guild member data structure.
- * 
  */
 export interface GuildMemberDataInitData {
     dataBase: Level;
@@ -25,14 +24,14 @@ export interface GuildMemberDataInitData {
  */
 export default class GuildMemberData extends FoundationClasses.DiscordEntity {
     public static readonly guildMembersData: Map<string, GuildMemberData> = new Map<string, GuildMemberData>();
-    readonly dataBase: Level;
-    readonly dataBaseKey: string;
-    readonly displayName: string;
-    readonly guildId: string;
-    readonly id: string;
-    readonly userName: string;
-    previousPermissionOverwrites: FoundationClasses.PermissionOverwrites[] = [];
-    previousRoleIDs: string[] = [];
+    public readonly dataBase: Level;
+    public readonly dataBaseKey: string;
+    public readonly displayName: string;
+    public readonly guildId: string;
+    public readonly id: string;
+    public readonly userName: string;
+    public previousPermissionOverwrites: FoundationClasses.PermissionOverwrites[] = [];
+    public previousRoleIDs: string[] = [];
     
     async getFromDataBase(){
         try{

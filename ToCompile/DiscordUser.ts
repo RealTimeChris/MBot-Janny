@@ -40,15 +40,15 @@ export interface DiscordUserData {
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
 export default class DiscordUser {
-    userData: DiscordUserData = {activeInviteGuilds: [], userID: '', userName: '', publicKey:'', guildCount: 0, botToken: '',
+    public userData: DiscordUserData = {activeInviteGuilds: [], userID: '', userName: '', publicKey:'', guildCount: 0, botToken: '',
         msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
         timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, botCommanders: [], msBetweenMessageDeletion: 0};
-    dataBase: any;
+    public dataBase: any;
 
     /**
     * Initializes the instance of Discord, within the DiscordUser class.
     */
-    async initializeInstance(client: Discord.Client): Promise<void> {
+    public async initializeInstance(client: Discord.Client): Promise<void> {
         try {
             const dataBaseFilePath = `${config.dataBaseFilePath} + ${client.user!.id}`;
             this.dataBase = new Level(dataBaseFilePath) as Level;
@@ -69,7 +69,7 @@ export default class DiscordUser {
     /**
     * Collects user data from the database, or alternatively, from the live objects.
     */
-    async getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData> {
+    public async getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData> {
         try {
             console.log('Loading user data from the database!');
             const userData = await this.dataBase.get((client.user as Discord.User).id);
@@ -108,7 +108,7 @@ export default class DiscordUser {
     /**
     * Updates the user data within the database.
     */
-    async updateUserDataInDB(newUserData: DiscordUserData): Promise<void> {
+    public async updateUserDataInDB(newUserData: DiscordUserData): Promise<void> {
         try {
             this.userData = newUserData;
             await this.dataBase.put(this.userData.userID, this.userData);
@@ -156,7 +156,7 @@ export default class DiscordUser {
     /**
     * Updates the cache of guild data.}
     */
-     private async updateGuildsData(client: Discord.Client): Promise<void> {
+    private async updateGuildsData(client: Discord.Client): Promise<void> {
         try {
             const liveDataGuildArray = client.guilds.cache.array().sort();
 
@@ -229,7 +229,7 @@ export default class DiscordUser {
     * Function that updates the data cache and saves it to disk,
     * if a certain amount of time has passed since it was last done.
     */
-    async saveCacheIfTimeHasPassed(client: Discord.Client): Promise<void> {
+    public async saveCacheIfTimeHasPassed(client: Discord.Client): Promise<void> {
         try {
             const currentTime = new Date().getTime();
             const msPassed = currentTime - this.userData.timeOfLastUpdateAndSave;

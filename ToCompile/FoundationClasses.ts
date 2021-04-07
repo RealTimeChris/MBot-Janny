@@ -93,23 +93,23 @@ module FoundationClasses{
     * Base abstract class for Discord classes.
     */
     export abstract class DiscordEntity {
-        abstract id: string = '';
-        abstract getFromDataBase(): Promise<void>;
-        abstract writeToDataBase(): Promise<void>;
+        public abstract id: string = '';
+        public abstract getFromDataBase(): Promise<void>;
+        public abstract writeToDataBase(): Promise<void>;
     }
 
     /**
     * Class representing the data that goes into a command.
     */
      export class CommandData {
-        args: string[] = [];
-        fromTextChannel: Discord.TextChannel | Discord.DMChannel | null = null;
-        fromTextChannelType: string = '';
-        guild: Discord.Guild | null = null;
-        guildMember: Discord.GuildMember | Discord.User | null = null;
-        interaction: any = null;
-        permsChannel: Discord.GuildChannel | null = null;
-        toTextChannel: Discord.WebhookClient | Discord.TextChannel | Discord.DMChannel |  null = null;
+        public args: string[] = [];
+        public fromTextChannel: Discord.TextChannel | Discord.DMChannel | null = null;
+        public fromTextChannelType: string = '';
+        public guild: Discord.Guild | null = null;
+        public guildMember: Discord.GuildMember | Discord.User | null = null;
+        public interaction: any = null;
+        public permsChannel: Discord.GuildChannel | null = null;
+        public toTextChannel: Discord.WebhookClient | Discord.TextChannel | Discord.DMChannel |  null = null;
     
         async initialize(client: Discord.Client, fromTextChannelID: string, fromTextChannelType: string, interaction: any = null, guildMemberID: string = '', guildID: string = ''): Promise<void>{
             try{

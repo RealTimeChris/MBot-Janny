@@ -53,28 +53,29 @@ var HelperFunctions;
     function sendMessageWithCorrectChannel(commandData, messageContents, atUserID) {
         if (atUserID === void 0) { atUserID = null; }
         return __awaiter(this, void 0, void 0, function () {
-            var returnMessage_1, msgEmbeds, error_1;
+            var returnMessage, msgEmbeds, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 17, , 18]);
+                        returnMessage = void 0;
                         if (!(commandData.toTextChannel instanceof Discord.WebhookClient)) return [3 /*break*/, 7];
                         if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 2];
                         msgEmbeds = [];
                         msgEmbeds.push(messageContents);
                         return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + ">", { embeds: msgEmbeds, split: false })];
                     case 1:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         return [3 /*break*/, 6];
                     case 2:
                         if (!(atUserID === null)) return [3 /*break*/, 4];
                         return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                     case 3:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         return [3 /*break*/, 6];
                     case 4: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
                     case 5:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         _a.label = 6;
                     case 6: return [3 /*break*/, 16];
                     case 7:
@@ -82,28 +83,26 @@ var HelperFunctions;
                         if (!(atUserID !== null && messageContents instanceof Discord.MessageEmbed)) return [3 /*break*/, 9];
                         return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + ">", { embed: messageContents })];
                     case 8:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         return [3 /*break*/, 13];
                     case 9:
                         if (!(atUserID === null)) return [3 /*break*/, 11];
                         return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                     case 10:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         return [3 /*break*/, 13];
                     case 11: return [4 /*yield*/, commandData.toTextChannel.send("<@!" + atUserID + "> " + messageContents)];
                     case 12:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         _a.label = 13;
                     case 13: return [3 /*break*/, 16];
                     case 14:
                         if (!(commandData.toTextChannel instanceof Discord.DMChannel)) return [3 /*break*/, 16];
                         return [4 /*yield*/, commandData.toTextChannel.send(messageContents)];
                     case 15:
-                        returnMessage_1 = _a.sent();
+                        returnMessage = _a.sent();
                         _a.label = 16;
-                    case 16: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve(returnMessage_1);
-                        })];
+                    case 16: return [2 /*return*/, returnMessage];
                     case 17:
                         error_1 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -201,9 +200,7 @@ var HelperFunctions;
                             }
                         });
                     }); });
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve();
-                        })];
+                    return [2 /*return*/];
                 }
                 catch (error) {
                     return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -263,12 +260,8 @@ var HelperFunctions;
                         return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(true);
-                            })];
-                    case 3: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve(false);
-                        })];
+                        return [2 /*return*/, true];
+                    case 3: return [2 /*return*/, false];
                     case 4:
                         error_2 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -301,9 +294,7 @@ var HelperFunctions;
                     case 2:
                         areTheyACommander = _a.sent();
                         if (areTheyAnAdmin === true || areTheyACommander === true) {
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
-                                    resolve(true);
-                                })];
+                            return [2 /*return*/, true];
                         }
                         msgString = "------\n**Sorry, but you don't have the permissions required for that!**\n------";
                         msgEmbed = new Discord.MessageEmbed();
@@ -322,9 +313,7 @@ var HelperFunctions;
                         return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                     case 4:
                         _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(false);
-                            })];
+                        return [2 /*return*/, false];
                     case 5:
                         error_3 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -363,9 +352,7 @@ var HelperFunctions;
                     case 4:
                         x += 1;
                         return [3 /*break*/, 2];
-                    case 5: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve();
-                        })];
+                    case 5: return [2 /*return*/];
                     case 6:
                         error_4 = _a.sent();
                         guildData.defaultRoleIDs.splice(currentIndex, 1);
@@ -435,9 +422,7 @@ var HelperFunctions;
                         return [4 /*yield*/, recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, yNew)];
                     case 3:
                         _c.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 4:
                         error_5 = _c.sent();
                         if (!(error_5.type === 'NotFoundError')) return [3 /*break*/, 8];
@@ -448,7 +433,6 @@ var HelperFunctions;
                             userRecords: []
                         };
                         console.log("Adding New Server Record: " + serverRecord.serverName);
-                        console.log("Saving the JSON file for FoundationClasses Discord server for the first time: " + serverRecord.serverName);
                         return [4 /*yield*/, liveGuildArray[y].members.fetch()];
                     case 5:
                         guildMembersCollection = _c.sent();
@@ -471,9 +455,7 @@ var HelperFunctions;
                     case 7:
                         //console.log(serverRecord);
                         _c.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 8: return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_5);
                         })];
@@ -513,9 +495,7 @@ var HelperFunctions;
                                 return [4 /*yield*/, guildData.writeToDataBase()];
                             case 3:
                                 _a.sent();
-                                return [2 /*return*/, new Promise(function (resolve, reject) {
-                                        resolve();
-                                    })];
+                                return [2 /*return*/];
                             case 4:
                                 msgManager = new Discord.MessageManager(currentChannel);
                                 return [4 /*yield*/, msgManager
@@ -537,9 +517,7 @@ var HelperFunctions;
                                 return [4 /*yield*/, oldVerificationMessage.delete()];
                             case 9:
                                 _a.sent();
-                                return [2 /*return*/, new Promise(function (resolve, reject) {
-                                        resolve();
-                                    })];
+                                return [2 /*return*/];
                             case 10: return [2 /*return*/, discordUser.userData.userID];
                             case 11:
                                 error_6 = _a.sent();
@@ -592,9 +570,7 @@ var HelperFunctions;
                     case 3:
                         console.log("Time until next record update and backup: " + (discordUser.userData.msBetweenRecordUpdates - timeDifference) + "ms");
                         _a.label = 4;
-                    case 4: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve();
-                        })];
+                    case 4: return [2 /*return*/];
                     case 5:
                         error_7 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -627,9 +603,7 @@ var HelperFunctions;
                         if (timeDifference < discordUser.userData.msBetweenInvites) {
                             timeRemaining = discordUser.userData.msBetweenInvites - timeDifference;
                             console.log("Time until next invite can be sent out: " + timeRemaining + "ms");
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
-                                    resolve();
-                                })];
+                            return [2 /*return*/];
                         }
                         x = 0;
                         _a.label = 1;
@@ -722,9 +696,7 @@ var HelperFunctions;
                         return [4 /*yield*/, discordUser.dataBase.put(availableFileKey, availableFileString)];
                     case 18:
                         _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 19: return [3 /*break*/, 28];
                     case 20:
                         deletedUser = {
@@ -763,9 +735,7 @@ var HelperFunctions;
                         };
                         serverRecord.userRecords.push(deletedUser);
                         discordUser.dataBase.put(notAvailableFileKey, serverRecord);
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 28:
                         discordUser.userData.timeOfLastInvite = new Date().getTime();
                         return [4 /*yield*/, discordUser.updateUserDataInDB(discordUser.userData)];
@@ -820,23 +790,17 @@ var HelperFunctions;
                         return [4 /*yield*/, newGuildData.writeToDataBase()];
                     case 4:
                         _b.sent();
-                        return [2 /*return*/, new Promise(function (resolve) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 5:
                         currentTime = new Date().getTime();
                         timeDifference = currentTime - newGuildData.deletionChannels[channelIndex].timeOfLastPurge;
                         if (newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted === true) {
                             console.log("Nope! Still being deleted! Channel: " + currentChannel.name);
-                            return [2 /*return*/, new Promise(function (resolve) {
-                                    resolve();
-                                })];
+                            return [2 /*return*/];
                         }
                         if (timeDifference < discordUser.userData.msBetweenMessageDeletion) {
                             console.log("Nope! Still " + (discordUser.userData.msBetweenMessageDeletion - timeDifference) + "ms left until we can purge! Channel: " + currentChannel.name);
-                            return [2 /*return*/, new Promise(function (resolve) {
-                                    resolve();
-                                })];
+                            return [2 /*return*/];
                         }
                         console.log("Checking for messages to delete in channel: " + currentChannel.name);
                         newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted = true;
@@ -945,9 +909,7 @@ var HelperFunctions;
                         console.log("Total of " + totalMessageCount + " in channel: " + currentChannel.name);
                         if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
                             newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted = false;
-                            return [2 /*return*/, new Promise(function (resolve) {
-                                    resolve();
-                                })];
+                            return [2 /*return*/];
                         }
                         y = arrayOfMessageArrays.length - 1;
                         _b.label = 23;
@@ -958,9 +920,7 @@ var HelperFunctions;
                     case 24:
                         if (!(z >= 0)) return [3 /*break*/, 28];
                         if (newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted === false) {
-                            return [2 /*return*/, new Promise(function (resolve) {
-                                    resolve();
-                                })];
+                            return [2 /*return*/];
                         }
                         if (!!arrayOfMessageArrays[y][z].pinned) return [3 /*break*/, 27];
                         if (!((_a = arrayOfMessageArrays[y][z]) === null || _a === void 0 ? void 0 : _a.deletable)) return [3 /*break*/, 26];
@@ -1024,9 +984,7 @@ var HelperFunctions;
                         console.log("Total of " + totalMessageCount + " in channel: " + currentChannel.name);
                         if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
                             newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted = false;
-                            return [2 /*return*/, new Promise(function (resolve) {
-                                    resolve();
-                                })];
+                            return [2 /*return*/];
                         }
                         w = arrayOfMessageArrays.length - 1;
                         _b.label = 37;
@@ -1037,9 +995,7 @@ var HelperFunctions;
                     case 38:
                         if (!(z >= 0)) return [3 /*break*/, 41];
                         if (newGuildData.deletionChannels[channelIndex].currentlyBeingDeleted === false) {
-                            return [2 /*return*/, new Promise(function (resolve) {
-                                    resolve();
-                                })];
+                            return [2 /*return*/];
                         }
                         if (!!arrayOfMessageArrays[w][z].pinned) return [3 /*break*/, 40];
                         return [4 /*yield*/, arrayOfMessageArrays[w][z].delete()];
@@ -1059,9 +1015,7 @@ var HelperFunctions;
                         return [4 /*yield*/, newGuildData.writeToDataBase()];
                     case 43:
                         _b.sent();
-                        return [2 /*return*/, new Promise(function (resolve) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 44:
                         error_14 = _b.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -1094,9 +1048,7 @@ var HelperFunctions;
                             return [2 /*return*/];
                         });
                     }); });
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve();
-                        })];
+                    return [2 /*return*/];
                 }
                 catch (error) {
                     return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -1154,9 +1106,7 @@ var HelperFunctions;
                             }
                         });
                     }); });
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve();
-                        })];
+                    return [2 /*return*/];
                 }
                 catch (error) {
                     return [2 /*return*/, new Promise(function (resolve, reject) {
