@@ -326,7 +326,7 @@ client.on('message', async (msg: Discord.Message) => {
 				}
 
 				console.log(`Standard message entered: ${msg.author.username}`);
-				const cmdName = await botCommands.get(command)?.function(msg, commandData, discordUser);
+				const cmdName = await botCommands.get(command)?.function(msg, commandData);
 				console.log(`Completed Command: ${cmdName}`);
 			} catch (error) {
 				console.log(error);
