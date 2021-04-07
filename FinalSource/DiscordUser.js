@@ -53,9 +53,9 @@ var config = require("./config.json");
  */
 var DiscordUser = /** @class */ (function () {
     function DiscordUser() {
-        this.userData = { activeInviteGuilds: [], userID: '', userName: '', publicKey: '', guildCount: 0, botToken: '',
-            msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
-            timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, botCommanders: [], msBetweenMessageDeletion: 0 };
+        this.userData = { activeInviteGuilds: [], botCommanders: [], botToken: '', currencyName: '', dataBaseFilePath: '',
+            guildCount: 0, msBetweenCacheBackup: 0, msBetweenInvites: 0, msBetweenMessageDeletion: 0, msBetweenRecordUpdates: 0, prefix: '',
+            publicKey: '', startupCall: true, timeOfLastInvite: 0, timeOfLastRecordUpdate: 0, timeOfLastUpdateAndSave: 0, userID: '', userName: '' };
     }
     /**
     * Initializes the instance of Discord, within the DiscordUser class.
@@ -113,21 +113,21 @@ var DiscordUser = /** @class */ (function () {
                         if (error_2.type === 'NotFoundError') {
                             console.log("Adding new entry for the current user's data!");
                             userData = {
-                                botToken: config.botToken,
+                                activeInviteGuilds: [],
                                 botCommanders: config.botCommanders,
-                                msBetweenRecordUpdates: config.msBetweenRecordUpdates,
+                                botToken: config.botToken,
+                                currencyName: config.currencyName,
+                                dataBaseFilePath: config.dataBaseFilePath,
+                                guildCount: client.guilds.cache.size,
+                                msBetweenCacheBackup: config.msBetweenCacheBackup,
                                 msBetweenInvites: config.msBetweenInvites,
                                 msBetweenMessageDeletion: config.msBetweenMessageDeletion,
-                                currencyName: config.currencyName,
-                                publicKey: config.publicKey,
-                                timeOfLastInvite: 0,
-                                activeInviteGuilds: [],
-                                timeOfLastRecordUpdate: 0,
-                                dataBaseFilePath: config.dataBaseFilePath,
-                                startupCall: true,
-                                guildCount: client.guilds.cache.array().length,
-                                msBetweenCacheBackup: config.msBetweenCacheBackup,
+                                msBetweenRecordUpdates: config.msBetweenRecordUpdates,
                                 prefix: config.prefix,
+                                publicKey: config.publicKey,
+                                startupCall: true,
+                                timeOfLastInvite: 0,
+                                timeOfLastRecordUpdate: 0,
                                 timeOfLastUpdateAndSave: 0,
                                 userID: client.user.id,
                                 userName: client.user.username
@@ -186,18 +186,18 @@ var DiscordUser = /** @class */ (function () {
                     case 1:
                         userData = _a.sent();
                         console.log('Updating the user data!');
-                        userData.botToken = config.botToken;
                         userData.botCommanders = config.botCommanders;
-                        userData.msBetweenRecordUpdates = config.msBetweenRecordUpdates;
+                        userData.botToken = config.botToken;
+                        userData.currencyName = config.currencyName;
+                        userData.dataBaseFilePath = config.dataBaseFilePath;
+                        userData.guildCount = client.guilds.cache.size;
+                        userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
                         userData.msBetweenInvites = config.msBetweenInvites;
                         userData.msBetweenMessageDeletion = config.msBetweenMessageDeletion;
-                        userData.currencyName = config.currencyName;
-                        userData.publicKey = config.publicKey;
-                        userData.guildCount = client.guilds.cache.array().length;
-                        userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
+                        userData.msBetweenRecordUpdates = config.msBetweenRecordUpdates;
                         userData.prefix = config.prefix;
+                        userData.publicKey = config.publicKey;
                         userData.timeOfLastUpdateAndSave = new Date().getTime();
-                        userData.startupCall = this.userData.startupCall;
                         userData.userID = client.user.id;
                         userData.userName = client.user.username;
                         return [4 /*yield*/, this.updateUserDataInDB(userData)];
