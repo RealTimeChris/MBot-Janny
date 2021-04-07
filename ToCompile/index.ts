@@ -39,7 +39,8 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	}
 	const nameSolid = name_full;
 	if (name_full === 'botinfo'){
-
+		const name = 'janny';
+		commandData.args[0] = name;
 	}
 	if (name_full === "deletedbentry"){
 		const {value:value1} = options_full[0];

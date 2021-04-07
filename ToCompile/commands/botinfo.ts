@@ -8,6 +8,7 @@
 import Discord = require('discord.js');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
+import GuildData from '../GuildData';
 import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {
@@ -24,6 +25,29 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
        const commandReturnData: FoundationClasses.CommandReturnData = {
            commandName: command.name
        };
+
+       const guildData = new GuildData({dataBase: discordUser.dataBase, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount, id: commandData.guild!.id});
+       await guildData.getFromDataBase();
+
+       if (commandData.args[0]?.toLowerCase() !== 'janny' && commandData.args[0]?.toLowerCase() !== 'musichouse' && commandData.args[0]?.toLowerCase() !== 'gamehouse'){
+           const msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------'
+           const msgEmbed = new Discord.MessageEmbed();
+           msgEmbed
+               .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+               .setColor(guildData.borderColor)
+               .setDescription(msgString)
+               .setTimestamp(Date() as unknown as Date)
+               .setTitle("__**Invalid Or Missing Arguments:**__")
+           let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+           if (commandData.toTextChannel instanceof Discord.WebhookClient){
+               msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
+           }
+           await msg.delete({timeout: 20000});
+       }
+       if (commandData.args[0]?.toLowerCase() !== 'musichouse'){
+           return commandReturnData;
+       }
+
        commandReturnData.commandName = command.name;
        const fields: Discord.EmbedField[] = [];
        const field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
