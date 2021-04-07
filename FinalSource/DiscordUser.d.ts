@@ -2,7 +2,7 @@ import Discord = require('discord.js');
 /**
  * Class representing a single instance of "Discord".
  */
-export interface DiscordUserData {
+interface DiscordUserData {
     activeInviteGuilds: string[];
     botCommanders: string[];
     botToken: string;
@@ -63,3 +63,4 @@ export default class DiscordUser {
     */
     saveCacheIfTimeHasPassed(client: Discord.Client): Promise<void>;
 }
+export {};
