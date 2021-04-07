@@ -53,7 +53,7 @@ var config = require("../ToCompile/config.json");
 var discordUser = new DiscordUser_1.default();
 var client = new Discord.Client();
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
-    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, userID, reason, name_full_1, viewOrNot, value, logname, enableOrDisable, msgCountToPurge, value1, redChannelValue, greenChannelValue, blueChannelValue, name_full_2, role, role, quantity, name_full_3, inviteLink, message, emoji, msgName, msgName, msgContents, msgInterval, userID, userID, user, returnData;
+    var channel_id, channel, id_full, guild_id_full, options_full, name_full, commandData, id, guild_id, _a, options, name_1, id, guild_id, _b, options, name_2, nameSolid, value1, name_3, userID, reason, name_full_1, viewOrNot, value, logname, enableOrDisable, msgCountToPurge, value1, redChannelValue, greenChannelValue, blueChannelValue, name_full_2, role, role, quantity, name_full_3, inviteLink, message, emoji, msgName, msgName, msgContents, msgInterval, userID, userID, user, returnData;
     var _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -95,6 +95,8 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
                     commandData.args[1] = value1;
                 }
                 if (name_full === "displayguildsdata") {
+                    name_3 = 'janny';
+                    commandData.args[0] = name_3;
                 }
                 if (name_full === 'ghost') {
                     userID = void 0;
@@ -415,7 +417,7 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
                 _c.label = 24;
             case 24:
                 console.log("Standard message entered: " + msg.author.username);
-                return [4 /*yield*/, ((_b = CommandIndex_1.default.get(command)) === null || _b === void 0 ? void 0 : _b.function(msg, commandData, discordUser))];
+                return [4 /*yield*/, ((_b = CommandIndex_1.default.get(command)) === null || _b === void 0 ? void 0 : _b.function(msg, commandData))];
             case 25:
                 cmdName = _c.sent();
                 console.log("Completed Command: " + cmdName);

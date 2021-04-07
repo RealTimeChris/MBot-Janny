@@ -48,49 +48,79 @@ var GuildData_1 = __importDefault(require("../GuildData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var command = {
     name: 'displayguildsdata',
-    description: '!displayguildsdata to display the guild info of the bots in chat!',
+    description: '!displayguildsdata = BOTNAME, to display the guild info of the bots in chat!',
     function: Function()
 };
 /**
  * Displays all of the data for all of the guilds, either in console or in chat.
  */
 function execute(commandData, discordUser) {
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, currentCount_1;
-        return __generator(this, function (_a) {
-            try {
-                commandReturnData = {
-                    commandName: command.name
-                };
-                commandReturnData.commandName = command.name;
-                currentCount_1 = 0;
-                GuildData_1.default.guildsData.forEach(function (guild) {
-                    var _a;
-                    var msgString = '';
-                    msgString += "__Guild Name:__ " + guild.guildName + "\n";
-                    msgString += "__Guild ID:__ " + guild.id + "\n";
-                    msgString += "__Member Count:__ " + guild.memberCount + "\n";
-                    (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(guild.id).then(function (guild) {
-                        msgString += "__Created:__ " + guild.createdAt + "\n";
-                        msgString += "__Guild Owner:__ <@!" + guild.owner.id + "> (" + guild.owner.user.tag + ")\n";
-                        var messageEmbed = new Discord.MessageEmbed()
-                            .setColor([254, 254, 254])
-                            .setThumbnail(guild.iconURL())
-                            .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + GuildData_1.default.guildsData.size + ":**__")
-                            .setTimestamp(Date())
-                            .setDescription(msgString);
-                        HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed);
-                        currentCount_1 += 1;
+        var commandReturnData, guildData, msgString, msgEmbed, msg, currentCount_1, error_1;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
+                case 0:
+                    _e.trys.push([0, 5, , 6]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
+                    commandReturnData.commandName = command.name;
+                    guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, name: commandData.guild.name, memberCount: commandData.guild.memberCount, id: commandData.guild.id });
+                    return [4 /*yield*/, guildData.getFromDataBase()];
+                case 1:
+                    _e.sent();
+                    if (!(((_a = commandData.args[0]) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== 'janny' && ((_b = commandData.args[0]) === null || _b === void 0 ? void 0 : _b.toLowerCase()) !== 'musichouse' && ((_c = commandData.args[0]) === null || _c === void 0 ? void 0 : _c.toLowerCase()) !== 'gamehouse')) return [3 /*break*/, 4];
+                    msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------';
+                    msgEmbed = new Discord.MessageEmbed();
+                    msgEmbed
+                        .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
+                        .setColor(guildData.borderColor)
+                        .setDescription(msgString)
+                        .setTimestamp(Date())
+                        .setTitle("__**Invalid Or Missing Arguments:**__");
+                    return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
+                case 2:
+                    msg = _e.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 3:
+                    _e.sent();
+                    _e.label = 4;
+                case 4:
+                    if (((_d = commandData.args[0]) === null || _d === void 0 ? void 0 : _d.toLowerCase()) !== 'janny') {
+                        return [2 /*return*/, commandReturnData];
+                    }
+                    currentCount_1 = 0;
+                    GuildData_1.default.guildsData.forEach(function (guild) {
+                        var _a;
+                        var msgString = '';
+                        msgString += "__Guild Name:__ " + guild.guildName + "\n";
+                        msgString += "__Guild ID:__ " + guild.id + "\n";
+                        msgString += "__Member Count:__ " + guild.memberCount + "\n";
+                        (_a = commandData.guildMember) === null || _a === void 0 ? void 0 : _a.client.guilds.fetch(guild.id).then(function (guild) {
+                            msgString += "__Created:__ " + guild.createdAt + "\n";
+                            msgString += "__Guild Owner:__ <@!" + guild.owner.id + "> (" + guild.owner.user.tag + ")\n";
+                            var messageEmbed = new Discord.MessageEmbed()
+                                .setColor([254, 254, 254])
+                                .setThumbnail(guild.iconURL())
+                                .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + GuildData_1.default.guildsData.size + ":**__")
+                                .setTimestamp(Date())
+                                .setDescription(msgString);
+                            HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed);
+                            currentCount_1 += 1;
+                        });
                     });
-                });
-                return [2 /*return*/, commandReturnData];
+                    return [2 /*return*/, commandReturnData];
+                case 5:
+                    error_1 = _e.sent();
+                    return [2 /*return*/, new Promise(function (resolve, reject) {
+                            reject(error_1);
+                        })];
+                case 6: return [2 /*return*/];
             }
-            catch (error) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        reject(error);
-                    })];
-            }
-            return [2 /*return*/];
         });
     });
 }
