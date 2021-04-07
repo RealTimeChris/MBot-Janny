@@ -181,7 +181,8 @@ export default class DiscordUser {
                         guildData.deletionChannels[x]!.currentlyBeingDeleted = false;
                         guildData.deletionChannels[x]!.timeOfLastPurge = 0;
                     }   
-                }                             
+                }
+                guildData.trackedUsers = [];
                 await guildData.writeToDataBase();
                 this.guildsData.set(liveDataGuildArray[x]!.id, guildData);
             }

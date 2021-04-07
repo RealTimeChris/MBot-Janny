@@ -35,7 +35,6 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
     verificationSystem: FoundationClasses.VerificationSystem = {channelID: '', emoji: '', messageID: ''};
     deletionChannels:FoundationClasses.DeletionChannel[] = [];
     defaultRoleIDs: string[] = [];
-
     async getFromDataBase(): Promise<void> {
         try{
             const guildData = await this.dataBase?.get(this.dataBaseKey) as GuildData;

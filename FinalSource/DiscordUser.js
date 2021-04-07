@@ -254,6 +254,7 @@ var DiscordUser = /** @class */ (function () {
                                 guildData.deletionChannels[x_1].timeOfLastPurge = 0;
                             }
                         }
+                        guildData.trackedUsers = [];
                         return [4 /*yield*/, guildData.writeToDataBase()];
                     case 3:
                         _a.sent();
