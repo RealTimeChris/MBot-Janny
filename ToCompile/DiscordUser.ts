@@ -58,9 +58,7 @@ export default class DiscordUser {
             console.log(`Logged in as ${client.user!.tag}!`);
             await this.updateDataCacheAndSaveToFile(client);
             await HelperFunctions.cacheMessagesForVerification(client, this);
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -75,9 +73,7 @@ export default class DiscordUser {
         try {
             console.log('Loading user data from the database!');
             const userData = await this.dataBase.get((client.user as Discord.User).id);
-            return new Promise((resolve, reject) => {
-                resolve(userData);
-            });
+            return userData;
         } catch (error) {
             if (error.type === 'NotFoundError'){
                 console.log("Adding new entry for the current user's data!");
@@ -101,9 +97,7 @@ export default class DiscordUser {
                     userID: client.user!.id,
                     userName:  client.user!.username
                 };
-                return new Promise((resolve, reject) => {
-                    resolve(userData);
-                });
+                return userData;
             }
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -121,9 +115,7 @@ export default class DiscordUser {
             const userData = await this.dataBase.get(this.userData.userID);
             console.log('New User Cache:');
             console.log(userData);
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -153,9 +145,7 @@ export default class DiscordUser {
             userData.userID = client.user!.id;
             userData.userName = client.user!.username;
             await this.updateUserDataInDB(userData);
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -182,9 +172,7 @@ export default class DiscordUser {
                 }
                 await guildData.writeToDataBase();
             }
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -202,24 +190,17 @@ export default class DiscordUser {
                 const liveDataGuildMemberArray = (await liveDataGuildArray[x]!.members.fetch()).array();
 
                 for (let y = 0; y < liveDataGuildMemberArray.length; y += 1) {
-                    try {
-                        const guildMemberData = new GuildMemberData({dataBase: this.dataBase, id: liveDataGuildMemberArray[y]!.id, guildId: liveDataGuildArray[x]!.id,
-                            userName: liveDataGuildMemberArray[y]!.user.username, displayName: liveDataGuildMemberArray[y]!.displayName});
-                        await guildMemberData.getFromDataBase();
-                        await guildMemberData.writeToDataBase();
-                    }
-                    catch(error){
-                        console.log(error);
-                    }
+                    const guildMemberData = new GuildMemberData({dataBase: this.dataBase, id: liveDataGuildMemberArray[y]!.id, guildId: liveDataGuildArray[x]!.id,
+                        userName: liveDataGuildMemberArray[y]!.user.username, displayName: liveDataGuildMemberArray[y]!.displayName});
+                    await guildMemberData.getFromDataBase();
+                    await guildMemberData.writeToDataBase();
                 }
             }
             const userData = await this.getUserDataFromDB(client);
             userData.timeOfLastUpdateAndSave = new Date().getTime();
             userData.startupCall = false;
             await this.updateUserDataInDB(userData);
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -236,9 +217,7 @@ export default class DiscordUser {
             await this.updateUserData(client);
             await this.updateGuildsData(client);
             await this.updateGuildMembersData(client);
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);
@@ -260,9 +239,7 @@ export default class DiscordUser {
                 const timeLeft = this.userData.msBetweenCacheBackup - msPassed;
                 console.log(`Time until next cache update and backup: ${timeLeft}ms`);
             }
-            return new Promise((resolve, reject) => {
-                resolve();
-            });
+            return;
         } catch (error) {
             return new Promise((resolve, reject) => {
                 reject(error);

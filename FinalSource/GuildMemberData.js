@@ -129,6 +129,7 @@ var GuildMemberData = /** @class */ (function (_super) {
                             error.message = "You've forgotten to initialize the GuildMemberData structure!";
                             throw error;
                         }
+                        console.log('Updating database values for guild member: ' + this.userName);
                         return [4 /*yield*/, ((_a = this.dataBase) === null || _a === void 0 ? void 0 : _a.put(this.dataBaseKey, this))];
                     case 1:
                         _b.sent();

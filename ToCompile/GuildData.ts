@@ -63,6 +63,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             error.message = "You've forgotten to initialize the GuildData structure!";
             throw error;
         }
+        console.log('Updating database values for guild: ' + this.guildName);
         await this.dataBase?.put(this.dataBaseKey, this);
         GuildData.guildsData.set(this.dataBaseKey, this);
     }

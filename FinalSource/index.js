@@ -310,6 +310,10 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
+                if (client.users.resolve(msg.author.id) === null) {
+                    console.log('Non-found user! Better escape!');
+                    return [2 /*return*/];
+                }
                 if (msg.author.id === client.user.id) {
                     console.log('Better not track our own messages!');
                     return [2 /*return*/];
@@ -400,9 +404,6 @@ client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, f
             case 20:
                 _c.trys.push([20, 26, , 28]);
                 commandData = new FoundationClasses_1.default.CommandData();
-                if (client.users.resolve(msg.author.id) === null) {
-                    return [2 /*return*/];
-                }
                 if (!(msg.channel.type !== 'dm' && msg.member !== null)) return [3 /*break*/, 22];
                 return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
             case 21:

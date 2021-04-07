@@ -82,9 +82,7 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, HelperFunctions_1.default.cacheMessagesForVerification(client, this)];
                     case 3:
                         _b.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 4:
                         error_1 = _b.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -100,7 +98,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.getUserDataFromDB = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var userData_1, error_2, userData_2;
+            var userData, error_2, userData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -108,15 +106,13 @@ var DiscordUser = /** @class */ (function () {
                         console.log('Loading user data from the database!');
                         return [4 /*yield*/, this.dataBase.get(client.user.id)];
                     case 1:
-                        userData_1 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve(userData_1);
-                            })];
+                        userData = _a.sent();
+                        return [2 /*return*/, userData];
                     case 2:
                         error_2 = _a.sent();
                         if (error_2.type === 'NotFoundError') {
                             console.log("Adding new entry for the current user's data!");
-                            userData_2 = {
+                            userData = {
                                 botToken: config.botToken,
                                 botCommanders: config.botCommanders,
                                 msBetweenRecordUpdates: config.msBetweenRecordUpdates,
@@ -136,9 +132,7 @@ var DiscordUser = /** @class */ (function () {
                                 userID: client.user.id,
                                 userName: client.user.username
                             };
-                            return [2 /*return*/, new Promise(function (resolve, reject) {
-                                    resolve(userData_2);
-                                })];
+                            return [2 /*return*/, userData];
                         }
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_2);
@@ -167,9 +161,7 @@ var DiscordUser = /** @class */ (function () {
                         userData = _a.sent();
                         console.log('New User Cache:');
                         console.log(userData);
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 3:
                         error_3 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -211,9 +203,7 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, this.updateUserDataInDB(userData)];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 3:
                         error_4 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -258,9 +248,7 @@ var DiscordUser = /** @class */ (function () {
                     case 4:
                         x += 1;
                         return [3 /*break*/, 1];
-                    case 5: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve();
-                        })];
+                    case 5: return [2 /*return*/];
                     case 6:
                         error_5 = _b.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -276,62 +264,53 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateGuildMembersData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var liveDataGuildArray, x, liveDataGuildMemberArray, y, guildMemberData, error_6, userData, error_7;
+            var liveDataGuildArray, x, liveDataGuildMemberArray, y, guildMemberData, userData, error_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 13, , 14]);
+                        _a.trys.push([0, 11, , 12]);
                         liveDataGuildArray = client.guilds.cache.array();
                         x = 0;
                         _a.label = 1;
                     case 1:
-                        if (!(x < liveDataGuildArray.length)) return [3 /*break*/, 10];
+                        if (!(x < liveDataGuildArray.length)) return [3 /*break*/, 8];
                         return [4 /*yield*/, liveDataGuildArray[x].members.fetch()];
                     case 2:
                         liveDataGuildMemberArray = (_a.sent()).array();
                         y = 0;
                         _a.label = 3;
                     case 3:
-                        if (!(y < liveDataGuildMemberArray.length)) return [3 /*break*/, 9];
-                        _a.label = 4;
-                    case 4:
-                        _a.trys.push([4, 7, , 8]);
+                        if (!(y < liveDataGuildMemberArray.length)) return [3 /*break*/, 7];
                         guildMemberData = new GuildMemberData_1.default({ dataBase: this.dataBase, id: liveDataGuildMemberArray[y].id, guildId: liveDataGuildArray[x].id,
                             userName: liveDataGuildMemberArray[y].user.username, displayName: liveDataGuildMemberArray[y].displayName });
                         return [4 /*yield*/, guildMemberData.getFromDataBase()];
-                    case 5:
+                    case 4:
                         _a.sent();
                         return [4 /*yield*/, guildMemberData.writeToDataBase()];
-                    case 6:
+                    case 5:
                         _a.sent();
-                        return [3 /*break*/, 8];
-                    case 7:
-                        error_6 = _a.sent();
-                        console.log(error_6);
-                        return [3 /*break*/, 8];
-                    case 8:
+                        _a.label = 6;
+                    case 6:
                         y += 1;
                         return [3 /*break*/, 3];
-                    case 9:
+                    case 7:
                         x += 1;
                         return [3 /*break*/, 1];
-                    case 10: return [4 /*yield*/, this.getUserDataFromDB(client)];
-                    case 11:
+                    case 8: return [4 /*yield*/, this.getUserDataFromDB(client)];
+                    case 9:
                         userData = _a.sent();
                         userData.timeOfLastUpdateAndSave = new Date().getTime();
                         userData.startupCall = false;
                         return [4 /*yield*/, this.updateUserDataInDB(userData)];
-                    case 12:
+                    case 10:
                         _a.sent();
+                        return [2 /*return*/];
+                    case 11:
+                        error_6 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve();
+                                reject(error_6);
                             })];
-                    case 13:
-                        error_7 = _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_7);
-                            })];
-                    case 14: return [2 /*return*/];
+                    case 12: return [2 /*return*/];
                 }
             });
         });
@@ -342,7 +321,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateDataCacheAndSaveToFile = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_8;
+            var error_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -356,13 +335,11 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, this.updateGuildMembersData(client)];
                     case 3:
                         _a.sent();
-                        return [2 /*return*/, new Promise(function (resolve, reject) {
-                                resolve();
-                            })];
+                        return [2 /*return*/];
                     case 4:
-                        error_8 = _a.sent();
+                        error_7 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_8);
+                                reject(error_7);
                             })];
                     case 5: return [2 /*return*/];
                 }
@@ -375,7 +352,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.saveCacheIfTimeHasPassed = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, msPassed, timeLeft, error_9;
+            var currentTime, msPassed, timeLeft, error_8;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -391,13 +368,11 @@ var DiscordUser = /** @class */ (function () {
                         timeLeft = this.userData.msBetweenCacheBackup - msPassed;
                         console.log("Time until next cache update and backup: " + timeLeft + "ms");
                         _a.label = 3;
-                    case 3: return [2 /*return*/, new Promise(function (resolve, reject) {
-                            resolve();
-                        })];
+                    case 3: return [2 /*return*/];
                     case 4:
-                        error_9 = _a.sent();
+                        error_8 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
-                                reject(error_9);
+                                reject(error_8);
                             })];
                     case 5: return [2 /*return*/];
                 }
