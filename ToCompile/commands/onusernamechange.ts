@@ -32,9 +32,9 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
         await guildData.getFromDataBase();
 
         let logs: FoundationClasses.Log;
-        for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-            if (guildData.exposeDataValues().logs![x]!.nameSmall === 'usernamechange') {
-                logs = guildData.exposeDataValues().logs![x]!;
+        for (let x = 0; x < guildData.logs.length; x += 1) {
+            if (guildData.logs[x]!.nameSmall === 'usernamechange') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -51,7 +51,7 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
 
         const msgEmbed = new Discord.MessageEmbed();
         msgEmbed
-            .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+            .setColor(guildData.borderColor as [number, number, number])
             .setDescription(msgString)
             .setThumbnail(newUser.avatarURL()!)
             .setTimestamp(Date() as unknown as Date)

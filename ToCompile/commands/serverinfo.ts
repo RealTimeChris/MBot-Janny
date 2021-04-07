@@ -77,7 +77,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                         .setTitle('__**Missing Or Invalid Arguments:**__')
                         .setTimestamp(Date() as unknown as Date)
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
-                        .setColor(guildData!.exposeDataValues().borderColor as [number, number, number]);
+                        .setColor(guildData!.borderColor as [number, number, number]);
                     let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                     if (commandData.toTextChannel instanceof Discord.WebhookClient){
                         msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
@@ -107,7 +107,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setTitle('__**Missing Or Invalid Arguments:**__')
                     .setTimestamp((Date() as unknown) as Date)
                     .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
-                    .setColor(guildData!.exposeDataValues().borderColor as [number, number, number]);
+                    .setColor(guildData!.borderColor as [number, number, number]);
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient){
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
@@ -150,7 +150,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setTitle('__**Server Issue:**__')
                     .setTimestamp(Date() as unknown as Date)
                     .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
-                    .setColor(guildData!.exposeDataValues().borderColor as [number, number, number]);
+                    .setColor(guildData!.borderColor as [number, number, number]);
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient){
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
@@ -216,7 +216,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             .setTitle('__**Server Info:**__')
             .setTimestamp(Date() as unknown as Date)
             .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
-            .setColor(guildData!.exposeDataValues().borderColor as [number, number, number]);
+            .setColor(guildData!.borderColor as [number, number, number]);
             messageEmbed.fields = fields as Discord.EmbedField[];
         }
         

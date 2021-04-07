@@ -54,7 +54,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -71,7 +71,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -88,7 +88,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -105,7 +105,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 (!ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -122,7 +122,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 @USERMENTION to ghost a new user, !ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -139,7 +139,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 (!ghost = remove, @USERMENTION to unghost a user)**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -175,7 +175,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         const roleManager = new Discord.RoleManager(commandData.guild!);
 
-        let ghostedRole = await roleManager.fetch(guildData.exposeDataValues().ghostedRoleID!);
+        let ghostedRole = await roleManager.fetch(guildData.ghostedRoleID!);
 
         const memberRoleManager = new Discord.GuildMemberRoleManager(currentGuildMember);
 
@@ -188,7 +188,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 },
             });
 
-            guildData.exposeDataValues().ghostedRoleID = ghostedRole.id;
+            guildData.ghostedRoleID = ghostedRole.id;
             await guildData.writeToDataBase();
         }
 
@@ -196,7 +196,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             for (let x = 0; x < channelsArray.length; x += 1) {
                 const voicePermissionOptions: FoundationClasses.PermissionOverwrites = {
                     channel: null,
-                    id: guildData.exposeDataValues().ghostedRoleID!,
+                    id: guildData.ghostedRoleID!,
                     type: 'role',
                     allow: ['VIEW_CHANNEL'],
                     deny: ['ADMINISTRATOR', 'CREATE_INSTANT_INVITE', 'KICK_MEMBERS', 'BAN_MEMBERS',
@@ -207,7 +207,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
                 const textPermissionOptions: FoundationClasses.PermissionOverwrites = {
                     channel: null,
-                    id: (guildData.exposeDataValues().ghostedRoleID as string),
+                    id: (guildData.ghostedRoleID as string),
                     type: 'role',
                     allow: ['VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
                     deny: ['ADMINISTRATOR', 'CREATE_INSTANT_INVITE', 'KICK_MEMBERS', 'BAN_MEMBERS',
@@ -224,7 +224,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     let isItFound = false;
                     let currentChannelPerms;
                     for (let y = 0; y < memberRoleManager.cache.array().length; y += 1) {
-                        if (guildData.exposeDataValues().verificationSystem!.channelID !== null) {
+                        if (guildData.verificationSystem!.channelID !== null) {
                             if (memberRoleManager.cache.array()[y]!.name === '@everyone') {
                                 continue;
                             }
@@ -257,7 +257,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     let isItFound2 = false;
                     let currentChannelPerms;
                     for (let y = 0; y < memberRoleManager.cache.array().length; y += 1) {
-                        if (guildData.exposeDataValues().verificationSystem!.channelID !== null) {
+                        if (guildData.verificationSystem!.channelID !== null) {
                             if (memberRoleManager.cache.array()[y]!.name === '@everyone') {
                                 continue;
                             }
@@ -329,7 +329,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Currently Ghosted Members:**__');
@@ -343,7 +343,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     const msgString = `------\n**They are already ghosted!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				        .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Already Ghosted:**__');
@@ -358,20 +358,20 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 }
             }
 
-            guildMemberData.exposeDataValues().previousRoleIDs!.push(memberRoleManager.highest.id);
+            guildMemberData.previousRoleIDs.push(memberRoleManager.highest.id);
             for (let x = 0; x < memberRoleManager.cache.array().length; x += 1) {
                 if (memberRoleManager.cache.array()[x]!.id === memberRoleManager.highest.id) {
                     continue;
                 }
                 if (memberRoleManager.cache.array()[x]!.name !== '@everyone' && memberRoleManager.cache.array()[x]!.name !== 'general'
                     && memberRoleManager.cache.array()[x]!.id !== memberRoleManager.highest.id) {
-                    guildMemberData.exposeDataValues().previousRoleIDs!.push(memberRoleManager.cache.array()[x]!.id);
+                    guildMemberData.previousRoleIDs!.push(memberRoleManager.cache.array()[x]!.id);
                 }
             }
 
-            for (let x = 0; x < guildMemberData.exposeDataValues().previousRoleIDs!.length; x += 1) {
+            for (let x = 0; x < guildMemberData.previousRoleIDs.length; x += 1) {
                 try {
-                    await memberRoleManager.remove(guildMemberData.exposeDataValues().previousRoleIDs![x]!);
+                    await memberRoleManager.remove(guildMemberData.previousRoleIDs[x]!);
                 } catch (error) {
                     if (error.message === 'Missing Permissions') {
                         console.log('Missing Permissions');
@@ -398,7 +398,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                             allow: currentChannelOverwritesArray[y]!.allow.toArray(),
                             deny: currentChannelOverwritesArray[y]!.deny.toArray()
                         };
-                        guildMemberData.exposeDataValues().previousPermissionOverwrites!
+                        guildMemberData.previousPermissionOverwrites!
                             .push(permOWs);
                         await currentChannelOverwritesArray[y]!.delete();
                     }
@@ -418,7 +418,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**You\'ve been ghosted:**__');
@@ -430,7 +430,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed2 = new Discord.MessageEmbed();
             msgEmbed2
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString2)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**New Server Member Ghosted:**__');
@@ -452,7 +452,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const msgString = `-------\n**Sorry, but that user is not currently ghosted!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				        .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Not Ghosted:**__');
@@ -466,9 +466,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             });
             }
 
-            for (let x = 0; x < guildMemberData.exposeDataValues().previousRoleIDs!.length; x += 1) {
+            for (let x = 0; x < guildMemberData.previousRoleIDs.length; x += 1) {
                 try {
-                    await memberRoleManager.add(guildMemberData.exposeDataValues().previousRoleIDs![x]!);
+                    await memberRoleManager.add(guildMemberData.previousRoleIDs[x]!);
                 } catch (error) {
                     if (error.message === 'Missing Permissions') {
                         continue;
@@ -481,17 +481,17 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
                 const currentChannelOverwritesArray = currentChannel!.permissionOverwrites.array();
 
-                for (let z = 0; z < guildMemberData.exposeDataValues().previousPermissionOverwrites!.length; z += 1) {
-                    if ((guildMemberData.exposeDataValues().previousPermissionOverwrites![z]!)
+                for (let z = 0; z < guildMemberData.previousPermissionOverwrites!.length; z += 1) {
+                    if ((guildMemberData.previousPermissionOverwrites![z]!)
                         .channel!.id === channelsArray[x]!.id) {
-                        currentChannelOverwritesArray.push(guildMemberData.exposeDataValues().previousPermissionOverwrites![z] as unknown as Discord.PermissionOverwrites)
+                        currentChannelOverwritesArray.push(guildMemberData.previousPermissionOverwrites[z] as unknown as Discord.PermissionOverwrites)
                     }
                 }
                 await (currentChannel as Discord.GuildChannel).overwritePermissions(currentChannelOverwritesArray);
             }
 
-            guildMemberData.exposeDataValues().previousPermissionOverwrites = [];
-            guildMemberData.exposeDataValues().previousRoleIDs = [];
+            guildMemberData.previousPermissionOverwrites = [];
+            guildMemberData.previousRoleIDs = [];
             await guildMemberData.writeToDataBase();
 
             await memberRoleManager.remove(ghostedRole.id);
@@ -500,7 +500,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**You\'ve been un-ghosted:**__');
@@ -512,7 +512,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed2 = new Discord.MessageEmbed();
             msgEmbed2
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString2)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**New Server Member Un-Ghosted:**__');
@@ -531,7 +531,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Permissions Issue:**__');

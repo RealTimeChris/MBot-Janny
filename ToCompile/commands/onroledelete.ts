@@ -32,9 +32,9 @@ async function execute(client: Discord.Client, role: Discord.Role,
         await guildData.getFromDataBase();
 
         let logs: FoundationClasses.Log;
-        for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-            if (guildData.exposeDataValues().logs![x]!.nameSmall === 'roledelete') {
-                logs = guildData.exposeDataValues().logs![x]!;
+        for (let x = 0; x < guildData.logs.length; x += 1) {
+            if (guildData.logs[x]!.nameSmall === 'roledelete') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }

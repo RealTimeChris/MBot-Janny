@@ -43,13 +43,13 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 			.setAuthor((commandData.guildMember as Discord.GuildMember).client.user!.username, (commandData.guildMember as Discord.GuildMember).client.user!.avatarURL()!)
 			.setTimestamp(Date() as unknown as Date)
 			.setTitle('__**Janny Options:**__')
-			.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+			.setColor(guildData.borderColor as [number, number, number])
 			.setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
 
 		const fields = [];
 		let resultIcon = '❌';
-		for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-			if (guildData.exposeDataValues().logs![x]!.enabled === true) {
+		for (let x = 0; x < guildData.logs.length; x += 1) {
+			if (guildData.logs[x]!.enabled === true) {
 				resultIcon = '✅';
 				break;
 			}
@@ -59,7 +59,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 		fields.push(logsField);
 
 		resultIcon = '❌';
-		if (guildData.exposeDataValues().defaultRoleIDs!.length > 0) {
+		if (guildData.defaultRoleIDs.length > 0) {
 			resultIcon = '✅';
 		}
 		const defaultRolesField = { name: '__**Default Roles:**__', value: `__Active:__ ${resultIcon}\n
@@ -67,7 +67,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 		fields.push(defaultRolesField);
 
 		resultIcon = '❌';
-		if (guildData.exposeDataValues().deletionChannels!.length > 0) {
+		if (guildData.deletionChannels.length > 0) {
 			resultIcon = '✅';
 		}
 		const deletionChannelsField = { name: '__**Delete Messages From Channels:**__', value: `__Active:__ ${resultIcon}\n
@@ -85,7 +85,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 		fields.push(replacementServerInviteField);
 
 		resultIcon = '❌';
-		if (guildData.exposeDataValues().verificationSystem!.channelID != '') {
+		if (guildData.verificationSystem.channelID != '') {
 			resultIcon = '✅';
 		}
 		const requireServerVerificationField = { name: '__**Require Server Verification:**__', value: `__Active:__ ${resultIcon}\n
@@ -93,7 +93,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 		fields.push(requireServerVerificationField);
 
 		resultIcon = '❌';
-		if (guildData.exposeDataValues().timedMessages!.length > 0) {
+		if (guildData.timedMessages.length > 0) {
 			resultIcon = '✅';
 		}
 		const timedMessagesField = { name: '__**Send Out Timed Messages:**__', value: `__Active:__ ${resultIcon}\n
@@ -101,7 +101,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 		fields.push(timedMessagesField);
 		
 		resultIcon = '❌';
-		if (guildData.exposeDataValues().trackedUsers!.length > 0) {
+		if (guildData.trackedUsers.length > 0) {
 			resultIcon = '✅';
 		}
 		const trackUsersField = { name: "__**Track User's Messages:**__", value: `__Active:__ ${resultIcon}\n

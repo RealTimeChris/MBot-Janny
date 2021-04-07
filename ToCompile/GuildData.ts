@@ -40,25 +40,23 @@ export interface GuildDataValues {
  */
 export default class GuildData extends FoundationClasses.DiscordEntity {
     protected readonly id: string = '';
-    private readonly dataBase: Level | null = null;
-    private readonly dataBaseKey: string = '';
-    private borderColor: [number, number, number] = [254, 254, 254];
-    private memberCount: number = 0;
-    private trackedUsers: FoundationClasses.TrackedUser[] = [];
-    private ghostedRoleID: string = '';
-    private timedMessages: FoundationClasses.TimedMessage[] = [];
-    private guildName: string = '';
-    private logs: FoundationClasses.Log[] = [];
-    private verificationSystem: FoundationClasses.VerificationSystem = {channelID: '', emoji: '', messageID: ''};
-    private deletionChannels:FoundationClasses.DeletionChannel[] = [];
-    private defaultRoleIDs: string[] = [];
+    readonly dataBase: Level | null = null;
+    readonly dataBaseKey: string = '';
+    readonly guildName: string = '';
+    readonly memberCount: number = 0;
+    borderColor: [number, number, number] = [254, 254, 254];
+    trackedUsers: FoundationClasses.TrackedUser[] = [];
+    ghostedRoleID: string = '';
+    timedMessages: FoundationClasses.TimedMessage[] = [];
+    logs: FoundationClasses.Log[] = [];
+    verificationSystem: FoundationClasses.VerificationSystem = {channelID: '', emoji: '', messageID: ''};
+    deletionChannels:FoundationClasses.DeletionChannel[] = [];
+    defaultRoleIDs: string[] = [];
 
     async getFromDataBase(): Promise<void> {
         try{
             const guildData = await this.dataBase?.get(this.dataBaseKey) as GuildData;
             this.borderColor = guildData.borderColor;
-            this.guildName = guildData.guildName;
-            this.memberCount = guildData.memberCount;
             this.defaultRoleIDs = guildData.defaultRoleIDs;
             this.deletionChannels = guildData.deletionChannels;
             this.ghostedRoleID = guildData.ghostedRoleID;
@@ -82,12 +80,6 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             throw error;
         }
         await this.dataBase?.put(this.dataBaseKey, this);
-    }
-    exposeDataValues(): GuildDataValues {
-        const dataValues: GuildDataValues = {id: this.id, borderColor: this.borderColor, deletionChannels: this.deletionChannels,
-            defaultRoleIDs: this.defaultRoleIDs, ghostedRoleID: this.ghostedRoleID, logs: this.logs, timedMessages: this.timedMessages, verificationSystem: this.verificationSystem,
-            guildName: this.guildName, memberCount: this.memberCount, trackedUsers: this.trackedUsers};
-            return dataValues;
     }
     constructor(initData: GuildDataInitData) {
         super();

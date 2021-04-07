@@ -28,11 +28,11 @@ async function execute(commandData : FoundationClasses.CommandData, discordUser:
 		let currentCount = 0;
 		discordUser.guildsData.forEach(guild => {
 			let msgString = '';
-			msgString += `__Guild Name:__ ${guild.exposeDataValues().guildName}\n`;
-			msgString += `__Guild ID:__ ${guild.exposeDataValues().id}\n`;
-			msgString += `__Member Count:__ ${guild.exposeDataValues().memberCount}\n`;
+			msgString += `__Guild Name:__ ${guild.guildName}\n`;
+			msgString += `__Guild ID:__ ${guild.id}\n`;
+			msgString += `__Member Count:__ ${guild.memberCount}\n`;
 
-			commandData.guildMember?.client.guilds.fetch(guild.exposeDataValues().id!).then(guild => {
+			commandData.guildMember?.client.guilds.fetch(guild.id).then(guild => {
 				msgString += `__Created:__ ${guild.createdAt}\n`;
 				msgString += `__Guild Owner:__ <@!${guild.owner!.id}> (${guild.owner!.user.tag})\n`;
 	

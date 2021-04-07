@@ -50,7 +50,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = `------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -64,7 +64,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = `------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -95,10 +95,10 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         const roleArray = commandData.guild!.roles.cache.array().sort();
 
-        for (let x = 0; x < guildData.exposeDataValues().defaultRoleIDs!.length; x += 1) {
+        for (let x = 0; x < guildData.defaultRoleIDs!.length; x += 1) {
             const isItFoundReal = roleArray.map(role => {
                 let isItFound = false;
-                if (role.id === guildData.exposeDataValues().defaultRoleIDs![x]) {
+                if (role.id === guildData.defaultRoleIDs![x]) {
                     isItFound = true;
                     return isItFound;
                 }
@@ -112,7 +112,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             }
             if (isItFoundFinal === false){
                 console.log('Removing a missing guild role from the list of defaults.');
-                guildData.exposeDataValues().defaultRoleIDs!.splice(x, 1);
+                guildData.defaultRoleIDs!.splice(x, 1);
                 await guildData.writeToDataBase(); 
             }
         }
@@ -120,9 +120,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         if (whatAreWeDoing === 'view') {
             let msgString = '';
 
-            if (guildData.exposeDataValues().defaultRoleIDs!.length > 0) {
+            if (guildData.defaultRoleIDs!.length > 0) {
                 msgString = '\n------\n';
-                guildData.exposeDataValues().defaultRoleIDs!.map(roleID => {
+                guildData.defaultRoleIDs!.map(roleID => {
                     roleArray.map(role => {
                         if (roleID === role.id) {
                             msgString += `<@&${role.id}>\n`;
@@ -140,7 +140,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTitle('__**Default Roles:**__')
                 .setTimestamp(Date() as unknown as Date)
                 .setDescription(msgString);
@@ -148,7 +148,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             return commandReturnData;
         }
 
-        let currentRole = new Discord.Role(commandData.guildMember!.client, {}, commandData.guildMember!.client.guilds.resolve(guildData.exposeDataValues().id!)!);
+        let currentRole = new Discord.Role(commandData.guildMember!.client, {}, commandData.guildMember!.client.guilds.resolve(guildData.id!)!);
 
         let isItFound = false;
         roleArray.map(role => {
@@ -163,7 +163,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Role Issue:**__');
@@ -176,12 +176,12 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
 
         if (whatAreWeDoing === 'add') {
-            for (let x = 0; x < guildData.exposeDataValues().defaultRoleIDs!.length; x += 1) {
-                if (currentRole.id === guildData.exposeDataValues().defaultRoleIDs![x]) {
+            for (let x = 0; x < guildData.defaultRoleIDs!.length; x += 1) {
+                if (currentRole.id === guildData.defaultRoleIDs![x]) {
                     const msgString = `------\n**Hey! It looks like you've already added that role!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				        .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				        .setColor(guildData.borderColor as [number, number, number])
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Role Issue:**__')
@@ -194,7 +194,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 }
             }
 
-            guildData.exposeDataValues().defaultRoleIDs!.push(currentRole.id);
+            guildData.defaultRoleIDs!.push(currentRole.id);
             await guildData.writeToDataBase();
 
             const msgString = `\n------\n__**Role:**__ <@&${currentRole.id}>\n------`;
@@ -202,7 +202,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTitle('__**New Default Role Added:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
@@ -211,9 +211,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
         if (whatAreWeDoing === 'remove') {
             isItFound = false;
-            for (let x = 0; x < guildData.exposeDataValues().defaultRoleIDs!.length; x += 1) {
-                if (currentRole.id === guildData.exposeDataValues().defaultRoleIDs![x]) {
-                    guildData.exposeDataValues().defaultRoleIDs!.splice(x, 1);
+            for (let x = 0; x < guildData.defaultRoleIDs!.length; x += 1) {
+                if (currentRole.id === guildData.defaultRoleIDs![x]) {
+                    guildData.defaultRoleIDs!.splice(x, 1);
                     await guildData.writeToDataBase();
                     isItFound = true;
                 }
@@ -223,7 +223,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				    .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				    .setColor(guildData.borderColor as [number, number, number])
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**Missing Or Invalid Arguments:**__')
@@ -240,7 +240,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+                .setColor(guildData.borderColor as [number, number, number])
                 .setTitle('__**Default Role Removed:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);

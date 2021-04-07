@@ -274,7 +274,7 @@ client.on('message', async (msg: Discord.Message) => {
 		try{
 			const commandData = new FoundationClasses.CommandData();
 			if (msg.channel.type !== 'dm' && msg.member !== null){
-				await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member!.id, msg.guild!.id);
+				await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild!.id);
 			}
 			else{
 				await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id);
@@ -382,9 +382,9 @@ client.on('guildDelete', async (guild: Discord.Guild) => {
 client.on('guildBanAdd', async (guild: Discord.Guild, user: Discord.User) => {
 	const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount});
 	await guildData.getFromDataBase();
-	for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'guildbanadd') {
-			if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+	for (let x = 0; x < guildData.logs.length; x += 1) {
+		if (guildData.logs[x]!.nameSmall === 'guildbanadd') {
+			if (guildData.logs[x]!.enabled === false) {
 				return;
 			}
 		}
@@ -407,9 +407,9 @@ client.on('guildBanAdd', async (guild: Discord.Guild, user: Discord.User) => {
 client.on('guildBanRemove', async (guild: Discord.Guild, user: Discord.User) => {
 	const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount});
 	await guildData.getFromDataBase();
-	for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'guildbanremove') {
-			if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+	for (let x = 0; x < guildData.logs.length; x += 1) {
+		if (guildData.logs[x]!.nameSmall === 'guildbanremove') {
+			if (guildData.logs[x]!.enabled === false) {
 				return;
 			}
 		}
@@ -432,9 +432,9 @@ client.on('guildBanRemove', async (guild: Discord.Guild, user: Discord.User) => 
 client.on('guildMemberAdd', async (member: Discord.GuildMember) => {
 	const guildData = new GuildData({dataBase: discordUser.dataBase, id: member.guild.id, name: member.guild.name, memberCount: member.guild.memberCount});
 	await guildData.getFromDataBase();
-	for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'guildmemberadd') {
-			if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+	for (let x = 0; x < guildData.logs.length; x += 1) {
+		if (guildData.logs[x]!.nameSmall === 'guildmemberadd') {
+			if (guildData.logs[x]!.enabled === false) {
 				return;
 			}
 		}
@@ -457,9 +457,9 @@ client.on('guildMemberAdd', async (member: Discord.GuildMember) => {
 client.on('guildMemberRemove', async (member: Discord.GuildMember) => {
 	const guildData = new GuildData({dataBase: discordUser.dataBase, id: member.guild.id, name: member.guild.name, memberCount: member.guild.memberCount});
 	await guildData.getFromDataBase();
-	for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'guildmemberremove') {
-			if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+	for (let x = 0; x < guildData.logs.length; x += 1) {
+		if (guildData.logs[x]!.nameSmall === 'guildmemberremove') {
+			if (guildData.logs[x]!.enabled === false) {
 				return;
 			}
 		}
@@ -482,9 +482,9 @@ client.on('guildMemberUpdate', async (oldGuildMember: Discord.GuildMember, newGu
 	if (oldGuildMember.displayName !== newGuildMember.displayName) {
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: oldGuildMember.guild.id, name: oldGuildMember.guild.name, memberCount: oldGuildMember.guild.memberCount});
 		await guildData.getFromDataBase();
-		for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-			if (guildData.exposeDataValues().logs![x]!.nameSmall === 'guildmemberupdate') {
-				if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+		for (let x = 0; x < guildData.logs.length; x += 1) {
+			if (guildData.logs[x]!.nameSmall === 'guildmemberupdate') {
+				if (guildData.logs[x]!.enabled === false) {
 					return;
 				}
 			}
@@ -506,9 +506,9 @@ client.on('guildMemberUpdate', async (oldGuildMember: Discord.GuildMember, newGu
 	if (oldGuildMember.nickname !== newGuildMember.nickname) {
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: oldGuildMember.guild.id, name: oldGuildMember.guild.name, memberCount: oldGuildMember.guild.memberCount});
 		await guildData.getFromDataBase();
-		for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-			if (guildData.exposeDataValues().logs![x]!.nameSmall === 'nicknamechange') {
-				if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+		for (let x = 0; x < guildData.logs.length; x += 1) {
+			if (guildData.logs[x]!.nameSmall === 'nicknamechange') {
+				if (guildData.logs[x]!.enabled === false) {
 					return;
 				}
 			}
@@ -539,10 +539,10 @@ client.on('guildMemberUpdate', async (oldGuildMember: Discord.GuildMember, newGu
 	if (collectionSizeDifference !== 0) {
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: newGuildMember.guild.id, name: newGuildMember.guild.name, memberCount: newGuildMember.guild.memberCount});
 		await guildData.getFromDataBase();
-		console.log(guildData.exposeDataValues().logs!);
-		for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-			if (guildData.exposeDataValues().logs![x]!.nameSmall === 'roleaddorremove') {
-				if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+		console.log(guildData.logs);
+		for (let x = 0; x < guildData.logs.length; x += 1) {
+			if (guildData.logs[x]!.nameSmall === 'roleaddorremove') {
+				if (guildData.logs[x]!.enabled === false) {
 					return;
 				}
 			}
@@ -567,9 +567,9 @@ client.on('guildMemberUpdate', async (oldGuildMember: Discord.GuildMember, newGu
 client.on('inviteCreate', async (invite: Discord.Invite) => {
 	const guildData = new GuildData({dataBase: discordUser.dataBase, id: invite.guild!.id, name: invite.guild!.name, memberCount: invite.guild!.memberCount});
 	await guildData.getFromDataBase();
-	for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'invitecreate') {
-			if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+	for (let x = 0; x < guildData.logs.length; x += 1) {
+		if (guildData.logs[x]!.nameSmall === 'invitecreate') {
+			if (guildData.logs[x]!.enabled === false) {
 				return;
 			}
 		}
@@ -593,9 +593,9 @@ client.on('messageDelete', async (message: Discord.Message) => {
 	if (message.channel.type !== 'dm'){
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: message.guild!.id, name: message.guild!.name, memberCount: message.guild!.memberCount});
 		await guildData.getFromDataBase();
-		for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-			if (guildData.exposeDataValues().logs![x]!.nameSmall === 'messagedelete') {
-				if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+		for (let x = 0; x < guildData.logs.length; x += 1) {
+			if (guildData.logs[x]!.nameSmall === 'messagedelete') {
+				if (guildData.logs[x]!.enabled === false) {
 					return;
 				}
 			}
@@ -619,9 +619,9 @@ client.on('messageDelete', async (message: Discord.Message) => {
 client.on('messageDeleteBulk', async (collection: Discord.Collection<string, Discord.Message>) => {
 	const guildData = new GuildData({dataBase: discordUser.dataBase, id: collection.first()!.guild!.id, name: collection.first()!.guild!.name, memberCount: collection.first()!.guild!.memberCount});
 	await guildData.getFromDataBase();
-	for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'messagedeletebulk') {
-			if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+	for (let x = 0; x < guildData.logs.length; x += 1) {
+		if (guildData.logs[x]!.nameSmall === 'messagedeletebulk') {
+			if (guildData.logs[x]!.enabled === false) {
 				return;
 			}
 		}
@@ -644,9 +644,9 @@ client.on('messageDeleteBulk', async (collection: Discord.Collection<string, Dis
 client.on('roleCreate', async (role: Discord.Role) => {
 	const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild.id, name: role.guild.name, memberCount: role.guild.memberCount});
 	await guildData.getFromDataBase();
-	for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'rolecreate') {
-			if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+	for (let x = 0; x < guildData.logs.length; x += 1) {
+		if (guildData.logs[x]!.nameSmall === 'rolecreate') {
+			if (guildData.logs[x]!.enabled === false) {
 				return;
 			}
 		}
@@ -669,9 +669,9 @@ client.on('roleCreate', async (role: Discord.Role) => {
 client.on('roleDelete', async (role: Discord.Role) => {
 	const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild.id, name: role.guild.name, memberCount: role.guild.memberCount});
 	await guildData.getFromDataBase();
-	for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-		if (guildData.exposeDataValues().logs![x]!.nameSmall === 'roledelete') {
-			if (guildData.exposeDataValues().logs![x]!.enabled === false) {
+	for (let x = 0; x < guildData.logs.length; x += 1) {
+		if (guildData.logs[x]!.nameSmall === 'roledelete') {
+			if (guildData.logs[x]!.enabled === false) {
 				return;
 			}
 		}
@@ -700,9 +700,9 @@ client.on('userUpdate', async (oldUser: Discord.User, newUser: Discord.User) => 
 				if (guildMembersArray[y]!.id === oldUser.id) {
 					const guildData = new GuildData({dataBase: discordUser.dataBase, id: guildArray[x]!.id, name: guildArray[x]!.name, memberCount: guildArray[x]!.memberCount});
 					await guildData.getFromDataBase();
-					for (let z = 0; z < guildData.exposeDataValues().logs!.length; z += 1) {
-						if (guildData.exposeDataValues().logs![z]!.nameSmall === 'userupdate') {
-							if (guildData.exposeDataValues().logs![z]!.enabled === false) {
+					for (let z = 0; z < guildData.logs.length; z += 1) {
+						if (guildData.logs[z]!.nameSmall === 'userupdate') {
+							if (guildData.logs[z]!.enabled === false) {
 								return;
 							} else {
 								const command = 'onusernamechange';

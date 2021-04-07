@@ -42,7 +42,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			const msgString = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -57,7 +57,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			const msgString = '------\n**Please, enter a bot to list the keys from! (!listdbguilds = BOTNAME)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -98,7 +98,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			await iterator.end();
 			let msgEmbed = new Discord.MessageEmbed()
 					.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-					.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+					.setColor(guildData.borderColor as [number, number, number])
 					.setDescription(msgString)
 					.setTimestamp(Date() as unknown as Date)
 					.setTitle('__**Depracated Database Entries:**__');
@@ -109,7 +109,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			const msgEmbed = new Discord.MessageEmbed();
 			msgEmbed
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription("------\n__**Looks like there's no unused database entries!**__\n------")
 				.setTimestamp((Date() as unknown) as Date)
 				.setTitle("__**No Spare Database Entries:**__");

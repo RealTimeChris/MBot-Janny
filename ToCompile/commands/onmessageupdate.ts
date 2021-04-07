@@ -33,9 +33,9 @@ async function execute(client: Discord.Client, oldMessage: Discord.Message, newM
         await guildData.getFromDataBase();
 
         let logs: FoundationClasses.Log;
-        for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-            if (guildData.exposeDataValues().logs![x]!.nameSmall === 'messageupdate') {
-                logs = guildData.exposeDataValues().logs![x]!;
+        for (let x = 0; x < guildData.logs.length; x += 1) {
+            if (guildData.logs[x]!.nameSmall === 'messageupdate') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
@@ -53,7 +53,7 @@ async function execute(client: Discord.Client, oldMessage: Discord.Message, newM
             .setTitle('__**Message Updated:**__')
             .setTimestamp(Date() as unknown as Date)
             .setDescription(msgString)
-            .setColor(guildData.exposeDataValues().borderColor as [number, number, number]);
+            .setColor(guildData.borderColor as [number, number, number]);
         await textChannel.send(msgEmbed);
 
         for (let x = 0; x < newMessage.embeds.length; x += 1) {

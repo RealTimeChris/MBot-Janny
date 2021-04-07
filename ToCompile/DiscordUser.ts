@@ -177,9 +177,9 @@ export default class DiscordUser {
                 const guildData = new GuildData({dataBase: this.dataBase, id: liveDataGuildArray[x]!.id, memberCount: liveDataGuildArray[x]!.memberCount, name: liveDataGuildArray[x]!.name});
                 await guildData.getFromDataBase();
                 if (this.userData.startupCall === true){
-                    for (let x = 0; x < guildData.exposeDataValues().deletionChannels!.length ; x += 1){
-                        guildData.exposeDataValues().deletionChannels![x]!.currentlyBeingDeleted = false;
-                        guildData.exposeDataValues().deletionChannels![x]!.timeOfLastPurge = 0;
+                    for (let x = 0; x < guildData.deletionChannels.length ; x += 1){
+                        guildData.deletionChannels[x]!.currentlyBeingDeleted = false;
+                        guildData.deletionChannels[x]!.timeOfLastPurge = 0;
                     }   
                 }                             
                 await guildData.writeToDataBase();

@@ -34,17 +34,17 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
         await HelperFunctions.applyDefaultRoles(guildData, guildMember);
 
         let logs: FoundationClasses.Log;
-        for (let x = 0; x < guildData.exposeDataValues().logs!.length; x += 1) {
-            if (guildData.exposeDataValues().logs![x]!.nameSmall === 'guildmemberadd') {
-                logs = guildData.exposeDataValues().logs![x]!;
+        for (let x = 0; x < guildData.logs.length; x += 1) {
+            if (guildData.logs[x]!.nameSmall === 'guildmemberadd') {
+                logs = guildData.logs[x]!;
                 break;
             }
         }
 
-        if (guildData.exposeDataValues().verificationSystem!.channelID === null) {
+        if (guildData.verificationSystem.channelID === null) {
             const roleManager = new Discord.GuildMemberRoleManager(guildMember);
-            for (let x = 0; x < guildData.exposeDataValues().defaultRoleIDs!.length; x += 1) {
-                await roleManager.add(guildData.exposeDataValues().defaultRoleIDs![x]!);
+            for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
+                await roleManager.add(guildData.defaultRoleIDs[x]!);
             }
         }
 

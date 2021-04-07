@@ -36,21 +36,19 @@ export interface GuildMemberDataValues {
  * Class representing a single guild member.
  */
 export default class GuildMemberData extends FoundationClasses.DiscordEntity {
-    protected readonly id: string = '';
-    private readonly guildId: string = '';
-    private readonly dataBase: Level | null = null;
-    private readonly dataBaseKey: string = '';
-    private userName: string = '';
-    private displayName: string = '';
-    private previousRoleIDs: string[] = [];
-    private previousPermissionOverwrites: FoundationClasses.PermissionOverwrites[] = [];
+    readonly id: string = '';
+    readonly guildId: string = '';
+    readonly dataBase: Level | null = null;
+    readonly dataBaseKey: string = '';
+    readonly userName: string = '';
+    readonly displayName: string = '';
+    previousRoleIDs: string[] = [];
+    previousPermissionOverwrites: FoundationClasses.PermissionOverwrites[] = [];
     async getFromDataBase(){
         try{
             const guildMemberData = await this.dataBase?.get(this.dataBaseKey) as GuildMemberData;
             this.previousPermissionOverwrites = guildMemberData.previousPermissionOverwrites;
             this.previousRoleIDs = guildMemberData.previousRoleIDs;
-            this.displayName = guildMemberData.displayName;
-            this.userName = guildMemberData.userName;
         }
         catch(error){
             if (error.type === 'NotFoundError') {
@@ -67,11 +65,6 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             throw error;
         }
         await this.dataBase?.put(this.dataBaseKey, this);
-    }
-    exposeDataValues(){
-        const dataValues: GuildMemberDataValues = {userName: this.userName, displayName: this.displayName, id: this.id,
-             guildId: this.guildId, previousRoleIDs: this.previousRoleIDs, previousPermissionOverwrites: this.previousPermissionOverwrites};
-        return dataValues;
     }
     constructor(initData: GuildMemberDataInitData) {
         super();

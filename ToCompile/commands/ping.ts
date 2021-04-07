@@ -34,7 +34,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await guildData.getFromDataBase();
             msgEmbed
             .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
-            .setColor(guildData.exposeDataValues().borderColor as [number, number, number])
+            .setColor(guildData.borderColor as [number, number, number])
             .setDescription(msgString)
             .setTimestamp(Date() as unknown as Date)
             .setTitle('__**Ping! Response:**__');
