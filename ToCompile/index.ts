@@ -9,6 +9,7 @@ import Discord = require('discord.js');
 import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
+import GuildMemberData from './GuildMemberData';
 import botCommands from './commandindex';
 import HelperFunctions from './HelperFunctions';
 import config = require('../ToCompile/config.json');
@@ -314,11 +315,11 @@ client.on('message', async (msg: Discord.Message) => {
 		try{
 			try {
 				const commandData = new FoundationClasses.CommandData();
-				if (client.users.resolve(msg.author!.id) === null) {
+				if (client.users.resolve(msg.author.id) === null) {
 					return;
 				}
 				if (msg.channel.type !== 'dm' && msg.member !== null){
-					await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member!.id, msg.guild!.id);
+					await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild!.id);
 				}
 				else {
 					await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id);
