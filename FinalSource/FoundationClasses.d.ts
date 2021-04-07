@@ -4,27 +4,27 @@ declare module FoundationClasses {
      * Class representing permission overwrites for Discord.
      */
     interface PermissionOverwrites {
-        deny: string[];
         allow: string[];
-        id: string;
         channel: Discord.GuildChannel | null;
+        deny: string[];
+        id: string;
         type: string;
     }
     /**
      * Class representing some info about a given user.
      */
     interface UserRecord {
-        userID: string;
         lastKnownUsername: string;
         lastKnownUserTag: string;
+        userID: string;
     }
     /**
      * Class representing some info about a given server.
      */
     interface ServerRecord {
         replacementServerInvite: string;
-        serverName: string;
         serverID: string;
+        serverName: string;
         userRecords: UserRecord[];
     }
     /**
@@ -32,36 +32,36 @@ declare module FoundationClasses {
      */
     interface DeletionChannel {
         channelID: string;
-        numberOfMessagesToSave: number;
-        timeOfLastPurge: number;
         currentlyBeingDeleted: boolean;
         deletionMessageID: string;
+        numberOfMessagesToSave: number;
+        timeOfLastPurge: number;
     }
     /**
      * Class representing a timed message to be sent out.
      */
     interface TimedMessage {
-        textChannelID: string;
         messageContent: string;
         msBetweenSends: number;
-        timeOfLastSend: number;
         name: string;
+        textChannelID: string;
+        timeOfLastSend: number;
     }
     /**
      * Class representing a "server-joining verification" system.
      */
     interface VerificationSystem {
         channelID: string;
-        messageID: string;
         emoji: string;
+        messageID: string;
     }
     /**
      * Class representing a single log for something on a server.
      */
     interface Log {
+        enabled: boolean;
         name: string;
         nameSmall: string;
-        enabled: boolean;
         loggingChannelID: string;
         loggingChannelName: string;
     }
@@ -69,8 +69,8 @@ declare module FoundationClasses {
      * Class representing a "tracked user".
      */
     interface TrackedUser {
-        userID: string;
         channelID: string | undefined;
+        userID: string;
         userName: string | undefined;
     }
     /**
@@ -82,29 +82,29 @@ declare module FoundationClasses {
         abstract writeToDataBase(): Promise<void>;
     }
     /**
-     * Class representing the data that goes into a command.
-     */
+    * Class representing the data that goes into a command.
+    */
     class CommandData {
-        interaction: any;
-        guild: Discord.Guild | null;
-        guildMember: Discord.GuildMember | Discord.User | null;
+        args: string[];
         fromTextChannel: Discord.TextChannel | Discord.DMChannel | null;
         fromTextChannelType: string;
+        guild: Discord.Guild | null;
+        guildMember: Discord.GuildMember | Discord.User | null;
+        interaction: any;
         permsChannel: Discord.GuildChannel | null;
         toTextChannel: Discord.WebhookClient | Discord.TextChannel | Discord.DMChannel | null;
-        args: string[];
         initialize(client: Discord.Client, fromTextChannelID: string, fromTextChannelType: string, interaction?: any, guildMemberID?: string, guildID?: string): Promise<void>;
     }
     /**
      * Class representing a function/command.
      */
     interface BotCommand {
-        name: string;
-        description: string;
+        description: string | Discord.MessageEmbed;
         function: Function;
+        name: string;
     }
     /**
-     * Class representing a command's return values.
+     * Class representing a command' return values.
      */
     interface CommandReturnData {
         commandName: string;

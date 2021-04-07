@@ -12,10 +12,10 @@ module FoundationClasses{
      * Class representing permission overwrites for Discord.
      */
     export interface PermissionOverwrites {
-        deny: string[];
         allow: string[];
-        id: string;
         channel: Discord.GuildChannel | null;
+        deny: string[];
+        id: string;
         type: string;
     }
 
@@ -23,9 +23,9 @@ module FoundationClasses{
      * Class representing some info about a given user.
      */
     export interface UserRecord {
-        userID: string;
         lastKnownUsername: string;
         lastKnownUserTag: string;
+        userID: string;
     }
 
     /**
@@ -33,8 +33,8 @@ module FoundationClasses{
      */
     export interface ServerRecord {
         replacementServerInvite: string;
-        serverName: string;
         serverID: string;
+        serverName: string;
         userRecords: UserRecord[];
     }
 
@@ -43,21 +43,21 @@ module FoundationClasses{
      */
     export interface DeletionChannel {
         channelID: string;
-        numberOfMessagesToSave: number;
-        timeOfLastPurge: number;
         currentlyBeingDeleted: boolean;
         deletionMessageID: string;
+        numberOfMessagesToSave: number;
+        timeOfLastPurge: number;
     }
 
     /**
      * Class representing a timed message to be sent out.
      */
     export interface TimedMessage {
-        textChannelID: string;
         messageContent: string;
         msBetweenSends: number;
-        timeOfLastSend: number;
         name: string;
+        textChannelID: string;
+        timeOfLastSend: number;
     }
 
     /**
@@ -65,17 +65,17 @@ module FoundationClasses{
      */
     export interface VerificationSystem {
         channelID: string
-        messageID: string;
         emoji: string;
+        messageID: string;
     }
 
     /**
      * Class representing a single log for something on a server.
      */
     export interface Log {
+        enabled: boolean;
         name: string;
         nameSmall: string;
-        enabled: boolean;
         loggingChannelID: string;
         loggingChannelName: string;
     }
@@ -84,8 +84,8 @@ module FoundationClasses{
      * Class representing a "tracked user".
      */
     export interface TrackedUser{
-        userID: string;
         channelID: string | undefined;
+        userID: string;
         userName: string | undefined;
     }
 
@@ -99,17 +99,18 @@ module FoundationClasses{
     }
 
     /**
-     * Class representing the data that goes into a command.
-     */
-    export class CommandData{
-        interaction: any = null;
-        guild: Discord.Guild | null = null;
-        guildMember: Discord.GuildMember | Discord.User | null = null;
+    * Class representing the data that goes into a command.
+    */
+     export class CommandData {
+        args: string[] = [];
         fromTextChannel: Discord.TextChannel | Discord.DMChannel | null = null;
         fromTextChannelType: string = '';
+        guild: Discord.Guild | null = null;
+        guildMember: Discord.GuildMember | Discord.User | null = null;
+        interaction: any = null;
         permsChannel: Discord.GuildChannel | null = null;
         toTextChannel: Discord.WebhookClient | Discord.TextChannel | Discord.DMChannel |  null = null;
-        args: string[] = [];
+    
         async initialize(client: Discord.Client, fromTextChannelID: string, fromTextChannelType: string, interaction: any = null, guildMemberID: string = '', guildID: string = ''): Promise<void>{
             try{
                 this.fromTextChannelType = fromTextChannelType;
@@ -155,17 +156,16 @@ module FoundationClasses{
      * Class representing a function/command.
      */
     export interface BotCommand {
-        name: string;
-        description: string;
+        description: string | Discord.MessageEmbed;
         function: Function;
+        name: string;
     }
 
     /**
-     * Class representing a command's return values.
+     * Class representing a command' return values.
      */
-    export interface CommandReturnData{
+    export interface CommandReturnData {
         commandName: string;
     }
-
 }
 export default FoundationClasses;

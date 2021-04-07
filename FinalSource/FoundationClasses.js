@@ -53,18 +53,18 @@ var FoundationClasses;
     }());
     FoundationClasses.DiscordEntity = DiscordEntity;
     /**
-     * Class representing the data that goes into a command.
-     */
+    * Class representing the data that goes into a command.
+    */
     var CommandData = /** @class */ (function () {
         function CommandData() {
-            this.interaction = null;
-            this.guild = null;
-            this.guildMember = null;
+            this.args = [];
             this.fromTextChannel = null;
             this.fromTextChannelType = '';
+            this.guild = null;
+            this.guildMember = null;
+            this.interaction = null;
             this.permsChannel = null;
             this.toTextChannel = null;
-            this.args = [];
         }
         CommandData.prototype.initialize = function (client, fromTextChannelID, fromTextChannelType, interaction, guildMemberID, guildID) {
             if (interaction === void 0) { interaction = null; }
