@@ -24,6 +24,7 @@ export interface GuildMemberDataInitData {
  * Class representing a single guild member.
  */
 export default class GuildMemberData extends FoundationClasses.DiscordEntity {
+    public static guildMembersData: Map<string, GuildMemberData> = new Map<string, GuildMemberData>();
     readonly id: string = '';
     readonly guildId: string = '';
     readonly dataBase: Level | null = null;
@@ -53,6 +54,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             throw error;
         }
         await this.dataBase?.put(this.dataBaseKey, this);
+        GuildMemberData.guildMembersData.set(this.dataBaseKey, this);
     }
     constructor(initData: GuildMemberDataInitData) {
         super();
@@ -70,5 +72,6 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             this.dataBase.del(this.dataBaseKey);
             throw error;
         }
+        GuildMemberData.guildMembersData.set(this.dataBaseKey, this);
     }
 }

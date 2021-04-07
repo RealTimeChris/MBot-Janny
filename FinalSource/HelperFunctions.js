@@ -490,7 +490,7 @@ var HelperFunctions;
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
-                discordUser.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {
+                GuildData_1.default.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {
                     var newGuildData, currentGuild, currentChannel, msgManager, oldVerificationMessage, newMsgEmbed, newVerificationMessage, error_6;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
@@ -1081,7 +1081,7 @@ var HelperFunctions;
             var _this = this;
             return __generator(this, function (_a) {
                 try {
-                    discordUser.guildsData.forEach(function (guild) { return __awaiter(_this, void 0, void 0, function () {
+                    GuildData_1.default.guildsData.forEach(function (guild) { return __awaiter(_this, void 0, void 0, function () {
                         var y;
                         return __generator(this, function (_a) {
                             if (guild.deletionChannels.length > 0) {
@@ -1116,7 +1116,7 @@ var HelperFunctions;
             var _this = this;
             return __generator(this, function (_a) {
                 try {
-                    discordUser.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {
+                    GuildData_1.default.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {
                         var y, newGuildData, currentTime, guild, textChannel, timeDifference, timeRemaining;
                         return __generator(this, function (_a) {
                             switch (_a.label) {

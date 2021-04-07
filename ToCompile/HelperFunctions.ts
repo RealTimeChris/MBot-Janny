@@ -331,7 +331,7 @@ module HelperFunctions{
 	* Caches messages for each of the guilds that have an active "verification" system.
 	*/
     export async function cacheMessagesForVerification(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
-		discordUser.guildsData.forEach(async (guildData: GuildData) => {
+		GuildData.guildsData.forEach(async (guildData: GuildData) => {
 			const newGuildData = guildData;
 			try {
 				if (newGuildData.verificationSystem.channelID != '') {
@@ -777,7 +777,7 @@ module HelperFunctions{
     */
     export async function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
         try {
-            discordUser.guildsData.forEach(async (guild: GuildData) => {
+            GuildData.guildsData.forEach(async (guild: GuildData) => {
                 if (guild.deletionChannels.length > 0) {
                     for (let y = 0; y < guild.deletionChannels.length; y += 1) {
                         deleteMessagesIfTimeHasPassed(client, guild, y, discordUser).catch(error => {
@@ -801,7 +801,7 @@ module HelperFunctions{
     */
     export async function sendTimedMessagesIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
         try {
-            discordUser.guildsData.forEach(async guildData => {
+            GuildData.guildsData.forEach(async guildData => {
                 for (let y = 0; y < guildData.timedMessages.length; y += 1) {
                     const newGuildData = guildData;
                     const currentTime = new Date().getTime();

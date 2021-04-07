@@ -131,6 +131,7 @@ var GuildData = /** @class */ (function (_super) {
         _this.logs[12] = { name: '', nameSmall: '', enabled: false, loggingChannelID: '', loggingChannelName: '' };
         _this.logs[12].name = 'Username Change';
         _this.logs[12].nameSmall = 'usernamechange';
+        GuildData.guildsData.set(_this.dataBaseKey, _this);
         return _this;
     }
     GuildData.prototype.getFromDataBase = function () {
@@ -181,11 +182,13 @@ var GuildData = /** @class */ (function (_super) {
                         return [4 /*yield*/, ((_a = this.dataBase) === null || _a === void 0 ? void 0 : _a.put(this.dataBaseKey, this))];
                     case 1:
                         _b.sent();
+                        GuildData.guildsData.set(this.dataBaseKey, this);
                         return [2 /*return*/];
                 }
             });
         });
     };
+    GuildData.guildsData = new Map();
     return GuildData;
 }(FoundationClasses_1.default.DiscordEntity));
 exports.default = GuildData;

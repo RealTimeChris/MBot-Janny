@@ -88,6 +88,7 @@ var GuildMemberData = /** @class */ (function (_super) {
             _this.dataBase.del(_this.dataBaseKey);
             throw error;
         }
+        GuildMemberData.guildMembersData.set(_this.dataBaseKey, _this);
         return _this;
     }
     GuildMemberData.prototype.getFromDataBase = function () {
@@ -132,11 +133,13 @@ var GuildMemberData = /** @class */ (function (_super) {
                         return [4 /*yield*/, ((_a = this.dataBase) === null || _a === void 0 ? void 0 : _a.put(this.dataBaseKey, this))];
                     case 1:
                         _b.sent();
+                        GuildMemberData.guildMembersData.set(this.dataBaseKey, this);
                         return [2 /*return*/];
                 }
             });
         });
     };
+    GuildMemberData.guildMembersData = new Map();
     return GuildMemberData;
 }(FoundationClasses_1.default.DiscordEntity));
 exports.default = GuildMemberData;

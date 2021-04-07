@@ -8,6 +8,7 @@
 import Discord = require('discord.js');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
+import GuildData from '../GuildData';
 import HelperFunctions from '../HelperFunctions';
 
 const command: FoundationClasses.BotCommand = {
@@ -26,7 +27,7 @@ async function execute(commandData : FoundationClasses.CommandData, discordUser:
 		};
 		commandReturnData.commandName = command.name;
 		let currentCount = 0;
-		discordUser.guildsData.forEach(guild => {
+		GuildData.guildsData.forEach(guild => {
 			let msgString = '';
 			msgString += `__Guild Name:__ ${guild.guildName}\n`;
 			msgString += `__Guild ID:__ ${guild.id}\n`;
@@ -39,7 +40,7 @@ async function execute(commandData : FoundationClasses.CommandData, discordUser:
 				const messageEmbed = new Discord.MessageEmbed()
 					.setColor([254, 254, 254])
 					.setThumbnail(guild.iconURL()!)
-					.setTitle(`__**Guild Data ${currentCount + 1} of ${discordUser.guildsData.size}:**__`)
+					.setTitle(`__**Guild Data ${currentCount + 1} of ${GuildData.guildsData.size}:**__`)
 					.setTimestamp(Date() as unknown as Date)
 					.setDescription(msgString);
 					

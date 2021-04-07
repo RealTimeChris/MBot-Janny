@@ -22,6 +22,7 @@ export interface GuildDataInitData {
  * Class representing a single guild/server.
  */
 export default class GuildData extends FoundationClasses.DiscordEntity {
+    public static guildsData: Map<string, GuildData> = new Map<string, GuildData>();
     readonly id: string = '';
     readonly dataBase: Level | null = null;
     readonly dataBaseKey: string = '';
@@ -62,6 +63,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             throw error;
         }
         await this.dataBase?.put(this.dataBaseKey, this);
+        GuildData.guildsData.set(this.dataBaseKey, this);
     }
     constructor(initData: GuildDataInitData) {
         super();
@@ -117,5 +119,6 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
         this.logs[12] = {name: '', nameSmall:'', enabled: false, loggingChannelID: '', loggingChannelName: ''};
         this.logs[12]!.name = 'Username Change';
         this.logs[12]!.nameSmall = 'usernamechange';
+        GuildData.guildsData.set(this.dataBaseKey, this);
     }
 }

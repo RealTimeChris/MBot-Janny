@@ -1,5 +1,4 @@
 import Discord = require('discord.js');
-import GuildData from './GuildData';
 import GuildMemberData from './GuildMemberData';
 /**
  * Class representing a single instance of "Discord".
@@ -29,7 +28,6 @@ export interface DiscordUserData {
  */
 export default class DiscordUser {
     userData: DiscordUserData;
-    guildsData: Map<string, GuildData>;
     guildMembersData: Map<string, GuildMemberData>;
     dataBase: any;
     /**

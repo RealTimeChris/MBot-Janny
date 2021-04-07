@@ -195,7 +195,7 @@ function execute(commandData, discordUser) {
                     if (!(currentIndex === -1)) return [3 /*break*/, 20];
                     trackedUser = {
                         userName: currentGuildMember.user.username,
-                        userID: currentGuildMember.user.id,
+                        userID: currentGuildMember.user.id.trim(),
                         channelID: commandData.fromTextChannel.id
                     };
                     guildData.trackedUsers.push(trackedUser);

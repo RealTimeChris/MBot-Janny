@@ -32,21 +32,21 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 		}
 		const userID = (messageReaction.users.cache
 			.array()[messageReaction.users.cache.array().length - 1]!).id;
-		for (let x = 0; x < discordUser.guildsData.size; x += 1) {
+		for (let x = 0; x < GuildData.guildsData.size; x += 1) {
 			if (messageReaction.message.guild!.id !== guildData.id) {
-				if (x === discordUser.guildsData.size - 1) {
+				if (x === GuildData.guildsData.size - 1) {
 					break;
 				}
 				continue;
 			}
 			if (messageReaction.message.channel.id !== guildData.verificationSystem.channelID) {
-				if (x === discordUser.guildsData.size - 1) {
+				if (x === GuildData.guildsData.size - 1) {
 					break;
 				}
 				continue;
 			}
 			if (messageReaction.message.id !== guildData.verificationSystem.messageID) {
-				if (x === discordUser.guildsData.size - 1) {
+				if (x === GuildData.guildsData.size - 1) {
 					break;
 				}
 				continue;

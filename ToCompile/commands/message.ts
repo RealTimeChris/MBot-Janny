@@ -8,6 +8,7 @@
 import Discord = require('discord.js');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
+import GuildData from '../GuildData';
 
 const command: FoundationClasses.BotCommand = {
     name: 'message',
@@ -20,7 +21,7 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
         if (message.guild === undefined || message.guild === null || message.author.bot){
             return;
         }
-        discordUser.guildsData.forEach(async (guildData) => {
+        GuildData.guildsData.forEach((guildData) => {
             for (let x = 0; x < guildData.trackedUsers.length; x += 1){
                 const user = message.author;
                 let msgStringContent;
@@ -43,8 +44,9 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
                         .setDescription(msgStringContent)
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle("__**Tracked User Message:**__");
-                    const currentTextChannel = await commandData.guildMember!.client.channels.fetch(guildData.trackedUsers[index as number]?.channelID!) as Discord.TextChannel;
-                    await currentTextChannel.send(msgEmbed);
+                    const currentTextChannel = commandData.guildMember!.client.channels.resolve(guildData.trackedUsers[index as number]?.channelID!) as Discord.TextChannel;
+                    console.log("SENDING IN CHANNEL:" + currentTextChannel + 'of guild ' +commandData.guild?.client.guilds.resolve(currentTextChannel.guild)!.name);
+                    currentTextChannel.send(msgEmbed);
                 }
             }
         });

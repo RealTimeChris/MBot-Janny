@@ -56,7 +56,6 @@ var DiscordUser = /** @class */ (function () {
         this.userData = { userID: '', userName: '', publicKey: '', guildCount: 0, botToken: '',
             msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
             timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, activeInviteGuilds: [], botCommanders: [], msBetweenMessageDeletion: 0 };
-        this.guildsData = new Map();
         this.guildMembersData = new Map();
     }
     /**
@@ -254,11 +253,9 @@ var DiscordUser = /** @class */ (function () {
                                 guildData.deletionChannels[x_1].timeOfLastPurge = 0;
                             }
                         }
-                        guildData.trackedUsers = [];
                         return [4 /*yield*/, guildData.writeToDataBase()];
                     case 3:
                         _a.sent();
-                        this.guildsData.set(liveDataGuildArray[x].id, guildData);
                         _a.label = 4;
                     case 4:
                         x += 1;

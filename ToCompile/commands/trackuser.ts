@@ -138,7 +138,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 if (currentIndex === -1) {
                     let trackedUser: FoundationClasses.TrackedUser = {
                         userName: currentGuildMember.user.username,
-                        userID: currentGuildMember.user.id,
+                        userID: currentGuildMember.user.id.trim(),
                         channelID: commandData.fromTextChannel!.id!
                     };
                     guildData.trackedUsers!.push(trackedUser);

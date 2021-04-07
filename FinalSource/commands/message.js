@@ -39,8 +39,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
+var GuildData_1 = __importDefault(require("../GuildData"));
 var command = {
     name: 'message',
     description: '__**Message Usage**__: Command executes automatically upon receiving certain messages!.',
@@ -48,55 +52,40 @@ var command = {
 };
 function trackIfTrackedUser(message, commandData, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var _this = this;
         return __generator(this, function (_a) {
             try {
                 if (message.guild === undefined || message.guild === null || message.author.bot) {
                     return [2 /*return*/];
                 }
-                discordUser.guildsData.forEach(function (guildData) { return __awaiter(_this, void 0, void 0, function () {
-                    var x, user, msgStringContent, isItFound, index, msgEmbed, currentTextChannel;
-                    var _a, _b;
-                    return __generator(this, function (_c) {
-                        switch (_c.label) {
-                            case 0:
-                                x = 0;
-                                _c.label = 1;
-                            case 1:
-                                if (!(x < guildData.trackedUsers.length)) return [3 /*break*/, 6];
-                                user = message.author;
-                                msgStringContent = void 0;
-                                isItFound = false;
-                                index = void 0;
-                                if (user.id === ((_a = guildData.trackedUsers[x]) === null || _a === void 0 ? void 0 : _a.userID)) {
-                                    msgStringContent = "__**Tracked User:**__ <@!" + user.id + "> (" + user.username + ")\n__**On Server:**__ " + message.guild.name + "\n                            \n__**In Channel:**__ <#" + message.channel.id + "> (" + message.channel.name + ")\n__**Message ID**__ " + message.id + "\n__**What They Said:**__ " + message.content;
-                                    isItFound = true;
-                                    index = x;
-                                }
-                                if (!(isItFound === false)) return [3 /*break*/, 2];
-                                return [2 /*return*/];
-                            case 2:
-                                msgEmbed = new Discord.MessageEmbed();
-                                msgEmbed
-                                    .setAuthor(user.username, user.avatarURL())
-                                    .setColor([254, 254, 254])
-                                    .setDescription(msgStringContent)
-                                    .setTimestamp(Date())
-                                    .setTitle("__**Tracked User Message:**__");
-                                return [4 /*yield*/, commandData.guildMember.client.channels.fetch((_b = guildData.trackedUsers[index]) === null || _b === void 0 ? void 0 : _b.channelID)];
-                            case 3:
-                                currentTextChannel = _c.sent();
-                                return [4 /*yield*/, currentTextChannel.send(msgEmbed)];
-                            case 4:
-                                _c.sent();
-                                _c.label = 5;
-                            case 5:
-                                x += 1;
-                                return [3 /*break*/, 1];
-                            case 6: return [2 /*return*/];
+                GuildData_1.default.guildsData.forEach(function (guildData) {
+                    var _a, _b, _c;
+                    for (var x = 0; x < guildData.trackedUsers.length; x += 1) {
+                        var user = message.author;
+                        var msgStringContent = void 0;
+                        var isItFound = false;
+                        var index = void 0;
+                        if (user.id === ((_a = guildData.trackedUsers[x]) === null || _a === void 0 ? void 0 : _a.userID)) {
+                            msgStringContent = "__**Tracked User:**__ <@!" + user.id + "> (" + user.username + ")\n__**On Server:**__ " + message.guild.name + "\n                            \n__**In Channel:**__ <#" + message.channel.id + "> (" + message.channel.name + ")\n__**Message ID**__ " + message.id + "\n__**What They Said:**__ " + message.content;
+                            isItFound = true;
+                            index = x;
                         }
-                    });
-                }); });
+                        if (isItFound === false) {
+                            return;
+                        }
+                        else {
+                            var msgEmbed = new Discord.MessageEmbed();
+                            msgEmbed
+                                .setAuthor(user.username, user.avatarURL())
+                                .setColor([254, 254, 254])
+                                .setDescription(msgStringContent)
+                                .setTimestamp(Date())
+                                .setTitle("__**Tracked User Message:**__");
+                            var currentTextChannel = commandData.guildMember.client.channels.resolve((_b = guildData.trackedUsers[index]) === null || _b === void 0 ? void 0 : _b.channelID);
+                            console.log("SENDING IN CHANNEL:" + currentTextChannel + 'of guild ' + ((_c = commandData.guild) === null || _c === void 0 ? void 0 : _c.client.guilds.resolve(currentTextChannel.guild).name));
+                            currentTextChannel.send(msgEmbed);
+                        }
+                    }
+                });
             }
             catch (error) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {

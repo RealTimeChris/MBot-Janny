@@ -44,6 +44,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
+var GuildData_1 = __importDefault(require("../GuildData"));
 var HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
 var command = {
     name: 'displayguildsdata',
@@ -63,7 +64,7 @@ function execute(commandData, discordUser) {
                 };
                 commandReturnData.commandName = command.name;
                 currentCount_1 = 0;
-                discordUser.guildsData.forEach(function (guild) {
+                GuildData_1.default.guildsData.forEach(function (guild) {
                     var _a;
                     var msgString = '';
                     msgString += "__Guild Name:__ " + guild.guildName + "\n";
@@ -75,7 +76,7 @@ function execute(commandData, discordUser) {
                         var messageEmbed = new Discord.MessageEmbed()
                             .setColor([254, 254, 254])
                             .setThumbnail(guild.iconURL())
-                            .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + discordUser.guildsData.size + ":**__")
+                            .setTitle("__**Guild Data " + (currentCount_1 + 1) + " of " + GuildData_1.default.guildsData.size + ":**__")
                             .setTimestamp(Date())
                             .setDescription(msgString);
                         HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed);

@@ -74,21 +74,21 @@ function execute(messageReaction, client, args, discordUser) {
                     x = 0;
                     _a.label = 2;
                 case 2:
-                    if (!(x < discordUser.guildsData.size)) return [3 /*break*/, 12];
+                    if (!(x < GuildData_1.default.guildsData.size)) return [3 /*break*/, 12];
                     if (messageReaction.message.guild.id !== guildData.id) {
-                        if (x === discordUser.guildsData.size - 1) {
+                        if (x === GuildData_1.default.guildsData.size - 1) {
                             return [3 /*break*/, 12];
                         }
                         return [3 /*break*/, 11];
                     }
                     if (messageReaction.message.channel.id !== guildData.verificationSystem.channelID) {
-                        if (x === discordUser.guildsData.size - 1) {
+                        if (x === GuildData_1.default.guildsData.size - 1) {
                             return [3 /*break*/, 12];
                         }
                         return [3 /*break*/, 11];
                     }
                     if (messageReaction.message.id !== guildData.verificationSystem.messageID) {
-                        if (x === discordUser.guildsData.size - 1) {
+                        if (x === GuildData_1.default.guildsData.size - 1) {
                             return [3 /*break*/, 12];
                         }
                         return [3 /*break*/, 11];

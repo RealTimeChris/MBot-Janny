@@ -43,8 +43,6 @@ export default class DiscordUser {
     userData: DiscordUserData = {userID: '', userName: '', publicKey:'', guildCount: 0, botToken: '',
         msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
         timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, activeInviteGuilds: [], botCommanders: [], msBetweenMessageDeletion: 0};
-    guildsData = new Map<string, GuildData>();
-    guildMembersData = new Map<string, GuildMemberData>();
     dataBase: any;
 
     /**
@@ -182,9 +180,7 @@ export default class DiscordUser {
                         guildData.deletionChannels[x]!.timeOfLastPurge = 0;
                     }   
                 }
-                guildData.trackedUsers = [];
                 await guildData.writeToDataBase();
-                this.guildsData.set(liveDataGuildArray[x]!.id, guildData);
             }
             return new Promise((resolve, reject) => {
                 resolve();
@@ -211,7 +207,6 @@ export default class DiscordUser {
                             userName: liveDataGuildMemberArray[y]!.user.username, displayName: liveDataGuildMemberArray[y]!.displayName});
                         await guildMemberData.getFromDataBase();
                         await guildMemberData.writeToDataBase();
-                        this.guildMembersData.set(liveDataGuildArray[x]!.id + ' + ' + liveDataGuildMemberArray[y]!.id, guildMemberData);
                     }
                     catch(error){
                         console.log(error);
