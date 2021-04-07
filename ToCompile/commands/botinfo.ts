@@ -27,21 +27,21 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
        };
 
        if (commandData.args[0]?.toLowerCase() !== 'janny' && commandData.args[0]?.toLowerCase() !== 'musichouse' && commandData.args[0]?.toLowerCase() !== 'gamehouse'){
-        const msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------'
-        const msgEmbed = new Discord.MessageEmbed();
-        msgEmbed
-            .setAuthor(discordUser.userData.userName, commandData.guildMember?.client.users.resolve(discordUser.userData.userID)?.avatarURL()!)
-            .setColor([254, 254, 254])
-            .setDescription(msgString)
-            .setTimestamp(Date() as unknown as Date)
-            .setTitle("__**Invalid Or Missing Arguments:**__")
-        let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-        if (commandData.toTextChannel instanceof Discord.WebhookClient){
-            msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
-        }
-        await msg.delete({timeout: 20000});
-    }
-       if (commandData.args[0]?.toLowerCase() !== 'musichouse'){
+           const msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------'
+           const msgEmbed = new Discord.MessageEmbed();
+           msgEmbed
+               .setAuthor(discordUser.userData.userName, commandData.guildMember?.client.users.resolve(discordUser.userData.userID)?.avatarURL()!)
+               .setColor([254, 254, 254])
+               .setDescription(msgString)
+               .setTimestamp(Date() as unknown as Date)
+               .setTitle("__**Invalid Or Missing Arguments:**__")
+           let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+           if (commandData.toTextChannel instanceof Discord.WebhookClient){
+               msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
+           }
+           await msg.delete({timeout: 20000});
+       }
+       if (commandData.args[0]?.toLowerCase() !== 'janny'){
            return commandReturnData;
        }
 
