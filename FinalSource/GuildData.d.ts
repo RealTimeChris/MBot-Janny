@@ -13,7 +13,7 @@ export interface GuildDataInitData {
  * Class representing a single guild/server.
  */
 export default class GuildData extends FoundationClasses.DiscordEntity {
-    static guildsData: Map<string, GuildData>;
+    static readonly guildsData: Map<string, GuildData>;
     readonly dataBase: Level;
     readonly dataBaseKey: string;
     readonly guildName: string;

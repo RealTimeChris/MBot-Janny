@@ -24,7 +24,7 @@ export interface GuildMemberDataInitData {
  * Class representing a single guild member.
  */
 export default class GuildMemberData extends FoundationClasses.DiscordEntity {
-    public static guildMembersData: Map<string, GuildMemberData> = new Map<string, GuildMemberData>();
+    public static readonly guildMembersData: Map<string, GuildMemberData> = new Map<string, GuildMemberData>();
     readonly dataBase: Level;
     readonly dataBaseKey: string;
     readonly displayName: string;
