@@ -56,7 +56,6 @@ var DiscordUser = /** @class */ (function () {
         this.userData = { userID: '', userName: '', publicKey: '', guildCount: 0, botToken: '',
             msBetweenCacheBackup: 0, currencyName: '', timeOfLastInvite: 0, prefix: '', dataBaseFilePath: '', msBetweenRecordUpdates: 0,
             timeOfLastRecordUpdate: 0, msBetweenInvites: 0, timeOfLastUpdateAndSave: 0, startupCall: true, activeInviteGuilds: [], botCommanders: [], msBetweenMessageDeletion: 0 };
-        this.guildMembersData = new Map();
     }
     /**
     * Initializes the instance of Discord, within the DiscordUser class.
@@ -306,7 +305,6 @@ var DiscordUser = /** @class */ (function () {
                         return [4 /*yield*/, guildMemberData.writeToDataBase()];
                     case 6:
                         _a.sent();
-                        this.guildMembersData.set(liveDataGuildArray[x].id + ' + ' + liveDataGuildMemberArray[y].id, guildMemberData);
                         return [3 /*break*/, 8];
                     case 7:
                         error_6 = _a.sent();
