@@ -207,10 +207,51 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
             
             await newMessage.react(commandData.args[2]!);
 
-            guildData.verificationSystem!.channelID = commandData.fromTextChannel!.id;
-            guildData.verificationSystem!.messageID = newMessage.id;
+            const currentGuild = commandData.guild?.client.guilds.resolve(commandData.guild.id)!;
+            const channelsArray = currentGuild.channels.cache.array()!;
+            const currentRolesArray = currentGuild.roles.cache.array()!;
+            let everyoneRoleID;
+            for (let x = 0; x < currentRolesArray.length; x += 1){
+                if (currentRolesArray[x]!.name === '@everyone'){
+                    everyoneRoleID = currentRolesArray[x]?.id;
+                }
+            }
+            for (let x = 0; x < channelsArray!.length; x += 1){
+                if (channelsArray![x]!.id === commandData.fromTextChannel!.id){
+                    const permOWs = channelsArray![x]?.permissionOverwrites.array()!;
+                    for (let y = 0; y < permOWs.length; y += 1){
+                        if (permOWs[y]?.id === everyoneRoleID){
+                            await permOWs[y]?.update({VIEW_CHANNEL: true});
+                        }
+                    }
+                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1){
+                        const newPermOWs = new Discord.PermissionOverwrites(channelsArray[x]!, {});
+                        newPermOWs.type = 'role';
+                        newPermOWs.id = guildData.defaultRoleIDs[y]!;
+                        newPermOWs.update({VIEW_CHANNEL: false});
+                    }
+                    
+                }
+                else{
+                    const permOWs = channelsArray![x]?.permissionOverwrites.array()!;
+                    for (let y = 0; y < permOWs.length; y += 1){
+                        if (permOWs[y]?.id === everyoneRoleID){
+                            await permOWs[y]?.update({VIEW_CHANNEL: false});
+                        }
+                    }
+                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1){
+                        const newPermOWs = new Discord.PermissionOverwrites(channelsArray[x]!, {});
+                        newPermOWs.type = 'role';
+                        newPermOWs.id = guildData.defaultRoleIDs[y]!;
+                        newPermOWs.update({VIEW_CHANNEL: true});
+                    }
+                }
+            }
+
+            guildData.verificationSystem.channelID = commandData.fromTextChannel!.id;
+            guildData.verificationSystem.messageID = newMessage.id;
             const argTwo = commandData.args[2];
-            guildData.verificationSystem!.emoji = argTwo!;
+            guildData.verificationSystem.emoji = argTwo!;
             await guildData.writeToDataBase();
 
             msgString = "__**Nicely done! You've enabled the verification system for this server!**__";
@@ -221,7 +262,11 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Set Verification System:**__')
                 .setDescription(msgString);
-            await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
+            }
+            await msg.delete({timeout: 20000});
             return commandReturnData;
         }
         return commandReturnData;

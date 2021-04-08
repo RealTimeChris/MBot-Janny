@@ -52,32 +52,33 @@ var command = {
     function: Function()
 };
 function execute(commandData, discordUser) {
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, areWeInADM, doWeHaveAdminPermission, guildData, whatAreWeDoing, emojiRegExp, msgString_1, msgEmbed, msg, msgString_2, msgEmbed, msg, msgString_3, msgEmbed, msg, msgString, messageManager, newMessage, error_1, msgEmbed_1, msgEmbed, currentChannel, msgString_4, msgEmbed_2, msg, messageManager, msgEmbed, msgString_5, msgEmbed_3, msg, msgEmbed2, newMessage, argTwo, msgEmbed, error_2;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var commandReturnData, areWeInADM, doWeHaveAdminPermission, guildData, whatAreWeDoing, emojiRegExp, msgString_1, msgEmbed, msg, msgString_2, msgEmbed, msg, msgString_3, msgEmbed, msg, msgString, messageManager, newMessage, error_1, msgEmbed_1, msgEmbed, currentChannel, msgString_4, msgEmbed_2, msg, messageManager, msgEmbed, msgString_5, msgEmbed_3, msg_1, msgEmbed2, newMessage, currentGuild, channelsArray, currentRolesArray, everyoneRoleID, x, x, permOWs, y, y, newPermOWs, permOWs, y, y, newPermOWs, argTwo, msgEmbed, msg, error_2;
+        return __generator(this, function (_j) {
+            switch (_j.label) {
                 case 0:
-                    _a.trys.push([0, 42, , 43]);
+                    _j.trys.push([0, 55, , 56]);
                     commandReturnData = {
                         commandName: command.name
                     };
                     commandReturnData.commandName = command.name;
                     return [4 /*yield*/, HelperFunctions_1.default.areWeInADM(commandData)];
                 case 1:
-                    areWeInADM = _a.sent();
+                    areWeInADM = _j.sent();
                     if (areWeInADM === true) {
                         return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, HelperFunctions_1.default.doWeHaveAdminPermission(commandData, discordUser)];
                 case 2:
-                    doWeHaveAdminPermission = _a.sent();
+                    doWeHaveAdminPermission = _j.sent();
                     if (doWeHaveAdminPermission === false) {
                         return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: commandData.guild.id, name: commandData.guild.name, memberCount: commandData.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 3:
-                    _a.sent();
+                    _j.sent();
                     whatAreWeDoing = void 0;
                     emojiRegExp = /.{1,26}/;
                     if (!(commandData.args[0] === undefined)) return [3 /*break*/, 4];
@@ -94,13 +95,13 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 5:
-                    msg = _a.sent();
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 6:
-                    _a.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 7:
                     if (!(commandData.args[0].toLowerCase() === 'enable' && commandData.args[1] === undefined)) return [3 /*break*/, 10];
@@ -113,13 +114,13 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 8:
-                    msg = _a.sent();
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 9:
-                    _a.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 10:
                     if (!(commandData.args[0].toLowerCase() === 'enable' && (commandData.args[2] === undefined || !emojiRegExp.test(commandData.args[2])))) return [3 /*break*/, 13];
@@ -132,13 +133,13 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Missing Or Invalid Arguments:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 11:
-                    msg = _a.sent();
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 12:
-                    _a.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 13:
                     if (commandData.args[0].toLowerCase() === 'enable') {
@@ -147,24 +148,24 @@ function execute(commandData, discordUser) {
                     else if (commandData.args[0].toLowerCase() === 'disable') {
                         whatAreWeDoing = 'disable';
                     }
-                    _a.label = 14;
+                    _j.label = 14;
                 case 14:
                     msgString = '';
                     if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 25];
                     if (!(guildData.verificationSystem.messageID !== '')) return [3 /*break*/, 21];
-                    _a.label = 15;
+                    _j.label = 15;
                 case 15:
-                    _a.trys.push([15, 17, , 20]);
+                    _j.trys.push([15, 17, , 20]);
                     messageManager = new Discord.MessageManager(commandData.guildMember.client.channels.resolve(guildData.verificationSystem.channelID));
                     return [4 /*yield*/, messageManager.fetch(guildData.verificationSystem.messageID)];
                 case 16:
-                    newMessage = _a.sent();
+                    newMessage = _j.sent();
                     msgString = "------\n__**Channel:**__ <#" + guildData.verificationSystem.channelID + ">\n";
                     msgString += "__**Message Content:**__ " + newMessage.embeds[0].description + "\n";
                     msgString += "__**Emoji:**__ " + guildData.verificationSystem.emoji + "\n------";
                     return [3 /*break*/, 20];
                 case 17:
-                    error_1 = _a.sent();
+                    error_1 = _j.sent();
                     console.log(error_1);
                     msgString = '------\n__The verification system is currently disabled.__\n------\n';
                     guildData.verificationSystem.channelID = '';
@@ -172,7 +173,7 @@ function execute(commandData, discordUser) {
                     guildData.verificationSystem.emoji = '';
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 18:
-                    _a.sent();
+                    _j.sent();
                     msgEmbed_1 = new Discord.MessageEmbed();
                     msgEmbed_1
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL())
@@ -182,7 +183,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_1)];
                 case 19:
-                    _a.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 20: return [3 /*break*/, 23];
                 case 21:
@@ -192,8 +193,8 @@ function execute(commandData, discordUser) {
                     guildData.verificationSystem.emoji = '';
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 22:
-                    _a.sent();
-                    _a.label = 23;
+                    _j.sent();
+                    _j.label = 23;
                 case 23:
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
@@ -204,7 +205,7 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 24:
-                    _a.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 25:
                     if (!(whatAreWeDoing === 'disable')) return [3 /*break*/, 33];
@@ -220,31 +221,31 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Existence Issue:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_2)];
                 case 26:
-                    msg = _a.sent();
+                    msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 27:
-                    _a.sent();
+                    _j.sent();
                     guildData.verificationSystem.channelID = '';
                     guildData.verificationSystem.messageID = '';
                     guildData.verificationSystem.emoji = '';
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 28:
-                    _a.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 29:
                     messageManager = new Discord.MessageManager(currentChannel);
                     return [4 /*yield*/, messageManager.delete(guildData.verificationSystem.messageID)];
                 case 30:
-                    _a.sent();
+                    _j.sent();
                     guildData.verificationSystem.channelID = '';
                     guildData.verificationSystem.messageID = '';
                     guildData.verificationSystem.emoji = '';
                     return [4 /*yield*/, guildData.writeToDataBase()];
                 case 31:
-                    _a.sent();
+                    _j.sent();
                     msgString = "__**Nicely done! You've disabled the verification system for this server!**__";
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
@@ -255,10 +256,10 @@ function execute(commandData, discordUser) {
                         .setDescription(msgString);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 32:
-                    _a.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 33:
-                    if (!(whatAreWeDoing === 'enable')) return [3 /*break*/, 41];
+                    if (!(whatAreWeDoing === 'enable')) return [3 /*break*/, 54];
                     if (!(guildData.defaultRoleIDs.length === 0)) return [3 /*break*/, 36];
                     msgString_5 = '------\n**Please, first set a default role to be applied to the new member! Using !setdefaultrole.**\n------';
                     msgEmbed_3 = new Discord.MessageEmbed()
@@ -269,13 +270,13 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Role Issue:**__');
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed_3)];
                 case 34:
-                    msg = _a.sent();
+                    msg_1 = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
-                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                        msg_1 = new Discord.Message(commandData.guild.client, msg_1, commandData.fromTextChannel);
                     }
-                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                    return [4 /*yield*/, msg_1.delete({ timeout: 20000 })];
                 case 35:
-                    _a.sent();
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 36:
                     msgEmbed2 = new Discord.MessageEmbed()
@@ -284,20 +285,81 @@ function execute(commandData, discordUser) {
                         .setTimestamp(Date());
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed2)];
                 case 37:
-                    newMessage = _a.sent();
+                    newMessage = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         newMessage = new Discord.Message(commandData.guild.client, newMessage, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, newMessage.react(commandData.args[2])];
                 case 38:
-                    _a.sent();
+                    _j.sent();
+                    currentGuild = (_a = commandData.guild) === null || _a === void 0 ? void 0 : _a.client.guilds.resolve(commandData.guild.id);
+                    channelsArray = currentGuild.channels.cache.array();
+                    currentRolesArray = currentGuild.roles.cache.array();
+                    everyoneRoleID = void 0;
+                    for (x = 0; x < currentRolesArray.length; x += 1) {
+                        if (currentRolesArray[x].name === '@everyone') {
+                            everyoneRoleID = (_b = currentRolesArray[x]) === null || _b === void 0 ? void 0 : _b.id;
+                        }
+                    }
+                    x = 0;
+                    _j.label = 39;
+                case 39:
+                    if (!(x < channelsArray.length)) return [3 /*break*/, 50];
+                    if (!(channelsArray[x].id === commandData.fromTextChannel.id)) return [3 /*break*/, 44];
+                    permOWs = (_c = channelsArray[x]) === null || _c === void 0 ? void 0 : _c.permissionOverwrites.array();
+                    y = 0;
+                    _j.label = 40;
+                case 40:
+                    if (!(y < permOWs.length)) return [3 /*break*/, 43];
+                    if (!(((_d = permOWs[y]) === null || _d === void 0 ? void 0 : _d.id) === everyoneRoleID)) return [3 /*break*/, 42];
+                    return [4 /*yield*/, ((_e = permOWs[y]) === null || _e === void 0 ? void 0 : _e.update({ VIEW_CHANNEL: true }))];
+                case 41:
+                    _j.sent();
+                    _j.label = 42;
+                case 42:
+                    y += 1;
+                    return [3 /*break*/, 40];
+                case 43:
+                    for (y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
+                        newPermOWs = new Discord.PermissionOverwrites(channelsArray[x], {});
+                        newPermOWs.type = 'role';
+                        newPermOWs.id = guildData.defaultRoleIDs[y];
+                        newPermOWs.update({ VIEW_CHANNEL: false });
+                    }
+                    return [3 /*break*/, 49];
+                case 44:
+                    permOWs = (_f = channelsArray[x]) === null || _f === void 0 ? void 0 : _f.permissionOverwrites.array();
+                    y = 0;
+                    _j.label = 45;
+                case 45:
+                    if (!(y < permOWs.length)) return [3 /*break*/, 48];
+                    if (!(((_g = permOWs[y]) === null || _g === void 0 ? void 0 : _g.id) === everyoneRoleID)) return [3 /*break*/, 47];
+                    return [4 /*yield*/, ((_h = permOWs[y]) === null || _h === void 0 ? void 0 : _h.update({ VIEW_CHANNEL: false }))];
+                case 46:
+                    _j.sent();
+                    _j.label = 47;
+                case 47:
+                    y += 1;
+                    return [3 /*break*/, 45];
+                case 48:
+                    for (y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
+                        newPermOWs = new Discord.PermissionOverwrites(channelsArray[x], {});
+                        newPermOWs.type = 'role';
+                        newPermOWs.id = guildData.defaultRoleIDs[y];
+                        newPermOWs.update({ VIEW_CHANNEL: true });
+                    }
+                    _j.label = 49;
+                case 49:
+                    x += 1;
+                    return [3 /*break*/, 39];
+                case 50:
                     guildData.verificationSystem.channelID = commandData.fromTextChannel.id;
                     guildData.verificationSystem.messageID = newMessage.id;
                     argTwo = commandData.args[2];
                     guildData.verificationSystem.emoji = argTwo;
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 39:
-                    _a.sent();
+                case 51:
+                    _j.sent();
                     msgString = "__**Nicely done! You've enabled the verification system for this server!**__";
                     msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
@@ -307,16 +369,22 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Set Verification System:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 40:
-                    _a.sent();
+                case 52:
+                    msg = _j.sent();
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                        msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
+                    }
+                    return [4 /*yield*/, msg.delete({ timeout: 20000 })];
+                case 53:
+                    _j.sent();
                     return [2 /*return*/, commandReturnData];
-                case 41: return [2 /*return*/, commandReturnData];
-                case 42:
-                    error_2 = _a.sent();
+                case 54: return [2 /*return*/, commandReturnData];
+                case 55:
+                    error_2 = _j.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
-                case 43: return [2 /*return*/];
+                case 56: return [2 /*return*/];
             }
         });
     });
