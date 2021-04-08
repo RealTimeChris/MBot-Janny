@@ -74,6 +74,20 @@ declare module FoundationClasses {
         userName: string | undefined;
     }
     /**
+     * Class representing a function/command.
+     */
+    interface BotCommand {
+        description: string | Discord.MessageEmbed;
+        function: Function;
+        name: string;
+    }
+    /**
+     * Class representing a command' return values.
+     */
+    interface CommandReturnData {
+        commandName: string;
+    }
+    /**
     * Base abstract class for Discord classes.
     */
     abstract class DiscordEntity {
@@ -94,20 +108,6 @@ declare module FoundationClasses {
         permsChannel: Discord.GuildChannel | null;
         toTextChannel: Discord.WebhookClient | Discord.TextChannel | Discord.DMChannel | null;
         initialize(client: Discord.Client, fromTextChannelID: string, fromTextChannelType: string, interaction?: any, guildMemberID?: string, guildID?: string): Promise<void>;
-    }
-    /**
-     * Class representing a function/command.
-     */
-    interface BotCommand {
-        description: string | Discord.MessageEmbed;
-        function: Function;
-        name: string;
-    }
-    /**
-     * Class representing a command' return values.
-     */
-    interface CommandReturnData {
-        commandName: string;
     }
 }
 export default FoundationClasses;
