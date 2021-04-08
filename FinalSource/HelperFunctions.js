@@ -776,7 +776,8 @@ var HelperFunctions;
                         _b.trys.push([1, 45, , 46]);
                         numberOfMessagesToSave = guildData.deletionChannels[channelIndex].numberOfMessagesToSave;
                         channelID = guildData.deletionChannels[channelIndex].channelID;
-                        currentChannel = new Discord.TextChannel(client.guilds.resolve(newGuildData.id), {});
+                        currentChannel = new Discord.TextChannel(client.guilds
+                            .resolve(newGuildData.id), {});
                         _b.label = 2;
                     case 2:
                         _b.trys.push([2, 4, , 6]);
