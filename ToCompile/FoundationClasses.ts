@@ -64,7 +64,7 @@ module FoundationClasses{
      * Class representing a "server-joining verification" system.
      */
     export interface VerificationSystem {
-        channelID: string
+        channelID: string;
         emoji: string;
         messageID: string;
     }
