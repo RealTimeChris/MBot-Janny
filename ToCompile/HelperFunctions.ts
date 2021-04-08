@@ -536,12 +536,12 @@ module HelperFunctions{
     * of each of the instance's guilds.
     */
     export async function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: GuildData, channelIndex: number, discordUser: DiscordUser): Promise<void> {
+        const newGuildData = guildData;
         try {
             const { numberOfMessagesToSave } = guildData.deletionChannels[channelIndex]!;
             const { channelID } = guildData.deletionChannels[channelIndex]!;
-            const newGuildData = guildData;
-            let currentChannel = new Discord.TextChannel(client.guilds
-                .resolve(newGuildData.id)!, {});
+
+            let currentChannel = new Discord.TextChannel(client.guilds.resolve(newGuildData.id)!, {});
             try {
                 currentChannel = await client.channels.fetch(channelID) as Discord.TextChannel;
             } catch (error) {
@@ -721,6 +721,7 @@ module HelperFunctions{
             await newGuildData.writeToDataBase();
             return;
         } catch (error) {
+            newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
             return new Promise((resolve, reject) => {
                 reject(error);
             });
