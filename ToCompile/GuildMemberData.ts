@@ -33,7 +33,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
     public previousPermissionOverwrites: FoundationClasses.PermissionOverwrites[] = [];
     public previousRoleIDs: string[] = [];
     
-    async getFromDataBase(){
+    public async getFromDataBase(){
         try{
             const guildMemberData = await this.dataBase?.get(this.dataBaseKey) as GuildMemberData;
             this.previousPermissionOverwrites = guildMemberData.previousPermissionOverwrites;
@@ -46,7 +46,7 @@ export default class GuildMemberData extends FoundationClasses.DiscordEntity {
             }
         }
     }
-    async writeToDataBase(){
+    public async writeToDataBase(){
         if (this.userName === ''|| this.displayName === ''){
             const error = new Error();
             error.name = "Non-Initialized Structure";

@@ -37,7 +37,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
     public trackedUsers: FoundationClasses.TrackedUser[] = [];
     public verificationSystem: FoundationClasses.VerificationSystem = {channelID: '', emoji: '', messageID: ''};
     
-    async getFromDataBase(): Promise<void> {
+    public async getFromDataBase(): Promise<void> {
         try{
             const guildData = await this.dataBase?.get(this.dataBaseKey) as GuildData;
             this.borderColor = guildData.borderColor;
@@ -56,7 +56,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
             }
         }
     }
-    async writeToDataBase(): Promise<void> {
+    public async writeToDataBase(): Promise<void> {
         if (this.guildName === ''){
             const error = new Error();
             error.name = "Non-Initialized Structure";

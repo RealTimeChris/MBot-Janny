@@ -31,7 +31,7 @@ module IndexFunctions{
             console.log('Better not track our own messages!');
             return;
         }
-         if (msg.content.startsWith(discordUser.userData.prefix)) {
+        if (msg.content.startsWith(discordUser.userData.prefix)) {
             let command = '';
             let args: string[] = [];
             if (msg.content.indexOf(' =') === -1) {
