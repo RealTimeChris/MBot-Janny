@@ -1053,22 +1053,17 @@ var HelperFunctions;
     */
     function purgeMessageChannelsIfTimeHasPassed(client, discordUser) {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
             return __generator(this, function (_a) {
                 try {
-                    GuildData_1.default.guildsData.forEach(function (guild) { return __awaiter(_this, void 0, void 0, function () {
-                        var y;
-                        return __generator(this, function (_a) {
-                            if (guild.deletionChannels.length > 0) {
-                                for (y = 0; y < guild.deletionChannels.length; y += 1) {
-                                    deleteMessagesIfTimeHasPassed(client, guild, y, discordUser).catch(function (error) {
-                                        console.log(error);
-                                    });
-                                }
+                    GuildData_1.default.guildsData.forEach(function (guild) {
+                        if (guild.deletionChannels.length > 0) {
+                            for (var y = 0; y < guild.deletionChannels.length; y += 1) {
+                                deleteMessagesIfTimeHasPassed(client, guild, y, discordUser).catch(function (error) {
+                                    console.log(error);
+                                });
                             }
-                            return [2 /*return*/];
-                        });
-                    }); });
+                        }
+                    });
                     return [2 /*return*/];
                 }
                 catch (error) {

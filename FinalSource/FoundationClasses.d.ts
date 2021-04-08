@@ -91,7 +91,7 @@ declare module FoundationClasses {
     * Base abstract class for Discord classes.
     */
     abstract class DiscordEntity {
-        abstract id: string;
+        abstract readonly id: string;
         abstract getFromDataBase(): Promise<void>;
         abstract writeToDataBase(): Promise<void>;
     }
