@@ -653,6 +653,7 @@ module HelperFunctions{
                 }
                 for (let y = arrayOfMessageArrays.length - 1; y >= 0; y -= 1) {
                     for (let z = arrayOfMessageArrays[y]!.length - 1; z >= 0; z -= 1) {
+                        await newGuildData.getFromDataBase();
                         if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === false) {
                             return;
                         }
@@ -706,6 +707,7 @@ module HelperFunctions{
                 }
                 for (let w = arrayOfMessageArrays.length - 1; w >= 0; w -= 1) {
                     for (let z = arrayOfMessageArrays[w]!.length - 1; z >= 0; z -= 1) {
+                        await newGuildData.getFromDataBase();
                         if (newGuildData.deletionChannels![channelIndex]!.currentlyBeingDeleted === false) {
                             return;
                         }
