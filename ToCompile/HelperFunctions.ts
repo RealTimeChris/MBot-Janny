@@ -540,8 +540,8 @@ module HelperFunctions{
         try {
             const { numberOfMessagesToSave } = guildData.deletionChannels[channelIndex]!;
             const { channelID } = guildData.deletionChannels[channelIndex]!;
-
-            let currentChannel = new Discord.TextChannel(client.guilds.resolve(newGuildData.id)!, {});
+            let currentChannel = new Discord.TextChannel(client.guilds
+                .resolve(newGuildData.id)!, {});
             try {
                 currentChannel = await client.channels.fetch(channelID) as Discord.TextChannel;
             } catch (error) {
