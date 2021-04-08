@@ -463,6 +463,50 @@ var IndexFunctions;
         });
     }
     IndexFunctions.onInteractionCreate = onInteractionCreate;
+    function onChannelCreate(newChannel, client, discordUser) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function () {
+            var guildData, currentRolesArray, everyoneRoleID, x, permOWs, y, y, newPermOWs;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        if (!!(newChannel instanceof Discord.DMChannel)) return [3 /*break*/, 5];
+                        guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name });
+                        currentRolesArray = newChannel.guild.roles.cache.array();
+                        if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 5];
+                        everyoneRoleID = void 0;
+                        for (x = 0; x < currentRolesArray.length; x += 1) {
+                            if (currentRolesArray[x].name === '@everyone') {
+                                everyoneRoleID = (_a = currentRolesArray[x]) === null || _a === void 0 ? void 0 : _a.id;
+                            }
+                        }
+                        permOWs = newChannel.permissionOverwrites.array();
+                        y = 0;
+                        _d.label = 1;
+                    case 1:
+                        if (!(y < permOWs.length)) return [3 /*break*/, 4];
+                        if (!(((_b = permOWs[y]) === null || _b === void 0 ? void 0 : _b.id) === everyoneRoleID)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, ((_c = permOWs[y]) === null || _c === void 0 ? void 0 : _c.update({ VIEW_CHANNEL: false }))];
+                    case 2:
+                        _d.sent();
+                        _d.label = 3;
+                    case 3:
+                        y += 1;
+                        return [3 /*break*/, 1];
+                    case 4:
+                        for (y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
+                            newPermOWs = new Discord.PermissionOverwrites(newChannel, {});
+                            newPermOWs.type = 'role';
+                            newPermOWs.id = guildData.defaultRoleIDs[y];
+                            newPermOWs.update({ VIEW_CHANNEL: true });
+                        }
+                        _d.label = 5;
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    IndexFunctions.onChannelCreate = onChannelCreate;
     function onMessageReactionAdd(messageReaction, user, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {

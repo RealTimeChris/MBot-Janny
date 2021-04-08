@@ -11,7 +11,7 @@ import DiscordUser from './DiscordUser';
 import config = require('./config.json');
 
 const discordUser = new DiscordUser();
-const client = new Discord.Client() as any;
+const client = new Discord.Client()as any;
 
 client.once('ready', async () => {
 	IndexFunctions.onReady(client, discordUser);
@@ -23,6 +23,10 @@ client.on('message', async (msg: Discord.Message) => {
 
 client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	IndexFunctions.onInteractionCreate(interaction, client, discordUser);
+});
+
+client.on('channelCreate', async (newChannel: Discord.DMChannel | Discord.GuildChannel) => {
+	IndexFunctions.onChannelCreate(newChannel, client, discordUser);
 });
 
 client.on('messageReactionAdd', async (messageReaction: Discord.MessageReaction, user: Discord.User) => {

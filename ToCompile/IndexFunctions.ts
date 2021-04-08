@@ -347,6 +347,33 @@ module IndexFunctions{
         console.log(`Completed Command: ${returnData.commandName}`);
     }
 
+    export async function onChannelCreate(newChannel: Discord.DMChannel | Discord.GuildChannel, client: any, discordUser: DiscordUser){
+        if (!(newChannel instanceof Discord.DMChannel)){
+            const guildData = new GuildData({dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name});
+            const currentRolesArray = newChannel.guild.roles.cache.array();
+            if (guildData.verificationSystem.channelID !== ''){
+                let everyoneRoleID;
+                for (let x = 0; x < currentRolesArray.length; x += 1){
+                    if (currentRolesArray[x]!.name === '@everyone'){
+                        everyoneRoleID = currentRolesArray[x]?.id;
+                    }
+                }
+                const permOWs = newChannel.permissionOverwrites.array()!;
+                for (let y = 0; y < permOWs.length; y += 1){
+                    if (permOWs[y]?.id === everyoneRoleID){
+                        await permOWs[y]?.update({VIEW_CHANNEL: false});
+                    }
+                }
+                for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1){
+                    const newPermOWs = new Discord.PermissionOverwrites(newChannel, {});
+                    newPermOWs.type = 'role';
+                    newPermOWs.id = guildData.defaultRoleIDs[y]!;
+                    newPermOWs.update({VIEW_CHANNEL: true});
+                }
+            }
+        }
+    }
+
     export async function onMessageReactionAdd(messageReaction: Discord.MessageReaction, user: Discord.User, client: any, discordUser: DiscordUser){
         const command = 'onmessagereactionadd';
 

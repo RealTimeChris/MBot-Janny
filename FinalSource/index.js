@@ -67,6 +67,12 @@ client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(voi
         return [2 /*return*/];
     });
 }); });
+client.on('channelCreate', function (newChannel) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        IndexFunctions_1.default.onChannelCreate(newChannel, client, discordUser);
+        return [2 /*return*/];
+    });
+}); });
 client.on('messageReactionAdd', function (messageReaction, user) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         IndexFunctions_1.default.onMessageReactionAdd(messageReaction, user, client, discordUser);

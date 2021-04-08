@@ -4,6 +4,7 @@ declare module IndexFunctions {
     function onReady(client: any, discordUser: DiscordUser): Promise<void>;
     function onMessage(msg: Discord.Message, client: any, discordUser: DiscordUser): Promise<void>;
     function onInteractionCreate(interaction: any, client: any, discordUser: DiscordUser): Promise<void>;
+    function onChannelCreate(newChannel: Discord.DMChannel | Discord.GuildChannel, client: any, discordUser: DiscordUser): Promise<void>;
     function onMessageReactionAdd(messageReaction: Discord.MessageReaction, user: Discord.User, client: any, discordUser: DiscordUser): Promise<void>;
     function onGuildDete(guild: Discord.Guild, discordUser: DiscordUser): Promise<void>;
     function onGuildBanAdd(guild: Discord.Guild, client: any, user: Discord.User, discordUser: DiscordUser): Promise<void>;
