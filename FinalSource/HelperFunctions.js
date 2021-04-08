@@ -892,7 +892,9 @@ var HelperFunctions;
                             return [3 /*break*/, 22];
                         }
                         _b.label = 21;
-                    case 21: return [3 /*break*/, 17];
+                    case 21:
+                        console.log("TESTING LOOP 1");
+                        return [3 /*break*/, 17];
                     case 22:
                         totalMessageCount = 0;
                         for (y = 0; y < arrayOfMessageArrays.length; y += 1) {
@@ -967,6 +969,7 @@ var HelperFunctions;
                         else {
                             return [3 /*break*/, 36];
                         }
+                        console.log("TESTING LOOP 2");
                         return [3 /*break*/, 31];
                     case 36:
                         totalMessageCount = 0;

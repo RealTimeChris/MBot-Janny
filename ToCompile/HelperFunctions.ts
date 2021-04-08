@@ -632,7 +632,8 @@ module HelperFunctions{
                         } else {
                             break;
                         }
-                    }			
+                    }
+                    console.log("TESTING LOOP 1");
                 }
                 let totalMessageCount = 0;
                 for (let y = 0; y < arrayOfMessageArrays.length; y += 1) {
@@ -685,6 +686,7 @@ module HelperFunctions{
                     } else {
                         break;
                     }
+                    console.log("TESTING LOOP 2");
                 }
                 let totalMessageCount = 0;
                 for (let w = 0; w < arrayOfMessageArrays.length; w += 1) {
