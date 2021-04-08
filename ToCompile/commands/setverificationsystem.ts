@@ -228,7 +228,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
                         const newPermOWs = new Discord.PermissionOverwrites(channelsArray[x]!, {});
                         newPermOWs.type = 'role';
                         newPermOWs.id = guildData.defaultRoleIDs[y]!;
-                        newPermOWs.update({VIEW_CHANNEL: false});
+                        await newPermOWs.update({VIEW_CHANNEL: false});
                     }
                     
                 }
@@ -243,7 +243,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
                         const newPermOWs = new Discord.PermissionOverwrites(channelsArray[x]!, {});
                         newPermOWs.type = 'role';
                         newPermOWs.id = guildData.defaultRoleIDs[y]!;
-                        newPermOWs.update({VIEW_CHANNEL: true});
+                        await newPermOWs.update({VIEW_CHANNEL: true});
                     }
                 }
             }
