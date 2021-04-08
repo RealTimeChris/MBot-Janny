@@ -565,6 +565,7 @@ module HelperFunctions{
             console.log(`Checking for messages to delete in channel: ${currentChannel.name}`);
 
             newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = true;
+            await newGuildData.writeToDataBase();
 
             if (numberOfMessagesToSave > 0) {
                 let startingMessage: Discord.Message | undefined = undefined;

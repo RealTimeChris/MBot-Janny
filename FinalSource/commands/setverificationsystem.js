@@ -58,7 +58,7 @@ function execute(commandData, discordUser) {
         return __generator(this, function (_j) {
             switch (_j.label) {
                 case 0:
-                    _j.trys.push([0, 55, , 56]);
+                    _j.trys.push([0, 62, , 63]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -259,7 +259,7 @@ function execute(commandData, discordUser) {
                     _j.sent();
                     return [2 /*return*/, commandReturnData];
                 case 33:
-                    if (!(whatAreWeDoing === 'enable')) return [3 /*break*/, 54];
+                    if (!(whatAreWeDoing === 'enable')) return [3 /*break*/, 61];
                     if (!(guildData.defaultRoleIDs.length === 0)) return [3 /*break*/, 36];
                     msgString_5 = '------\n**Please, first set a default role to be applied to the new member! Using !setdefaultrole.**\n------';
                     msgEmbed_3 = new Discord.MessageEmbed()
@@ -304,8 +304,8 @@ function execute(commandData, discordUser) {
                     x = 0;
                     _j.label = 39;
                 case 39:
-                    if (!(x < channelsArray.length)) return [3 /*break*/, 50];
-                    if (!(channelsArray[x].id === commandData.fromTextChannel.id)) return [3 /*break*/, 44];
+                    if (!(x < channelsArray.length)) return [3 /*break*/, 57];
+                    if (!(channelsArray[x].id === commandData.fromTextChannel.id)) return [3 /*break*/, 48];
                     permOWs = (_c = channelsArray[x]) === null || _c === void 0 ? void 0 : _c.permissionOverwrites.array();
                     y = 0;
                     _j.label = 40;
@@ -320,45 +320,60 @@ function execute(commandData, discordUser) {
                     y += 1;
                     return [3 /*break*/, 40];
                 case 43:
-                    for (y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
-                        newPermOWs = new Discord.PermissionOverwrites(channelsArray[x], {});
-                        newPermOWs.type = 'role';
-                        newPermOWs.id = guildData.defaultRoleIDs[y];
-                        newPermOWs.update({ VIEW_CHANNEL: false });
-                    }
-                    return [3 /*break*/, 49];
+                    y = 0;
+                    _j.label = 44;
                 case 44:
+                    if (!(y < guildData.defaultRoleIDs.length)) return [3 /*break*/, 47];
+                    newPermOWs = new Discord.PermissionOverwrites(channelsArray[x], {});
+                    newPermOWs.type = 'role';
+                    newPermOWs.id = guildData.defaultRoleIDs[y];
+                    return [4 /*yield*/, newPermOWs.update({ VIEW_CHANNEL: false })];
+                case 45:
+                    _j.sent();
+                    _j.label = 46;
+                case 46:
+                    y += 1;
+                    return [3 /*break*/, 44];
+                case 47: return [3 /*break*/, 56];
+                case 48:
                     permOWs = (_f = channelsArray[x]) === null || _f === void 0 ? void 0 : _f.permissionOverwrites.array();
                     y = 0;
-                    _j.label = 45;
-                case 45:
-                    if (!(y < permOWs.length)) return [3 /*break*/, 48];
-                    if (!(((_g = permOWs[y]) === null || _g === void 0 ? void 0 : _g.id) === everyoneRoleID)) return [3 /*break*/, 47];
-                    return [4 /*yield*/, ((_h = permOWs[y]) === null || _h === void 0 ? void 0 : _h.update({ VIEW_CHANNEL: false }))];
-                case 46:
-                    _j.sent();
-                    _j.label = 47;
-                case 47:
-                    y += 1;
-                    return [3 /*break*/, 45];
-                case 48:
-                    for (y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
-                        newPermOWs = new Discord.PermissionOverwrites(channelsArray[x], {});
-                        newPermOWs.type = 'role';
-                        newPermOWs.id = guildData.defaultRoleIDs[y];
-                        newPermOWs.update({ VIEW_CHANNEL: true });
-                    }
                     _j.label = 49;
                 case 49:
+                    if (!(y < permOWs.length)) return [3 /*break*/, 52];
+                    if (!(((_g = permOWs[y]) === null || _g === void 0 ? void 0 : _g.id) === everyoneRoleID)) return [3 /*break*/, 51];
+                    return [4 /*yield*/, ((_h = permOWs[y]) === null || _h === void 0 ? void 0 : _h.update({ VIEW_CHANNEL: false }))];
+                case 50:
+                    _j.sent();
+                    _j.label = 51;
+                case 51:
+                    y += 1;
+                    return [3 /*break*/, 49];
+                case 52:
+                    y = 0;
+                    _j.label = 53;
+                case 53:
+                    if (!(y < guildData.defaultRoleIDs.length)) return [3 /*break*/, 56];
+                    newPermOWs = new Discord.PermissionOverwrites(channelsArray[x], {});
+                    newPermOWs.type = 'role';
+                    newPermOWs.id = guildData.defaultRoleIDs[y];
+                    return [4 /*yield*/, newPermOWs.update({ VIEW_CHANNEL: true })];
+                case 54:
+                    _j.sent();
+                    _j.label = 55;
+                case 55:
+                    y += 1;
+                    return [3 /*break*/, 53];
+                case 56:
                     x += 1;
                     return [3 /*break*/, 39];
-                case 50:
+                case 57:
                     guildData.verificationSystem.channelID = commandData.fromTextChannel.id;
                     guildData.verificationSystem.messageID = newMessage.id;
                     argTwo = commandData.args[2];
                     guildData.verificationSystem.emoji = argTwo;
                     return [4 /*yield*/, guildData.writeToDataBase()];
-                case 51:
+                case 58:
                     _j.sent();
                     msgString = "__**Nicely done! You've enabled the verification system for this server!**__";
                     msgEmbed = new Discord.MessageEmbed();
@@ -369,22 +384,22 @@ function execute(commandData, discordUser) {
                         .setTitle('__**Set Verification System:**__')
                         .setDescription(msgString);
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
-                case 52:
+                case 59:
                     msg = _j.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
-                case 53:
+                case 60:
                     _j.sent();
                     return [2 /*return*/, commandReturnData];
-                case 54: return [2 /*return*/, commandReturnData];
-                case 55:
+                case 61: return [2 /*return*/, commandReturnData];
+                case 62:
                     error_2 = _j.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_2);
                         })];
-                case 56: return [2 /*return*/];
+                case 63: return [2 /*return*/];
             }
         });
     });
