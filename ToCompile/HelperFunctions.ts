@@ -633,7 +633,6 @@ module HelperFunctions{
                             break;
                         }
                     }
-                    console.log("TESTING LOOP 1");
                 }
                 let totalMessageCount = 0;
                 for (let y = 0; y < arrayOfMessageArrays.length; y += 1) {
@@ -649,6 +648,7 @@ module HelperFunctions{
                 console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
                 if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
                     newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
+                    await newGuildData.writeToDataBase();
                     return;
                 }
                 for (let y = arrayOfMessageArrays.length - 1; y >= 0; y -= 1) {
@@ -686,7 +686,6 @@ module HelperFunctions{
                     } else {
                         break;
                     }
-                    console.log("TESTING LOOP 2");
                 }
                 let totalMessageCount = 0;
                 for (let w = 0; w < arrayOfMessageArrays.length; w += 1) {
@@ -702,6 +701,7 @@ module HelperFunctions{
                 console.log(`Total of ${totalMessageCount} in channel: ${currentChannel.name}`);
                 if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
                     newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
+                    await newGuildData.writeToDataBase();
                     return; 
                 }
                 for (let w = arrayOfMessageArrays.length - 1; w >= 0; w -= 1) {
@@ -722,6 +722,7 @@ module HelperFunctions{
             return;
         } catch (error) {
             newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
+            await newGuildData.writeToDataBase();
             return new Promise((resolve, reject) => {
                 reject(error);
             });
