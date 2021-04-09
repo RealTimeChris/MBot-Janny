@@ -17,9 +17,9 @@ class Data{
 }
 
 class DeletedCounter {
-	deletedCount: number = 0;
+	private deletedCount: number = 0;
 
-	data: Data = new Data();
+	private data: Data = new Data();
 
 	setData(key: string, value: any): void {
 		const newData = new Data();
@@ -85,7 +85,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		}
 
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
-		await guildData.getFromDataBase();
+        await guildData.getFromDataBase();
 
 		if (commandData.args[0] === undefined) {
 			const msgString = `------\n**Please, enter a bot to delete the key from! (!deletedbentry = BOTNAME, DBENTRYKEY)**\n------`;
@@ -127,7 +127,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setColor(guildData.borderColor as [number, number, number])
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Missing Or Invalid Arguments:**__')
+				.setTitle('__**Missing Or Invalid Arguments:**__');
 			let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
 			if (commandData.toTextChannel instanceof Discord.WebhookClient){
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
