@@ -536,10 +536,8 @@ module HelperFunctions{
         try {
             const numberOfMessagesToSave = guildData.deletionChannels[channelIndex]?.numberOfMessagesToSave!;
             const channelID = guildData.deletionChannels[channelIndex]?.channelID!;
-            let currentChannel = new Discord.TextChannel(client.guilds.resolve(guildData.id)!, {});
-            try {
-                currentChannel = await client.channels.fetch(channelID) as Discord.TextChannel;
-            } catch (error) {
+            const currentChannel = client.channels.resolve(channelID) as Discord.TextChannel;
+            if (currentChannel === null){
                 guildData.deletionChannels.splice(channelIndex, 1);
                 console.log('Removing an "unknown channel" from list of deletion channels!');
                 await guildData.writeToDataBase();
@@ -661,13 +659,15 @@ module HelperFunctions{
                 let x = 1;
                 let y = 0;
                 const arrayOfMessageArrays = [];
+                let startingMessage: Discord.Message;
                 while (x !== 0) {
                     let arrayOfMessages;
                     if (y === 0) {
                         arrayOfMessages = (await currentChannel.messages.fetch({ limit: 100 })).array();
+                        startingMessage = arrayOfMessages[arrayOfMessages.length - 1]!;
                     } else {
-                        arrayOfMessages = (await currentChannel.messages
-                            .fetch({ limit: 100, })).array();
+                        arrayOfMessages = (await currentChannel.messages.fetch({ limit: 100, before: startingMessage!.id })).array();
+                        startingMessage = arrayOfMessages[arrayOfMessages.length - 1]!;
                     }
 
                     x = arrayOfMessages.length;

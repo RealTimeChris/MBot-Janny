@@ -87,23 +87,16 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             currentlyBeingDeleted: false,
             deletionMessageID: ''
         };
-        let isItFound = false;
-        let deletionChannelIndex: number;
-        for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
-            if (commandData.fromTextChannel!.id === guildData.deletionChannels[x]!.channelID) {
-                currentDeletionChannel = guildData.deletionChannels[x]!;
-                currentDeletionChannel.currentlyBeingDeleted = false;
-                currentDeletionChannel.timeOfLastPurge = 0;
-                currentDeletionChannel.numberOfMessagesToSave = howManyBack;
-                isItFound = true;
-                deletionChannelIndex = x;
-            }
-        }
 
         if (whatAreWeDoing === 'viewing') {
             let msgString = '\n------\n';
             if (guildData.deletionChannels.length > 0) {
                 for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
+                    const currentChannel = commandData.guild?.channels.resolve(guildData.deletionChannels[x]?.channelID as string);
+                    if (currentChannel === null) {
+                        guildData.deletionChannels.splice(x, 1);
+                        continue;
+                    }
                     msgString += `__**Channel:**__ <#${guildData.deletionChannels[x]!.channelID}>, __**Messages To Save:**__ `+
                     `${guildData.deletionChannels[x]!.numberOfMessagesToSave}\n`;
                 }
@@ -123,29 +116,40 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             return commandReturnData;
         }
         if (whatAreWeDoing === 'enable') {
+            let isItFound = false;
+            let deletionChannelIndex: number;
             for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
-                if (isItFound === true) {
-                    const msgString = '------\n**This channel has already been added! I will update your number of saved messages though!**\n------';
-                    let msgEmbed = new Discord.MessageEmbed()
-				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				        .setColor(guildData.borderColor as [number, number, number])
-				        .setDescription(msgString)
-				        .setTimestamp(Date() as unknown as Date)
-				        .setTitle('__**Channel Re-Added:**__');
-                    let message = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
-                        message = new Discord.Message(commandData.guildMember!.client, message, commandData.fromTextChannel!);
+                if (commandData.fromTextChannel!.id === guildData.deletionChannels[x]!.channelID) {
+                    currentDeletionChannel = guildData.deletionChannels[x]!;
+                    currentDeletionChannel.currentlyBeingDeleted = false;
+                    currentDeletionChannel.timeOfLastPurge = 0;
+                    currentDeletionChannel.numberOfMessagesToSave = howManyBack;
+                    isItFound = true;
+                    deletionChannelIndex = x;
+                }
+            }
+
+            if (isItFound === true) {
+                const msgString = '------\n**This channel has already been added! I will update your number of saved messages though!**\n------';
+                let msgEmbed = new Discord.MessageEmbed()
+                    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+                    .setColor(guildData.borderColor as [number, number, number])
+                    .setDescription(msgString)
+                    .setTimestamp(Date() as unknown as Date)
+                    .setTitle('__**Channel Re-Added:**__');
+                let message = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+                    message = new Discord.Message(commandData.guildMember!.client, message, commandData.fromTextChannel!);
+                }
+                message.delete({timeout: 20000});
+                try {
+                    const previousMessage = await commandData.fromTextChannel!.messages.fetch(currentDeletionChannel.deletionMessageID);
+                    if (previousMessage.deletable === true) {
+                        await previousMessage.delete();
                     }
-                    message.delete({timeout: 20000});
-                    try {
-                        const previousMessage = await commandData.fromTextChannel!.messages.fetch(currentDeletionChannel.deletionMessageID);
-                        if (previousMessage.deletable === true) {
-                            await previousMessage.delete();
-                        }
-                    } catch (error) {
-                        if (error.message === 'Unknown Message') {
-                            currentDeletionChannel.deletionMessageID = '';
-                        }
+                } catch (error) {
+                    if (error.message === 'Unknown Message') {
+                        currentDeletionChannel.deletionMessageID = '';
                     }
                 }
             }
@@ -177,6 +181,15 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             return commandReturnData;
         }
         if (whatAreWeDoing === 'disable') {
+            let isItFound = false;
+            let deletionChannelIndex: number;
+            for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
+                if (commandData.fromTextChannel!.id === guildData.deletionChannels[x]!.channelID) {
+                    isItFound = true;
+                    deletionChannelIndex = x;
+                }
+            }
+
             if (isItFound === false) {
                 const msgString = '------\n**Sorry, but this channel could not be found in the list of active deletion channels!**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
