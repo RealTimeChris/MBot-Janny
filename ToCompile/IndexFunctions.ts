@@ -27,7 +27,7 @@ module IndexFunctions{
             console.log('Non-found user! Better escape!');
             return;
         }
-        if (msg.author.id === (client.user as Discord.User).id) {
+        if (msg.author.id === client.user.id) {
             console.log('Better not track our own messages!');
             return;
         }
