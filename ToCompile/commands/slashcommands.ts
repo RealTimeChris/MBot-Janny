@@ -8,6 +8,7 @@
 import Discord = require('discord.js');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
+import GuildData from '../GuildData';
 import HelperFunctions from '../HelperFunctions';
 import DiscordInteractions from 'slash-commands';
 import SlashCommands = require('slash-commands');
@@ -308,7 +309,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             }
             ]
         }
-        let guildData = new GuildData();
+        let guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, memberCount: commandData.guild!.memberCount, name: commandData.guild!.name});
         let choices1: any[] = [];
         for (let x = 0; x < guildData.logs.length; x += 1){
             if (x < 10){

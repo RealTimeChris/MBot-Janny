@@ -11,7 +11,7 @@ import DiscordUser from './DiscordUser';
 import config = require('./config.json');
 
 const discordUser = new DiscordUser();
-const client = new Discord.Client()as any;
+const client = new Discord.Client() as any;
 
 client.once('ready', async () => {
 	IndexFunctions.onReady(client, discordUser);
