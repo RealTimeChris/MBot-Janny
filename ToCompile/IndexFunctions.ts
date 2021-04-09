@@ -410,21 +410,21 @@ module IndexFunctions{
                 if (guildData.logs[x]!.enabled === false) {
                     return;
                 }
-            }
-        }
-	const command = 'onguildbanadd';
+                const command = 'onguildbanadd';
 
-        if (!botCommands.has(command)) {
-            return;
-        }
-        try {
-            console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await botCommands.get(command)?.function(client, guild, user, discordUser);
-            console.log(`Completed Command: ${cmdName}`);
-            return;
-        } catch (error) {
-            console.log(error);
-        }
+                if (!botCommands.has(command)) {
+                    return;
+                }
+                try {
+                    console.log(`Command: '${command}' entered by system.`);
+                    const cmdName = await botCommands.get(command)?.function(client, guild, user, discordUser);
+                    console.log(`Completed Command: ${cmdName}`);
+                    return;
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }	
     }
 
     export async function onGuildBanRemove(guild: Discord.Guild, user: Discord.User, client: any, discordUser: DiscordUser){
@@ -435,20 +435,20 @@ module IndexFunctions{
                 if (guildData.logs[x]!.enabled === false) {
                     return;
                 }
-            }
-        }
-        const command = 'onguildbanremove';
+                const command = 'onguildbanremove';
 
-        if (!botCommands.has(command)) {
-            return;
-        }
-        try {
-            console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await botCommands.get(command)?.function(client, guild, user, discordUser);
-            console.log(`Completed Command: ${cmdName}`);
-            return;
-        } catch (error) {
-            console.log(error);
+                if (!botCommands.has(command)) {
+                    return;
+                }
+                try {
+                    console.log(`Command: '${command}' entered by system.`);
+                    const cmdName = await botCommands.get(command)?.function(client, guild, user, discordUser);
+                    console.log(`Completed Command: ${cmdName}`);
+                    return;
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         }
     }
 
@@ -460,20 +460,20 @@ module IndexFunctions{
                 if (guildData.logs[x]!.enabled === false) {
                     return;
                 }
-            }
-        }
-        const command = 'onguildmemberadd';
+                const command = 'onguildmemberadd';
 
-        if (!botCommands.has(command)) {
-            return;
-        }
-        try {
-            console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await botCommands.get(command)?.function(client, member, discordUser);
-            console.log(`Completed Command: ${cmdName}`);
-            return;
-        } catch (error) {
-            console.log(error);
+                if (!botCommands.has(command)) {
+                    return;
+                }
+                try {
+                    console.log(`Command: '${command}' entered by system.`);
+                    const cmdName = await botCommands.get(command)?.function(client, member, discordUser);
+                    console.log(`Completed Command: ${cmdName}`);
+                    return;
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         }
     }
 
@@ -485,19 +485,20 @@ module IndexFunctions{
                 if (guildData.logs[x]!.enabled === false) {
                     return;
                 }
+                const command = 'onguildmemberremove';
+
+                if (!botCommands.has(command)) {
+                    return;
+                }
+                try {
+                    console.log(`Command: '${command}' entered by system.`);
+                    const cmdName = await botCommands.get(command)?.function(client, member, discordUser);
+                    console.log(`Completed Command: ${cmdName}`);
+                    return;
+                } catch (error) {
+                    console.log(error);
+                }
             }
-        }
-        const command = 'onguildmemberremove';
-        if (!botCommands.has(command)) {
-            return;
-        }
-        try {
-            console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await botCommands.get(command)?.function(client, member, discordUser);
-            console.log(`Completed Command: ${cmdName}`);
-            return;
-        } catch (error) {
-            console.log(error);
         }
     }
 
@@ -510,20 +511,21 @@ module IndexFunctions{
                     if (guildData.logs[x]!.enabled === false) {
                         return;
                     }
+                    const command = 'ondisplaynamechange';
+                    
+                    if (!botCommands.has(command)) {
+                        return;
+                    }
+                    try {
+                        console.log(`Command: '${command}' entered by system.`);
+                        const cmdName = await (botCommands.get(command)?.function(client, oldGuildMember,
+                            newGuildMember, discordUser));
+                        console.log(`Completed Command: ${cmdName}`);
+                        return;
+                    } catch (error) {
+                        return;
+                    }
                 }
-            }
-            const command = 'ondisplaynamechange';
-            if (!botCommands.has(command)) {
-                return;
-            }
-            try {
-                console.log(`Command: '${command}' entered by system.`);
-                const cmdName = await (botCommands.get(command)?.function(client, oldGuildMember,
-                    newGuildMember, discordUser));
-                console.log(`Completed Command: ${cmdName}`);
-                return;
-            } catch (error) {
-                return;
             }
         }
         if (oldGuildMember.nickname !== newGuildMember.nickname) {
@@ -534,20 +536,21 @@ module IndexFunctions{
                     if (guildData.logs[x]!.enabled === false) {
                         return;
                     }
+                    const command = 'onnicknamechange';
+
+                    if (!botCommands.has(command)) {
+                        return;
+                    }
+                    try {
+                        console.log(`Command: '${command}' entered by system.`);
+                        const cmdName = await (botCommands.get(command)?.function(client, oldGuildMember,
+                            newGuildMember, discordUser));
+                        console.log(`Completed Command: ${cmdName}`);
+                        return;
+                    } catch (error) {
+                        return;
+                    }
                 }
-            }
-            const command = 'onnicknamechange';
-            if (!botCommands.has(command)) {
-                return;
-            }
-            try {
-                console.log(`Command: '${command}' entered by system.`);
-                const cmdName = await (botCommands.get(command)?.function(client, oldGuildMember,
-                    newGuildMember, discordUser));
-                console.log(`Completed Command: ${cmdName}`);
-                return;
-            } catch (error) {
-                return;
             }
         }
         const oldGuildMemberRoleManager = new Discord.GuildMemberRoleManager(oldGuildMember);
@@ -567,21 +570,21 @@ module IndexFunctions{
                     if (guildData.logs[x]!.enabled === false) {
                         return;
                     }
-                }
-            }
-            const command = 'onroleaddorremove';
+                    const command = 'onroleaddorremove';
     
-            if (!botCommands.has(command)) {
-                return;
-            }
-            try {
-                console.log(`Command: '${command}' entered by system.`);
-                const cmdName = await (botCommands.get(command)?.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager,
-                        newGuildMember, collectionSizeDifference, discordUser));
-                console.log(`Completed Command: ${cmdName}`);
-                return;
-            } catch (error) {
-                console.log(error);
+                    if (!botCommands.has(command)) {
+                        return;
+                    }
+                    try {
+                        console.log(`Command: '${command}' entered by system.`);
+                        const cmdName = await (botCommands.get(command)?.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager,
+                                newGuildMember, collectionSizeDifference, discordUser));
+                        console.log(`Completed Command: ${cmdName}`);
+                        return;
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
             }
         }
     }
@@ -594,20 +597,20 @@ module IndexFunctions{
                 if (guildData.logs[x]!.enabled === false) {
                     return;
                 }
-            }
-        }
-        const command = 'oninvitecreate';
+                const command = 'oninvitecreate';
 
-        if (!botCommands.has(command)) {
-            return;
-        }
-        try {
-            console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await botCommands.get(command)?.function(client, invite, discordUser);
-            console.log(`Completed Command: ${cmdName}`);
-            return;
-        } catch (error) {
-            console.log(error);
+                if (!botCommands.has(command)) {
+                    return;
+                }
+                try {
+                    console.log(`Command: '${command}' entered by system.`);
+                    const cmdName = await botCommands.get(command)?.function(client, invite, discordUser);
+                    console.log(`Completed Command: ${cmdName}`);
+                    return;
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         }
     }
 
@@ -620,20 +623,20 @@ module IndexFunctions{
                     if (guildData.logs[x]!.enabled === false) {
                         return;
                     }
-                }
-            }
-            const command = 'onmessagedelete';
+                    const command = 'onmessagedelete';
         
-            if (!botCommands.has(command)) {
-                return;
-            }
-            try {
-                console.log(`Command: '${command}' entered by system.`);
-                const cmdName = await botCommands.get(command)?.function(client, message, discordUser);
-                console.log(`Completed Command: ${cmdName}`);
-                return;
-            } catch (error) {
-                console.log(error);
+                    if (!botCommands.has(command)) {
+                        return;
+                    }
+                    try {
+                        console.log(`Command: '${command}' entered by system.`);
+                        const cmdName = await botCommands.get(command)?.function(client, message, discordUser);
+                        console.log(`Completed Command: ${cmdName}`);
+                        return;
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
             }
         }
     }
@@ -646,20 +649,20 @@ module IndexFunctions{
                 if (guildData.logs[x]!.enabled === false) {
                     return;
                 }
-            }
-        }
-        const command = 'onmessagedeletebulk';
+                const command = 'onmessagedeletebulk';
 
-        if (!botCommands.has(command)) {
-            return;
-        }
-        try {
-            console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await botCommands.get(command)?.function(client, collection, discordUser);
-            console.log(`Completed Command: ${cmdName}`);
-            return;
-        } catch (error) {
-            console.log(error);
+                if (!botCommands.has(command)) {
+                    return;
+                }
+                try {
+                    console.log(`Command: '${command}' entered by system.`);
+                    const cmdName = await botCommands.get(command)?.function(client, collection, discordUser);
+                    console.log(`Completed Command: ${cmdName}`);
+                    return;
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         }
     }
 
@@ -671,20 +674,20 @@ module IndexFunctions{
                 if (guildData.logs[x]!.enabled === false) {
                     return;
                 }
-            }
-        }
-        const command = 'onrolecreate';
+                const command = 'onrolecreate';
 
-        if (!botCommands.has(command)) {
-            return;
-        }
-        try {
-            console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await botCommands.get(command)?.function(client, role, discordUser);
-            console.log(`Completed Command: ${cmdName}`);
-            return;
-        } catch (error) {
-            console.log(error);
+                if (!botCommands.has(command)) {
+                    return;
+                }
+                try {
+                    console.log(`Command: '${command}' entered by system.`);
+                    const cmdName = await botCommands.get(command)?.function(client, role, discordUser);
+                    console.log(`Completed Command: ${cmdName}`);
+                    return;
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         }
     }
 
@@ -696,20 +699,20 @@ module IndexFunctions{
                 if (guildData.logs[x]!.enabled === false) {
                     return;
                 }
-            }
-        }
-        const command = 'onroledelete';
+                const command = 'onroledelete';
 
-        if (!botCommands.has(command)) {
-            return;
-        }
-        try {
-            console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await botCommands.get(command)?.function(client, role, discordUser);
-            console.log(`Completed Command: ${cmdName}`);
-            return;
-        } catch (error) {
-            console.log(error);
+                if (!botCommands.has(command)) {
+                    return;
+                }
+                try {
+                    console.log(`Command: '${command}' entered by system.`);
+                    const cmdName = await botCommands.get(command)!.function(client, role, discordUser);
+                    console.log(`Completed Command: ${cmdName}`);
+                    return;
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         }
     }
 
@@ -726,22 +729,20 @@ module IndexFunctions{
                             if (guildData.logs[z]!.nameSmall === 'userupdate') {
                                 if (guildData.logs[z]!.enabled === false) {
                                     return;
-                                } else {
-                                    const command = 'onusernamechange';
-    
-                                    if (!botCommands.has(command)) {
-                                        return;
-                                    }
-                                    try {
-                                        console.log(`Command: '${command}' entered by system.`);
-                                        const cmdName = await (botCommands.get(command)?.function(client, oldUser,
-                                            newUser, guildArray[x], discordUser));
-                                        console.log(`Completed Command: ${cmdName}`);
-                                        break;
-                                    } catch (error) {
-                                        console.log(error);
-                                        return;
-                                    }
+                                }
+                                const command = 'onusernamechange';
+
+                                if (!botCommands.has(command)) {
+                                    return;
+                                }
+                                try {
+                                    console.log(`Command: '${command}' entered by system.`);
+                                    const cmdName = await (botCommands.get(command)?.function(client, oldUser, newUser, guildArray[x], discordUser));
+                                    console.log(`Completed Command: ${cmdName}`);
+                                    break;
+                                } catch (error) {
+                                    console.log(error);
+                                    return;
                                 }
                             }
                         }
