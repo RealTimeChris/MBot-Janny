@@ -574,15 +574,13 @@ module HelperFunctions{
                     if (x > 0) {
                         currentMessageLimit = 100;
                         if (x === (Math.trunc(numberOfMessagesToSave / 100))) {
-                            const arrayOfMessagesToSave = (await currentChannel.messages
-                                .fetch({ limit: currentMessageLimit })).array();
+                            const arrayOfMessagesToSave = (await currentChannel.messages.fetch({ limit: currentMessageLimit })).array();
                             if (arrayOfMessagesToSave.length === 0) {
                                 break;
                             }
                             startingMessage = arrayOfMessagesToSave[arrayOfMessagesToSave.length - 1];
                         } else {
-                            const arrayOfMessagesToSave = (await currentChannel.messages
-                                .fetch({ limit: currentMessageLimit, before: startingMessage!.id })).array();
+                            const arrayOfMessagesToSave = (await currentChannel.messages.fetch({ limit: currentMessageLimit, before: startingMessage!.id })).array();
                             if (arrayOfMessagesToSave.length === 0) {
                                 break;
                             }
@@ -591,16 +589,14 @@ module HelperFunctions{
                     } else {
                         currentMessageLimit = (numberOfMessagesToSave % 100) + 1;
                         if (x === (Math.trunc(numberOfMessagesToSave / 100))) {
-                            const arrayOfMessagesToSave = (await currentChannel.messages
-                                .fetch({ limit: currentMessageLimit })).array();
+                            const arrayOfMessagesToSave = (await currentChannel.messages.fetch({ limit: currentMessageLimit })).array();
                             arrayOfMessagesToSave.splice(arrayOfMessagesToSave.length - 1, 1);
                             if (arrayOfMessagesToSave.length === 0) {
                                 break;
                             }
                             startingMessage = arrayOfMessagesToSave[arrayOfMessagesToSave.length - 1];
                         } else {
-                            const arrayOfMessagesToSave = (await currentChannel.messages
-                                .fetch({ limit: currentMessageLimit, before: (startingMessage as unknown as Discord.Message)!.id })).array();
+                            const arrayOfMessagesToSave = (await currentChannel.messages.fetch({ limit: currentMessageLimit, before: startingMessage!.id })).array();
                             arrayOfMessagesToSave.splice(arrayOfMessagesToSave.length - 1, 1);
                             if (arrayOfMessagesToSave.length === 0) {
                                 break;
@@ -670,7 +666,6 @@ module HelperFunctions{
                 let x = 1;
                 let y = 0;
                 const arrayOfMessageArrays = [];
-                let startingMessage;
                 while (x !== 0) {
                     let arrayOfMessages;
                     if (y === 0) {
@@ -682,7 +677,6 @@ module HelperFunctions{
 
                     x = arrayOfMessages.length;
                     if (arrayOfMessages !== undefined && x > 0) {
-                        startingMessage = arrayOfMessages[arrayOfMessages.length - 1];
                         arrayOfMessageArrays.push(arrayOfMessages);
                         y += 1;
                     } else {
