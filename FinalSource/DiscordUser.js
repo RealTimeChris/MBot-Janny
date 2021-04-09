@@ -152,8 +152,7 @@ var DiscordUser = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        this.userData = newUserData;
-                        return [4 /*yield*/, this.dataBase.put(this.userData.userID, this.userData)];
+                        return [4 /*yield*/, this.dataBase.put(this.userData.userID, newUserData)];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, this.dataBase.get(this.userData.userID)];
@@ -177,7 +176,7 @@ var DiscordUser = /** @class */ (function () {
     */
     DiscordUser.prototype.updateUserData = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var userData, error_4;
+            var userData, newUserData, error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -186,22 +185,27 @@ var DiscordUser = /** @class */ (function () {
                     case 1:
                         userData = _a.sent();
                         console.log('Updating the user data!');
-                        userData.botCommanders = config.botCommanders;
-                        userData.botToken = config.botToken;
-                        userData.currencyName = config.currencyName;
-                        userData.dataBaseFilePath = config.dataBaseFilePath;
-                        userData.guildCount = client.guilds.cache.size;
-                        userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
-                        userData.msBetweenInvites = config.msBetweenInvites;
-                        userData.msBetweenMessageDeletion = config.msBetweenMessageDeletion;
-                        userData.msBetweenRecordUpdates = config.msBetweenRecordUpdates;
-                        userData.prefix = config.prefix;
-                        userData.publicKey = config.publicKey;
-                        userData.startupCall = this.userData.startupCall;
-                        userData.timeOfLastUpdateAndSave = new Date().getTime();
-                        userData.userID = client.user.id;
-                        userData.userName = client.user.username;
-                        return [4 /*yield*/, this.updateUserDataInDB(userData)];
+                        newUserData = {
+                            activeInviteGuilds: userData.activeInviteGuilds,
+                            botCommanders: config.botCommanders,
+                            botToken: config.botToken,
+                            currencyName: config.currencyName,
+                            dataBaseFilePath: userData.dataBaseFilePath,
+                            guildCount: client.guilds.cache.size,
+                            msBetweenCacheBackup: config.msBetweenCacheBackup,
+                            msBetweenInvites: config.msBetweenInvites,
+                            msBetweenMessageDeletion: config.msBetweenMessageDeletion,
+                            msBetweenRecordUpdates: config.msBetweenRecordUpdates,
+                            prefix: config.prefix,
+                            publicKey: config.publicKey,
+                            startupCall: userData.startupCall,
+                            timeOfLastInvite: userData.timeOfLastInvite,
+                            timeOfLastRecordUpdate: userData.timeOfLastRecordUpdate,
+                            timeOfLastUpdateAndSave: new Date().getTime(),
+                            userID: client.user.id,
+                            userName: client.user.username,
+                        };
+                        return [4 /*yield*/, this.updateUserDataInDB(newUserData)];
                     case 2:
                         _a.sent();
                         return [2 /*return*/];

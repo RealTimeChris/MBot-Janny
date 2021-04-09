@@ -110,8 +110,7 @@ export default class DiscordUser {
     */
     public async updateUserDataInDB(newUserData: DiscordUserData): Promise<void> {
         try {
-            this.userData = newUserData;
-            await this.dataBase.put(this.userData.userID, this.userData);
+            await this.dataBase.put(this.userData.userID, newUserData);
             const userData = await this.dataBase.get(this.userData.userID);
             console.log('New User Cache:');
             console.log(userData);
@@ -130,22 +129,27 @@ export default class DiscordUser {
         try {
             const userData = await this.getUserDataFromDB(client);
             console.log('Updating the user data!');
-            userData.botCommanders = config.botCommanders;
-            userData.botToken = config.botToken;
-            userData.currencyName = config.currencyName;
-            userData.dataBaseFilePath = config.dataBaseFilePath;
-            userData.guildCount = client.guilds.cache.size;
-            userData.msBetweenCacheBackup = config.msBetweenCacheBackup;
-            userData.msBetweenInvites = config.msBetweenInvites;
-            userData.msBetweenMessageDeletion = config.msBetweenMessageDeletion;
-            userData.msBetweenRecordUpdates = config.msBetweenRecordUpdates;
-            userData.prefix = config.prefix;
-            userData.publicKey = config.publicKey;
-            userData.startupCall = this.userData.startupCall;
-            userData.timeOfLastUpdateAndSave = new Date().getTime();
-            userData.userID = client.user!.id;
-            userData.userName = client.user!.username;
-            await this.updateUserDataInDB(userData);
+            const newUserData: DiscordUserData = {
+                activeInviteGuilds: userData.activeInviteGuilds,
+                botCommanders: config.botCommanders,
+                botToken: config.botToken,
+                currencyName: config.currencyName,
+                dataBaseFilePath: userData.dataBaseFilePath,
+                guildCount: client.guilds.cache.size,
+                msBetweenCacheBackup: config.msBetweenCacheBackup,
+                msBetweenInvites: config.msBetweenInvites,
+                msBetweenMessageDeletion: config.msBetweenMessageDeletion,
+                msBetweenRecordUpdates: config.msBetweenRecordUpdates,
+                prefix: config.prefix,
+                publicKey: config.publicKey,
+                startupCall: userData.startupCall,
+                timeOfLastInvite: userData.timeOfLastInvite,
+                timeOfLastRecordUpdate: userData.timeOfLastRecordUpdate,
+                timeOfLastUpdateAndSave: new Date().getTime(),
+                userID: client.user!.id,
+                userName: client.user!.username,
+            }
+            await this.updateUserDataInDB(newUserData);
             return;
         } catch (error) {
             return new Promise((resolve, reject) => {
