@@ -650,8 +650,8 @@ module HelperFunctions{
                         if (!arrayOfMessageArrays[y]![z]!.pinned) {
                             if (arrayOfMessageArrays[y]![z]?.deletable) {
                                 await arrayOfMessageArrays[y]![z]!.delete();
-                            }                            
-                            console.log(`Deleting Message Number: ${totalMessageCount - (y * 100 + z)} of ${totalMessageCount} in channel ${currentChannel.name}.`);
+                                console.log(`Deleting Message Number: ${totalMessageCount - (y * 100 + z)} of ${totalMessageCount} in channel ${currentChannel.name}.`);
+                            }
                         }
                     }
                 }
