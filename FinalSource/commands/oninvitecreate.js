@@ -60,7 +60,6 @@ function execute(client, invite, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     if (!(invite instanceof Discord.Invite)) {
                         return [2 /*return*/, command.name];
                     }

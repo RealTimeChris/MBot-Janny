@@ -60,7 +60,6 @@ function execute(client, message, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     if (!(message.deleted)) {
                         return [2 /*return*/, command.name];
                     }

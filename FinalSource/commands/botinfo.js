@@ -87,7 +87,6 @@ function execute(commandData, discordUser) {
                     if (((_f = commandData.args[0]) === null || _f === void 0 ? void 0 : _f.toLowerCase()) !== 'janny') {
                         return [2 /*return*/, commandReturnData];
                     }
-                    commandReturnData.commandName = command.name;
                     fields = [];
                     field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
                     fields.push(field1);

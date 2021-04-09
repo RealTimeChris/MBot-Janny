@@ -64,7 +64,6 @@ function execute(commandData, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     msgString = '------\n**Pong!**\n------';
                     msgEmbed = new Discord.MessageEmbed();
                     if (!(commandData.guildMember instanceof Discord.GuildMember)) return [3 /*break*/, 2];

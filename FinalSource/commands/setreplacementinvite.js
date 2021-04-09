@@ -60,7 +60,6 @@ function execute(commandData, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 21, , 22]);

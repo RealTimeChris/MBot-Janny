@@ -61,7 +61,6 @@ function execute(client, guild, user, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     if (!(guild instanceof Discord.Guild)) {
                         return [2 /*return*/, command.name];
                     }

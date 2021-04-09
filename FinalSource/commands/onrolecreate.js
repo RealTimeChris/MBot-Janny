@@ -60,7 +60,6 @@ function execute(client, role, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     if (!(role instanceof Discord.Role)) {
                         return [2 /*return*/, command.name];
                     }

@@ -60,7 +60,6 @@ function execute(client, oldMessage, newMessage, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     if (!(newMessage instanceof Discord.Message)) {
                         return [2 /*return*/, command.name];
                     }

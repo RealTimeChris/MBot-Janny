@@ -60,7 +60,6 @@ function execute(client, oldUser, newUser, guild, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     if (!(oldUser instanceof Discord.User)) {
                         return [2 /*return*/, command.name];
                     }

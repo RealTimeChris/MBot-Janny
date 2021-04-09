@@ -60,7 +60,6 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     if (!(oldGuildMemberRoleManager instanceof Discord.GuildMemberRoleManager)) {
                         return [2 /*return*/, command.name];
                     }

@@ -59,7 +59,6 @@ function execute(guild, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     if (!(discordUser instanceof DiscordUser_1.default)) {
                         return [2 /*return*/, command.name];
                     }

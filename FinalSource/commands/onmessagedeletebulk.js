@@ -60,7 +60,6 @@ function execute(client, collection, discordUser) {
                     commandReturnData = {
                         commandName: command.name
                     };
-                    commandReturnData.commandName = command.name;
                     if (!(collection instanceof Discord.Collection)) {
                         return [2 /*return*/, command.name];
                     }
