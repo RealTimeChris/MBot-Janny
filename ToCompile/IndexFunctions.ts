@@ -347,18 +347,15 @@ module IndexFunctions{
         if (newChannel instanceof Discord.GuildChannel){
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name});
             await guildData.getFromDataBase();
-            const currentRolesArray = newChannel.guild.roles.cache.array();
             if (guildData.verificationSystem.channelID !== '') {
+                const currentRolesArray = newChannel.guild.roles.cache.array();
                 let everyoneRoleID: string;
                 for (let x = 0; x < currentRolesArray.length; x += 1) {
                     if (currentRolesArray[x]!.name === '@everyone') {
                         everyoneRoleID = currentRolesArray[x]?.id!;
                     }
                 }
-                await newChannel.updateOverwrite(everyoneRoleID!, {'VIEW_CHANNEL': false});
-                for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
-                    await newChannel.updateOverwrite(guildData.defaultRoleIDs[x]!, {'VIEW_CHANNEL': true});
-                }
+                await newChannel.updateOverwrite(everyoneRoleID!, {VIEW_CHANNEL: false});
             }
         }
     }

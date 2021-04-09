@@ -51,13 +51,13 @@ var command = {
     function: Function()
 };
 function execute(client, role, discordUser) {
-    var _a, _b, _c;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
         var commandReturnData, guildData, logs, x, textChannel, auditLogs, auditLogEntry, currentGuild, msgEmbed, msgString, channelsArray, x, error_1;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _d.trys.push([0, 13, , 14]);
+                    _c.trys.push([0, 11, , 12]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -68,7 +68,7 @@ function execute(client, role, discordUser) {
                         name: role.guild.name, memberCount: role.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 1:
-                    _d.sent();
+                    _c.sent();
                     logs = void 0;
                     for (x = 0; x < guildData.logs.length; x += 1) {
                         if (guildData.logs[x].nameSmall === 'rolecreate') {
@@ -79,14 +79,14 @@ function execute(client, role, discordUser) {
                     if (!(logs.enabled === true)) return [3 /*break*/, 6];
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
                 case 2:
-                    textChannel = _d.sent();
+                    textChannel = _c.sent();
                     return [4 /*yield*/, role.guild.fetchAuditLogs({ type: 'ROLE_CREATE', limit: 1 })];
                 case 3:
-                    auditLogs = _d.sent();
+                    auditLogs = _c.sent();
                     auditLogEntry = auditLogs.entries.find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
                     return [4 /*yield*/, client.guilds.fetch(role.guild.id)];
                 case 4:
-                    currentGuild = _d.sent();
+                    currentGuild = _c.sent();
                     msgEmbed = new Discord.MessageEmbed();
                     msgString = '';
                     msgString = "__**New Role:**__ <@&" + role.id + "> (" + role.name + ")\n";
@@ -99,34 +99,30 @@ function execute(client, role, discordUser) {
                         .setColor(role.color);
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 5:
-                    _d.sent();
-                    _d.label = 6;
+                    _c.sent();
+                    _c.label = 6;
                 case 6:
-                    if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 12];
+                    if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 10];
                     channelsArray = role.guild.channels.cache.array();
                     x = 0;
-                    _d.label = 7;
+                    _c.label = 7;
                 case 7:
-                    if (!(x < channelsArray.length)) return [3 /*break*/, 12];
+                    if (!(x < channelsArray.length)) return [3 /*break*/, 10];
                     if (!(((_a = channelsArray[x]) === null || _a === void 0 ? void 0 : _a.id) === guildData.verificationSystem.channelID)) return [3 /*break*/, 9];
-                    return [4 /*yield*/, ((_b = channelsArray[x]) === null || _b === void 0 ? void 0 : _b.updateOverwrite(role.id, { 'VIEW_CHANNEL': false }))];
+                    return [4 /*yield*/, ((_b = channelsArray[x]) === null || _b === void 0 ? void 0 : _b.updateOverwrite(role.id, { VIEW_CHANNEL: false }))];
                 case 8:
-                    _d.sent();
-                    return [3 /*break*/, 11];
-                case 9: return [4 /*yield*/, ((_c = channelsArray[x]) === null || _c === void 0 ? void 0 : _c.updateOverwrite(role.id, { 'VIEW_CHANNEL': null }))];
-                case 10:
-                    _d.sent();
-                    _d.label = 11;
-                case 11:
+                    _c.sent();
+                    _c.label = 9;
+                case 9:
                     x += 1;
                     return [3 /*break*/, 7];
-                case 12: return [2 /*return*/, commandReturnData];
-                case 13:
-                    error_1 = _d.sent();
+                case 10: return [2 /*return*/, commandReturnData];
+                case 11:
+                    error_1 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 14: return [2 /*return*/];
+                case 12: return [2 /*return*/];
             }
         });
     });

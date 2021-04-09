@@ -65,10 +65,7 @@ async function execute(client: Discord.Client, role: Discord.Role,
             const channelsArray = role.guild.channels.cache.array();
             for (let x = 0; x < channelsArray.length; x += 1) {
                 if (channelsArray[x]?.id === guildData.verificationSystem.channelID) {
-                    await channelsArray[x]?.updateOverwrite(role.id, {'VIEW_CHANNEL': false});
-                }
-                else {
-                    await channelsArray[x]?.updateOverwrite(role.id, {'VIEW_CHANNEL': null});
+                    await channelsArray[x]?.updateOverwrite(role.id, {VIEW_CHANNEL: false});
                 }
             }
         }

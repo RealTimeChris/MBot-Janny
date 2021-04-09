@@ -10,6 +10,7 @@ import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
 import HelperFunctions from '../HelperFunctions';
+import { RSA_PKCS1_OAEP_PADDING } from 'node:constants';
 
 const command: FoundationClasses.BotCommand = {
     name: 'setverificationsystem',
@@ -206,44 +207,32 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
             }            
             
             await newMessage.react(commandData.args[2]!);
-            
+
             const currentGuild = commandData.guild?.client.guilds.resolve(commandData.guild.id)!;
             const channelsArray = currentGuild.channels.cache.array()!;
             const currentRolesArray = currentGuild.roles.cache.array()!;
-            let everyoneRoleID;
+            let everyoneRoleID: string;
             for (let x = 0; x < currentRolesArray.length; x += 1) {
                 if (currentRolesArray[x]!.name === '@everyone') {
-                    everyoneRoleID = currentRolesArray[x]?.id;
+                    everyoneRoleID = currentRolesArray[x]?.id!;
                 }
             }
             for (let x = 0; x < channelsArray!.length; x += 1) {
-                if (channelsArray![x]!.id === commandData.fromTextChannel!.id) {
-                    const permOWs = channelsArray![x]?.permissionOverwrites.array()!;
-                    for (let y = 0; y < permOWs.length; y += 1) {
-                        if (permOWs[y]?.id === everyoneRoleID) {
-                            await permOWs[y]?.update({VIEW_CHANNEL: true, SEND_MESSAGES: false, ATTACH_FILES: false, EMBED_LINKS: false});
+                const rolesArray = currentGuild.roles.cache.array();
+                if (channelsArray![x]!.id !== commandData.fromTextChannel!.id){
+                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1){
+                        if (channelsArray[x]?.permissionsFor(guildData.defaultRoleIDs[y]!)?.has('VIEW_CHANNEL')) {
+                            await channelsArray[x]?.updateOverwrite(guildData.defaultRoleIDs[y]!, {VIEW_CHANNEL: true});
                         }
                     }
-                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
-                        const newPermOWs = new Discord.PermissionOverwrites(channelsArray[x]!, {});
-                        newPermOWs.type = 'role';
-                        newPermOWs.id = guildData.defaultRoleIDs[y]!;
-                        await newPermOWs.update({VIEW_CHANNEL: false});
-                    }
-                    
+                    await channelsArray[x]?.updateOverwrite(everyoneRoleID!, {VIEW_CHANNEL: false});
                 }
-                else{
-                    const permOWs = channelsArray![x]?.permissionOverwrites.array()!;
-                    for (let y = 0; y < permOWs.length; y += 1) {
-                        if (permOWs[y]?.id === everyoneRoleID) {
-                            await permOWs[y]?.update({VIEW_CHANNEL: false});
+                else {
+                    await channelsArray[x]?.updateOverwrite(everyoneRoleID!, {VIEW_CHANNEL: true, SEND_MESSAGES: false, ATTACH_FILES: false, EMBED_LINKS: false});
+                    for (let y = 0; y < rolesArray.length; y += 1) {
+                        if (rolesArray![y]?.id !== everyoneRoleID!) {
+                            await channelsArray[x]?.updateOverwrite(rolesArray[y]!.id!, {VIEW_CHANNEL: false});
                         }
-                    }
-                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
-                        const newPermOWs = new Discord.PermissionOverwrites(channelsArray[x]!, {});
-                        newPermOWs.type = 'role';
-                        newPermOWs.id = guildData.defaultRoleIDs[y]!;
-                        await newPermOWs.update({VIEW_CHANNEL: true});
                     }
                 }
             }

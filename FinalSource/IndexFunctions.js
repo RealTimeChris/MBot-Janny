@@ -462,38 +462,28 @@ var IndexFunctions;
     function onChannelCreate(newChannel, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, currentRolesArray, everyoneRoleID, x, x;
+            var guildData, currentRolesArray, everyoneRoleID, x;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        if (!(newChannel instanceof Discord.GuildChannel)) return [3 /*break*/, 6];
+                        if (!(newChannel instanceof Discord.GuildChannel)) return [3 /*break*/, 3];
                         guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name });
                         return [4 /*yield*/, guildData.getFromDataBase()];
                     case 1:
                         _b.sent();
+                        if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 3];
                         currentRolesArray = newChannel.guild.roles.cache.array();
-                        if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 6];
                         everyoneRoleID = void 0;
                         for (x = 0; x < currentRolesArray.length; x += 1) {
                             if (currentRolesArray[x].name === '@everyone') {
                                 everyoneRoleID = (_a = currentRolesArray[x]) === null || _a === void 0 ? void 0 : _a.id;
                             }
                         }
-                        return [4 /*yield*/, newChannel.updateOverwrite(everyoneRoleID, { 'VIEW_CHANNEL': false })];
+                        return [4 /*yield*/, newChannel.updateOverwrite(everyoneRoleID, { VIEW_CHANNEL: false })];
                     case 2:
                         _b.sent();
-                        x = 0;
                         _b.label = 3;
-                    case 3:
-                        if (!(x < guildData.defaultRoleIDs.length)) return [3 /*break*/, 6];
-                        return [4 /*yield*/, newChannel.updateOverwrite(guildData.defaultRoleIDs[x], { 'VIEW_CHANNEL': true })];
-                    case 4:
-                        _b.sent();
-                        _b.label = 5;
-                    case 5:
-                        x += 1;
-                        return [3 /*break*/, 3];
-                    case 6: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
