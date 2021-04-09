@@ -72,7 +72,7 @@ export default class DiscordUser {
     public async getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData> {
         try {
             console.log('Loading user data from the database!');
-            const userData = await this.dataBase.get((client.user as Discord.User).id);
+            const userData = await this.dataBase.get(client.user!.id);
             return userData;
         } catch (error) {
             if (error.type === 'NotFoundError'){

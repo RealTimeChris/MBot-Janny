@@ -29,7 +29,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setColor([254, 254, 254])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
-                .setTitle('__**Test:**__')
+                .setTitle('__**Test:**__');
             await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
         }
         else{
@@ -39,10 +39,10 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setColor([254, 254, 254])
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
-                .setTitle('__**Test:**__')
+                .setTitle('__**Test:**__');
             await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
         }
-        
+
         return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {

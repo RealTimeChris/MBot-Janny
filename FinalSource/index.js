@@ -51,172 +51,104 @@ var discordUser = new DiscordUser_1.default();
 var client = new Discord.Client();
 client.once('ready', function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onReady(client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onReady(client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('message', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onMessage(msg, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onMessage(msg, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.ws.on('INTERACTION_CREATE', function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onInteractionCreate(interaction, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onInteractionCreate(interaction, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('channelCreate', function (newChannel) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onChannelCreate(newChannel, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onChannelCreate(newChannel, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('messageReactionAdd', function (messageReaction, user) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onMessageReactionAdd(messageReaction, user, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onMessageReactionAdd(messageReaction, user, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('guildDelete', function (guild) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildDete(guild, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onGuildDete(guild, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('guildBanAdd', function (guild, user) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildBanAdd(guild, user, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onGuildBanAdd(guild, user, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('guildBanRemove', function (guild, user) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildBanRemove(guild, user, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onGuildBanRemove(guild, user, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('guildMemberAdd', function (member) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildMemberAdd(member, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onGuildMemberAdd(member, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('guildMemberRemove', function (member) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildMemberRemove(member, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onGuildMemberRemove(member, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('guildMemberUpdate', function (oldGuildMember, newGuildMember) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildMemberUpdate(oldGuildMember, newGuildMember, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onGuildMemberUpdate(oldGuildMember, newGuildMember, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('inviteCreate', function (invite) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onInviteCreate(invite, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onInviteCreate(invite, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('messageDelete', function (message) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onMessageDelete(message, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onMessageDelete(message, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('messageDeleteBulk', function (collection) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onMessageDeleteBulk(collection, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onMessageDeleteBulk(collection, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('roleCreate', function (role) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onRoleCreate(role, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onRoleCreate(role, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('roleDelete', function (role) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onRoleDelete(role, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onRoleDelete(role, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.on('userUpdate', function (oldUser, newUser) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onUserUpdate(oldUser, newUser, client, discordUser)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        IndexFunctions_1.default.onUserUpdate(oldUser, newUser, client, discordUser);
+        return [2 /*return*/];
     });
 }); });
 client.login(config.botToken);
