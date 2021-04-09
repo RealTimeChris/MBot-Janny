@@ -148,7 +148,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			console.log(key + ' = ' + value);
             if (key.includes(dbKey)){
 				deletedCounter.setData(key, value);
-				await onData(dbKey, discordUser, deletedCounter)
+				await onData(dbKey, discordUser, deletedCounter);
 			}
         }
 
