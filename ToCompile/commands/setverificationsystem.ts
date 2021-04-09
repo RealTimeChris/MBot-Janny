@@ -206,7 +206,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
             }            
             
             await newMessage.react(commandData.args[2]!);
-
+            
             const currentGuild = commandData.guild?.client.guilds.resolve(commandData.guild.id)!;
             const channelsArray = currentGuild.channels.cache.array()!;
             const currentRolesArray = currentGuild.roles.cache.array()!;

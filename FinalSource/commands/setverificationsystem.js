@@ -311,7 +311,7 @@ function execute(commandData, discordUser) {
                 case 40:
                     if (!(y < permOWs.length)) return [3 /*break*/, 43];
                     if (!(((_d = permOWs[y]) === null || _d === void 0 ? void 0 : _d.id) === everyoneRoleID)) return [3 /*break*/, 42];
-                    return [4 /*yield*/, ((_e = permOWs[y]) === null || _e === void 0 ? void 0 : _e.update({ VIEW_CHANNEL: true }))];
+                    return [4 /*yield*/, ((_e = permOWs[y]) === null || _e === void 0 ? void 0 : _e.update({ VIEW_CHANNEL: true, SEND_MESSAGES: false, ATTACH_FILES: false, EMBED_LINKS: false }))];
                 case 41:
                     _j.sent();
                     _j.label = 42;

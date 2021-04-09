@@ -314,8 +314,7 @@ module HelperFunctions{
 			try {
 				if (guildData.verificationSystem.channelID != '') {
 					const currentGuild = await client.guilds.fetch(guildData.id!);
-					const currentChannel = currentGuild.channels
-						.resolve(guildData.verificationSystem.channelID) as Discord.TextChannel;
+					const currentChannel = currentGuild.channels.resolve(guildData.verificationSystem.channelID) as Discord.TextChannel;
 					if (currentChannel === null) {
 						console.log('null Channel! Purging from the values! For Guild: ' + guildData.guildName);
 						guildData.verificationSystem.channelID = '';
@@ -325,14 +324,12 @@ module HelperFunctions{
 						return;
 					}
 					const msgManager = new Discord.MessageManager(currentChannel);
-					const oldVerificationMessage = await msgManager
-						.fetch(guildData.verificationSystem.messageID);
+					const oldVerificationMessage = await msgManager.fetch(guildData.verificationSystem.messageID);
 					const newMsgEmbed = oldVerificationMessage.embeds[0];
 					const newVerificationMessage = await currentChannel.send(newMsgEmbed!);
 					guildData.verificationSystem.messageID = newVerificationMessage.id;
 					await guildData.writeToDataBase();
-					await newVerificationMessage
-						.react((oldVerificationMessage.reactions.cache.first()!).emoji.name);
+					await newVerificationMessage.react((oldVerificationMessage.reactions.cache.first()!).emoji.name);
 					await oldVerificationMessage.delete();
 					return;
 				}

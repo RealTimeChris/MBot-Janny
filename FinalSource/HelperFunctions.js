@@ -479,8 +479,7 @@ var HelperFunctions;
                                 return [4 /*yield*/, client.guilds.fetch(guildData.id)];
                             case 1:
                                 currentGuild = _a.sent();
-                                currentChannel = currentGuild.channels
-                                    .resolve(guildData.verificationSystem.channelID);
+                                currentChannel = currentGuild.channels.resolve(guildData.verificationSystem.channelID);
                                 if (!(currentChannel === null)) return [3 /*break*/, 3];
                                 console.log('null Channel! Purging from the values! For Guild: ' + guildData.guildName);
                                 guildData.verificationSystem.channelID = '';
@@ -492,8 +491,7 @@ var HelperFunctions;
                                 return [2 /*return*/];
                             case 3:
                                 msgManager = new Discord.MessageManager(currentChannel);
-                                return [4 /*yield*/, msgManager
-                                        .fetch(guildData.verificationSystem.messageID)];
+                                return [4 /*yield*/, msgManager.fetch(guildData.verificationSystem.messageID)];
                             case 4:
                                 oldVerificationMessage = _a.sent();
                                 newMsgEmbed = oldVerificationMessage.embeds[0];
@@ -504,8 +502,7 @@ var HelperFunctions;
                                 return [4 /*yield*/, guildData.writeToDataBase()];
                             case 6:
                                 _a.sent();
-                                return [4 /*yield*/, newVerificationMessage
-                                        .react((oldVerificationMessage.reactions.cache.first()).emoji.name)];
+                                return [4 /*yield*/, newVerificationMessage.react((oldVerificationMessage.reactions.cache.first()).emoji.name)];
                             case 7:
                                 _a.sent();
                                 return [4 /*yield*/, oldVerificationMessage.delete()];

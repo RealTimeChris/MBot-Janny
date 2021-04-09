@@ -460,16 +460,19 @@ var IndexFunctions;
     }
     IndexFunctions.onInteractionCreate = onInteractionCreate;
     function onChannelCreate(newChannel, client, discordUser) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d, _e;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, currentRolesArray, everyoneRoleID, x, permOWs, y, y, newPermOWs;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
+            var guildData, currentRolesArray, everyoneRoleID, x, permOWs, isItFound, x, x, y, x;
+            return __generator(this, function (_f) {
+                switch (_f.label) {
                     case 0:
-                        if (!!(newChannel instanceof Discord.DMChannel)) return [3 /*break*/, 8];
+                        if (!(newChannel instanceof Discord.GuildChannel)) return [3 /*break*/, 17];
                         guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name });
+                        return [4 /*yield*/, guildData.getFromDataBase()];
+                    case 1:
+                        _f.sent();
                         currentRolesArray = newChannel.guild.roles.cache.array();
-                        if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 8];
+                        if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 17];
                         everyoneRoleID = void 0;
                         for (x = 0; x < currentRolesArray.length; x += 1) {
                             if (currentRolesArray[x].name === '@everyone') {
@@ -477,34 +480,62 @@ var IndexFunctions;
                             }
                         }
                         permOWs = newChannel.permissionOverwrites.array();
-                        y = 0;
-                        _d.label = 1;
-                    case 1:
-                        if (!(y < permOWs.length)) return [3 /*break*/, 4];
-                        if (!(((_b = permOWs[y]) === null || _b === void 0 ? void 0 : _b.id) === everyoneRoleID)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, ((_c = permOWs[y]) === null || _c === void 0 ? void 0 : _c.update({ VIEW_CHANNEL: false }))];
+                        isItFound = false;
+                        x = 0;
+                        _f.label = 2;
                     case 2:
-                        _d.sent();
-                        _d.label = 3;
+                        if (!(x < permOWs.length)) return [3 /*break*/, 5];
+                        if (!(((_b = permOWs[x]) === null || _b === void 0 ? void 0 : _b.id) === everyoneRoleID)) return [3 /*break*/, 4];
+                        isItFound = true;
+                        return [4 /*yield*/, ((_c = permOWs[x]) === null || _c === void 0 ? void 0 : _c.update({ VIEW_CHANNEL: false }))];
                     case 3:
-                        y += 1;
-                        return [3 /*break*/, 1];
+                        _f.sent();
+                        _f.label = 4;
                     case 4:
-                        y = 0;
-                        _d.label = 5;
+                        x += 1;
+                        return [3 /*break*/, 2];
                     case 5:
-                        if (!(y < guildData.defaultRoleIDs.length)) return [3 /*break*/, 8];
-                        newPermOWs = new Discord.PermissionOverwrites(newChannel, {});
-                        newPermOWs.type = 'role';
-                        newPermOWs.id = guildData.defaultRoleIDs[y];
-                        return [4 /*yield*/, newPermOWs.update({ VIEW_CHANNEL: true })];
+                        if (!(isItFound === false)) return [3 /*break*/, 7];
+                        return [4 /*yield*/, newChannel.overwritePermissions([{ id: everyoneRoleID, deny: ['VIEW_CHANNEL'], type: 'role' }])];
                     case 6:
-                        _d.sent();
-                        _d.label = 7;
+                        _f.sent();
+                        _f.label = 7;
                     case 7:
+                        isItFound = false;
+                        x = 0;
+                        _f.label = 8;
+                    case 8:
+                        if (!(x < permOWs.length)) return [3 /*break*/, 13];
+                        y = 0;
+                        _f.label = 9;
+                    case 9:
+                        if (!(y < guildData.defaultRoleIDs.length)) return [3 /*break*/, 12];
+                        if (!(((_d = permOWs[x]) === null || _d === void 0 ? void 0 : _d.id) === guildData.defaultRoleIDs[y])) return [3 /*break*/, 11];
+                        isItFound = true;
+                        return [4 /*yield*/, ((_e = permOWs[x]) === null || _e === void 0 ? void 0 : _e.update({ VIEW_CHANNEL: true }))];
+                    case 10:
+                        _f.sent();
+                        _f.label = 11;
+                    case 11:
                         y += 1;
-                        return [3 /*break*/, 5];
-                    case 8: return [2 /*return*/];
+                        return [3 /*break*/, 9];
+                    case 12:
+                        x += 1;
+                        return [3 /*break*/, 8];
+                    case 13:
+                        if (!(isItFound === false)) return [3 /*break*/, 17];
+                        x = 0;
+                        _f.label = 14;
+                    case 14:
+                        if (!(x < guildData.defaultRoleIDs.length)) return [3 /*break*/, 17];
+                        return [4 /*yield*/, newChannel.updateOverwrite(guildData.defaultRoleIDs[x], { 'VIEW_CHANNEL': true })];
+                    case 15:
+                        _f.sent();
+                        _f.label = 16;
+                    case 16:
+                        x += 1;
+                        return [3 /*break*/, 14];
+                    case 17: return [2 /*return*/];
                 }
             });
         });

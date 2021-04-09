@@ -343,28 +343,42 @@ module IndexFunctions{
         console.log(`Completed Command: ${returnData.commandName}`);
     }
 
-    export async function onChannelCreate(newChannel: Discord.DMChannel | Discord.GuildChannel, client: any, discordUser: DiscordUser) {
-        if (!(newChannel instanceof Discord.DMChannel)) {
+    export async function onChannelCreate(newChannel:  Discord.Channel | Discord.DMChannel | Discord.GuildChannel, client: any, discordUser: DiscordUser) {
+        if (newChannel instanceof Discord.GuildChannel){
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name});
-            const currentRolesArray = newChannel.guild.roles.cache.array();
+            await guildData.getFromDataBase();
+            const currentRolesArray= newChannel.guild.roles.cache.array();
             if (guildData.verificationSystem.channelID !== '') {
-                let everyoneRoleID;
+                let everyoneRoleID: string;
                 for (let x = 0; x < currentRolesArray.length; x += 1) {
                     if (currentRolesArray[x]!.name === '@everyone') {
-                        everyoneRoleID = currentRolesArray[x]?.id;
+                        everyoneRoleID = currentRolesArray[x]?.id!;
                     }
                 }
                 const permOWs = newChannel.permissionOverwrites.array()!;
-                for (let y = 0; y < permOWs.length; y += 1) {
-                    if (permOWs[y]?.id === everyoneRoleID) {
-                        await permOWs[y]?.update({VIEW_CHANNEL: false});
+                let isItFound = false;
+                for (let x = 0; x < permOWs.length; x += 1) {
+                    if (permOWs[x]?.id === everyoneRoleID!) {
+                        isItFound = true;
+                        await permOWs[x]?.update({VIEW_CHANNEL: false});
                     }
                 }
-                for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
-                    const newPermOWs = new Discord.PermissionOverwrites(newChannel, {});
-                    newPermOWs.type = 'role';
-                    newPermOWs.id = guildData.defaultRoleIDs[y]!;
-                    await newPermOWs.update({VIEW_CHANNEL: true});
+                if (isItFound === false) {
+                    await newChannel.overwritePermissions([{id: everyoneRoleID!, deny:['VIEW_CHANNEL'], type: 'role'}]);
+                }
+                isItFound = false;
+                for (let x = 0; x < permOWs.length; x += 1){
+                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
+                        if (permOWs[x]?.id === guildData.defaultRoleIDs[y]) {
+                            isItFound = true;
+                            await permOWs[x]?.update({VIEW_CHANNEL: true});
+                        }
+                    }
+                }
+                if (isItFound === false) {
+                    for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
+                        await newChannel.updateOverwrite(guildData.defaultRoleIDs[x]!,{'VIEW_CHANNEL': true});
+                    }
                 }
             }
         }

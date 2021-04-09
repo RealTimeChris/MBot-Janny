@@ -25,7 +25,7 @@ client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
 	await IndexFunctions.onInteractionCreate(interaction, client, discordUser);
 });
 
-client.on('channelCreate', async (newChannel: Discord.DMChannel | Discord.GuildChannel) => {
+client.on('channelCreate', async (newChannel: Discord.Channel | Discord.DMChannel | Discord.GuildChannel) => {
 	await IndexFunctions.onChannelCreate(newChannel, client, discordUser);
 });
 
