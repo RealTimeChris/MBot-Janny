@@ -221,7 +221,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
                     const permOWs = channelsArray![x]?.permissionOverwrites.array()!;
                     for (let y = 0; y < permOWs.length; y += 1) {
                         if (permOWs[y]?.id === everyoneRoleID) {
-                            await permOWs[y]?.update({VIEW_CHANNEL: true});
+                            await permOWs[y]?.update({VIEW_CHANNEL: true, SEND_MESSAGES: false, ATTACH_FILES: false, EMBED_LINKS: false});
                         }
                     }
                     for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
