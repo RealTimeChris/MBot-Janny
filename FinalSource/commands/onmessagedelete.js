@@ -61,7 +61,7 @@ function execute(client, message, discordUser) {
                         commandName: command.name
                     };
                     if (!(message.deleted)) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: message.guild.id, name: message.guild.name, memberCount: message.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
@@ -102,7 +102,7 @@ function execute(client, message, discordUser) {
                 case 6:
                     x += 1;
                     return [3 /*break*/, 4];
-                case 7: return [2 /*return*/, command.name];
+                case 7: return [2 /*return*/, commandReturnData];
                 case 8:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

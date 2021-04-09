@@ -27,8 +27,8 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
             let index;
             for (let x = 0; x < guildData.trackedUsers.length; x += 1) {
                 if (user.id === guildData.trackedUsers[x]?.userID) {
-                    msgStringContent = `__**Tracked User:**__ <@!${user.id}> (${user.username})\n__**On Server:**__ ${message.guild!.name}
-                        \n__**In Channel:**__ <#${message.channel.id}> (${(message.channel as Discord.TextChannel).name})\n__**Message ID**__ ${message.id}\n__**What They Said:**__ ${message.content}`;
+                    msgStringContent = `__**Tracked User:**__ <@!${user.id}> (${user.username})\n__**On Server:**__ ${message.guild!.name}`+
+                        `\n__**In Channel:**__ <#${message.channel.id}> (${(message.channel as Discord.TextChannel).name})\n__**Message ID**__ ${message.id}\n__**What They Said:**__ ${message.content}`;
                     isItFound = true;
                     index = x;
                 }   
@@ -50,9 +50,7 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
         });
     }
     catch(error) {
-        return new Promise((resolve, reject) => {
-            reject(error);
-        });
+        console.log(error);
     }
 }
 
@@ -60,8 +58,11 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
 * Selects a chosen chat message and sends it via the appropriate channel,
 * upon recieving a trigger phrase or word.
 */
-async function execute(message: Discord.Message, commandData: FoundationClasses.CommandData): Promise<string> {
+async function execute(message: Discord.Message, commandData: FoundationClasses.CommandData): Promise<FoundationClasses.CommandReturnData> {
     try {
+        const commandReturnData: FoundationClasses.CommandReturnData = {
+            commandName: command.name
+        }
         await trackIfTrackedUser(message, commandData);
 
         const number = Math.random() * 100;
@@ -70,11 +71,11 @@ async function execute(message: Discord.Message, commandData: FoundationClasses.
                 await message.reply("Greetings, what's up fellow Discordee?! Can I offer you some drugs?");
             }
         }
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);
-        });
+        })
     }
 }
 command.function = execute;

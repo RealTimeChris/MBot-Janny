@@ -65,7 +65,8 @@ function trackIfTrackedUser(message, commandData) {
                     var index;
                     for (var x = 0; x < guildData.trackedUsers.length; x += 1) {
                         if (user.id === ((_a = guildData.trackedUsers[x]) === null || _a === void 0 ? void 0 : _a.userID)) {
-                            msgStringContent = "__**Tracked User:**__ <@!" + user.id + "> (" + user.username + ")\n__**On Server:**__ " + message.guild.name + "\n                        \n__**In Channel:**__ <#" + message.channel.id + "> (" + message.channel.name + ")\n__**Message ID**__ " + message.id + "\n__**What They Said:**__ " + message.content;
+                            msgStringContent = "__**Tracked User:**__ <@!" + user.id + "> (" + user.username + ")\n__**On Server:**__ " + message.guild.name +
+                                ("\n__**In Channel:**__ <#" + message.channel.id + "> (" + message.channel.name + ")\n__**Message ID**__ " + message.id + "\n__**What They Said:**__ " + message.content);
                             isItFound = true;
                             index = x;
                         }
@@ -87,9 +88,7 @@ function trackIfTrackedUser(message, commandData) {
                 });
             }
             catch (error) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        reject(error);
-                    })];
+                console.log(error);
             }
             return [2 /*return*/];
         });
@@ -101,11 +100,14 @@ function trackIfTrackedUser(message, commandData) {
 */
 function execute(message, commandData) {
     return __awaiter(this, void 0, void 0, function () {
-        var number, error_1;
+        var commandReturnData, number, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     return [4 /*yield*/, trackIfTrackedUser(message, commandData)];
                 case 1:
                     _a.sent();
@@ -116,7 +118,7 @@ function execute(message, commandData) {
                 case 2:
                     _a.sent();
                     _a.label = 3;
-                case 3: return [2 /*return*/, command.name];
+                case 3: return [2 /*return*/, commandReturnData];
                 case 4:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

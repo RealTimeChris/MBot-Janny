@@ -61,7 +61,7 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                         commandName: command.name
                     };
                     if (!(oldGuildMemberRoleManager instanceof Discord.GuildMemberRoleManager)) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newGuildMember.guild.id,
                         name: newGuildMember.guild.name, memberCount: newGuildMember.guild.memberCount });
@@ -100,7 +100,7 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                     return [4 /*yield*/, textChannel.send(messageEmbed)];
                 case 3:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 4:
                     if (!(collectionSizeDifference < 0)) return [3 /*break*/, 6];
                     finalString = "__**Role Gained:**__ <@&" + newRole.id + "> (" + newRole.name + ")\n";
@@ -118,8 +118,8 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                     return [4 /*yield*/, textChannel.send(messageEmbed)];
                 case 5:
                     _a.sent();
-                    return [2 /*return*/, command.name];
-                case 6: return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
+                case 6: return [2 /*return*/, commandReturnData];
                 case 7:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

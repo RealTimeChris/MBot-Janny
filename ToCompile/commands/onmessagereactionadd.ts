@@ -17,18 +17,18 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(messageReaction: Discord.MessageReaction, client: Discord.Client, args: string[],
-    discordUser: DiscordUser): Promise<string> {
+    discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
 	try {
 		const commandReturnData: FoundationClasses.CommandReturnData = {
 			commandName: command.name
 		};
 		
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: messageReaction.message.guild!.id,
-            name: messageReaction.message.guild!.name, memberCount: messageReaction.message.guild!.memberCount});
+            memberCount: messageReaction.message.guild!.memberCount, name: messageReaction.message.guild!.name});
 		await guildData.getFromDataBase();
 
 		if (messageReaction instanceof Discord.MessageReaction === false) {
-			return command.name;
+			return commandReturnData;
 		}
 		const userID = (messageReaction.users.cache
 			.array()[messageReaction.users.cache.array().length - 1]!).id;
@@ -63,8 +63,8 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 						await messageReaction.users.remove(userID);
 					}
 					catch(error) {
-						if (!client.guilds.resolve(guildData.id)?.members.resolve(discordUser.userData.userID)?.permissionsIn(messageReaction.message.channel).has('MANAGE_EMOJIS')) {
-							
+						if (!(client.guilds.resolve(guildData.id)?.members.resolve(discordUser.userData.userID)?.permissionsIn(messageReaction.message.channel).has('MANAGE_EMOJIS'))) {
+							console.log('I\'M MISSING PERMISSIONS REQUIRED FOR DOING THAT!');
 						}
 					}
 					
@@ -73,7 +73,7 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 				await messageReaction.users.remove(userID);
 			}
 		}
-		return command.name;
+		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {
 			reject(error);

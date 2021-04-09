@@ -62,7 +62,7 @@ function execute(client, guild, user, discordUser) {
                         commandName: command.name
                     };
                     if (!(guild instanceof Discord.Guild)) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     guildData_1 = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount });
                     return [4 /*yield*/, guildData_1.getFromDataBase()];
@@ -107,7 +107,7 @@ function execute(client, guild, user, discordUser) {
                             }
                         });
                     }); }, 500);
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 2:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

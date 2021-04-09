@@ -61,7 +61,7 @@ function execute(client, collection, discordUser) {
                         commandName: command.name
                     };
                     if (!(collection instanceof Discord.Collection)) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: collection.first().guild.id,
                         name: collection.first().guild.name, memberCount: collection.first().guild.memberCount });
@@ -118,7 +118,7 @@ function execute(client, collection, discordUser) {
                 case 8:
                     x += 1;
                     return [3 /*break*/, 4];
-                case 9: return [2 /*return*/, command.name];
+                case 9: return [2 /*return*/, commandReturnData];
                 case 10:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

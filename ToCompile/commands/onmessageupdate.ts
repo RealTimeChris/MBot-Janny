@@ -17,14 +17,14 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(client: Discord.Client, oldMessage: Discord.Message, newMessage: Discord.Message,
-    discordUser: DiscordUser): Promise<string> {
+    discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
 		
         if (!(newMessage instanceof Discord.Message)) {
-            return command.name;
+            return commandReturnData;
         }
 
         
@@ -61,7 +61,7 @@ async function execute(client: Discord.Client, oldMessage: Discord.Message, newM
             await textChannel.send('Message Content!', { embed: msgEmbed2 });
         }
 
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

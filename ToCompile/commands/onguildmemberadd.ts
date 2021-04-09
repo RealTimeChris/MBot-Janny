@@ -18,14 +18,14 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
-    discordUser: DiscordUser): Promise<string> {
+    discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
 		
         if (!(guildMember instanceof Discord.GuildMember)) {
-            return command.name;
+            return commandReturnData;
         }
 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guildMember.guild.id, name: guildMember.guild.name, memberCount: guildMember.guild.memberCount});
@@ -49,7 +49,7 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
         }
 
         if (logs!.enabled === false) {
-            return command.name;
+            return commandReturnData;
         }
 
         const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
@@ -72,7 +72,7 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
             .setTitle('__**New Guild Member:**__');
 
         await textChannel.send(msgEmbed);
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

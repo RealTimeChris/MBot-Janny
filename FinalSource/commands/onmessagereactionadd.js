@@ -62,12 +62,12 @@ function execute(messageReaction, client, args, discordUser) {
                         commandName: command.name
                     };
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: messageReaction.message.guild.id,
-                        name: messageReaction.message.guild.name, memberCount: messageReaction.message.guild.memberCount });
+                        memberCount: messageReaction.message.guild.memberCount, name: messageReaction.message.guild.name });
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 1:
                     _c.sent();
                     if (messageReaction instanceof Discord.MessageReaction === false) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     userID = (messageReaction.users.cache
                         .array()[messageReaction.users.cache.array().length - 1]).id;
@@ -117,6 +117,7 @@ function execute(messageReaction, client, args, discordUser) {
                 case 8:
                     error_1 = _c.sent();
                     if (!((_b = (_a = client.guilds.resolve(guildData.id)) === null || _a === void 0 ? void 0 : _a.members.resolve(discordUser.userData.userID)) === null || _b === void 0 ? void 0 : _b.permissionsIn(messageReaction.message.channel).has('MANAGE_EMOJIS'))) {
+                        console.log('I\'M MISSING PERMISSIONS REQUIRED FOR DOING THAT!');
                     }
                     return [3 /*break*/, 9];
                 case 9:
@@ -132,7 +133,7 @@ function execute(messageReaction, client, args, discordUser) {
                 case 13:
                     x += 1;
                     return [3 /*break*/, 2];
-                case 14: return [2 /*return*/, command.name];
+                case 14: return [2 /*return*/, commandReturnData];
                 case 15:
                     error_2 = _c.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

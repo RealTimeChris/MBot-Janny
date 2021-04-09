@@ -61,7 +61,7 @@ function execute(client, oldMessage, newMessage, discordUser) {
                         commandName: command.name
                     };
                     if (!(newMessage instanceof Discord.Message)) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newMessage.guild.id,
                         name: newMessage.guild.name, memberCount: newMessage.guild.memberCount });
@@ -104,7 +104,7 @@ function execute(client, oldMessage, newMessage, discordUser) {
                 case 6:
                     x += 1;
                     return [3 /*break*/, 4];
-                case 7: return [2 /*return*/, command.name];
+                case 7: return [2 /*return*/, commandReturnData];
                 case 8:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

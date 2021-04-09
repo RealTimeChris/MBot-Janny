@@ -17,14 +17,14 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(client: Discord.Client, role: Discord.Role,
-    discordUser: DiscordUser): Promise<string> {
+    discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
 		
         if (!(role instanceof Discord.Role)) {
-            return command.name;
+            return commandReturnData;
         }
 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild!.id,
@@ -60,7 +60,7 @@ async function execute(client: Discord.Client, role: Discord.Role,
             .setColor(role.color);
         await textChannel.send(msgEmbed);
 
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

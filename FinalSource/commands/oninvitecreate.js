@@ -61,7 +61,7 @@ function execute(client, invite, discordUser) {
                         commandName: command.name
                     };
                     if (!(invite instanceof Discord.Invite)) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: invite.guild.id, name: invite.guild.name, memberCount: invite.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
@@ -91,7 +91,7 @@ function execute(client, invite, discordUser) {
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 4:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

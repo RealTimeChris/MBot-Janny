@@ -378,8 +378,8 @@ module IndexFunctions{
         }
         try {
             console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await (botCommands.get(command)?.function(messageReaction, client, user, discordUser));
-            console.log(`Completed Command: ${cmdName}`);
+            const returnData = await botCommands.get(command)?.function(messageReaction, client, user, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
             return;
         } catch (error) {
             console.log(error);
@@ -394,8 +394,8 @@ module IndexFunctions{
         }
         try {
             console.log(`Command: '${command}' entered by system.`);
-            const cmdName = await botCommands.get(command)?.function(guild, discordUser);
-            console.log(`Completed Command: ${cmdName}`);
+            const returnData = await botCommands.get(command)?.function(guild, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
             return;
         } catch (error) {
             console.log(error);
@@ -417,8 +417,8 @@ module IndexFunctions{
                 }
                 try {
                     console.log(`Command: '${command}' entered by system.`);
-                    const cmdName = await botCommands.get(command)?.function(client, guild, user, discordUser);
-                    console.log(`Completed Command: ${cmdName}`);
+                    const returnData = await botCommands.get(command)?.function(guild, client, user, discordUser) as FoundationClasses.CommandReturnData;
+                    console.log(`Completed Command: ${returnData.commandName}`);
                     return;
                 } catch (error) {
                     console.log(error);
@@ -442,8 +442,8 @@ module IndexFunctions{
                 }
                 try {
                     console.log(`Command: '${command}' entered by system.`);
-                    const cmdName = await botCommands.get(command)?.function(client, guild, user, discordUser);
-                    console.log(`Completed Command: ${cmdName}`);
+                    const returnData = await botCommands.get(command)?.function(client, client, guild, discordUser) as FoundationClasses.CommandReturnData;
+                    console.log(`Completed Command: ${returnData.commandName}`);
                     return;
                 } catch (error) {
                     console.log(error);
@@ -467,8 +467,8 @@ module IndexFunctions{
                 }
                 try {
                     console.log(`Command: '${command}' entered by system.`);
-                    const cmdName = await botCommands.get(command)?.function(client, member, discordUser);
-                    console.log(`Completed Command: ${cmdName}`);
+                    const returnData = await botCommands.get(command)?.function(client, member, discordUser) as FoundationClasses.CommandReturnData;
+                    console.log(`Completed Command: ${returnData.commandName}`);
                     return;
                 } catch (error) {
                     console.log(error);
@@ -492,8 +492,8 @@ module IndexFunctions{
                 }
                 try {
                     console.log(`Command: '${command}' entered by system.`);
-                    const cmdName = await botCommands.get(command)?.function(client, member, discordUser);
-                    console.log(`Completed Command: ${cmdName}`);
+                    const returnData = await botCommands.get(command)?.function(client, member, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
                     return;
                 } catch (error) {
                     console.log(error);
@@ -518,9 +518,8 @@ module IndexFunctions{
                     }
                     try {
                         console.log(`Command: '${command}' entered by system.`);
-                        const cmdName = await (botCommands.get(command)?.function(client, oldGuildMember,
-                            newGuildMember, discordUser));
-                        console.log(`Completed Command: ${cmdName}`);
+                        const returnData = await botCommands.get(command)?.function(client, oldGuildMember, newGuildMember, discordUser) as FoundationClasses.CommandReturnData;
+                        console.log(`Completed Command: ${returnData.commandName}`);
                         return;
                     } catch (error) {
                         return;
@@ -543,9 +542,8 @@ module IndexFunctions{
                     }
                     try {
                         console.log(`Command: '${command}' entered by system.`);
-                        const cmdName = await (botCommands.get(command)?.function(client, oldGuildMember,
-                            newGuildMember, discordUser));
-                        console.log(`Completed Command: ${cmdName}`);
+                        const returnData = await botCommands.get(command)?.function(client, oldGuildMember, newGuildMember, discordUser) as FoundationClasses.CommandReturnData;
+                        console.log(`Completed Command: ${returnData.commandName}`);
                         return;
                     } catch (error) {
                         return;
@@ -577,9 +575,8 @@ module IndexFunctions{
                     }
                     try {
                         console.log(`Command: '${command}' entered by system.`);
-                        const cmdName = await (botCommands.get(command)?.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager,
-                                newGuildMember, collectionSizeDifference, discordUser));
-                        console.log(`Completed Command: ${cmdName}`);
+                        const returnData = await botCommands.get(command)?.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser) as FoundationClasses.CommandReturnData;
+                        console.log(`Completed Command: ${returnData.commandName}`);
                         return;
                     } catch (error) {
                         console.log(error);
@@ -604,8 +601,8 @@ module IndexFunctions{
                 }
                 try {
                     console.log(`Command: '${command}' entered by system.`);
-                    const cmdName = await botCommands.get(command)?.function(client, invite, discordUser);
-                    console.log(`Completed Command: ${cmdName}`);
+                    const returnData = await botCommands.get(command)?.function(client, invite, discordUser) as FoundationClasses.CommandReturnData;
+                    console.log(`Completed Command: ${returnData.commandName}`);
                     return;
                 } catch (error) {
                     console.log(error);
@@ -630,8 +627,8 @@ module IndexFunctions{
                     }
                     try {
                         console.log(`Command: '${command}' entered by system.`);
-                        const cmdName = await botCommands.get(command)?.function(client, message, discordUser);
-                        console.log(`Completed Command: ${cmdName}`);
+                        const returnData = await botCommands.get(command)?.function(client, message, discordUser) as FoundationClasses.CommandReturnData;
+                        console.log(`Completed Command: ${returnData.commandName}`);
                         return;
                     } catch (error) {
                         console.log(error);
@@ -656,8 +653,8 @@ module IndexFunctions{
                 }
                 try {
                     console.log(`Command: '${command}' entered by system.`);
-                    const cmdName = await botCommands.get(command)?.function(client, collection, discordUser);
-                    console.log(`Completed Command: ${cmdName}`);
+                    const returnData = await botCommands.get(command)?.function(client, collection, discordUser) as FoundationClasses.CommandReturnData;
+                    console.log(`Completed Command: ${returnData.commandName}`);
                     return;
                 } catch (error) {
                     console.log(error);
@@ -681,8 +678,8 @@ module IndexFunctions{
                 }
                 try {
                     console.log(`Command: '${command}' entered by system.`);
-                    const cmdName = await botCommands.get(command)?.function(client, role, discordUser);
-                    console.log(`Completed Command: ${cmdName}`);
+                    const returnData = await botCommands.get(command)?.function(client, role, discordUser) as FoundationClasses.CommandReturnData;
+                    console.log(`Completed Command: ${returnData.commandName}`);
                     return;
                 } catch (error) {
                     console.log(error);
@@ -706,8 +703,8 @@ module IndexFunctions{
                 }
                 try {
                     console.log(`Command: '${command}' entered by system.`);
-                    const cmdName = await botCommands.get(command)!.function(client, role, discordUser);
-                    console.log(`Completed Command: ${cmdName}`);
+                    const returnData = await botCommands.get(command)?.function(client, role, discordUser) as FoundationClasses.CommandReturnData;
+                    console.log(`Completed Command: ${returnData.commandName}`);
                     return;
                 } catch (error) {
                     console.log(error);
@@ -737,8 +734,8 @@ module IndexFunctions{
                                 }
                                 try {
                                     console.log(`Command: '${command}' entered by system.`);
-                                    const cmdName = await (botCommands.get(command)?.function(client, oldUser, newUser, guildArray[x], discordUser));
-                                    console.log(`Completed Command: ${cmdName}`);
+                                    const returnData = await botCommands.get(command)?.function(client, oldUser, newUser, guildArray[x],  discordUser) as FoundationClasses.CommandReturnData;
+                                    console.log(`Completed Command: ${returnData.commandName}`);
                                     break;
                                 } catch (error) {
                                     console.log(error);

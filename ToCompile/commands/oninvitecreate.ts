@@ -17,14 +17,14 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(client: Discord.Client, invite: Discord.Invite,
-    discordUser: DiscordUser): Promise<string> {
+    discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData =  {
             commandName: command.name
         };
 		
         if (!(invite instanceof Discord.Invite)) {
-            return command.name;
+            return commandReturnData;
         }
 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: invite.guild!.id, name: invite.guild!.name, memberCount: invite.guild!.memberCount});
@@ -53,7 +53,7 @@ async function execute(client: Discord.Client, invite: Discord.Invite,
             .setDescription(msgString)
             .setColor(guildData.borderColor as [number, number, number]);
         await textChannel.send(msgEmbed);
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

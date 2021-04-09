@@ -62,7 +62,7 @@ function execute(client, guildMember, discordUser) {
                         commandName: command.name
                     };
                     if (!(guildMember instanceof Discord.GuildMember)) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guildMember.guild.id, name: guildMember.guild.name, memberCount: guildMember.guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
@@ -93,7 +93,7 @@ function execute(client, guildMember, discordUser) {
                     return [3 /*break*/, 3];
                 case 6:
                     if (logs.enabled === false) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
                 case 7:
@@ -117,7 +117,7 @@ function execute(client, guildMember, discordUser) {
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 9:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 10:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

@@ -52,13 +52,16 @@ var command = {
 };
 function execute(client, guild, user, discordUser) {
     return __awaiter(this, void 0, void 0, function () {
-        var guildData, logs, x, textChannel, auditLogs, auditLogEntry, msgString, msgEmbed, error_1;
+        var commandReturnData, guildData, logs, x, textChannel, auditLogs, auditLogEntry, msgString, msgEmbed, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 4, , 5]);
+                    commandReturnData = {
+                        commandName: command.name
+                    };
                     if (!(guild instanceof Discord.Guild)) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount });
                     return [4 /*yield*/, guildData.getFromDataBase()];
@@ -94,7 +97,7 @@ function execute(client, guild, user, discordUser) {
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 4:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

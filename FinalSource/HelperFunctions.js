@@ -885,11 +885,9 @@ var HelperFunctions;
                                 if (arrayOfMessageArrays[y][z].pinned === true
                                     || arrayOfMessageArrays[y][z].deleted === true) {
                                     arrayOfMessageArrays[y].splice(z, 1);
-                                    console.log('BEING SPLICED!');
                                 }
                                 else {
                                     totalMessageCount += 1;
-                                    console.log('BEING ADDED!');
                                 }
                             }
                         }
@@ -917,7 +915,7 @@ var HelperFunctions;
                         }
                         if (!!arrayOfMessageArrays[y][z].pinned) return [3 /*break*/, 28];
                         if (!((_c = arrayOfMessageArrays[y][z]) === null || _c === void 0 ? void 0 : _c.deletable)) return [3 /*break*/, 28];
-                        return [4 /*yield*/, arrayOfMessageArrays[y][z].delete()];
+                        return [4 /*yield*/, arrayOfMessageArrays[y][z].delete({ timeout: 5000 })];
                     case 27:
                         _d.sent();
                         console.log("Deleting Message Number: " + (totalMessageCount - (y * 100 + z)) + " of " + totalMessageCount + " in channel " + currentChannel.name + ".");

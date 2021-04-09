@@ -16,14 +16,14 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(guild: Discord.Guild, 
-    discordUser: DiscordUser): Promise<string> {
+    discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
 		
         if (!(discordUser instanceof DiscordUser)) {
-            return command.name;
+            return commandReturnData;
         }
 
         const serverRecordKey = `${guild.id} + Record`;
@@ -34,7 +34,7 @@ async function execute(guild: Discord.Guild,
             discordUser.userData.activeInviteGuilds.push(guild.id);
             discordUser.updateUserDataInDB(discordUser.userData);
         }
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

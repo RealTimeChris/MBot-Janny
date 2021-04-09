@@ -60,7 +60,7 @@ function execute(guild, discordUser) {
                         commandName: command.name
                     };
                     if (!(discordUser instanceof DiscordUser_1.default)) {
-                        return [2 /*return*/, command.name];
+                        return [2 /*return*/, commandReturnData];
                     }
                     serverRecordKey = guild.id + " + Record";
                     return [4 /*yield*/, discordUser.dataBase.get(serverRecordKey)];
@@ -70,7 +70,7 @@ function execute(guild, discordUser) {
                         discordUser.userData.activeInviteGuilds.push(guild.id);
                         discordUser.updateUserDataInDB(discordUser.userData);
                     }
-                    return [2 /*return*/, command.name];
+                    return [2 /*return*/, commandReturnData];
                 case 2:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {

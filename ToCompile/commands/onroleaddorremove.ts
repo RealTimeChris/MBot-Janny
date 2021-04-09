@@ -17,14 +17,14 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discord.GuildMemberRoleManager, newGuildMemberRoleManager: Discord.GuildMemberRoleManager,
-    newGuildMember: Discord.GuildMember, collectionSizeDifference: number, discordUser: DiscordUser): Promise<string> {
+    newGuildMember: Discord.GuildMember, collectionSizeDifference: number, discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
 		
         if (!(oldGuildMemberRoleManager instanceof Discord.GuildMemberRoleManager)) {
-            return command.name;
+            return commandReturnData;
         }
 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: newGuildMember.guild!.id,
@@ -65,7 +65,7 @@ async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discor
                 .setThumbnail(newGuildMember.user.avatarURL()!)
                 .setDescription(finalString);
             await textChannel.send(messageEmbed);
-            return command.name;
+            return commandReturnData;
         }
         if (collectionSizeDifference < 0) {
             let finalString = `__**Role Gained:**__ <@&${newRole.id}> (${newRole.name})\n`;
@@ -82,10 +82,10 @@ async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discor
                 .setThumbnail(newGuildMember.user.avatarURL()!)
                 .setDescription(finalString);
             await textChannel.send(messageEmbed);
-            return command.name;
+            return commandReturnData;
         }
 
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);

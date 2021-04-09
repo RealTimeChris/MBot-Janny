@@ -17,14 +17,14 @@ const command: FoundationClasses.BotCommand = {
 };
 
 async function execute(client: Discord.Client, oldUser: Discord.User, newUser: Discord.User, guild: Discord.Guild,
-    discordUser: DiscordUser): Promise<string> {
+    discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     try {
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
 		
         if (!(oldUser instanceof Discord.User)) {
-            return command.name;
+            return commandReturnData;
         }
 
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id,
@@ -58,7 +58,7 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
             .setTitle('__**New Username:**__');
 
         await textChannel.send(msgEmbed);
-        return command.name;
+        return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
             reject(error);
