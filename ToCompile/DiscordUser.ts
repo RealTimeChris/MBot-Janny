@@ -111,9 +111,9 @@ export default class DiscordUser {
     public async updateUserDataInDB(newUserData: DiscordUserData): Promise<void> {
         try {
             await this.dataBase.put(this.userData.userID, newUserData);
-            const userData = await this.dataBase.get(this.userData.userID);
+            newUserData = await this.dataBase.get(this.userData.userID);
             console.log('New User Cache:');
-            console.log(userData);
+            console.log(newUserData);
             return;
         } catch (error) {
             return new Promise((resolve, reject) => {
@@ -142,7 +142,7 @@ export default class DiscordUser {
                 msBetweenRecordUpdates: config.msBetweenRecordUpdates,
                 prefix: config.prefix,
                 publicKey: config.publicKey,
-                startupCall: userData.startupCall,
+                startupCall: this.userData.startupCall,
                 timeOfLastInvite: userData.timeOfLastInvite,
                 timeOfLastRecordUpdate: userData.timeOfLastRecordUpdate,
                 timeOfLastUpdateAndSave: new Date().getTime(),
