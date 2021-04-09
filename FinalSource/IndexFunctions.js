@@ -460,82 +460,40 @@ var IndexFunctions;
     }
     IndexFunctions.onInteractionCreate = onInteractionCreate;
     function onChannelCreate(newChannel, client, discordUser) {
-        var _a, _b, _c, _d, _e;
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, currentRolesArray, everyoneRoleID, x, permOWs, isItFound, x, x, y, x;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
+            var guildData, currentRolesArray, everyoneRoleID, x, x;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        if (!(newChannel instanceof Discord.GuildChannel)) return [3 /*break*/, 17];
+                        if (!(newChannel instanceof Discord.GuildChannel)) return [3 /*break*/, 6];
                         guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name });
                         return [4 /*yield*/, guildData.getFromDataBase()];
                     case 1:
-                        _f.sent();
+                        _b.sent();
                         currentRolesArray = newChannel.guild.roles.cache.array();
-                        if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 17];
+                        if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 6];
                         everyoneRoleID = void 0;
                         for (x = 0; x < currentRolesArray.length; x += 1) {
                             if (currentRolesArray[x].name === '@everyone') {
                                 everyoneRoleID = (_a = currentRolesArray[x]) === null || _a === void 0 ? void 0 : _a.id;
                             }
                         }
-                        permOWs = newChannel.permissionOverwrites.array();
-                        isItFound = false;
-                        x = 0;
-                        _f.label = 2;
+                        return [4 /*yield*/, newChannel.updateOverwrite(everyoneRoleID, { 'VIEW_CHANNEL': false })];
                     case 2:
-                        if (!(x < permOWs.length)) return [3 /*break*/, 5];
-                        if (!(((_b = permOWs[x]) === null || _b === void 0 ? void 0 : _b.id) === everyoneRoleID)) return [3 /*break*/, 4];
-                        isItFound = true;
-                        return [4 /*yield*/, ((_c = permOWs[x]) === null || _c === void 0 ? void 0 : _c.update({ VIEW_CHANNEL: false }))];
+                        _b.sent();
+                        x = 0;
+                        _b.label = 3;
                     case 3:
-                        _f.sent();
-                        _f.label = 4;
-                    case 4:
-                        x += 1;
-                        return [3 /*break*/, 2];
-                    case 5:
-                        if (!(isItFound === false)) return [3 /*break*/, 7];
-                        return [4 /*yield*/, newChannel.overwritePermissions([{ id: everyoneRoleID, deny: ['VIEW_CHANNEL'], type: 'role' }])];
-                    case 6:
-                        _f.sent();
-                        _f.label = 7;
-                    case 7:
-                        isItFound = false;
-                        x = 0;
-                        _f.label = 8;
-                    case 8:
-                        if (!(x < permOWs.length)) return [3 /*break*/, 13];
-                        y = 0;
-                        _f.label = 9;
-                    case 9:
-                        if (!(y < guildData.defaultRoleIDs.length)) return [3 /*break*/, 12];
-                        if (!(((_d = permOWs[x]) === null || _d === void 0 ? void 0 : _d.id) === guildData.defaultRoleIDs[y])) return [3 /*break*/, 11];
-                        isItFound = true;
-                        return [4 /*yield*/, ((_e = permOWs[x]) === null || _e === void 0 ? void 0 : _e.update({ VIEW_CHANNEL: true }))];
-                    case 10:
-                        _f.sent();
-                        _f.label = 11;
-                    case 11:
-                        y += 1;
-                        return [3 /*break*/, 9];
-                    case 12:
-                        x += 1;
-                        return [3 /*break*/, 8];
-                    case 13:
-                        if (!(isItFound === false)) return [3 /*break*/, 17];
-                        x = 0;
-                        _f.label = 14;
-                    case 14:
-                        if (!(x < guildData.defaultRoleIDs.length)) return [3 /*break*/, 17];
+                        if (!(x < guildData.defaultRoleIDs.length)) return [3 /*break*/, 6];
                         return [4 /*yield*/, newChannel.updateOverwrite(guildData.defaultRoleIDs[x], { 'VIEW_CHANNEL': true })];
-                    case 15:
-                        _f.sent();
-                        _f.label = 16;
-                    case 16:
+                    case 4:
+                        _b.sent();
+                        _b.label = 5;
+                    case 5:
                         x += 1;
-                        return [3 /*break*/, 14];
-                    case 17: return [2 /*return*/];
+                        return [3 /*break*/, 3];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

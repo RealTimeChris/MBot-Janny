@@ -347,7 +347,7 @@ module IndexFunctions{
         if (newChannel instanceof Discord.GuildChannel){
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name});
             await guildData.getFromDataBase();
-            const currentRolesArray= newChannel.guild.roles.cache.array();
+            const currentRolesArray = newChannel.guild.roles.cache.array();
             if (guildData.verificationSystem.channelID !== '') {
                 let everyoneRoleID: string;
                 for (let x = 0; x < currentRolesArray.length; x += 1) {
@@ -355,30 +355,9 @@ module IndexFunctions{
                         everyoneRoleID = currentRolesArray[x]?.id!;
                     }
                 }
-                const permOWs = newChannel.permissionOverwrites.array()!;
-                let isItFound = false;
-                for (let x = 0; x < permOWs.length; x += 1) {
-                    if (permOWs[x]?.id === everyoneRoleID!) {
-                        isItFound = true;
-                        await permOWs[x]?.update({VIEW_CHANNEL: false});
-                    }
-                }
-                if (isItFound === false) {
-                    await newChannel.overwritePermissions([{id: everyoneRoleID!, deny:['VIEW_CHANNEL'], type: 'role'}]);
-                }
-                isItFound = false;
-                for (let x = 0; x < permOWs.length; x += 1){
-                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
-                        if (permOWs[x]?.id === guildData.defaultRoleIDs[y]) {
-                            isItFound = true;
-                            await permOWs[x]?.update({VIEW_CHANNEL: true});
-                        }
-                    }
-                }
-                if (isItFound === false) {
-                    for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
-                        await newChannel.updateOverwrite(guildData.defaultRoleIDs[x]!,{'VIEW_CHANNEL': true});
-                    }
+                await newChannel.updateOverwrite(everyoneRoleID!, {'VIEW_CHANNEL': false});
+                for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {
+                    await newChannel.updateOverwrite(guildData.defaultRoleIDs[x]!, {'VIEW_CHANNEL': true});
                 }
             }
         }
