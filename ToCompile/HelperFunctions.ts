@@ -694,7 +694,7 @@ module HelperFunctions{
                 if (arrayOfMessageArrays[0] === undefined || arrayOfMessageArrays[0].length === 0) {
                     guildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
                     await guildData.writeToDataBase();
-                    return; 
+                    return;
                 }
                 for (let w = arrayOfMessageArrays.length - 1; w >= 0; w -= 1) {
                     for (let z = arrayOfMessageArrays[w]!.length - 1; z >= 0; z -= 1) {
@@ -725,22 +725,23 @@ module HelperFunctions{
     /**
     * Purges the actively-being-purged text channels, if enough time has passed.
     */
-    export async function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
+    export function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): void {
         try {
             GuildData.guildsData.forEach(async (guild: GuildData) => {
                 if (guild.deletionChannels.length > 0) {
                     for (let y = 0; y < guild.deletionChannels.length; y += 1) {
-                        deleteMessagesIfTimeHasPassed(client, guild, y, discordUser).catch(error => {
+                        try{
+                            await deleteMessagesIfTimeHasPassed(client, guild, y, discordUser);
+                        }
+                        catch(error){
                             console.log(error);
-                        });
+                        }
                     }
                 }
             });
             return;
         } catch (error) {
-            return new Promise((resolve, reject) => {
-                reject(error);
-            });
+            throw error;
         }
     }
 

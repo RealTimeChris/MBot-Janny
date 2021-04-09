@@ -53,7 +53,7 @@ declare module HelperFunctions {
     /**
     * Purges the actively-being-purged text channels, if enough time has passed.
     */
-    function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
+    function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): void;
     /**
     * Sends out the timed messages within each server, if enough time has passed.
     */

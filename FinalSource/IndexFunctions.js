@@ -153,9 +153,7 @@ var IndexFunctions;
                         return [4 /*yield*/, HelperFunctions_1.default.sendTimedMessagesIfTimeHasPassed(client, discordUser)];
                     case 15:
                         _c.sent();
-                        HelperFunctions_1.default.purgeMessageChannelsIfTimeHasPassed(client, discordUser).catch(function (error) {
-                            console.log(error);
-                        });
+                        HelperFunctions_1.default.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
                         return [2 /*return*/];
                     case 16:
                         error_3 = _c.sent();
@@ -211,9 +209,7 @@ var IndexFunctions;
                         return [4 /*yield*/, HelperFunctions_1.default.sendTimedMessagesIfTimeHasPassed(client, discordUser)];
                     case 32:
                         _c.sent();
-                        HelperFunctions_1.default.purgeMessageChannelsIfTimeHasPassed(client, discordUser).catch(function (error) {
-                            console.log(error);
-                        });
+                        HelperFunctions_1.default.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
                         return [2 /*return*/];
                     case 33:
                         error_5 = _c.sent();

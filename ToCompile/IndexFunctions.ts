@@ -75,9 +75,7 @@ module IndexFunctions{
                 await HelperFunctions.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser);
                 await discordUser.saveCacheIfTimeHasPassed(client);
                 await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);
-                HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser).catch((error: Error) => {
-                    console.log(error);
-                });
+                HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
                 return;
             }
             catch(error){
@@ -110,9 +108,7 @@ module IndexFunctions{
                 await HelperFunctions.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser);
                 await discordUser.saveCacheIfTimeHasPassed(client);
                 await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);
-                HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser).catch((error: Error) => {
-                    console.log(error);
-                });
+                HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
                 return;
             }
             catch(error){

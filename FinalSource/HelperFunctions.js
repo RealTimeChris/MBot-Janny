@@ -1039,33 +1039,41 @@ var HelperFunctions;
     * Purges the actively-being-purged text channels, if enough time has passed.
     */
     function purgeMessageChannelsIfTimeHasPassed(client, discordUser) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                try {
-                    GuildData_1.default.guildsData.forEach(function (guild) { return __awaiter(_this, void 0, void 0, function () {
-                        var y;
-                        return __generator(this, function (_a) {
-                            if (guild.deletionChannels.length > 0) {
-                                for (y = 0; y < guild.deletionChannels.length; y += 1) {
-                                    deleteMessagesIfTimeHasPassed(client, guild, y, discordUser).catch(function (error) {
-                                        console.log(error);
-                                    });
-                                }
-                            }
-                            return [2 /*return*/];
-                        });
-                    }); });
-                    return [2 /*return*/];
-                }
-                catch (error) {
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            reject(error);
-                        })];
-                }
-                return [2 /*return*/];
-            });
-        });
+        var _this = this;
+        try {
+            GuildData_1.default.guildsData.forEach(function (guild) { return __awaiter(_this, void 0, void 0, function () {
+                var y, error_15;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            if (!(guild.deletionChannels.length > 0)) return [3 /*break*/, 6];
+                            y = 0;
+                            _a.label = 1;
+                        case 1:
+                            if (!(y < guild.deletionChannels.length)) return [3 /*break*/, 6];
+                            _a.label = 2;
+                        case 2:
+                            _a.trys.push([2, 4, , 5]);
+                            return [4 /*yield*/, deleteMessagesIfTimeHasPassed(client, guild, y, discordUser)];
+                        case 3:
+                            _a.sent();
+                            return [3 /*break*/, 5];
+                        case 4:
+                            error_15 = _a.sent();
+                            console.log(error_15);
+                            return [3 /*break*/, 5];
+                        case 5:
+                            y += 1;
+                            return [3 /*break*/, 1];
+                        case 6: return [2 /*return*/];
+                    }
+                });
+            }); });
+            return;
+        }
+        catch (error) {
+            throw error;
+        }
     }
     HelperFunctions.purgeMessageChannelsIfTimeHasPassed = purgeMessageChannelsIfTimeHasPassed;
     /**
