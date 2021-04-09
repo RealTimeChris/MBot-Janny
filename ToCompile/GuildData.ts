@@ -30,7 +30,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
     public readonly memberCount: number;
     public borderColor: [number, number, number] = [254, 254, 254];
     public defaultRoleIDs: string[] = [];
-    public deletionChannels:FoundationClasses.DeletionChannel[] = [];
+    public deletionChannels: FoundationClasses.DeletionChannel[] = [];
     public ghostedRoleID: string = '';
     public logs: FoundationClasses.Log[] = [];
     public timedMessages: FoundationClasses.TimedMessage[] = [];
