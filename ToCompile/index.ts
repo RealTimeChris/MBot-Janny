@@ -14,71 +14,71 @@ const discordUser = new DiscordUser();
 const client = new Discord.Client() as any;
 
 client.once('ready', async () => {
-	IndexFunctions.onReady(client, discordUser);
+	await IndexFunctions.onReady(client, discordUser);
 });
 
 client.on('message', async (msg: Discord.Message) => {
-	IndexFunctions.onMessage(msg, client, discordUser);
+	await IndexFunctions.onMessage(msg, client, discordUser);
 });
 
 client.ws.on('INTERACTION_CREATE', async (interaction: any) => {
-	IndexFunctions.onInteractionCreate(interaction, client, discordUser);
+	await IndexFunctions.onInteractionCreate(interaction, client, discordUser);
 });
 
 client.on('channelCreate', async (newChannel: Discord.DMChannel | Discord.GuildChannel) => {
-	IndexFunctions.onChannelCreate(newChannel, client, discordUser);
+	await IndexFunctions.onChannelCreate(newChannel, client, discordUser);
 });
 
 client.on('messageReactionAdd', async (messageReaction: Discord.MessageReaction, user: Discord.User) => {
-	IndexFunctions.onMessageReactionAdd(messageReaction, user, client, discordUser);
+	await IndexFunctions.onMessageReactionAdd(messageReaction, user, client, discordUser);
 });
 
 client.on('guildDelete', async (guild: Discord.Guild) => {
-	IndexFunctions.onGuildDete(guild, discordUser);
+	await IndexFunctions.onGuildDete(guild, discordUser);
 });
 
 client.on('guildBanAdd', async (guild: Discord.Guild, user: Discord.User) => {
-	IndexFunctions.onGuildBanAdd(guild, user, client, discordUser);
+	await IndexFunctions.onGuildBanAdd(guild, user, client, discordUser);
 });
 
 client.on('guildBanRemove', async (guild: Discord.Guild, user: Discord.User) => {
-	IndexFunctions.onGuildBanRemove(guild, user, client, discordUser);
+	await IndexFunctions.onGuildBanRemove(guild, user, client, discordUser);
 });
 
 client.on('guildMemberAdd', async (member: Discord.GuildMember) => {
-	IndexFunctions.onGuildMemberAdd(member, client, discordUser);
+	await IndexFunctions.onGuildMemberAdd(member, client, discordUser);
 });
 
 client.on('guildMemberRemove', async (member: Discord.GuildMember) => {
-	IndexFunctions.onGuildMemberRemove(member, client, discordUser);
+	await IndexFunctions.onGuildMemberRemove(member, client, discordUser);
 });
 
 client.on('guildMemberUpdate', async (oldGuildMember: Discord.GuildMember, newGuildMember: Discord.GuildMember) => {
-	IndexFunctions.onGuildMemberUpdate(oldGuildMember, newGuildMember, client, discordUser);
+	await IndexFunctions.onGuildMemberUpdate(oldGuildMember, newGuildMember, client, discordUser);
 });
 
 client.on('inviteCreate', async (invite: Discord.Invite) => {
-	IndexFunctions.onInviteCreate(invite, client, discordUser);
+	await IndexFunctions.onInviteCreate(invite, client, discordUser);
 });
 
 client.on('messageDelete', async (message: Discord.Message) => {
-	IndexFunctions.onMessageDelete(message, client, discordUser);
+	await IndexFunctions.onMessageDelete(message, client, discordUser);
 });
 
 client.on('messageDeleteBulk', async (collection: Discord.Collection<string, Discord.Message>) => {
-	IndexFunctions.onMessageDeleteBulk(collection, client, discordUser);
+	await IndexFunctions.onMessageDeleteBulk(collection, client, discordUser);
 });
 
 client.on('roleCreate', async (role: Discord.Role) => {
-	IndexFunctions.onRoleCreate(role, client, discordUser);
+	await IndexFunctions.onRoleCreate(role, client, discordUser);
 });
 
 client.on('roleDelete', async (role: Discord.Role) => {
-	IndexFunctions.onRoleDelete(role, client, discordUser);
+	await IndexFunctions.onRoleDelete(role, client, discordUser);
 });
 
 client.on('userUpdate', async (oldUser: Discord.User, newUser: Discord.User) => {
-	IndexFunctions.onUserUpdate(oldUser, newUser, client, discordUser);
+	await IndexFunctions.onUserUpdate(oldUser, newUser, client, discordUser);
 });
 
 client.login(config.botToken);
