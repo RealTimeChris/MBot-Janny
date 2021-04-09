@@ -131,37 +131,37 @@ module FoundationClasses{
             try{
                 this.fromTextChannelType = fromTextChannelType;
                 this.fromTextChannel = await client.channels.fetch(fromTextChannelID) as Discord.TextChannel | Discord.DMChannel;
-                if (interaction !== null){
+                if (interaction !== null) {
                     this.interaction = interaction;
                 }
-                if (guildID !== ''){
+                if (guildID !== '') {
                     this.guild  = await client.guilds.fetch(guildID);
                 }
-                if (guildMemberID !== '' && guildID !== ''){
+                if (guildMemberID !== '' && guildID !== '') {
                     this.guildMember = await this.guild!.members.fetch(guildMemberID);
                 }
                 else{
                     this.guildMember = await client.users.fetch(guildMemberID);
                 }
-                if (interaction !== null && fromTextChannelType !== 'dm'){
+                if (interaction !== null && fromTextChannelType !== 'dm') {
                     this.toTextChannel = new Discord.WebhookClient(client.user!.id, this.interaction.token);
                     this.permsChannel = new Discord.GuildChannel(this.guild!, this.fromTextChannel);
                 }
-                if (interaction === null && fromTextChannelType !== 'dm'){
+                if (interaction === null && fromTextChannelType !== 'dm') {
                     this.toTextChannel = await client.channels.fetch(fromTextChannelID) as Discord.TextChannel;
                     this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
                 }
-                if (interaction !== null && fromTextChannelType === 'dm'){
+                if (interaction !== null && fromTextChannelType === 'dm') {
                     this.toTextChannel = new Discord.WebhookClient(client.user!.id, this.interaction.token);
                     this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
                 }
-                if (interaction === null && fromTextChannelType === 'dm'){
+                if (interaction === null && fromTextChannelType === 'dm') {
                     this.toTextChannel = await this.guildMember.createDM(true);
                     this.permsChannel = await client.channels.fetch(fromTextChannelID) as Discord.GuildChannel;
                 }
                 return;
             }
-            catch(error){
+            catch(error) {
                 return new Promise((resolve, reject) => {
                     reject(error);
                 })

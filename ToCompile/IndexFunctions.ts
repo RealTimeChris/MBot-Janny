@@ -13,7 +13,7 @@ import HelperFunctions from './HelperFunctions';
 import botCommands from './CommandIndex';
 
 module IndexFunctions{
-    export async function onReady(client: any, discordUser: DiscordUser){
+    export async function onReady(client: any, discordUser: DiscordUser) {
         try {
             await discordUser.initializeInstance(client);
             await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
@@ -22,7 +22,7 @@ module IndexFunctions{
         }
     }
     
-    export async function onMessage(msg: Discord.Message, client: any, discordUser: DiscordUser){
+    export async function onMessage(msg: Discord.Message, client: any, discordUser: DiscordUser) {
         if (client.users.resolve(msg.author.id) === null) {
             console.log('Non-found user! Better escape!');
             return;
@@ -44,13 +44,13 @@ module IndexFunctions{
                 }
             }
     
-            if (!botCommands.has(command)){
+            if (!botCommands.has(command)) {
                 return;
             }
     
             try{
                 const commandData = new FoundationClasses.CommandData();
-                if (msg.channel.type !== 'dm' && msg.member !== null){
+                if (msg.channel.type !== 'dm' && msg.member !== null) {
                     await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild!.id);
                 }
                 else{
@@ -58,7 +58,7 @@ module IndexFunctions{
                 }
                 commandData.args = args;
     
-                if (msg.deletable){
+                if (msg.deletable) {
                     await msg.delete();
                 }
     
@@ -78,7 +78,7 @@ module IndexFunctions{
                 HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
                 return;
             }
-            catch(error){
+            catch(error) {
                 console.log(error);
             }
         } else if (msg.author.id !== client.user.id) {
@@ -89,7 +89,7 @@ module IndexFunctions{
             try{
                 try {
                     const commandData = new FoundationClasses.CommandData();
-                    if (msg.channel.type !== 'dm' && msg.member !== null){
+                    if (msg.channel.type !== 'dm' && msg.member !== null) {
                         await commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild!.id);
                     }
                     else {
@@ -111,18 +111,18 @@ module IndexFunctions{
                 HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
                 return;
             }
-            catch(error){
+            catch(error) {
                 console.log(error);
             }
         }
     }
 
-    export async function onInteractionCreate(interaction: any, client: any, discordUser: DiscordUser){
+    export async function onInteractionCreate(interaction: any, client: any, discordUser: DiscordUser) {
         const {channel_id} = interaction;
         const channel = await client.channels.fetch(channel_id);
         let id_full, guild_id_full, options_full, name_full;
         const commandData = new FoundationClasses.CommandData();
-        if (await channel.type === 'dm'){
+        if (await channel.type === 'dm') {
             let {user:{id}, guild_id, data:{options, name}} = interaction;
             id_full = id;
             guild_id_full = guild_id;
@@ -139,65 +139,65 @@ module IndexFunctions{
             await commandData.initialize(client, channel_id, channel.type, interaction, id_full, guild_id_full);
         }
         const nameSolid = name_full;
-        if (name_full === 'botinfo'){
+        if (name_full === 'botinfo') {
             const name = 'janny';
             commandData.args[0] = name;
         }
-        if (name_full === "deletedbentry"){
+        if (name_full === "deletedbentry") {
             const {value:value1} = options_full[0];
             commandData.args[0] = 'janny';
             commandData.args[1] = value1;
         }
-        if (name_full === "displayguildsdata"){
+        if (name_full === "displayguildsdata") {
             const name = 'janny';
             commandData.args[0] = name;
         }
-        if (name_full === 'ghost'){
+        if (name_full === 'ghost') {
             let userID;
             let reason;
             const name_full = options_full[0].name;
-            if (name_full === 'view'){
+            if (name_full === 'view') {
                 const viewOrNot = options_full[0].options[0].value;
                 commandData.args[1] = '';
                 commandData.args[2] = '';
-                if (!viewOrNot){
+                if (!viewOrNot) {
                     return;
                 }
             }
-            else if(name_full === 'add'){
+            else if(name_full === 'add') {
                 userID = options_full[0].options[0].value;
                 reason = options_full[0].options[1].value;
                 commandData.args[0] = 'add';
                 commandData.args[1] = reason;
                 commandData.args[2] = userID;
             }
-            else if (name_full === 'remove'){
+            else if (name_full === 'remove') {
                 userID = options_full[0].options[0].value;
                 commandData.args[0] = 'remove';
                 commandData.args[1] = userID;
             }
         }
-        if (name_full === 'help'){
-            if (options_full[0].options !==  undefined){
+        if (name_full === 'help') {
+            if (options_full[0].options !==  undefined) {
                 const {value} = options_full[0].options[0];
                 commandData.args[0] = value;
             }
         }
-        if (name_full === 'jannyoptinos'){
+        if (name_full === 'jannyoptinos') {
             
         }
-        if (name_full === 'listdbguilds'){
+        if (name_full === 'listdbguilds') {
             commandData.args[0] = 'janny';
         }
-        if (name_full === "managelogs"){
+        if (name_full === "managelogs") {
             name_full = options_full[0].name;
-            if (name_full === 'display'){
+            if (name_full === 'display') {
 
             }
-            else if (name_full = "group1" || "group2"){
+            else if (name_full = "group1" || "group2") {
                 const logname = options_full[0].options[0].value;
                 let enableOrDisable;
-                if (options_full[0].options[1].value === true){
+                if (options_full[0].options[1].value === true) {
                     enableOrDisable = 'enable';
                 }
                 else {
@@ -207,20 +207,20 @@ module IndexFunctions{
                 commandData.args[0] = enableOrDisable;
             }
         }
-        if (name_full === 'ping'){
+        if (name_full === 'ping') {
             
         }
-        if (name_full === 'purge'){
+        if (name_full === 'purge') {
             const msgCountToPurge = options_full[0].value;
             commandData.args[0] = msgCountToPurge;
         }
-        if (name_full === 'serverinfo'){
-            if (options_full !== undefined){
+        if (name_full === 'serverinfo') {
+            if (options_full !== undefined) {
                 const {value:value1} = options_full[0];
                 commandData.args[0] = value1;
             }		
         }
-        if (name_full === 'setbordercolor'){
+        if (name_full === 'setbordercolor') {
             commandData.args[0] = 'janny';
             const redChannelValue = options_full[0].value;
             const greenChannelValue = options_full[1].value;
@@ -229,14 +229,14 @@ module IndexFunctions{
             commandData.args[2] = greenChannelValue.toString();
             commandData.args[3] = blueChannelValue.toString();
         }
-        if (name_full === 'setdefaultrole'){
+        if (name_full === 'setdefaultrole') {
             const name_full = options_full[0].name;
-            if (name_full === 'add'){
+            if (name_full === 'add') {
                 let role = options_full[0].options[0].value;
                 commandData.args[0] = 'add';
                 commandData.args[1] = role;
             }
-            else if (name_full === 'remove'){
+            else if (name_full === 'remove') {
                 let role = options_full[0].options[0].value;
                 commandData.args[0] = 'remove';
                 commandData.args[1] = role;
@@ -245,36 +245,36 @@ module IndexFunctions{
 
             }
         }
-        if (name_full === 'setdeletionstatus'){
+        if (name_full === 'setdeletionstatus') {
             let quantity;
-            if (options_full[0].options !== undefined){
+            if (options_full[0].options !== undefined) {
                 quantity = options_full[0].options[0].value;
             }
             const name_full = options_full[0].name;
-            if (name_full == 'view'){
+            if (name_full == 'view') {
 
             }
-            else if (name_full === 'enable'){
+            else if (name_full === 'enable') {
                 commandData.args[0] = 'enable';
                 commandData.args[1] = quantity;
             }
-            else if (name_full === 'disable'){
+            else if (name_full === 'disable') {
                 commandData.args[0] = 'disable';
             }
         }
-        if (name_full === 'setreplacementinvite'){
+        if (name_full === 'setreplacementinvite') {
             const inviteLink = options_full[0].value
             commandData.args[0] = inviteLink;
         }
-        if (name_full === 'setverificationsystem'){
+        if (name_full === 'setverificationsystem') {
             name_full = options_full[0].name;
-            if (name_full === "display"){
+            if (name_full === "display") {
 
             }
-            else if (name_full === 'disable'){
+            else if (name_full === 'disable') {
                 commandData.args[0] = 'disable';
             }
-            else if (name_full === 'enable'){
+            else if (name_full === 'enable') {
                 const message = options_full[0].options[0].value;
                 const emoji = options_full[0].options[1].value;
                 commandData.args[0] = 'enable';
@@ -282,23 +282,23 @@ module IndexFunctions{
                 commandData.args[2] = emoji;
             }
         }
-        if (name_full === 'slashcommands'){
+        if (name_full === 'slashcommands') {
             
         }
-        if (name_full === 'test'){
+        if (name_full === 'test') {
 
         }
-        if (name_full === 'timedmessages'){
+        if (name_full === 'timedmessages') {
             name_full = options_full[0].name;
-            if (name_full === 'display'){
+            if (name_full === 'display') {
 
             }
-            else if (name_full === 'disable'){
+            else if (name_full === 'disable') {
                 const msgName = options_full[0].options[0].value;
                 commandData.args[0] = 'remove';
                 commandData.args[1] = msgName;
             }
-            else if (name_full === 'enable'){
+            else if (name_full === 'enable') {
                 const msgName = options_full[0].options[0].value;
                 const msgContents = options_full[0].options[1].value;
                 const msgInterval = options_full[0].options[2].value;
@@ -308,23 +308,23 @@ module IndexFunctions{
                 commandData.args[3] = msgContents;
             }
         }
-        if (name_full === 'trackuser'){
+        if (name_full === 'trackuser') {
             name_full = options_full[0].name;
-            if (name_full === "display"){
+            if (name_full === "display") {
 
             }
-            else if (name_full === 'enable'){
+            else if (name_full === 'enable') {
                 const userID = options_full[0].options[0].value;
                 commandData.args[0] = 'add';
                 commandData.args[1] = userID;
             }
-            else if (name_full === 'disable'){
+            else if (name_full === 'disable') {
                 const userID = options_full[0].options[0].value;
                 commandData.args[0] = 'remove';
                 commandData.args[1] = userID;
             }
         }
-        if (name_full === 'userinfo'){
+        if (name_full === 'userinfo') {
             const user = options_full[0].value;
             commandData.args[0] = user;
         }
@@ -333,34 +333,34 @@ module IndexFunctions{
                 type: 5
             }
         });
-        if (commandData.guildMember instanceof Discord.GuildMember){
+        if (commandData.guildMember instanceof Discord.GuildMember) {
             console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember.user.username}`);
         }
-        else if (commandData.guildMember instanceof Discord.User){
+        else if (commandData.guildMember instanceof Discord.User) {
             console.log(`Command: '${nameSolid}' entered by user: ${commandData.guildMember.username}`);
         }
         const returnData = await botCommands.get(nameSolid)?.function(commandData, discordUser) as FoundationClasses.CommandReturnData;
         console.log(`Completed Command: ${returnData.commandName}`);
     }
 
-    export async function onChannelCreate(newChannel: Discord.DMChannel | Discord.GuildChannel, client: any, discordUser: DiscordUser){
-        if (!(newChannel instanceof Discord.DMChannel)){
+    export async function onChannelCreate(newChannel: Discord.DMChannel | Discord.GuildChannel, client: any, discordUser: DiscordUser) {
+        if (!(newChannel instanceof Discord.DMChannel)) {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name});
             const currentRolesArray = newChannel.guild.roles.cache.array();
-            if (guildData.verificationSystem.channelID !== ''){
+            if (guildData.verificationSystem.channelID !== '') {
                 let everyoneRoleID;
-                for (let x = 0; x < currentRolesArray.length; x += 1){
-                    if (currentRolesArray[x]!.name === '@everyone'){
+                for (let x = 0; x < currentRolesArray.length; x += 1) {
+                    if (currentRolesArray[x]!.name === '@everyone') {
                         everyoneRoleID = currentRolesArray[x]?.id;
                     }
                 }
                 const permOWs = newChannel.permissionOverwrites.array()!;
-                for (let y = 0; y < permOWs.length; y += 1){
-                    if (permOWs[y]?.id === everyoneRoleID){
+                for (let y = 0; y < permOWs.length; y += 1) {
+                    if (permOWs[y]?.id === everyoneRoleID) {
                         await permOWs[y]?.update({VIEW_CHANNEL: false});
                     }
                 }
-                for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1){
+                for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
                     const newPermOWs = new Discord.PermissionOverwrites(newChannel, {});
                     newPermOWs.type = 'role';
                     newPermOWs.id = guildData.defaultRoleIDs[y]!;
@@ -370,7 +370,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onMessageReactionAdd(messageReaction: Discord.MessageReaction, user: Discord.User, client: any, discordUser: DiscordUser){
+    export async function onMessageReactionAdd(messageReaction: Discord.MessageReaction, user: Discord.User, client: any, discordUser: DiscordUser) {
         const command = 'onmessagereactionadd';
 
         if (!botCommands.has(command)) {
@@ -386,7 +386,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onGuildDete(guild: Discord.Guild, discordUser: DiscordUser){
+    export async function onGuildDete(guild: Discord.Guild, discordUser: DiscordUser) {
         const command = 'onguilddelete';
 
         if (!botCommands.has(command)) {
@@ -402,7 +402,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onGuildBanAdd(guild: Discord.Guild, client: any, user: Discord.User, discordUser: DiscordUser){
+    export async function onGuildBanAdd(guild: Discord.Guild, client: any, user: Discord.User, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -427,7 +427,7 @@ module IndexFunctions{
         }	
     }
 
-    export async function onGuildBanRemove(guild: Discord.Guild, user: Discord.User, client: any, discordUser: DiscordUser){
+    export async function onGuildBanRemove(guild: Discord.Guild, user: Discord.User, client: any, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -452,7 +452,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onGuildMemberAdd(member: Discord.GuildMember, client: any, discordUser: DiscordUser){
+    export async function onGuildMemberAdd(member: Discord.GuildMember, client: any, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: member.guild.id, name: member.guild.name, memberCount: member.guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -477,7 +477,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onGuildMemberRemove(member: Discord.GuildMember, client: any, discordUser: DiscordUser){
+    export async function onGuildMemberRemove(member: Discord.GuildMember, client: any, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: member.guild.id, name: member.guild.name, memberCount: member.guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -502,7 +502,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onGuildMemberUpdate(oldGuildMember: Discord.GuildMember, newGuildMember: Discord.GuildMember, client: any, discordUser: DiscordUser){
+    export async function onGuildMemberUpdate(oldGuildMember: Discord.GuildMember, newGuildMember: Discord.GuildMember, client: any, discordUser: DiscordUser) {
         if (oldGuildMember.displayName !== newGuildMember.displayName) {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: oldGuildMember.guild.id, name: oldGuildMember.guild.name, memberCount: oldGuildMember.guild.memberCount});
             await guildData.getFromDataBase();
@@ -589,7 +589,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onInviteCreate(invite: Discord.Invite, client: any, discordUser: DiscordUser){
+    export async function onInviteCreate(invite: Discord.Invite, client: any, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: invite.guild!.id, name: invite.guild!.name, memberCount: invite.guild!.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -614,8 +614,8 @@ module IndexFunctions{
         }
     }
 
-    export async function onMessageDelete(message: Discord.Message, client: any, discordUser: DiscordUser){
-        if (message.channel.type !== 'dm'){
+    export async function onMessageDelete(message: Discord.Message, client: any, discordUser: DiscordUser) {
+        if (message.channel.type !== 'dm') {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: message.guild!.id, name: message.guild!.name, memberCount: message.guild!.memberCount});
             await guildData.getFromDataBase();
             for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -641,7 +641,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onMessageDeleteBulk(collection: Discord.Collection<string, Discord.Message>, client: any, discordUser: DiscordUser){
+    export async function onMessageDeleteBulk(collection: Discord.Collection<string, Discord.Message>, client: any, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: collection.first()!.guild!.id, name: collection.first()!.guild!.name, memberCount: collection.first()!.guild!.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -666,7 +666,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onRoleCreate(role: Discord.Role, client: any, discordUser: DiscordUser){
+    export async function onRoleCreate(role: Discord.Role, client: any, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild.id, name: role.guild.name, memberCount: role.guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -691,7 +691,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onRoleDelete(role: Discord.Role, client: any, discordUser: DiscordUser){
+    export async function onRoleDelete(role: Discord.Role, client: any, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild.id, name: role.guild.name, memberCount: role.guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -716,7 +716,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onUserUpdate(oldUser: Discord.User, newUser: Discord.User, client: any, discordUser: DiscordUser){
+    export async function onUserUpdate(oldUser: Discord.User, newUser: Discord.User, client: any, discordUser: DiscordUser) {
         if (oldUser.username !== newUser.username) {
             const guildArray = client.guilds.cache.array() as Discord.Guild[];
             for (let x = 0; x < guildArray.length; x += 1) {

@@ -75,7 +75,7 @@ export default class DiscordUser {
             const userData = await this.dataBase.get(client.user!.id);
             return userData;
         } catch (error) {
-            if (error.type === 'NotFoundError'){
+            if (error.type === 'NotFoundError') {
                 console.log("Adding new entry for the current user's data!");
                 const userData: DiscordUserData = {
                     activeInviteGuilds: [],
@@ -170,8 +170,8 @@ export default class DiscordUser {
             for (let x = 0; x < liveDataGuildArray.length; x += 1) {
                 const guildData = new GuildData({dataBase: this.dataBase, id: liveDataGuildArray[x]!.id, memberCount: liveDataGuildArray[x]!.memberCount, name: liveDataGuildArray[x]!.name});
                 await guildData.getFromDataBase();
-                if (this.userData.startupCall === true){
-                    for (let x = 0; x < guildData.deletionChannels.length ; x += 1){
+                if (this.userData.startupCall === true) {
+                    for (let x = 0; x < guildData.deletionChannels.length ; x += 1) {
                         guildData.deletionChannels[x]!.currentlyBeingDeleted = false;
                         guildData.deletionChannels[x]!.timeOfLastPurge = 0;
                     }   
