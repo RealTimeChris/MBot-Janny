@@ -470,10 +470,10 @@ var IndexFunctions;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        if (!!(newChannel instanceof Discord.DMChannel)) return [3 /*break*/, 5];
+                        if (!!(newChannel instanceof Discord.DMChannel)) return [3 /*break*/, 8];
                         guildData = new GuildData_1.default({ dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name });
                         currentRolesArray = newChannel.guild.roles.cache.array();
-                        if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 5];
+                        if (!(guildData.verificationSystem.channelID !== '')) return [3 /*break*/, 8];
                         everyoneRoleID = void 0;
                         for (x = 0; x < currentRolesArray.length; x += 1) {
                             if (currentRolesArray[x].name === '@everyone') {
@@ -494,14 +494,21 @@ var IndexFunctions;
                         y += 1;
                         return [3 /*break*/, 1];
                     case 4:
-                        for (y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
-                            newPermOWs = new Discord.PermissionOverwrites(newChannel, {});
-                            newPermOWs.type = 'role';
-                            newPermOWs.id = guildData.defaultRoleIDs[y];
-                            newPermOWs.update({ VIEW_CHANNEL: true });
-                        }
+                        y = 0;
                         _d.label = 5;
-                    case 5: return [2 /*return*/];
+                    case 5:
+                        if (!(y < guildData.defaultRoleIDs.length)) return [3 /*break*/, 8];
+                        newPermOWs = new Discord.PermissionOverwrites(newChannel, {});
+                        newPermOWs.type = 'role';
+                        newPermOWs.id = guildData.defaultRoleIDs[y];
+                        return [4 /*yield*/, newPermOWs.update({ VIEW_CHANNEL: true })];
+                    case 6:
+                        _d.sent();
+                        _d.label = 7;
+                    case 7:
+                        y += 1;
+                        return [3 /*break*/, 5];
+                    case 8: return [2 /*return*/];
                 }
             });
         });
@@ -807,7 +814,6 @@ var IndexFunctions;
                         return [4 /*yield*/, guildData.getFromDataBase()];
                     case 11:
                         _d.sent();
-                        console.log(guildData.logs);
                         for (x = 0; x < guildData.logs.length; x += 1) {
                             if (guildData.logs[x].nameSmall === 'roleaddorremove') {
                                 if (guildData.logs[x].enabled === false) {

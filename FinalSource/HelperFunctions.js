@@ -417,7 +417,6 @@ var HelperFunctions;
                         }
                         serverRecordKey = liveGuildArray[y].id + " + Record";
                         dataBase.put(serverRecordKey, fileObject);
-                        //console.log(fileObject);
                         yNew += 1;
                         return [4 /*yield*/, recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, yNew)];
                     case 3:
@@ -450,10 +449,8 @@ var HelperFunctions;
                         return [4 /*yield*/, dataBase.put(serverRecordKey, serverRecord)];
                     case 6:
                         _c.sent();
-                        //console.log(serverRecord);
                         return [4 /*yield*/, recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y)];
                     case 7:
-                        //console.log(serverRecord);
                         _c.sent();
                         return [2 /*return*/];
                     case 8: return [2 /*return*/, new Promise(function (resolve, reject) {

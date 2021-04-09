@@ -150,7 +150,6 @@ function execute(commandData, discordUser) {
                     else if (((_b = commandData.args[0]) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'remove') {
                         whatAreWeDoing = 'remove';
                     }
-                    console.log(whatAreWeDoing);
                     roleName_1 = commandData.args[1];
                     roleArray_1 = commandData.guild.roles.cache.array().sort();
                     _loop_1 = function (x) {
