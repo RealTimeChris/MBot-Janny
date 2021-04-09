@@ -885,9 +885,11 @@ var HelperFunctions;
                                 if (arrayOfMessageArrays[y][z].pinned === true
                                     || arrayOfMessageArrays[y][z].deleted === true) {
                                     arrayOfMessageArrays[y].splice(z, 1);
+                                    console.log('BEING SPLICED!');
                                 }
                                 else {
                                     totalMessageCount += 1;
+                                    console.log('BEING ADDED!');
                                 }
                             }
                         }

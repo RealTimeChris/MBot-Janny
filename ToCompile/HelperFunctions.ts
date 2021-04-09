@@ -649,7 +649,7 @@ module HelperFunctions{
                         }
                         if (!arrayOfMessageArrays[y]![z]!.pinned) {
                             if (arrayOfMessageArrays[y]![z]?.deletable) {
-                                await arrayOfMessageArrays[y]![z]!.delete();
+                                await arrayOfMessageArrays[y]![z]!.delete({timeout:5000});
                                 console.log(`Deleting Message Number: ${totalMessageCount - (y * 100 + z)} of ${totalMessageCount} in channel ${currentChannel.name}.`);
                             }
                         }
