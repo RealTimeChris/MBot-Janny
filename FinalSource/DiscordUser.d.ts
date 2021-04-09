@@ -37,8 +37,8 @@ export default class DiscordUser {
     */
     getUserDataFromDB(client: Discord.Client): Promise<DiscordUserData>;
     /**
-    * Updates the user data within the database.
-    */
+     * Updates the user data within the database.
+     */
     updateUserDataInDB(newUserData: DiscordUserData): Promise<void>;
     /**
     * * Updates the cache of user data.
