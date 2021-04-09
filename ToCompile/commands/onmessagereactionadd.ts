@@ -62,8 +62,8 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 					try{
 						await messageReaction.users.remove(userID);
 					}
-					catch(error){
-						if (!client.guilds.resolve(guildData.id)?.members.resolve(discordUser.userData.userID)?.permissionsIn(messageReaction.message.channel).has('MANAGE_EMOJIS')){
+					catch(error) {
+						if (!client.guilds.resolve(guildData.id)?.members.resolve(discordUser.userData.userID)?.permissionsIn(messageReaction.message.channel).has('MANAGE_EMOJIS')) {
 							
 						}
 					}

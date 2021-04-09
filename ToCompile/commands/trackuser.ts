@@ -54,7 +54,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -69,7 +69,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -108,7 +108,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Missing User(s):**__');
                     let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                     }
                     guildData.trackedUsers.splice(x, 1);
@@ -127,8 +127,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         if (whatAreWeDoing === 'add') {
             try {
                 let currentIndex = -1;
-                for (let x = 0; x < guildData.trackedUsers.length; x += 1){
-                    if (trackedUserID === guildData.trackedUsers[x]?.userID){
+                for (let x = 0; x < guildData.trackedUsers.length; x += 1) {
+                    if (trackedUserID === guildData.trackedUsers[x]?.userID) {
                         currentIndex = x;
                         break;
                     }
@@ -156,8 +156,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 } else if (currentIndex >= 0) {
                     let currentIndex = -1;
-                    for (let x = 0; x < guildData.trackedUsers.length; x += 1){
-                        if (trackedUserID === guildData.trackedUsers[x]!.userID){
+                    for (let x = 0; x < guildData.trackedUsers.length; x += 1) {
+                        if (trackedUserID === guildData.trackedUsers[x]!.userID) {
                             currentIndex = x;
                             break;
                         }
@@ -188,7 +188,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**User Issue:**__');
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -200,8 +200,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             try {
                 if (commandData.args[0]!.toLowerCase() === 'remove' && guildData.trackedUsers.length >= 1) {
                     let currentIndex = -1;
-                    for (let x = 0; x < guildData.trackedUsers.length; x += 1){
-                        if (trackedUserID === guildData.trackedUsers[x]?.userID){
+                    for (let x = 0; x < guildData.trackedUsers.length; x += 1) {
+                        if (trackedUserID === guildData.trackedUsers[x]?.userID) {
                             currentIndex = x;
                             break;
                         }
@@ -232,7 +232,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				            .setTimestamp(Date() as unknown as Date)
 				            .setTitle('__**User Issue:**__');
                         let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                        if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                        if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                             msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                         }
                         await msg.delete({timeout: 20000});
@@ -257,7 +257,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                     .setColor(guildData.borderColor as [number, number, number]);
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -269,7 +269,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
             if (guildData.trackedUsers.length > 0) {
                 for (let x = 0; x < guildData.trackedUsers.length; x += 1) {
-                    if (x===0){
+                    if (x===0) {
                         msgString = '------\n';
                     }
                     const trackedChannelName = (commandData.guild!.client.channels
@@ -277,7 +277,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
                     msgString += `__**Tracked User Name #${x + 1}:**__ <@!${guildData.trackedUsers[x]?.userID}> (${guildData.trackedUsers[x]?.userName})\n`;
                     msgString += `__**In Channel:**__ <#${guildData.trackedUsers[x]?.channelID}> (${trackedChannelName})\n------`;
-                    if (x < guildData.trackedUsers.length - 1){
+                    if (x < guildData.trackedUsers.length - 1) {
                         msgString += '\n';
                     }
                 }

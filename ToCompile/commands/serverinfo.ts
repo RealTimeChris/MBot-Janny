@@ -30,7 +30,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         let currentServerID;
 
-        if (commandData.guildMember instanceof Discord.User && commandData.args[0] === undefined){
+        if (commandData.guildMember instanceof Discord.User && commandData.args[0] === undefined) {
             const msgString = `------\n**Please, enter a server ID if you're going to DM this command!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL()!)
@@ -39,7 +39,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -47,7 +47,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
 
         let guildData: GuildData;
-        if (commandData.guildMember instanceof Discord.GuildMember){
+        if (commandData.guildMember instanceof Discord.GuildMember) {
             guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
             await guildData.getFromDataBase();
         }
@@ -58,7 +58,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             
             const msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
                 const messageEmbed = new Discord.MessageEmbed();
-                if (commandData.guildMember instanceof Discord.User){
+                if (commandData.guildMember instanceof Discord.User) {
                     messageEmbed
                         .setDescription(msgString)
                         .setTitle('__**Missing Or Invalid Arguments:**__')
@@ -66,12 +66,12 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                         .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL()!)
                         .setColor([254, 254, 254]);
                     let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
-                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
                     }
                     await msg.delete({timeout: 20000});
                 }
-                else if (commandData.guildMember instanceof Discord.GuildMember){
+                else if (commandData.guildMember instanceof Discord.GuildMember) {
                      messageEmbed
                         .setDescription(msgString)
                         .setTitle('__**Missing Or Invalid Arguments:**__')
@@ -79,7 +79,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                         .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
                         .setColor(guildData!.borderColor as [number, number, number]);
                     let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
-                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                     }
                     await msg.delete({timeout: 20000});
@@ -88,7 +88,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }	else if (!idRegExp.test(commandData.args[0]!)) {
             const msgString = '------\n**Please enter a valid server ID! (!displayserverinfo = SERVERID)**\n------';
             const messageEmbed = new Discord.MessageEmbed();
-            if (commandData.guildMember instanceof Discord.User){
+            if (commandData.guildMember instanceof Discord.User) {
                 messageEmbed
                     .setDescription(msgString)
                     .setTitle('__**Missing Or Invalid Arguments:**__')
@@ -96,12 +96,12 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL()!)
                     .setColor([254, 254, 254]);
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
             }
-            else if (commandData.guildMember instanceof Discord.GuildMember){
+            else if (commandData.guildMember instanceof Discord.GuildMember) {
                  messageEmbed
                     .setDescription(msgString)
                     .setTitle('__**Missing Or Invalid Arguments:**__')
@@ -109,7 +109,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
                     .setColor(guildData!.borderColor as [number, number, number]);
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -131,7 +131,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         if (currentServer == null) {
             const msgString = '------\n**Sorry! No matching servers were found!**\n------';
             const messageEmbed = new Discord.MessageEmbed()
-            if (commandData.guildMember instanceof Discord.User){
+            if (commandData.guildMember instanceof Discord.User) {
                 messageEmbed
                     .setDescription(msgString)
                     .setTitle('__**Server Issue:**__')
@@ -139,12 +139,12 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL()!)
                     .setColor([254, 254, 254]);
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guildMember!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
              }
-             else if (commandData.guildMember instanceof Discord.GuildMember){
+             else if (commandData.guildMember instanceof Discord.GuildMember) {
                  messageEmbed
                     .setDescription(msgString)
                     .setTitle('__**Server Issue:**__')
@@ -152,7 +152,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setAuthor(commandData.guildMember.user.username, commandData.guildMember.user.avatarURL()!)
                     .setColor(guildData!.borderColor as [number, number, number]);
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -201,7 +201,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         fields.push(field11);
 
         let messageEmbed = new Discord.MessageEmbed()
-        if (commandData.guildMember instanceof Discord.User){
+        if (commandData.guildMember instanceof Discord.User) {
            messageEmbed
             .setImage(currentServer.iconURL()!)
             .setTitle('__**Server Info:**__')
@@ -210,7 +210,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             .setColor([254, 254, 254]);
             messageEmbed.fields = fields as Discord.EmbedField[];
         }
-        else if (commandData.guildMember instanceof Discord.GuildMember){
+        else if (commandData.guildMember instanceof Discord.GuildMember) {
             messageEmbed
             .setImage(currentServer.iconURL()!)
             .setTitle('__**Server Info:**__')

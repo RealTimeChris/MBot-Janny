@@ -53,7 +53,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -67,7 +67,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -140,7 +140,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Channel Re-Added:**__');
                     let message = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         message = new Discord.Message(commandData.guildMember!.client, message, commandData.fromTextChannel!);
                     }
                     message.delete({timeout: 20000});
@@ -172,7 +172,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Enabled Channel Purging:**__');
             let pinMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                pinMessage = new Discord.Message(commandData.guildMember!.client, pinMessage, commandData.fromTextChannel!);
             }
             await pinMessage.pin();
@@ -203,7 +203,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Channel Issue:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});

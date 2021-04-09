@@ -6,12 +6,12 @@
 'use strict';
 
 import Discord = require('discord.js');
+import DiscordInteractions from 'slash-commands';
+import SlashCommands = require('slash-commands');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
 import HelperFunctions from '../HelperFunctions';
-import DiscordInteractions from 'slash-commands';
-import SlashCommands = require('slash-commands');
 
 const command: FoundationClasses.BotCommand = {
     name: 'slashcommands',
@@ -31,7 +31,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             authToken: discordUser.userData.botToken})
 
         const commands = await interaction.getApplicationCommands();
-        for (let x = 0; x < commands.length; x += 1){
+        for (let x = 0; x < commands.length; x += 1) {
             //const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
             //console.log(newInteraction);
         }
@@ -235,8 +235,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         // Create Global Command
         await interaction.createApplicationCommand(jannyoptions).then(error => console.log(error)).catch(error => console.log(error.message));
 
-        for (let x = 0; x < commands.length; x += 1){
-            if ((commands[x] as SlashCommands.ApplicationCommand).name === 'listdbguilds'){
+        for (let x = 0; x < commands.length; x += 1) {
+            if ((commands[x] as SlashCommands.ApplicationCommand).name === 'listdbguilds') {
                 const newInteraction = await interaction.deleteApplicationCommand(commands[x]?.id as string);
                 console.log(newInteraction);
             }            
@@ -311,8 +311,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         }
         let guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, memberCount: commandData.guild!.memberCount, name: commandData.guild!.name});
         let choices1: any[] = [];
-        for (let x = 0; x < guildData.logs.length; x += 1){
-            if (x < 10){
+        for (let x = 0; x < guildData.logs.length; x += 1) {
+            if (x < 10) {
                 let choice = {name: '', value: ''};
                 choice.name = (guildData.logs as FoundationClasses.Log[])[x]?.nameSmall as string;
                 choice.value = (guildData.logs as FoundationClasses.Log[])[x]?.nameSmall as string;
@@ -322,8 +322,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         managelogs.options[0]!.options[0]!.choices = choices1;
 
         let choices2: any[] = [];
-        for (let x = 0; x < guildData.logs.length; x += 1){
-            if (x >= 10){
+        for (let x = 0; x < guildData.logs.length; x += 1) {
+            if (x >= 10) {
                 let choice = {name: '', value: ''};
                 choice.name = (guildData.logs as FoundationClasses.Log[])[x]?.nameSmall as string;
                 choice.value = (guildData.logs as FoundationClasses.Log[])[x]?.nameSmall as string;
@@ -624,11 +624,11 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 
         let msgString = `------\n**Yes, IT'S COMPLETED! You have ${globalCommands.length} commands registered!**\n------\n`;
         let msgEmbeds: Discord.MessageEmbed[] = [];
-        for (let x = 0; x < globalCommands.length; x += 1){
+        for (let x = 0; x < globalCommands.length; x += 1) {
             msgString += `__**Name**__: ${globalCommands[x]?.name} __**Description**__: ${globalCommands[x]?.description}\n`;
-            if (msgString.length >= 2000 || x === globalCommands.length - 1){
+            if (msgString.length >= 2000 || x === globalCommands.length - 1) {
                 let msgEmbed = new Discord.MessageEmbed();
-                if (commandData.guildMember instanceof Discord.User){
+                if (commandData.guildMember instanceof Discord.User) {
                     msgEmbed
                         .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL()!)
                         .setColor([254, 254, 255])
@@ -650,14 +650,14 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 msgString = `------\n**Yes, IT'S COMPLETED! You have ${globalCommands.length} commands registered!**\n------\n`;
             }
         }
-        for (let x = 0; x < msgEmbeds.length; x += 1){
+        for (let x = 0; x < msgEmbeds.length; x += 1) {
             msgEmbeds[x]?.setTitle(`__**Registered Commands, (${(x + 1).toString()} of ${msgEmbeds.length}): **__`);
             await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbeds[x]!);
         }
 
     return commandReturnData;
     }
-    catch(error){
+    catch(error) {
         return new Promise((resolve, reject) => {
             reject(error);
         });

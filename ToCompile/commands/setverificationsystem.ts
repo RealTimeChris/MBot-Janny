@@ -51,7 +51,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -65,7 +65,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -79,7 +79,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -92,7 +92,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 
         let msgString = '';
         if (whatAreWeDoing === 'viewing') {
-            if (guildData.verificationSystem!.messageID !== ''){
+            if (guildData.verificationSystem!.messageID !== '') {
                 try{
                     const messageManager = new Discord.MessageManager(commandData.guildMember!.client.channels.resolve(guildData.verificationSystem!.channelID) as Discord.TextChannel);
                     const newMessage = await messageManager.fetch(guildData.verificationSystem!.messageID);
@@ -100,7 +100,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
                     msgString += `__**Message Content:**__ ${newMessage.embeds[0]!.description}\n`;
                     msgString += `__**Emoji:**__ ${guildData.verificationSystem!.emoji}\n------`;
                 }
-                catch(error){
+                catch(error) {
                     console.log(error);
                     msgString = '------\n__The verification system is currently disabled.__\n------\n';
                     guildData.verificationSystem!.channelID = '';
@@ -148,7 +148,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 	    			.setTimestamp(Date() as unknown as Date)
     				.setTitle('__**Existence Issue:**__');
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -189,7 +189,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 	    			.setTimestamp(Date() as unknown as Date)
     				.setTitle('__**Role Issue:**__');
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -201,7 +201,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
                 .setDescription(commandData.args[1])
                 .setTimestamp(Date() as unknown as Date);
             let newMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed2);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 newMessage = new Discord.Message(commandData.guild!.client, newMessage, commandData.fromTextChannel!);
             }            
             
@@ -211,20 +211,20 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
             const channelsArray = currentGuild.channels.cache.array()!;
             const currentRolesArray = currentGuild.roles.cache.array()!;
             let everyoneRoleID;
-            for (let x = 0; x < currentRolesArray.length; x += 1){
-                if (currentRolesArray[x]!.name === '@everyone'){
+            for (let x = 0; x < currentRolesArray.length; x += 1) {
+                if (currentRolesArray[x]!.name === '@everyone') {
                     everyoneRoleID = currentRolesArray[x]?.id;
                 }
             }
-            for (let x = 0; x < channelsArray!.length; x += 1){
-                if (channelsArray![x]!.id === commandData.fromTextChannel!.id){
+            for (let x = 0; x < channelsArray!.length; x += 1) {
+                if (channelsArray![x]!.id === commandData.fromTextChannel!.id) {
                     const permOWs = channelsArray![x]?.permissionOverwrites.array()!;
-                    for (let y = 0; y < permOWs.length; y += 1){
-                        if (permOWs[y]?.id === everyoneRoleID){
+                    for (let y = 0; y < permOWs.length; y += 1) {
+                        if (permOWs[y]?.id === everyoneRoleID) {
                             await permOWs[y]?.update({VIEW_CHANNEL: true});
                         }
                     }
-                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1){
+                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
                         const newPermOWs = new Discord.PermissionOverwrites(channelsArray[x]!, {});
                         newPermOWs.type = 'role';
                         newPermOWs.id = guildData.defaultRoleIDs[y]!;
@@ -234,12 +234,12 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
                 }
                 else{
                     const permOWs = channelsArray![x]?.permissionOverwrites.array()!;
-                    for (let y = 0; y < permOWs.length; y += 1){
-                        if (permOWs[y]?.id === everyoneRoleID){
+                    for (let y = 0; y < permOWs.length; y += 1) {
+                        if (permOWs[y]?.id === everyoneRoleID) {
                             await permOWs[y]?.update({VIEW_CHANNEL: false});
                         }
                     }
-                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1){
+                    for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
                         const newPermOWs = new Discord.PermissionOverwrites(channelsArray[x]!, {});
                         newPermOWs.type = 'role';
                         newPermOWs.id = guildData.defaultRoleIDs[y]!;
@@ -263,7 +263,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
                 .setTitle('__**Set Verification System:**__')
                 .setDescription(msgString);
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});

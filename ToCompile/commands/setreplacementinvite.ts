@@ -41,7 +41,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
             await guildData.getFromDataBase();
         }
-        catch(error){
+        catch(error) {
             if (error.type === 'NotFoundError') {
                 const msgString = '------\n**Sorry, but your current guild could not be found!**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
@@ -51,7 +51,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Server Issue:**__');
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});
@@ -72,7 +72,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});

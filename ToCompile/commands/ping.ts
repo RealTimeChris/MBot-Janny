@@ -28,7 +28,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 		
         const msgString = '------\n**Pong!**\n------';
         let msgEmbed = new Discord.MessageEmbed();
-        if (commandData.guildMember instanceof Discord.GuildMember){
+        if (commandData.guildMember instanceof Discord.GuildMember) {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: commandData.guild!.id, name: commandData.guild!.name, memberCount: commandData.guild!.memberCount});
             await guildData.getFromDataBase();
             msgEmbed

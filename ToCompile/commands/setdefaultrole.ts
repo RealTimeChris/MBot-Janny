@@ -55,7 +55,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -69,7 +69,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
             }
             await msg.delete({timeout: 20000});
@@ -104,12 +104,12 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 return isItFound;
             });
             let isItFoundFinal = false
-            for (let y = 0; y < isItFoundReal.length; y += 1){
+            for (let y = 0; y < isItFoundReal.length; y += 1) {
                 if (isItFoundReal[y] === true) {
                     isItFoundFinal = true;
                 }
             }
-            if (isItFoundFinal === false){
+            if (isItFoundFinal === false) {
                 console.log('Removing a missing guild role from the list of defaults.');
                 guildData.defaultRoleIDs!.splice(x, 1);
                 await guildData.writeToDataBase(); 
@@ -167,7 +167,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Role Issue:**__');
             let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            if (commandData.toTextChannel instanceof Discord.WebhookClient){
+            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                 msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
              }
             await msg.delete({timeout: 20000});
@@ -185,7 +185,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Role Issue:**__')
                     let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                    if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                    if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                     }
                     await msg.delete({timeout: 20000});
@@ -227,7 +227,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**Missing Or Invalid Arguments:**__')
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-                if (commandData.toTextChannel instanceof Discord.WebhookClient){
+                if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
                 }
                 await msg.delete({timeout: 20000});

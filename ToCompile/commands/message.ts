@@ -7,7 +7,6 @@
 
 import Discord = require('discord.js');
 import FoundationClasses from '../FoundationClasses';
-import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
 
 const command: FoundationClasses.BotCommand = {
@@ -18,7 +17,7 @@ const command: FoundationClasses.BotCommand = {
 
 async function trackIfTrackedUser(message: Discord.Message, commandData: FoundationClasses.CommandData): Promise<void> {
     try{
-        if (message.guild === undefined || message.guild === null || message.author.bot){
+        if (message.guild === undefined || message.guild === null || message.author.bot) {
             return;
         }
         GuildData.guildsData.forEach((guildData) => {
@@ -26,15 +25,15 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
             const user = message.author;
             let isItFound = false;
             let index;
-            for (let x = 0; x < guildData.trackedUsers.length; x += 1){
-                if (user.id === guildData.trackedUsers[x]?.userID){
+            for (let x = 0; x < guildData.trackedUsers.length; x += 1) {
+                if (user.id === guildData.trackedUsers[x]?.userID) {
                     msgStringContent = `__**Tracked User:**__ <@!${user.id}> (${user.username})\n__**On Server:**__ ${message.guild!.name}
                         \n__**In Channel:**__ <#${message.channel.id}> (${(message.channel as Discord.TextChannel).name})\n__**Message ID**__ ${message.id}\n__**What They Said:**__ ${message.content}`;
                     isItFound = true;
                     index = x;
                 }   
             }
-            if (isItFound === false){
+            if (isItFound === false) {
                 return;
             }
             else {
@@ -50,7 +49,7 @@ async function trackIfTrackedUser(message: Discord.Message, commandData: Foundat
             }
         });
     }
-    catch(error){
+    catch(error) {
         return new Promise((resolve, reject) => {
             reject(error);
         });
