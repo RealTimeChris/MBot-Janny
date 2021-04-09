@@ -22,7 +22,7 @@ async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMemb
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-		commandReturnData.commandName = command.name;
+		
         if (!(oldGuildMember instanceof Discord.GuildMember)) {
             return command.name;
         }

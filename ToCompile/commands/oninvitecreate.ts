@@ -22,7 +22,7 @@ async function execute(client: Discord.Client, invite: Discord.Invite,
         const commandReturnData: FoundationClasses.CommandReturnData =  {
             commandName: command.name
         };
-		commandReturnData.commandName = command.name;
+		
         if (!(invite instanceof Discord.Invite)) {
             return command.name;
         }

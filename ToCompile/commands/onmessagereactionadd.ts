@@ -22,7 +22,7 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 		const commandReturnData: FoundationClasses.CommandReturnData = {
 			commandName: command.name
 		};
-		commandReturnData.commandName = command.name;
+		
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: messageReaction.message.guild!.id,
             name: messageReaction.message.guild!.name, memberCount: messageReaction.message.guild!.memberCount});
 		await guildData.getFromDataBase();
@@ -59,7 +59,15 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
 
 				for (let y = 0; y < guildData.defaultRoleIDs.length; y += 1) {
 					await currentGuildMemberRoleManager.add(guildData.defaultRoleIDs[y]!);
-					await messageReaction.users.remove(userID);
+					try{
+						await messageReaction.users.remove(userID);
+					}
+					catch(error){
+						if (!client.guilds.resolve(guildData.id)?.members.resolve(discordUser.userData.userID)?.permissionsIn(messageReaction.message.channel).has('MANAGE_EMOJIS')){
+							
+						}
+					}
+					
 				}
 			} else if (userID !== client.user!.id) {
 				await messageReaction.users.remove(userID);

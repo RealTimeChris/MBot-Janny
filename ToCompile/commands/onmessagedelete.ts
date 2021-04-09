@@ -21,7 +21,7 @@ async function execute(client: Discord.Client, message: Discord.Message, discord
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-		commandReturnData.commandName = command.name;
+		
         if (!(message.deleted)) {
             return command.name;
         }

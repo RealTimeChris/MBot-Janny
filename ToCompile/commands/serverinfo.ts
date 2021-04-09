@@ -25,7 +25,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-		commandReturnData.commandName = command.name;
+		
         const idRegExp = /\d{18}/;
 
         let currentServerID;

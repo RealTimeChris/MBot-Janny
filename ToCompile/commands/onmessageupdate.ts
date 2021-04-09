@@ -22,7 +22,7 @@ async function execute(client: Discord.Client, oldMessage: Discord.Message, newM
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-		commandReturnData.commandName = command.name;
+		
         if (!(newMessage instanceof Discord.Message)) {
             return command.name;
         }

@@ -22,7 +22,7 @@ async function execute(client: Discord.Client, collection: Discord.Collection<st
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-		commandReturnData.commandName = command.name;
+		
         if (!(collection instanceof Discord.Collection)) {
             return command.name;
         }

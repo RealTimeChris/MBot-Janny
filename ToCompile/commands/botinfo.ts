@@ -44,8 +44,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
        if (commandData.args[0]?.toLowerCase() !== 'janny'){
            return commandReturnData;
        }
-
-       commandReturnData.commandName = command.name;
+       
        const fields: Discord.EmbedField[] = [];
        const field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
        fields.push(field1);

@@ -22,7 +22,7 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-		commandReturnData.commandName = command.name;
+		
         if (!(oldUser instanceof Discord.User)) {
             return command.name;
         }

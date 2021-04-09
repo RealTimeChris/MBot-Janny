@@ -25,8 +25,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         const commandReturnData: FoundationClasses.CommandReturnData = {
             commandName: command.name
         };
-		commandReturnData.commandName = command.name;
-
+		
         const msgString = '------\n**Pong!**\n------';
         let msgEmbed = new Discord.MessageEmbed();
         if (commandData.guildMember instanceof Discord.GuildMember){
