@@ -94,6 +94,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 currentDeletionChannel = guildData.deletionChannels![x]!;
                 currentDeletionChannel.currentlyBeingDeleted = false;
                 currentDeletionChannel.timeOfLastPurge = 0;
+                currentDeletionChannel.numberOfMessagesToSave = howManyBack;
                 isItFound = true;
                 deletionChannelIndex = x;
             }
