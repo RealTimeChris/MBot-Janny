@@ -39,26 +39,39 @@ async function execute(client: Discord.Client, role: Discord.Role,
             }
         }
 
-        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
+        if (logs!.enabled === true) {
+            const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
-        const auditLogs = await role.guild.fetchAuditLogs({ type: 'ROLE_CREATE', limit: 1 });
-        const auditLogEntry = auditLogs.entries
-            .find(entry => Date.now() - entry.createdTimestamp < 5000)!;
-
-        const currentGuild = await client.guilds.fetch(role.guild.id);
-
-        const msgEmbed = new Discord.MessageEmbed();
-        let msgString = '';
-        msgString = `__**New Role:**__ <@&${role.id}> (${role.name})\n`;
-        msgString += `__**Created By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
-        msgString += `__**Role Count:**__ ${currentGuild.roles.cache.size}`;
-
-        msgEmbed
-            .setTitle('__**Role Created:**__')
-            .setTimestamp(Date() as unknown as Date)
-            .setDescription(msgString)
-            .setColor(role.color);
-        await textChannel.send(msgEmbed);
+            const auditLogs = await role.guild.fetchAuditLogs({ type: 'ROLE_CREATE', limit: 1 });
+            const auditLogEntry = auditLogs.entries.find(entry => Date.now() - entry.createdTimestamp < 5000)!;
+    
+            const currentGuild = await client.guilds.fetch(role.guild.id);
+    
+            const msgEmbed = new Discord.MessageEmbed();
+            let msgString = '';
+            msgString = `__**New Role:**__ <@&${role.id}> (${role.name})\n`;
+            msgString += `__**Created By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
+            msgString += `__**Role Count:**__ ${currentGuild.roles.cache.size}`;
+    
+            msgEmbed
+                .setTitle('__**Role Created:**__')
+                .setTimestamp(Date() as unknown as Date)
+                .setDescription(msgString)
+                .setColor(role.color);
+            await textChannel.send(msgEmbed);
+        }
+        
+        if (guildData.verificationSystem.channelID !== ''){
+            const channelsArray = role.guild.channels.cache.array();
+            for (let x = 0; x < channelsArray.length; x += 1) {
+                if (channelsArray[x]?.id === guildData.verificationSystem.channelID) {
+                    await channelsArray[x]?.updateOverwrite(role.id, {'VIEW_CHANNEL': false});
+                }
+                else {
+                    await channelsArray[x]?.updateOverwrite(role.id, {'VIEW_CHANNEL': null});
+                }
+            }
+        }
 
         return commandReturnData;
     } catch (error) {

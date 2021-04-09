@@ -996,7 +996,7 @@ var IndexFunctions;
     function onRoleCreate(role, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_18;
+            var guildData, command, returnData, error_18;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -1004,35 +1004,24 @@ var IndexFunctions;
                         return [4 /*yield*/, guildData.getFromDataBase()];
                     case 1:
                         _b.sent();
-                        x = 0;
-                        _b.label = 2;
-                    case 2:
-                        if (!(x < guildData.logs.length)) return [3 /*break*/, 7];
-                        if (!(guildData.logs[x].nameSmall === 'rolecreate')) return [3 /*break*/, 6];
-                        if (guildData.logs[x].enabled === false) {
-                            return [2 /*return*/];
-                        }
                         command = 'onrolecreate';
                         if (!CommandIndex_1.default.has(command)) {
                             return [2 /*return*/];
                         }
-                        _b.label = 3;
-                    case 3:
-                        _b.trys.push([3, 5, , 6]);
+                        _b.label = 2;
+                    case 2:
+                        _b.trys.push([2, 4, , 5]);
                         console.log("Command: '" + command + "' entered by system.");
                         return [4 /*yield*/, ((_a = CommandIndex_1.default.get(command)) === null || _a === void 0 ? void 0 : _a.function(client, role, discordUser))];
-                    case 4:
+                    case 3:
                         returnData = _b.sent();
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
-                    case 5:
+                    case 4:
                         error_18 = _b.sent();
                         console.log(error_18);
-                        return [3 /*break*/, 6];
-                    case 6:
-                        x += 1;
-                        return [3 /*break*/, 2];
-                    case 7: return [2 /*return*/];
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
                 }
             });
         });

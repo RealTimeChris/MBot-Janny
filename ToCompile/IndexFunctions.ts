@@ -659,25 +659,18 @@ module IndexFunctions{
     export async function onRoleCreate(role: Discord.Role, client: any, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild.id, name: role.guild.name, memberCount: role.guild.memberCount});
         await guildData.getFromDataBase();
-        for (let x = 0; x < guildData.logs.length; x += 1) {
-            if (guildData.logs[x]!.nameSmall === 'rolecreate') {
-                if (guildData.logs[x]!.enabled === false) {
-                    return;
-                }
-                const command = 'onrolecreate';
+        const command = 'onrolecreate';
 
-                if (!botCommands.has(command)) {
-                    return;
-                }
-                try {
-                    console.log(`Command: '${command}' entered by system.`);
-                    const returnData = await botCommands.get(command)?.function(client, role, discordUser) as FoundationClasses.CommandReturnData;
-                    console.log(`Completed Command: ${returnData.commandName}`);
-                    return;
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+        if (!botCommands.has(command)) {
+            return;
+        }
+        try {
+            console.log(`Command: '${command}' entered by system.`);
+            const returnData = await botCommands.get(command)?.function(client, role, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
+            return;
+        } catch (error) {
+            console.log(error);
         }
     }
 
