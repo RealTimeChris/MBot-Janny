@@ -173,8 +173,8 @@ export default class DiscordUser {
                 if (this.userData.startupCall === true) {
                     for (let x = 0; x < guildData.deletionChannels.length ; x += 1) {
                         guildData.deletionChannels[x]!.currentlyBeingDeleted = false;
-                        guildData.deletionChannels[x]!.timeOfLastPurge = 0;
-                    }   
+                        guildData.deletionChannels[x]!.timeOfLastPurge = 0
+                    }
                 }
                 await guildData.writeToDataBase();
             }

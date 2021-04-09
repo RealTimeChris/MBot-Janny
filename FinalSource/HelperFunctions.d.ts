@@ -1,8 +1,8 @@
 import Discord = require('discord.js');
+import Level from 'level-ts';
 import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
-import Level from 'level-ts';
 declare module HelperFunctions {
     /**
     * Function for sending out a message, using the appropriate channel.
