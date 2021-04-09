@@ -90,7 +90,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             whatAreWeDoing = 'remove';
         }
 
-        console.log(whatAreWeDoing);
         const roleName = commandData.args[1];
 
         const roleArray = commandData.guild!.roles.cache.array().sort();

@@ -368,7 +368,7 @@ module IndexFunctions{
                     const newPermOWs = new Discord.PermissionOverwrites(newChannel, {});
                     newPermOWs.type = 'role';
                     newPermOWs.id = guildData.defaultRoleIDs[y]!;
-                    newPermOWs.update({VIEW_CHANNEL: true});
+                    await newPermOWs.update({VIEW_CHANNEL: true});
                 }
             }
         }
@@ -566,7 +566,6 @@ module IndexFunctions{
         if (collectionSizeDifference !== 0) {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newGuildMember.guild.id, name: newGuildMember.guild.name, memberCount: newGuildMember.guild.memberCount});
             await guildData.getFromDataBase();
-            console.log(guildData.logs);
             for (let x = 0; x < guildData.logs.length; x += 1) {
                 if (guildData.logs[x]!.nameSmall === 'roleaddorremove') {
                     if (guildData.logs[x]!.enabled === false) {

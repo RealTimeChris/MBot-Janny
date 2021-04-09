@@ -269,7 +269,6 @@ module HelperFunctions{
             }
             const serverRecordKey = `${liveGuildArray[y]!.id} + Record`;
             dataBase.put(serverRecordKey, fileObject);
-            //console.log(fileObject);
             yNew += 1;
             await recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, yNew);
             return;
@@ -298,7 +297,6 @@ module HelperFunctions{
                 }
                 const serverRecordKey = `${liveGuildArray[y]!.id} + Record`;
                 await dataBase.put(serverRecordKey, serverRecord);
-                //console.log(serverRecord);
                 await recurseThroughServerRecords(dataBase, liveGuildArray, keyNames, y);
                 return;
             }
