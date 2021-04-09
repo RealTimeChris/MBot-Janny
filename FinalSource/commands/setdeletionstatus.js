@@ -152,18 +152,12 @@ function execute(commandData, discordUser) {
                             deletionChannelIndex = x;
                         }
                     }
-                    if (isItFound === false) {
-                        currentDeletionChannel.numberOfMessagesToSave = howManyBack;
-                        currentDeletionChannel.channelID = commandData.fromTextChannel.id;
-                        currentDeletionChannel.timeOfLastPurge = 0;
-                        currentDeletionChannel.currentlyBeingDeleted = false;
-                    }
                     if (!(whatAreWeDoing === 'viewing')) return [3 /*break*/, 13];
-                    msgString = '';
                     msgString = '\n------\n';
                     if (guildData.deletionChannels.length > 0) {
                         for (x = 0; x < guildData.deletionChannels.length; x += 1) {
-                            msgString += "__**Channel:**__ <#" + guildData.deletionChannels[x].channelID + ">, __**Messages To Save:**__ \n                    " + guildData.deletionChannels[x].numberOfMessagesToSave + "\n";
+                            msgString += "__**Channel:**__ <#" + guildData.deletionChannels[x].channelID + ">, __**Messages To Save:**__ " +
+                                (guildData.deletionChannels[x].numberOfMessagesToSave + "\n");
                         }
                     }
                     else {
@@ -205,8 +199,7 @@ function execute(commandData, discordUser) {
                     _a.label = 16;
                 case 16:
                     _a.trys.push([16, 20, , 21]);
-                    return [4 /*yield*/, commandData.fromTextChannel.messages
-                            .fetch(currentDeletionChannel.deletionMessageID)];
+                    return [4 /*yield*/, commandData.fromTextChannel.messages.fetch(currentDeletionChannel.deletionMessageID)];
                 case 17:
                     previousMessage = _a.sent();
                     if (!(previousMessage.deletable === true)) return [3 /*break*/, 19];

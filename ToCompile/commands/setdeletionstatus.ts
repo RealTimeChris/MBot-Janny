@@ -89,9 +89,9 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         };
         let isItFound = false;
         let deletionChannelIndex: number;
-        for (let x = 0; x < guildData.deletionChannels!.length; x += 1) {
-            if (commandData.fromTextChannel!.id === guildData.deletionChannels![x]!.channelID) {
-                currentDeletionChannel = guildData.deletionChannels![x]!;
+        for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
+            if (commandData.fromTextChannel!.id === guildData.deletionChannels[x]!.channelID) {
+                currentDeletionChannel = guildData.deletionChannels[x]!;
                 currentDeletionChannel.currentlyBeingDeleted = false;
                 currentDeletionChannel.timeOfLastPurge = 0;
                 currentDeletionChannel.numberOfMessagesToSave = howManyBack;
@@ -99,20 +99,13 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 deletionChannelIndex = x;
             }
         }
-        if (isItFound === false) {
-            currentDeletionChannel!.numberOfMessagesToSave = howManyBack;
-            currentDeletionChannel!.channelID = commandData.fromTextChannel!.id;
-            currentDeletionChannel!.timeOfLastPurge = 0;
-            currentDeletionChannel!.currentlyBeingDeleted = false;
-        }
 
         if (whatAreWeDoing === 'viewing') {
-            let msgString = '';
-            msgString = '\n------\n';
-            if (guildData.deletionChannels!.length > 0) {
-                for (let x = 0; x < guildData.deletionChannels!.length; x += 1) {
-                    msgString += `__**Channel:**__ <#${guildData.deletionChannels![x]!.channelID}>, __**Messages To Save:**__ 
-                    ${guildData.deletionChannels![x]!.numberOfMessagesToSave}\n`;
+            let msgString = '\n------\n';
+            if (guildData.deletionChannels.length > 0) {
+                for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
+                    msgString += `__**Channel:**__ <#${guildData.deletionChannels[x]!.channelID}>, __**Messages To Save:**__ `+
+                    `${guildData.deletionChannels[x]!.numberOfMessagesToSave}\n`;
                 }
             } else {
                 msgString = "------\n__There's no channels to display, currently!__\n";
@@ -126,12 +119,11 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Current Deletion Channels:**__');
-
             await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
             return commandReturnData;
         }
         if (whatAreWeDoing === 'enable') {
-            for (let x = 0; x < guildData.deletionChannels!.length; x += 1) {
+            for (let x = 0; x < guildData.deletionChannels.length; x += 1) {
                 if (isItFound === true) {
                     const msgString = '------\n**This channel has already been added! I will update your number of saved messages though!**\n------';
                     let msgEmbed = new Discord.MessageEmbed()
@@ -146,20 +138,19 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     }
                     message.delete({timeout: 20000});
                     try {
-                        const previousMessage = await commandData.fromTextChannel!.messages
-                            .fetch(currentDeletionChannel!.deletionMessageID);
+                        const previousMessage = await commandData.fromTextChannel!.messages.fetch(currentDeletionChannel.deletionMessageID);
                         if (previousMessage.deletable === true) {
                             await previousMessage.delete();
                         }
                     } catch (error) {
                         if (error.message === 'Unknown Message') {
-                            currentDeletionChannel!.deletionMessageID = '';
+                            currentDeletionChannel.deletionMessageID = '';
                         }
                     }
                 }
             }
 
-            const msgString = `__**Messages beyond message number ${currentDeletionChannel!.numberOfMessagesToSave} are being purged, in this channel.**__`;
+            const msgString = `__**Messages beyond message number ${currentDeletionChannel.numberOfMessagesToSave} are being purged, in this channel.**__`;
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
@@ -173,13 +164,13 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             }
             await pinMessage.pin();
             
-            currentDeletionChannel!.deletionMessageID = pinMessage.id;
-
+            currentDeletionChannel.deletionMessageID = pinMessage.id;
+            
             if (isItFound === true) {
-                guildData.deletionChannels[deletionChannelIndex!] = currentDeletionChannel!;
+                guildData.deletionChannels[deletionChannelIndex!] = currentDeletionChannel;
             }
             else {
-                guildData.deletionChannels!.push(currentDeletionChannel!);
+                guildData.deletionChannels.push(currentDeletionChannel);
             }
             await guildData.writeToDataBase();
             
@@ -201,10 +192,10 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 await msg.delete({timeout: 20000});
                 return commandReturnData;
             }
-            guildData.deletionChannels!.splice(deletionChannelIndex!, 1);
+            guildData.deletionChannels.splice(deletionChannelIndex!, 1);
             await guildData.writeToDataBase();
 
-            const msgString = `${'\n------\n__**Channel Name:**__ <#'}${currentDeletionChannel!.channelID}>\n------`;
+            const msgString = `${'\n------\n__**Channel Name:**__ <#'}${currentDeletionChannel.channelID}>\n------`;
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
