@@ -550,7 +550,7 @@ module HelperFunctions{
                 await newGuildData.writeToDataBase();
                 return;
             }
-
+            await guildData.getFromDataBase();
             const currentTime = new Date().getTime();
             const timeDifference = currentTime - newGuildData.deletionChannels[channelIndex]!.timeOfLastPurge;
             if (newGuildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === true) {
