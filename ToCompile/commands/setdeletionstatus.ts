@@ -176,7 +176,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                pinMessage = new Discord.Message(commandData.guildMember!.client, pinMessage, commandData.fromTextChannel!);
             }
             await pinMessage.pin();
-            currentDeletionChannel!.deletionMessageID = pinMessage.id;          
+            currentDeletionChannel!.deletionMessageID = pinMessage.id;
             if (isItFound === false) {
                 guildData.deletionChannels!.push(currentDeletionChannel!);
             }
