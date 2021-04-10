@@ -9,10 +9,6 @@ interface DiscordUserData {
     currencyName: string;
     dataBaseFilePath: string;
     guildCount: number;
-    msBetweenCacheBackup: number;
-    msBetweenInvites: number;
-    msBetweenMessageDeletion: number;
-    msBetweenRecordUpdates: number;
     prefix: string;
     publicKey: string;
     startupCall: boolean;

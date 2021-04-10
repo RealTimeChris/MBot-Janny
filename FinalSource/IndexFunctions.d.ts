@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import Discord = require('discord.js');
+import EventEmitter from 'events';
 import DiscordUser from './DiscordUser';
-import { EventEmitter } from 'node:stream';
 declare module IndexFunctions {
     function onHeartBeat(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
     function onReady(client: Discord.Client, discordUser: DiscordUser, eventEmitter: EventEmitter): Promise<void>;

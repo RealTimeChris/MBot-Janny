@@ -22,10 +22,6 @@ interface DiscordUserData {
     currencyName: string;
     dataBaseFilePath: string;
     guildCount: number;
-    msBetweenCacheBackup: number;
-    msBetweenInvites: number;
-    msBetweenMessageDeletion: number;
-    msBetweenRecordUpdates: number;
     prefix: string;
     publicKey: string;
     startupCall: boolean;
@@ -41,8 +37,7 @@ interface DiscordUserData {
  */
 export default class DiscordUser {
     public userData: DiscordUserData = {activeInviteGuilds: [], botCommanders: [], botToken: '', currencyName: '', dataBaseFilePath: '',
-        guildCount: 0, msBetweenCacheBackup: 0, msBetweenInvites: 0, msBetweenMessageDeletion: 0, msBetweenRecordUpdates: 0, prefix: '',
-        publicKey:'', startupCall: true, timeOfLastInvite: 0, timeOfLastRecordUpdate: 0, timeOfLastUpdateAndSave: 0, userID: '', userName: ''};
+        guildCount: 0, prefix: '', publicKey:'', startupCall: true, timeOfLastInvite: 0, timeOfLastRecordUpdate: 0, timeOfLastUpdateAndSave: 0, userID: '', userName: ''};
     public dataBase: any;
 
     /**
@@ -84,10 +79,6 @@ export default class DiscordUser {
                     currencyName: config.currencyName,
                     dataBaseFilePath: this.userData.dataBaseFilePath,
                     guildCount: client.guilds.cache.size,
-                    msBetweenCacheBackup: config.msBetweenCacheBackup,
-                    msBetweenInvites: config.msBetweenInvites,
-                    msBetweenMessageDeletion: config.msBetweenMessageDeletion,
-                    msBetweenRecordUpdates: config.msBetweenRecordUpdates,
                     prefix: config.prefix,
                     publicKey: config.publicKey,
                     startupCall: true,
@@ -138,10 +129,6 @@ export default class DiscordUser {
                 currencyName: config.currencyName,
                 dataBaseFilePath: this.userData.dataBaseFilePath,
                 guildCount: client.guilds.cache.size,
-                msBetweenCacheBackup: config.msBetweenCacheBackup,
-                msBetweenInvites: config.msBetweenInvites,
-                msBetweenMessageDeletion: config.msBetweenMessageDeletion,
-                msBetweenRecordUpdates: config.msBetweenRecordUpdates,
                 prefix: config.prefix,
                 publicKey: config.publicKey,
                 startupCall: this.userData.startupCall,

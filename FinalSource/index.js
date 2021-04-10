@@ -55,13 +55,13 @@ eventEmitter.on('HeartBeat', function () { return __awaiter(void 0, void 0, void
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log('HeartBeat Emitted and captured!');
-                return [4 /*yield*/, IndexFunctions_1.default.onHeartBeat(client, discordUser)];
-            case 1:
-                _a.sent();
+                console.log('HeartBeat emitted and captured!');
                 setTimeout(function () {
                     eventEmitter.emit('HeartBeat');
                 }, 60000);
+                return [4 /*yield*/, IndexFunctions_1.default.onHeartBeat(client, discordUser)];
+            case 1:
+                _a.sent();
                 return [2 /*return*/];
         }
     });

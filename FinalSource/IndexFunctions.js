@@ -52,9 +52,12 @@ var IndexFunctions;
 (function (IndexFunctions) {
     function onHeartBeat(client, discordUser) {
         return __awaiter(this, void 0, void 0, function () {
+            var error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, HelperFunctions_1.default.sendInviteIfGuildIsActive(client, discordUser)];
+                    case 0:
+                        _a.trys.push([0, 5, , 6]);
+                        return [4 /*yield*/, HelperFunctions_1.default.sendInviteIfGuildIsActive(client, discordUser)];
                     case 1:
                         _a.sent();
                         return [4 /*yield*/, HelperFunctions_1.default.updateAndSaveDiscordRecord(client, discordUser)];
@@ -67,7 +70,12 @@ var IndexFunctions;
                     case 4:
                         _a.sent();
                         HelperFunctions_1.default.purgeMessageChannels(client, discordUser);
-                        return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 5:
+                        error_1 = _a.sent();
+                        console.log(error_1);
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -75,7 +83,7 @@ var IndexFunctions;
     IndexFunctions.onHeartBeat = onHeartBeat;
     function onReady(client, discordUser, eventEmitter) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_1;
+            var error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -89,8 +97,8 @@ var IndexFunctions;
                         eventEmitter.emit('HeartBeat');
                         return [3 /*break*/, 4];
                     case 3:
-                        error_1 = _a.sent();
-                        console.log(error_1);
+                        error_2 = _a.sent();
+                        console.log(error_2);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -101,7 +109,7 @@ var IndexFunctions;
     function onMessage(msg, client, discordUser) {
         var _a, _b, _c, _d;
         return __awaiter(this, void 0, void 0, function () {
-            var command, args, x, commandData, cmdReturnData, error_2, newMsg, error_3, command, commandData, cmdReturnData, error_4, newMsg, error_5;
+            var command, args, x, commandData, cmdReturnData, error_3, newMsg, error_4, command, commandData, cmdReturnData, error_5, newMsg, error_6;
             return __generator(this, function (_e) {
                 switch (_e.label) {
                     case 0:
@@ -158,8 +166,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + cmdReturnData.commandName);
                         return [3 /*break*/, 11];
                     case 9:
-                        error_2 = _e.sent();
-                        console.log(error_2);
+                        error_3 = _e.sent();
+                        console.log(error_3);
                         return [4 /*yield*/, msg.reply('There was an error trying to process that message!')];
                     case 10:
                         newMsg = _e.sent();
@@ -167,8 +175,8 @@ var IndexFunctions;
                         return [3 /*break*/, 11];
                     case 11: return [3 /*break*/, 13];
                     case 12:
-                        error_3 = _e.sent();
-                        console.log(error_3);
+                        error_4 = _e.sent();
+                        console.log(error_4);
                         return [3 /*break*/, 13];
                     case 13: return [3 /*break*/, 26];
                     case 14:
@@ -201,8 +209,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + cmdReturnData.commandName);
                         return [3 /*break*/, 24];
                     case 22:
-                        error_4 = _e.sent();
-                        console.log(error_4);
+                        error_5 = _e.sent();
+                        console.log(error_5);
                         return [4 /*yield*/, msg.reply('There was an error trying to process that message!')];
                     case 23:
                         newMsg = _e.sent();
@@ -210,8 +218,8 @@ var IndexFunctions;
                         return [3 /*break*/, 24];
                     case 24: return [3 /*break*/, 26];
                     case 25:
-                        error_5 = _e.sent();
-                        console.log(error_5);
+                        error_6 = _e.sent();
+                        console.log(error_6);
                         return [3 /*break*/, 26];
                     case 26: return [2 /*return*/];
                 }
@@ -490,7 +498,7 @@ var IndexFunctions;
     function onMessageReactionAdd(messageReaction, user, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var command, returnData, error_6;
+            var command, returnData, error_7;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -508,8 +516,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 3:
-                        error_6 = _b.sent();
-                        console.log(error_6);
+                        error_7 = _b.sent();
+                        console.log(error_7);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -520,7 +528,7 @@ var IndexFunctions;
     function onGuildDete(guild, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var command, returnData, error_7;
+            var command, returnData, error_8;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -538,8 +546,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 3:
-                        error_7 = _b.sent();
-                        console.log(error_7);
+                        error_8 = _b.sent();
+                        console.log(error_8);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -550,7 +558,7 @@ var IndexFunctions;
     function onGuildBanAdd(guild, client, user, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_8;
+            var guildData, x, command, returnData, error_9;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -580,8 +588,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 5:
-                        error_8 = _b.sent();
-                        console.log(error_8);
+                        error_9 = _b.sent();
+                        console.log(error_9);
                         return [3 /*break*/, 6];
                     case 6:
                         x += 1;
@@ -595,7 +603,7 @@ var IndexFunctions;
     function onGuildBanRemove(guild, client, user, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_9;
+            var guildData, x, command, returnData, error_10;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -625,8 +633,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 5:
-                        error_9 = _b.sent();
-                        console.log(error_9);
+                        error_10 = _b.sent();
+                        console.log(error_10);
                         return [3 /*break*/, 6];
                     case 6:
                         x += 1;
@@ -640,7 +648,7 @@ var IndexFunctions;
     function onGuildMemberAdd(member, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_10;
+            var guildData, x, command, returnData, error_11;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -670,8 +678,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 5:
-                        error_10 = _b.sent();
-                        console.log(error_10);
+                        error_11 = _b.sent();
+                        console.log(error_11);
                         return [3 /*break*/, 6];
                     case 6:
                         x += 1;
@@ -685,7 +693,7 @@ var IndexFunctions;
     function onGuildMemberRemove(member, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_11;
+            var guildData, x, command, returnData, error_12;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -715,8 +723,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 5:
-                        error_11 = _b.sent();
-                        console.log(error_11);
+                        error_12 = _b.sent();
+                        console.log(error_12);
                         return [3 /*break*/, 6];
                     case 6:
                         x += 1;
@@ -730,7 +738,7 @@ var IndexFunctions;
     function onGuildMemberUpdate(oldGuildMember, newGuildMember, client, discordUser) {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_12, guildData, x, command, returnData, error_13, oldGuildMemberRoleManager, newGuildMemberRoleManager, collectionSizeDifference, guildData, x, command, returnData, error_14;
+            var guildData, x, command, returnData, error_13, guildData, x, command, returnData, error_14, oldGuildMemberRoleManager, newGuildMemberRoleManager, collectionSizeDifference, guildData, x, command, returnData, error_15;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -761,7 +769,7 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 5:
-                        error_12 = _d.sent();
+                        error_13 = _d.sent();
                         return [2 /*return*/];
                     case 6:
                         x += 1;
@@ -794,7 +802,7 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 12:
-                        error_13 = _d.sent();
+                        error_14 = _d.sent();
                         return [2 /*return*/];
                     case 13:
                         x += 1;
@@ -833,8 +841,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 19:
-                        error_14 = _d.sent();
-                        console.log(error_14);
+                        error_15 = _d.sent();
+                        console.log(error_15);
                         return [3 /*break*/, 20];
                     case 20:
                         x += 1;
@@ -848,7 +856,7 @@ var IndexFunctions;
     function onInviteCreate(invite, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_15;
+            var guildData, x, command, returnData, error_16;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -878,8 +886,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 5:
-                        error_15 = _b.sent();
-                        console.log(error_15);
+                        error_16 = _b.sent();
+                        console.log(error_16);
                         return [3 /*break*/, 6];
                     case 6:
                         x += 1;
@@ -893,7 +901,7 @@ var IndexFunctions;
     function onMessageDelete(message, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_16;
+            var guildData, x, command, returnData, error_17;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -924,8 +932,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 5:
-                        error_16 = _b.sent();
-                        console.log(error_16);
+                        error_17 = _b.sent();
+                        console.log(error_17);
                         return [3 /*break*/, 6];
                     case 6:
                         x += 1;
@@ -939,7 +947,7 @@ var IndexFunctions;
     function onMessageDeleteBulk(collection, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_17;
+            var guildData, x, command, returnData, error_18;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -969,8 +977,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 5:
-                        error_17 = _b.sent();
-                        console.log(error_17);
+                        error_18 = _b.sent();
+                        console.log(error_18);
                         return [3 /*break*/, 6];
                     case 6:
                         x += 1;
@@ -984,7 +992,7 @@ var IndexFunctions;
     function onRoleCreate(role, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, command, returnData, error_18;
+            var guildData, command, returnData, error_19;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -1006,8 +1014,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 4:
-                        error_18 = _b.sent();
-                        console.log(error_18);
+                        error_19 = _b.sent();
+                        console.log(error_19);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -1018,7 +1026,7 @@ var IndexFunctions;
     function onRoleDelete(role, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildData, x, command, returnData, error_19;
+            var guildData, x, command, returnData, error_20;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -1048,8 +1056,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [2 /*return*/];
                     case 5:
-                        error_19 = _b.sent();
-                        console.log(error_19);
+                        error_20 = _b.sent();
+                        console.log(error_20);
                         return [3 /*break*/, 6];
                     case 6:
                         x += 1;
@@ -1063,7 +1071,7 @@ var IndexFunctions;
     function onUserUpdate(oldUser, newUser, client, discordUser) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var guildArray, x, guildMembersArray, y, guildData, z, command, returnData, error_20;
+            var guildArray, x, guildMembersArray, y, guildData, z, command, returnData, error_21;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -1107,8 +1115,8 @@ var IndexFunctions;
                         console.log("Completed Command: " + returnData.commandName);
                         return [3 /*break*/, 10];
                     case 8:
-                        error_20 = _b.sent();
-                        console.log(error_20);
+                        error_21 = _b.sent();
+                        console.log(error_21);
                         return [2 /*return*/];
                     case 9:
                         z += 1;
