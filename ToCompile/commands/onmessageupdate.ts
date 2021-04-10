@@ -27,7 +27,6 @@ async function execute(client: Discord.Client, oldMessage: Discord.Message, newM
             return commandReturnData;
         }
 
-        
 		const guildData = new GuildData({dataBase: discordUser.dataBase, id: newMessage.guild!.id,
             name: newMessage.guild!.name, memberCount: newMessage.guild!.memberCount});
         await guildData.getFromDataBase();
@@ -41,7 +40,7 @@ async function execute(client: Discord.Client, oldMessage: Discord.Message, newM
         }
 
         const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
-
+        
         const msgEmbed = new Discord.MessageEmbed();
         let msgString = '';
         msgString = `__**Message Author:**__ <@!${newMessage.author.id}> (${newMessage.author.tag})\n`;
