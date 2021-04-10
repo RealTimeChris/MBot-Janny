@@ -26,7 +26,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
        };
 
        if (commandData.args[0]?.toLowerCase() !== 'janny' && commandData.args[0]?.toLowerCase() !== 'musichouse' && commandData.args[0]?.toLowerCase() !== 'gamehouse') {
-           const msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------'
+           const msgString = '------\n**Please, enter the name of a bot as the first argument! (!displayguildsdata = BOTNAME)**\n------';
            const msgEmbed = new Discord.MessageEmbed();
            msgEmbed
                .setAuthor(discordUser.userData.userName, commandData.guildMember?.client.users.resolve(discordUser.userData.userID)?.avatarURL()!)

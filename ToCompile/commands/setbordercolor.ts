@@ -39,7 +39,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Missing Or Invalid Arguments:**__");
@@ -54,7 +54,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Missing Or Invalid Arguments:**__");
@@ -66,7 +66,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Missing Or Invalid Arguments:**__");
@@ -78,7 +78,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle("__**Missing Or Invalid Arguments:**__");
@@ -106,7 +106,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         const msgEmbed = new Discord.MessageEmbed();
         msgEmbed
             .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-            .setColor(guildData.borderColor as [number, number, number])
+            .setColor(guildData.borderColor)
             .setDescription(`Nicely done, you've updated the default border color for this bot!\n------\n__**Border Color Values:**__ ${guildData.borderColor}\n------`)
             .setTimestamp(Date() as unknown as Date)
             .setTitle('__**Updated Border Color:**__');

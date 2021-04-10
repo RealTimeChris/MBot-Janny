@@ -540,7 +540,7 @@ var HelperFunctions;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
+                        _a.trys.push([0, 2, , 3]);
                         liveGuildArray = client.guilds.cache.array();
                         keyNames = [];
                         for (x = 0; x < liveGuildArray.length; x += 1) {
@@ -550,17 +550,13 @@ var HelperFunctions;
                         return [4 /*yield*/, recurseThroughServerRecords(discordUser.dataBase, liveGuildArray, keyNames)];
                     case 1:
                         _a.sent();
-                        discordUser.userData.timeOfLastRecordUpdate = new Date().getTime();
-                        return [4 /*yield*/, discordUser.updateUserDataInDB(discordUser.userData)];
-                    case 2:
-                        _a.sent();
                         return [2 /*return*/];
-                    case 3:
+                    case 2:
                         error_7 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_7);
                             })];
-                    case 4: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -576,7 +572,7 @@ var HelperFunctions;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 32, , 33]);
+                        _a.trys.push([0, 30, , 31]);
                         if (discordUser.userData.activeInviteGuilds.length === 0) {
                             return [2 /*return*/, new Promise(function (resolve, reject) {
                                     resolve();
@@ -585,7 +581,7 @@ var HelperFunctions;
                         x = 0;
                         _a.label = 1;
                     case 1:
-                        if (!(x < discordUser.userData.activeInviteGuilds.length)) return [3 /*break*/, 31];
+                        if (!(x < discordUser.userData.activeInviteGuilds.length)) return [3 /*break*/, 29];
                         fileKey = '';
                         fileKey = discordUser.userData.activeInviteGuilds[x] + " + Record";
                         currentFileObject = void 0;
@@ -714,23 +710,17 @@ var HelperFunctions;
                         discordUser.dataBase.put(notAvailableFileKey, serverRecord);
                         return [2 /*return*/];
                     case 28:
-                        discordUser.userData.timeOfLastInvite = new Date().getTime();
-                        return [4 /*yield*/, discordUser.updateUserDataInDB(discordUser.userData)];
-                    case 29:
-                        _a.sent();
-                        _a.label = 30;
-                    case 30:
                         x += 1;
                         return [3 /*break*/, 1];
-                    case 31: return [2 /*return*/, new Promise(function (resolve, reject) {
+                    case 29: return [2 /*return*/, new Promise(function (resolve, reject) {
                             resolve();
                         })];
-                    case 32:
+                    case 30:
                         error_12 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_12);
                             })];
-                    case 33: return [2 /*return*/];
+                    case 31: return [2 /*return*/];
                 }
             });
         });
@@ -982,7 +972,6 @@ var HelperFunctions;
                         w -= 1;
                         return [3 /*break*/, 40];
                     case 46:
-                        guildData.deletionChannels[channelIndex].timeOfLastPurge = new Date().getTime();
                         guildData.deletionChannels[channelIndex].currentlyBeingDeleted = false;
                         return [4 /*yield*/, guildData.writeToDataBase()];
                     case 47:

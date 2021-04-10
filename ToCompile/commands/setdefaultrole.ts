@@ -50,7 +50,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = `------\n**Please, only enter either 'add' or 'remove' as a first argument! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.borderColor)
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -64,7 +64,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = `------\n**Please, enter the name of a server role! (!setdefaultrole = ADDorREMOVE, ROLENAME, or just !setdefaultrol)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.borderColor)
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -139,7 +139,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setTitle('__**Default Roles:**__')
                 .setTimestamp(Date() as unknown as Date)
                 .setDescription(msgString);
@@ -162,7 +162,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Role Issue:**__');
@@ -180,7 +180,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     const msgString = `------\n**Hey! It looks like you've already added that role!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				        .setColor(guildData.borderColor as [number, number, number])
+				        .setColor(guildData.borderColor)
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Role Issue:**__')
@@ -201,7 +201,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setTitle('__**New Default Role Added:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);
@@ -222,7 +222,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const msgString = `------\n**Sorry, but the role you entered could not be found! Check spelling and case!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				    .setColor(guildData.borderColor as [number, number, number])
+				    .setColor(guildData.borderColor)
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**Missing Or Invalid Arguments:**__')
@@ -239,7 +239,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setTitle('__**Default Role Removed:**__')
                 .setTimestamp((Date() as unknown) as Date)
                 .setDescription(msgString);

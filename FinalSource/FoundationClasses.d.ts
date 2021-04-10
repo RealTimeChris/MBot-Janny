@@ -35,7 +35,6 @@ declare module FoundationClasses {
         currentlyBeingDeleted: boolean;
         deletionMessageID: string;
         numberOfMessagesToSave: number;
-        timeOfLastPurge: number;
     }
     /**
      * Class representing a timed message to be sent out.

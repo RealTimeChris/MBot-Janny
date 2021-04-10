@@ -51,7 +51,7 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
 
         const msgEmbed = new Discord.MessageEmbed();
         msgEmbed
-            .setColor(guildData.borderColor as [number, number, number])
+            .setColor(guildData.borderColor)
             .setDescription(msgString)
             .setThumbnail(newUser.avatarURL()!)
             .setTimestamp(Date() as unknown as Date)

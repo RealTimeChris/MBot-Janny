@@ -48,7 +48,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = "------\n**Please enter either 'enable' or 'disable'! (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------";
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.borderColor)
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -62,7 +62,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = '------\n**Please enter a valid number of messages back to save! (0 to 10000) (!setdeletionstatus = ENABLE/DISABLE, AMOUNTOFMESSAGESTOSAVE, or just !setdeletionstatus = ENABLE/DISABLE)**\n------';
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.borderColor)
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -107,7 +107,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Current Deletion Channels:**__');
@@ -131,7 +131,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const msgString = '------\n**This channel has already been added! I will update your number of saved messages though!**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
                     .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                    .setColor(guildData.borderColor as [number, number, number])
+                    .setColor(guildData.borderColor)
                     .setDescription(msgString)
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Channel Re-Added:**__');
@@ -156,7 +156,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Enabled Channel Purging:**__');
@@ -192,7 +192,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const msgString = '------\n**Sorry, but this channel could not be found in the list of active deletion channels!**\n------';
                 let msgEmbed = new Discord.MessageEmbed()
                     .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                    .setColor(guildData.borderColor as [number, number, number])
+                    .setColor(guildData.borderColor)
                     .setDescription(msgString)
                     .setTimestamp(Date() as unknown as Date)
                     .setTitle('__**Channel Issue:**__');
@@ -210,7 +210,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const messageEmbed = new Discord.MessageEmbed();
             messageEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setDescription(msgString)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Disabled Channel Purging:**__');

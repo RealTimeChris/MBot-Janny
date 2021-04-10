@@ -49,7 +49,7 @@ async function execute(client: Discord.Client, collection: Discord.Collection<st
             .setTitle('__**Messages Bulk Deleted:**__')
             .setTimestamp(Date() as unknown as Date)
             .setDescription(msgString)
-            .setColor(guildData.borderColor as [number, number, number]);
+            .setColor(guildData.borderColor);
         await textChannel.send(msgEmbed);
 
         const keyArray = collection.keyArray();
@@ -63,7 +63,7 @@ async function execute(client: Discord.Client, collection: Discord.Collection<st
                     .setTitle(`__**Deleted Message: ${x + 1} of ${keyArray.length}**__`)
                     .setTimestamp(Date() as unknown as Date)
                     .setDescription(msgString2)
-                    .setColor(guildData.borderColor as [number, number, number]);
+                    .setColor(guildData.borderColor);
                 await textChannel.send(msgEmbed);
             }
             if (currentMessage!.embeds.length > 0) {

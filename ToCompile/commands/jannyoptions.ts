@@ -43,7 +43,7 @@ async function execute(commandData: FoundationClasses.CommandData,  discordUser:
 			.setAuthor((commandData.guildMember as Discord.GuildMember).client.user!.username, (commandData.guildMember as Discord.GuildMember).client.user!.avatarURL()!)
 			.setTimestamp(Date() as unknown as Date)
 			.setTitle('__**Janny Options:**__')
-			.setColor(guildData.borderColor as [number, number, number])
+			.setColor(guildData.borderColor)
 			.setDescription("**Enter '!help = COMMANDNAME to get instructions for each option!**");
 
 		const fields = [];

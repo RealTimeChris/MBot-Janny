@@ -61,7 +61,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = `------\n**Please, enter a proper first argument or enter none at all!**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.borderColor)
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -107,7 +107,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgEmbed = new Discord.MessageEmbed();
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Timed Messages:**__');
             msgEmbed.fields = embedFields;
@@ -136,7 +136,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             msgString += `__**Content:**__ ${newTimedMessage.messageContent}\n------`;
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Timed Message Added:**__')
                 .setDescription(msgString);
@@ -161,7 +161,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const msgString = `------\n**Sorry, but the timed message you requested could not be found!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				    .setColor(guildData.borderColor as [number, number, number])
+				    .setColor(guildData.borderColor)
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**Message Issue:**__');
@@ -178,7 +178,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             msgString = `You've just removed a timed message from your server! It is as follows:\n------\n__**Name:**__ ${currentTimedMessageName}\n------`;
             msgEmbed
                 .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                .setColor(guildData.borderColor as [number, number, number])
+                .setColor(guildData.borderColor)
                 .setTimestamp(Date() as unknown as Date)
                 .setTitle('__**Timed Message Removed:**__')
                 .setDescription(msgString);

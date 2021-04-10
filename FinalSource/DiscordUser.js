@@ -54,7 +54,7 @@ var config = require("./config.json");
 var DiscordUser = /** @class */ (function () {
     function DiscordUser() {
         this.userData = { activeInviteGuilds: [], botCommanders: [], botToken: '', currencyName: '', dataBaseFilePath: '',
-            guildCount: 0, prefix: '', publicKey: '', startupCall: true, timeOfLastInvite: 0, timeOfLastRecordUpdate: 0, timeOfLastUpdateAndSave: 0, userID: '', userName: '' };
+            guildCount: 0, prefix: '', publicKey: '', startupCall: true, userID: '', userName: '' };
     }
     /**
     * Initializes the instance of Discord, within the DiscordUser class.
@@ -121,9 +121,6 @@ var DiscordUser = /** @class */ (function () {
                                 prefix: config.prefix,
                                 publicKey: config.publicKey,
                                 startupCall: true,
-                                timeOfLastInvite: 0,
-                                timeOfLastRecordUpdate: 0,
-                                timeOfLastUpdateAndSave: 0,
                                 userID: client.user.id,
                                 userName: client.user.username
                             };
@@ -178,7 +175,6 @@ var DiscordUser = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        this.userData.timeOfLastUpdateAndSave = new Date().getTime();
                         return [4 /*yield*/, this.getUserDataFromDB(client)];
                     case 1:
                         userData = _a.sent();
@@ -193,9 +189,6 @@ var DiscordUser = /** @class */ (function () {
                             prefix: config.prefix,
                             publicKey: config.publicKey,
                             startupCall: this.userData.startupCall,
-                            timeOfLastInvite: userData.timeOfLastInvite,
-                            timeOfLastRecordUpdate: userData.timeOfLastRecordUpdate,
-                            timeOfLastUpdateAndSave: new Date().getTime(),
                             userID: client.user.id,
                             userName: client.user.username,
                         };
@@ -235,7 +228,6 @@ var DiscordUser = /** @class */ (function () {
                         if (this.userData.startupCall === true) {
                             for (x_1 = 0; x_1 < guildData.deletionChannels.length; x_1 += 1) {
                                 guildData.deletionChannels[x_1].currentlyBeingDeleted = false;
-                                guildData.deletionChannels[x_1].timeOfLastPurge = 0;
                             }
                         }
                         return [4 /*yield*/, guildData.writeToDataBase()];

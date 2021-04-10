@@ -51,7 +51,7 @@ async function execute(client: Discord.Client, invite: Discord.Invite,
             .setTitle('__**New Invite:**__')
             .setTimestamp(Date() as unknown as Date)
             .setDescription(msgString)
-            .setColor(guildData.borderColor as [number, number, number]);
+            .setColor(guildData.borderColor);
         await textChannel.send(msgEmbed);
         return commandReturnData;
     } catch (error) {

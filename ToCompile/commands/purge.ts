@@ -47,7 +47,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			const msgString = '------\n**Please enter a valid number of messages you would like to delete (1, to 100)! (!purge = AMOUNTTODELETE)**\n------';
 			let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.borderColor)
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__')
@@ -55,21 +55,24 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 			if (commandData.toTextChannel instanceof Discord.WebhookClient) {
 				msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
 			}
-			await msg.delete({timeout: 20000});
+			msg.delete({timeout: 20000});
 			return commandReturnData;
 		}
 		const deleteCount = parseInt(commandData.args[0].toString().match(regExp)![0]!, 10);
 		let currentChannel = await commandData.guildMember!.client.channels.fetch(commandData.fromTextChannel!.id) as Discord.TextChannel;
-        await currentChannel.bulkDelete(deleteCount, true);
+        currentChannel.bulkDelete(deleteCount, false);
 		const msgString = `<@!${commandData.guildMember!.id}> I've just deleted ${deleteCount} messages from this channel!`;
 		let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.borderColor)
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Messages Purged:**__');
-		const newMessage = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-		await newMessage.delete({timeout: 5000});
+		let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+		if (commandData.toTextChannel instanceof Discord.WebhookClient) {
+			msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
+		}
+		await msg.delete({timeout: 5000});
 		return commandReturnData;
 	} catch (error) {
 		return new Promise((resolve, reject) => {

@@ -49,7 +49,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = `------\n**Please enter either add or remove for the first argument! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.borderColor)
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -64,7 +64,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             const msgString = `------\n**Please enter a valud usermention! (!trackuser = ADDorREMOVE, @USERMENTION, or just !trackuser)**\n------`;
             let msgEmbed = new Discord.MessageEmbed()
 				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor(guildData.borderColor as [number, number, number])
+				.setColor(guildData.borderColor)
 				.setDescription(msgString)
 				.setTimestamp(Date() as unknown as Date)
 				.setTitle('__**Missing Or Invalid Arguments:**__');
@@ -103,7 +103,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     const msgString = `------\n**Removing user <@!${guildData.trackedUsers[x]!.userID}> (${guildData.trackedUsers[x]?.userName}) from the list of tracked users!**\n------`;
                     let msgEmbed = new Discord.MessageEmbed()
 				        .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL() as string)
-				        .setColor(guildData.borderColor as [number, number, number])
+				        .setColor(guildData.borderColor)
 				        .setDescription(msgString)
 				        .setTimestamp(Date() as unknown as Date)
 				        .setTitle('__**Missing User(s):**__');
@@ -152,7 +152,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                         .setDescription(msgString)
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
                         .setThumbnail(currentGuildMember.user.avatarURL()!)
-                        .setColor(guildData.borderColor as [number, number, number]);
+                        .setColor(guildData.borderColor);
                     await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 } else if (currentIndex >= 0) {
                     let currentIndex = -1;
@@ -170,7 +170,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     const msgEmbed = new Discord.MessageEmbed();
                     msgEmbed
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                        .setColor(guildData.borderColor as [number, number, number])
+                        .setColor(guildData.borderColor)
                         .setDescription(msgString)
                         .setTimestamp(Date() as unknown as Date)
                         .setTitle("__**User Already Added:**__")
@@ -183,7 +183,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 const msgString = `------\n**Sorry, but the specified user could not be found!**\n------`;
                 let msgEmbed = new Discord.MessageEmbed()
 				    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				    .setColor(guildData.borderColor as [number, number, number])
+				    .setColor(guildData.borderColor)
 				    .setDescription(msgString)
 				    .setTimestamp(Date() as unknown as Date)
 				    .setTitle('__**User Issue:**__');
@@ -221,13 +221,13 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                             .setTitle('__**Removed Tracked User:**__')
                             .setDescription(msgString)
                             .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                            .setColor(guildData.borderColor as [number, number, number]);
+                            .setColor(guildData.borderColor);
                         await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                     } else if (currentIndex === -1) {
                         const msgString = `------\n**There is noone by that ID being tracked!**\n------`;
                         let msgEmbed = new Discord.MessageEmbed()
 				            .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				            .setColor(guildData.borderColor as [number, number, number])
+				            .setColor(guildData.borderColor)
 				            .setDescription(msgString)
 				            .setTimestamp(Date() as unknown as Date)
 				            .setTitle('__**User Issue:**__');
@@ -245,7 +245,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                         .setTitle('__**No Tracked Users:**__')
                         .setDescription(msgString)
                         .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                        .setColor(guildData.borderColor as [number, number, number]);
+                        .setColor(guildData.borderColor);
                     await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 }
             } catch (error) {
@@ -255,7 +255,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                     .setTitle('__**User Issue:**__')
                     .setDescription(msgString)
                     .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-                    .setColor(guildData.borderColor as [number, number, number]);
+                    .setColor(guildData.borderColor);
                 let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
                 if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                     msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
