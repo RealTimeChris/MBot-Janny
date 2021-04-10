@@ -361,8 +361,6 @@ module HelperFunctions{
             }
 
             await recurseThroughServerRecords(discordUser.dataBase, liveGuildArray, keyNames);
-            discordUser.userData.timeOfLastRecordUpdate = new Date().getTime();
-            await discordUser.updateUserDataInDB(discordUser.userData);
             return;
         } catch (error) {
             return new Promise((resolve, reject) => {
@@ -494,8 +492,6 @@ module HelperFunctions{
                         return;
                     }
                 }
-                discordUser.userData.timeOfLastInvite = new Date().getTime();
-                await discordUser.updateUserDataInDB(discordUser.userData);
             }
             return new Promise((resolve, reject) => {
                 resolve();
@@ -681,7 +677,6 @@ module HelperFunctions{
                     }
                 }
             }
-            guildData.deletionChannels[channelIndex]!.timeOfLastPurge = new Date().getTime();
             guildData.deletionChannels[channelIndex]!.currentlyBeingDeleted = false;
             await guildData.writeToDataBase();
             return;

@@ -25,9 +25,6 @@ interface DiscordUserData {
     prefix: string;
     publicKey: string;
     startupCall: boolean;
-    timeOfLastInvite: number;
-    timeOfLastRecordUpdate: number;
-    timeOfLastUpdateAndSave: number;
     userID: string;
     userName: string;
 }
@@ -37,7 +34,7 @@ interface DiscordUserData {
  */
 export default class DiscordUser {
     public userData: DiscordUserData = {activeInviteGuilds: [], botCommanders: [], botToken: '', currencyName: '', dataBaseFilePath: '',
-        guildCount: 0, prefix: '', publicKey:'', startupCall: true, timeOfLastInvite: 0, timeOfLastRecordUpdate: 0, timeOfLastUpdateAndSave: 0, userID: '', userName: ''};
+        guildCount: 0, prefix: '', publicKey:'', startupCall: true, userID: '', userName: ''};
     public dataBase: any;
 
     /**
@@ -82,9 +79,6 @@ export default class DiscordUser {
                     prefix: config.prefix,
                     publicKey: config.publicKey,
                     startupCall: true,
-                    timeOfLastInvite: 0,
-                    timeOfLastRecordUpdate: 0,
-                    timeOfLastUpdateAndSave: 0,
                     userID: client.user!.id,
                     userName: client.user!.username
                 };
@@ -119,7 +113,6 @@ export default class DiscordUser {
     */
     private async updateUserData(client: Discord.Client): Promise<void> {
         try {
-            this.userData.timeOfLastUpdateAndSave = new Date().getTime();
             const userData = await this.getUserDataFromDB(client);
             console.log('Updating the user data!');
             const newUserData: DiscordUserData = {
@@ -132,9 +125,6 @@ export default class DiscordUser {
                 prefix: config.prefix,
                 publicKey: config.publicKey,
                 startupCall: this.userData.startupCall,
-                timeOfLastInvite: userData.timeOfLastInvite,
-                timeOfLastRecordUpdate: userData.timeOfLastRecordUpdate,
-                timeOfLastUpdateAndSave: new Date().getTime(),
                 userID: client.user!.id,
                 userName: client.user!.username,
             }
@@ -160,7 +150,6 @@ export default class DiscordUser {
                 if (this.userData.startupCall === true) {
                     for (let x = 0; x < guildData.deletionChannels.length ; x += 1) {
                         guildData.deletionChannels[x]!.currentlyBeingDeleted = false;
-                        guildData.deletionChannels[x]!.timeOfLastPurge = 0
                     }
                 }
                 await guildData.writeToDataBase();

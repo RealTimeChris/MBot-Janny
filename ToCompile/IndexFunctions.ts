@@ -20,7 +20,7 @@ module IndexFunctions{
             await HelperFunctions.updateAndSaveDiscordRecord(client, discordUser);
             await discordUser.updateDataCacheAndSaveToFile(client);
             await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);
-            HelperFunctions.purgeMessageChannels(client, discordUser);    
+            HelperFunctions.purgeMessageChannels(client, discordUser);
         }
         catch(error){
             console.log(error);

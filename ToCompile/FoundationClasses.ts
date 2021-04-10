@@ -46,7 +46,6 @@ module FoundationClasses{
         currentlyBeingDeleted: boolean;
         deletionMessageID: string;
         numberOfMessagesToSave: number;
-        timeOfLastPurge: number;
     }
 
     /**

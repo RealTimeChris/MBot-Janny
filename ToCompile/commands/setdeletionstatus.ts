@@ -83,7 +83,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         let currentDeletionChannel: FoundationClasses.DeletionChannel = {
             numberOfMessagesToSave: howManyBack,
             channelID: commandData.fromTextChannel!.id,
-            timeOfLastPurge: 0,
             currentlyBeingDeleted: false,
             deletionMessageID: ''
         };
@@ -122,7 +121,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                 if (commandData.fromTextChannel!.id === guildData.deletionChannels[x]!.channelID) {
                     currentDeletionChannel = guildData.deletionChannels[x]!;
                     currentDeletionChannel.currentlyBeingDeleted = false;
-                    currentDeletionChannel.timeOfLastPurge = 0;
                     currentDeletionChannel.numberOfMessagesToSave = howManyBack;
                     isItFound = true;
                     deletionChannelIndex = x;
@@ -169,7 +167,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             await pinMessage.pin();
             
             currentDeletionChannel.deletionMessageID = pinMessage.id;
-            
+
             if (isItFound === true) {
                 guildData.deletionChannels[deletionChannelIndex!] = currentDeletionChannel;
             }
