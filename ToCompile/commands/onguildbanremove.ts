@@ -39,7 +39,7 @@ async function execute(client: Discord.Client, guild: Discord.Guild, user: Disco
             }
         }
 
-        if (logs!.enabled === true){
+        if (logs!.enabled === true) {
             const textChannel = guild.channels.resolve(logs!.loggingChannelID) as Discord.TextChannel;
 
             const auditLogs = await guild.fetchAuditLogs({ type: 'MEMBER_BAN_REMOVE', limit: 1 });

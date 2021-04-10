@@ -54,13 +54,14 @@ var command = {
 * Displays the data about the currend user.
 */
 function execute(commandData, discordUser) {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
     return __awaiter(this, void 0, void 0, function () {
-        var commandReturnData, msgString, msgEmbed, msg, fields, field1, field2, field3, field4, messageEmbed, error_1;
-        return __generator(this, function (_j) {
-            switch (_j.label) {
+        var commandReturnData, msgString, msgEmbed, msg, fields, field0, field1, field2, field3, field4, field5, field6, field7, messageEmbed, error_1;
+        var _t;
+        return __generator(this, function (_u) {
+            switch (_u.label) {
                 case 0:
-                    _j.trys.push([0, 5, , 6]);
+                    _u.trys.push([0, 6, , 7]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -75,19 +76,24 @@ function execute(commandData, discordUser) {
                         .setTitle("__**Invalid Or Missing Arguments:**__");
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, msgEmbed)];
                 case 1:
-                    msg = _j.sent();
+                    msg = _u.sent();
                     if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                         msg = new Discord.Message(commandData.guild.client, msg, commandData.fromTextChannel);
                     }
                     return [4 /*yield*/, msg.delete({ timeout: 20000 })];
                 case 2:
-                    _j.sent();
-                    _j.label = 3;
+                    _u.sent();
+                    _u.label = 3;
                 case 3:
                     if (((_f = commandData.args[0]) === null || _f === void 0 ? void 0 : _f.toLowerCase()) !== 'janny') {
                         return [2 /*return*/, commandReturnData];
                     }
                     fields = [];
+                    _t = { name: '__Public Bot?:__' };
+                    return [4 /*yield*/, ((_g = commandData.guild) === null || _g === void 0 ? void 0 : _g.client.fetchApplication())];
+                case 4:
+                    field0 = (_t.value = (_h = (_u.sent()).botPublic) === null || _h === void 0 ? void 0 : _h.valueOf.toString(), _t.inline = true, _t);
+                    fields.push(field0);
                     field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
                     fields.push(field1);
                     field2 = { name: '__Bot ID:__', value: discordUser.userData.userID, inline: true };
@@ -96,22 +102,28 @@ function execute(commandData, discordUser) {
                     fields.push(field3);
                     field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
                     fields.push(field4);
+                    field5 = { name: '__Created At:__', value: (_k = (_j = commandData.guild) === null || _j === void 0 ? void 0 : _j.client.user) === null || _k === void 0 ? void 0 : _k.createdAt.toString(), inline: true };
+                    fields.push(field5);
+                    field6 = { name: '__Locale:__', value: (_o = (_m = (_l = commandData.guild) === null || _l === void 0 ? void 0 : _l.client.user) === null || _m === void 0 ? void 0 : _m.locale) === null || _o === void 0 ? void 0 : _o.toString(), inline: true };
+                    fields.push(field6);
+                    field7 = { name: 'Verified?:__', value: (_q = (_p = commandData.guild) === null || _p === void 0 ? void 0 : _p.client.user) === null || _q === void 0 ? void 0 : _q.verified.valueOf.toString(), inline: true };
+                    fields.push(field7);
                     messageEmbed = new Discord.MessageEmbed()
-                        .setImage((_h = (_g = commandData.guildMember) === null || _g === void 0 ? void 0 : _g.client.user) === null || _h === void 0 ? void 0 : _h.avatarURL())
+                        .setImage((_s = (_r = commandData.guildMember) === null || _r === void 0 ? void 0 : _r.client.user) === null || _s === void 0 ? void 0 : _s.avatarURL())
                         .setColor([254, 254, 254])
                         .setTitle('__**Bot Info:**__')
                         .setTimestamp(Date());
                     messageEmbed.fields = fields;
                     return [4 /*yield*/, HelperFunctions_1.default.sendMessageWithCorrectChannel(commandData, messageEmbed)];
-                case 4:
-                    _j.sent();
-                    return [2 /*return*/, commandReturnData];
                 case 5:
-                    error_1 = _j.sent();
+                    _u.sent();
+                    return [2 /*return*/, commandReturnData];
+                case 6:
+                    error_1 = _u.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 6: return [2 /*return*/];
+                case 7: return [2 /*return*/];
             }
         });
     });

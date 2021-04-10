@@ -61,7 +61,7 @@ async function execute(client: Discord.Client, role: Discord.Role,
             await textChannel.send(msgEmbed);
         }
         
-        if (guildData.verificationSystem.channelID !== ''){
+        if (guildData.verificationSystem.channelID !== '') {
             const channelsArray = role.guild.channels.cache.array();
             for (let x = 0; x < channelsArray.length; x += 1) {
                 if (channelsArray[x]?.id === guildData.verificationSystem.channelID) {

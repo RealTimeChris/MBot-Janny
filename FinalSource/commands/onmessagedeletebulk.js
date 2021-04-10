@@ -99,7 +99,8 @@ function execute(client, collection, discordUser) {
                     if (!(currentMessage.content !== '')) return [3 /*break*/, 6];
                     msgString2 = "__**Message Author:**__ <@!" + currentMessage.author.id + "> (" + currentMessage.author.tag + ")\n";
                     msgString2 += "__**Message Id:**__ " + currentMessage.id + "\n";
-                    msgString2 += "__**Message Content:**__ " + currentMessage.content;
+                    msgString2 += "__**Message Content:**__ " + currentMessage.content + "\n";
+                    msgString2 += "__**Message Channel:**__ " + (currentMessage === null || currentMessage === void 0 ? void 0 : currentMessage.channel).name;
                     msgEmbed
                         .setTitle("__**Deleted Message: " + (x + 1) + " of " + keyArray.length + "**__")
                         .setTimestamp(Date())

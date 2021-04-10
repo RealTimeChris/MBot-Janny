@@ -38,7 +38,7 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
             }
         }
 
-        if (logs!.enabled === true){
+        if (logs!.enabled === true) {
             const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
             const currentGuild = await client.guilds.fetch(guildMember.guild.id);

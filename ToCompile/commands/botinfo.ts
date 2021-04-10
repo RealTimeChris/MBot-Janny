@@ -33,7 +33,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
                .setColor([254, 254, 254])
                .setDescription(msgString)
                .setTimestamp(Date() as unknown as Date)
-               .setTitle("__**Invalid Or Missing Arguments:**__")
+               .setTitle("__**Invalid Or Missing Arguments:**__");
            let msg = await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
            if (commandData.toTextChannel instanceof Discord.WebhookClient) {
                msg = new Discord.Message(commandData.guild!.client, msg, commandData.fromTextChannel!);
@@ -45,6 +45,8 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
        }
        
        const fields: Discord.EmbedField[] = [];
+       const field0 = { name: '__Public Bot?:__', value: (await commandData.guild?.client.fetchApplication())!.botPublic?.valueOf.toString()!, inline: true };
+       fields.push(field0);
        const field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
        fields.push(field1);
        const field2 = { name: '__Bot ID:__', value: discordUser.userData.userID, inline: true };
@@ -53,6 +55,12 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
        fields.push(field3);
        const field4 = { name: '__Currency Name:__', value: discordUser.userData.currencyName, inline: true };
        fields.push(field4);
+       const field5 = { name: '__Created At:__', value:commandData.guild?.client.user?.createdAt.toString()!, inline: true };
+       fields.push(field5);
+       const field6 = { name: '__Locale:__', value:commandData.guild?.client.user?.locale?.toString()!, inline: true };
+       fields.push(field6);
+       const field7 = { name: 'Verified?:__', value:commandData.guild?.client.user?.verified.valueOf.toString()!, inline: true};
+       fields.push(field7);
 
         const messageEmbed = new Discord.MessageEmbed()
            .setImage(commandData.guildMember?.client.user?.avatarURL()!)

@@ -39,7 +39,7 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
             }
         }
 
-        if (logs!.enabled === true){
+        if (logs!.enabled === true) {
             const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
             let msgString = '';

@@ -22,7 +22,7 @@ module IndexFunctions{
             await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);
             HelperFunctions.purgeMessageChannels(client, discordUser);
         }
-        catch(error){
+        catch(error) {
             console.log(error);
         }
     }
@@ -347,7 +347,7 @@ module IndexFunctions{
     }
 
     export async function onChannelCreate(newChannel:  Discord.Channel | Discord.DMChannel | Discord.GuildChannel, client: Discord.Client, discordUser: DiscordUser) {
-        if (newChannel instanceof Discord.GuildChannel){
+        if (newChannel instanceof Discord.GuildChannel) {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name});
             await guildData.getFromDataBase();
             if (guildData.verificationSystem.channelID !== '') {

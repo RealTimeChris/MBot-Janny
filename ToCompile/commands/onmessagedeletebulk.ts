@@ -26,7 +26,7 @@ async function execute(client: Discord.Client, collection: Discord.Collection<st
         if (!(collection instanceof Discord.Collection)) {
             return commandReturnData;
         }
-
+        
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: collection.first()!.guild!.id,
             name: collection.first()!.guild!.name, memberCount: collection.first()!.guild!.memberCount});
         await guildData.getFromDataBase();
@@ -59,7 +59,8 @@ async function execute(client: Discord.Client, collection: Discord.Collection<st
                 if (currentMessage!.content !== '') {
                     let msgString2 = `__**Message Author:**__ <@!${currentMessage!.author.id}> (${currentMessage!.author.tag})\n`;
                     msgString2 += `__**Message Id:**__ ${currentMessage!.id}\n`;
-                    msgString2 += `__**Message Content:**__ ${currentMessage!.content}`;
+                    msgString2 += `__**Message Content:**__ ${currentMessage!.content}\n`;
+                    msgString2 += `__**Message Channel:**__ ${(currentMessage?.channel as Discord.TextChannel).name}`;
                     msgEmbed
                         .setTitle(`__**Deleted Message: ${x + 1} of ${keyArray.length}**__`)
                         .setTimestamp(Date() as unknown as Date)
