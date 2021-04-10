@@ -38,21 +38,24 @@ async function execute(client: Discord.Client, invite: Discord.Invite,
             }
         }
 
-        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
+        if (logs!.enabled === true) {
+            const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
-        const msgEmbed = new Discord.MessageEmbed();
-        let msgString = '';
-        msgString = `__**Max Uses:**__ ${invite.maxUses}\n`;
-        msgString += `__**Expires At:**__ ${invite.expiresAt}\n`;
-        msgString += `__**URL:**__ ${invite.url}\n`;
-        msgString += `__**Created By User:**__ <@!${invite.inviter!.id}> (${invite.inviter!.tag})`;
-
-        msgEmbed
-            .setTitle('__**New Invite:**__')
-            .setTimestamp(Date() as unknown as Date)
-            .setDescription(msgString)
-            .setColor(guildData.borderColor);
-        await textChannel.send(msgEmbed);
+            const msgEmbed = new Discord.MessageEmbed();
+            let msgString = '';
+            msgString = `__**Max Uses:**__ ${invite.maxUses}\n`;
+            msgString += `__**Expires At:**__ ${invite.expiresAt}\n`;
+            msgString += `__**URL:**__ ${invite.url}\n`;
+            msgString += `__**Created By User:**__ <@!${invite.inviter!.id}> (${invite.inviter!.tag})`;
+    
+            msgEmbed
+                .setTitle('__**New Invite:**__')
+                .setTimestamp(Date() as unknown as Date)
+                .setDescription(msgString)
+                .setColor(guildData.borderColor);
+            await textChannel.send(msgEmbed);
+        }
+        
         return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {

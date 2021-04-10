@@ -38,25 +38,28 @@ async function execute(client: Discord.Client, oldGuildMember: Discord.GuildMemb
             }
         }
 
-        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
+        if (logs!.enabled === true){
+            const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
-        let msgString = '';
-        msgString = `__**New Displayname:**__ ${newGuildMember.displayName}\n`;
-        msgString += `__**Old Displayname:**__ ${oldGuildMember.displayName}\n`;
-        msgString += `__**User:**__ <@!${newGuildMember.id}>\n`;
-        msgString += `__**User Tag:**__ ${newGuildMember.user.tag}\n`;
-        msgString += `__**Username:**__ ${newGuildMember.user.username}\n`;
-        msgString += `__**User ID:**__ ${oldGuildMember.id}\n`;
-
-        const msgEmbed = new Discord.MessageEmbed();
-        msgEmbed
-            .setColor(newGuildMember.displayColor)
-            .setDescription(msgString)
-            .setThumbnail(newGuildMember.user.avatarURL()!)
-            .setTimestamp(Date() as unknown as Date)
-            .setTitle('__**New Displayname:**__');
-
-        await textChannel.send(msgEmbed);
+            let msgString = '';
+            msgString = `__**New Displayname:**__ ${newGuildMember.displayName}\n`;
+            msgString += `__**Old Displayname:**__ ${oldGuildMember.displayName}\n`;
+            msgString += `__**User:**__ <@!${newGuildMember.id}>\n`;
+            msgString += `__**User Tag:**__ ${newGuildMember.user.tag}\n`;
+            msgString += `__**Username:**__ ${newGuildMember.user.username}\n`;
+            msgString += `__**User ID:**__ ${oldGuildMember.id}\n`;
+    
+            const msgEmbed = new Discord.MessageEmbed();
+            msgEmbed
+                .setColor(newGuildMember.displayColor)
+                .setDescription(msgString)
+                .setThumbnail(newGuildMember.user.avatarURL()!)
+                .setTimestamp(Date() as unknown as Date)
+                .setTitle('__**New Displayname:**__');
+    
+            await textChannel.send(msgEmbed);
+        }
+        
         return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {

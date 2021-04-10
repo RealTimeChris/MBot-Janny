@@ -37,26 +37,28 @@ async function execute(client: Discord.Client, message: Discord.Message, discord
             }
         }
 
-        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
+        if (logs!.enabled === true) {
+            const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
-        const msgEmbed = new Discord.MessageEmbed();
-        let msgString = '';
-        msgString = `__**Message Author:**__ <@!${message.author.id}> (${message.author.tag})\n`;
-        msgString += `__**Message ID:**__ ${message.id}\n`;
-        msgString += `__**Content:**__ ${message.content}`;
-
-        msgEmbed
-            .setTitle('__**Message Deleted:**__')
-            .setTimestamp(Date() as unknown as Date)
-            .setDescription(msgString)
-            .setColor([0, 0, 255]);
-        await textChannel.send(msgEmbed);
-
-        for (let x = 0; x < message.embeds.length; x += 1) {
-            const msgEmbed2 = message.embeds[0];
-            await textChannel.send('Message Content!', { embed: msgEmbed2 });
+            const msgEmbed = new Discord.MessageEmbed();
+            let msgString = '';
+            msgString = `__**Message Author:**__ <@!${message.author.id}> (${message.author.tag})\n`;
+            msgString += `__**Message ID:**__ ${message.id}\n`;
+            msgString += `__**Content:**__ ${message.content}`;
+    
+            msgEmbed
+                .setTitle('__**Message Deleted:**__')
+                .setTimestamp(Date() as unknown as Date)
+                .setDescription(msgString)
+                .setColor([0, 0, 255]);
+            await textChannel.send(msgEmbed);
+    
+            for (let x = 0; x < message.embeds.length; x += 1) {
+                const msgEmbed2 = message.embeds[0];
+                await textChannel.send('Message Content!', { embed: msgEmbed2 });
+            }
         }
-
+        
         return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {

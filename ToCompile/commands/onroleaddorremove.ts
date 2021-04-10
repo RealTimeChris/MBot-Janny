@@ -39,50 +39,52 @@ async function execute(client: Discord.Client, oldGuildMemberRoleManager: Discor
             }
         }
 
-        const newRoleCollection = oldGuildMemberRoleManager.cache
+        if (logs!.enabled === true) {
+            const newRoleCollection = oldGuildMemberRoleManager.cache
             .difference(newGuildMemberRoleManager.cache);
 
-        const newRole = newRoleCollection.first()!;
+            const newRole = newRoleCollection.first()!;
 
-        const textChannel = client.channels.resolve(logs!.loggingChannelID) as Discord.TextChannel;
+            const textChannel = client.channels.resolve(logs!.loggingChannelID) as Discord.TextChannel;
 
-        const auditLogs = await newGuildMember.guild.fetchAuditLogs({ type: 'MEMBER_ROLE_UPDATE', limit: 1 });
-        const auditLogEntry = auditLogs.entries
-            .find(entry => Date.now() - entry.createdTimestamp < 5000)!;
+            const auditLogs = await newGuildMember.guild.fetchAuditLogs({ type: 'MEMBER_ROLE_UPDATE', limit: 1 });
+            const auditLogEntry = auditLogs.entries
+                .find(entry => Date.now() - entry.createdTimestamp < 5000)!;
 
-        if (collectionSizeDifference > 0) {
-            let finalString = `__**Role Lost:**__ <@&${newRole.id}> (${newRole.name})\n`;
-            finalString += `__**Role Taken By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
-            finalString += `__**User:**__ <@!${newGuildMember.user.id}>\n`;
-            finalString += `__**User Tag:**__ ${newGuildMember.user.tag}\n`;
-            finalString += `__**Username:**__ ${newGuildMember.user.username}\n`;
-            finalString += `__**User ID:**__ ${newGuildMember.id}\n`;
+            if (collectionSizeDifference > 0) {
+                let finalString = `__**Role Lost:**__ <@&${newRole.id}> (${newRole.name})\n`;
+                finalString += `__**Role Taken By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
+                finalString += `__**User:**__ <@!${newGuildMember.user.id}>\n`;
+                finalString += `__**User Tag:**__ ${newGuildMember.user.tag}\n`;
+                finalString += `__**Username:**__ ${newGuildMember.user.username}\n`;
+                finalString += `__**User ID:**__ ${newGuildMember.id}\n`;
 
-            const messageEmbed = new Discord.MessageEmbed()
-                .setColor(newGuildMember.displayColor)
-                .setTitle('__**Lost Role:**__')
-                .setTimestamp(Date() as unknown as Date)
-                .setThumbnail(newGuildMember.user.avatarURL()!)
-                .setDescription(finalString);
-            await textChannel.send(messageEmbed);
-            return commandReturnData;
-        }
-        if (collectionSizeDifference < 0) {
-            let finalString = `__**Role Gained:**__ <@&${newRole.id}> (${newRole.name})\n`;
-            finalString += `__**Role Given By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
-            finalString += `__**User:**__ <@!${newGuildMember.user.id}>\n`;
-            finalString += `__**User Tag:**__ ${newGuildMember.user.tag}\n`;
-            finalString += `__**Username:**__ ${newGuildMember.user.username}\n`;
-            finalString += `__**User ID:**__ ${newGuildMember.id}\n`;
+                const messageEmbed = new Discord.MessageEmbed()
+                    .setColor(newGuildMember.displayColor)
+                    .setTitle('__**Lost Role:**__')
+                    .setTimestamp(Date() as unknown as Date)
+                    .setThumbnail(newGuildMember.user.avatarURL()!)
+                    .setDescription(finalString);
+                await textChannel.send(messageEmbed);
+                return commandReturnData;
+            }
+            if (collectionSizeDifference < 0) {
+                let finalString = `__**Role Gained:**__ <@&${newRole.id}> (${newRole.name})\n`;
+                finalString += `__**Role Given By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
+                finalString += `__**User:**__ <@!${newGuildMember.user.id}>\n`;
+                finalString += `__**User Tag:**__ ${newGuildMember.user.tag}\n`;
+                finalString += `__**Username:**__ ${newGuildMember.user.username}\n`;
+                finalString += `__**User ID:**__ ${newGuildMember.id}\n`;
 
-            const messageEmbed = new Discord.MessageEmbed()
-                .setColor(newGuildMember.displayColor)
-                .setTitle('__**New Role:**__')
-                .setTimestamp(Date() as unknown as Date)
-                .setThumbnail(newGuildMember.user.avatarURL()!)
-                .setDescription(finalString);
-            await textChannel.send(messageEmbed);
-            return commandReturnData;
+                const messageEmbed = new Discord.MessageEmbed()
+                    .setColor(newGuildMember.displayColor)
+                    .setTitle('__**New Role:**__')
+                    .setTimestamp(Date() as unknown as Date)
+                    .setThumbnail(newGuildMember.user.avatarURL()!)
+                    .setDescription(finalString);
+                await textChannel.send(messageEmbed);
+                return commandReturnData;
+            }
         }
 
         return commandReturnData;

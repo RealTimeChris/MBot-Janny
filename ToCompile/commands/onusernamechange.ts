@@ -39,25 +39,28 @@ async function execute(client: Discord.Client, oldUser: Discord.User, newUser: D
             }
         }
 
-        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
+        if (logs!.enabled === true){
+            const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
-        let msgString = '';
-        msgString = `__**New Username:**__ ${newUser.username}\n`;
-        msgString += `__**Old Username:**__ ${oldUser.username}\n`;
-        msgString += `__**User:**__ <@!${newUser.id}>\n`;
-        msgString += `__**User Tag:**__ ${newUser.tag}\n`;
-        msgString += `__**Username:**__ ${newUser.username}\n`;
-        msgString += `__**User ID:**__ ${newUser.id}\n`;
-
-        const msgEmbed = new Discord.MessageEmbed();
-        msgEmbed
-            .setColor(guildData.borderColor)
-            .setDescription(msgString)
-            .setThumbnail(newUser.avatarURL()!)
-            .setTimestamp(Date() as unknown as Date)
-            .setTitle('__**New Username:**__');
-
-        await textChannel.send(msgEmbed);
+            let msgString = '';
+            msgString = `__**New Username:**__ ${newUser.username}\n`;
+            msgString += `__**Old Username:**__ ${oldUser.username}\n`;
+            msgString += `__**User:**__ <@!${newUser.id}>\n`;
+            msgString += `__**User Tag:**__ ${newUser.tag}\n`;
+            msgString += `__**Username:**__ ${newUser.username}\n`;
+            msgString += `__**User ID:**__ ${newUser.id}\n`;
+    
+            const msgEmbed = new Discord.MessageEmbed();
+            msgEmbed
+                .setColor(guildData.borderColor)
+                .setDescription(msgString)
+                .setThumbnail(newUser.avatarURL()!)
+                .setTimestamp(Date() as unknown as Date)
+                .setTitle('__**New Username:**__');
+    
+            await textChannel.send(msgEmbed);
+        }
+        
         return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {

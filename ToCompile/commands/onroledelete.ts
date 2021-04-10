@@ -39,26 +39,28 @@ async function execute(client: Discord.Client, role: Discord.Role,
             }
         }
 
-        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
+        if (logs!.enabled === true) {
+            const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
-        const auditLogs = await role.guild.fetchAuditLogs({ type: 'ROLE_DELETE', limit: 1 });
-        const auditLogEntry = auditLogs.entries
-            .find(entry => Date.now() - entry.createdTimestamp < 5000)!;
-
-        const currentGuild = await client.guilds.fetch(role.guild.id);
-
-        const msgEmbed = new Discord.MessageEmbed();
-        let msgString = '';
-        msgString = `__**Role Deleted:**__ ${role.name}\n`;
-        msgString += `__**Deleted By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
-        msgString += `__**Role Count:**__ ${currentGuild.roles.cache.size}`;
-
-        msgEmbed
-            .setTitle('__**Role Deleted:**__')
-            .setTimestamp(Date() as unknown as Date)
-            .setDescription(msgString)
-            .setColor(role.color);
-        await textChannel.send(msgEmbed);
+            const auditLogs = await role.guild.fetchAuditLogs({ type: 'ROLE_DELETE', limit: 1 });
+            const auditLogEntry = auditLogs.entries
+                .find(entry => Date.now() - entry.createdTimestamp < 5000)!;
+    
+            const currentGuild = await client.guilds.fetch(role.guild.id);
+    
+            const msgEmbed = new Discord.MessageEmbed();
+            let msgString = '';
+            msgString = `__**Role Deleted:**__ ${role.name}\n`;
+            msgString += `__**Deleted By:**__ <@!${auditLogEntry.executor.id}> (${auditLogEntry.executor.tag})\n`;
+            msgString += `__**Role Count:**__ ${currentGuild.roles.cache.size}`;
+    
+            msgEmbed
+                .setTitle('__**Role Deleted:**__')
+                .setTimestamp(Date() as unknown as Date)
+                .setDescription(msgString)
+                .setColor(role.color);
+            await textChannel.send(msgEmbed);
+        }        
 
         return commandReturnData;
     } catch (error) {

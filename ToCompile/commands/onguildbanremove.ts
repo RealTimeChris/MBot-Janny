@@ -39,31 +39,33 @@ async function execute(client: Discord.Client, guild: Discord.Guild, user: Disco
             }
         }
 
-        const textChannel = guild.channels.resolve(logs!.loggingChannelID) as Discord.TextChannel;
+        if (logs!.enabled === true){
+            const textChannel = guild.channels.resolve(logs!.loggingChannelID) as Discord.TextChannel;
 
-        const auditLogs = await guild.fetchAuditLogs({ type: 'MEMBER_BAN_REMOVE', limit: 1 });
-        const auditLogEntry = auditLogs.entries
-            .find(entry => Date.now() - entry.createdTimestamp < 5000);
+            const auditLogs = await guild.fetchAuditLogs({ type: 'MEMBER_BAN_REMOVE', limit: 1 });
+            const auditLogEntry = auditLogs.entries.find(entry => Date.now() - entry.createdTimestamp < 5000);
+    
+            let msgString = '';
+            msgString += `__**Unbanned By:**__ <@!${auditLogEntry!.executor.id}> 
+            (${auditLogEntry!.executor.tag})\n`;
+            msgString += `__**Time of Unban:**__ ${Date()}\n`;
+            msgString += `__**User:**__ <@!${user.id}>\n`;
+            msgString += `__**User Tag:**__ ${user.tag}\n`;
+            msgString += `__**Username:**__ ${user.username}\n`;
+            msgString += `__**User ID:**__ ${user.id}\n`;
+    
+            const msgEmbed = new Discord.MessageEmbed();
+    
+            msgEmbed
+                .setColor([0, 255, 0])
+                .setThumbnail(user.avatarURL()!)
+                .setTimestamp(Date() as unknown as Date)
+                .setTitle('__**User Unbanned:**__')
+                .setDescription(msgString);
+    
+            await textChannel.send(msgEmbed);
+        }
 
-        let msgString = '';
-        msgString += `__**Unbanned By:**__ <@!${auditLogEntry!.executor.id}> 
-        (${auditLogEntry!.executor.tag})\n`;
-        msgString += `__**Time of Unban:**__ ${Date()}\n`;
-        msgString += `__**User:**__ <@!${user.id}>\n`;
-        msgString += `__**User Tag:**__ ${user.tag}\n`;
-        msgString += `__**Username:**__ ${user.username}\n`;
-        msgString += `__**User ID:**__ ${user.id}\n`;
-
-        const msgEmbed = new Discord.MessageEmbed();
-
-        msgEmbed
-            .setColor([0, 255, 0])
-            .setThumbnail(user.avatarURL()!)
-            .setTimestamp(Date() as unknown as Date)
-            .setTitle('__**User Unbanned:**__')
-            .setDescription(msgString);
-
-        await textChannel.send(msgEmbed);
         return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {

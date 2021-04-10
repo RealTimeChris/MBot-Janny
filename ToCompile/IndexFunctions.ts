@@ -398,100 +398,71 @@ module IndexFunctions{
     export async function onGuildBanAdd(guild: Discord.Guild, client: Discord.Client, user: Discord.User, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount});
         await guildData.getFromDataBase();
-        for (let x = 0; x < guildData.logs.length; x += 1) {
-            if (guildData.logs[x]!.nameSmall === 'guildbanadd') {
-                if (guildData.logs[x]!.enabled === false) {
-                    return;
-                }
-                const command = 'onguildbanadd';
-
-                if (!botCommands.has(command)) {
-                    return;
-                }
-                try {
-                    console.log(`Command: '${command}' entered by system.`);
-                    const returnData = await botCommands.get(command)?.function(guild, client, user, discordUser) as FoundationClasses.CommandReturnData;
-                    console.log(`Completed Command: ${returnData.commandName}`);
-                    return;
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        }	
+        const command = 'onguildbanadd';
+        if (!botCommands.has(command)) {
+            return;
+        }
+        try {
+            console.log(`Command: '${command}' entered by system.`);
+            const returnData = await botCommands.get(command)?.function(guild, client, user, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
+            return;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     export async function onGuildBanRemove(guild: Discord.Guild, client: Discord.Client, user: Discord.User, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount});
         await guildData.getFromDataBase();
-        for (let x = 0; x < guildData.logs.length; x += 1) {
-            if (guildData.logs[x]!.nameSmall === 'guildbanremove') {
-                if (guildData.logs[x]!.enabled === false) {
-                    return;
-                }
-                const command = 'onguildbanremove';
+        const command = 'onguildbanremove';
 
-                if (!botCommands.has(command)) {
-                    return;
-                }
-                try {
-                    console.log(`Command: '${command}' entered by system.`);
-                    const returnData = await botCommands.get(command)?.function(client, client, guild, discordUser) as FoundationClasses.CommandReturnData;
-                    console.log(`Completed Command: ${returnData.commandName}`);
-                    return;
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+        if (!botCommands.has(command)) {
+            return;
+        }
+        try {
+            console.log(`Command: '${command}' entered by system.`);
+            const returnData = await botCommands.get(command)?.function(client, client, guild, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
+            return;
+        } catch (error) {
+            console.log(error);
         }
     }
 
     export async function onGuildMemberAdd(member: Discord.GuildMember, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: member.guild.id, name: member.guild.name, memberCount: member.guild.memberCount});
         await guildData.getFromDataBase();
-        for (let x = 0; x < guildData.logs.length; x += 1) {
-            if (guildData.logs[x]!.nameSmall === 'guildmemberadd') {
-                if (guildData.logs[x]!.enabled === false) {
-                    return;
-                }
-                const command = 'onguildmemberadd';
+        const command = 'onguildmemberadd';
 
-                if (!botCommands.has(command)) {
-                    return;
-                }
-                try {
-                    console.log(`Command: '${command}' entered by system.`);
-                    const returnData = await botCommands.get(command)?.function(client, member, discordUser) as FoundationClasses.CommandReturnData;
-                    console.log(`Completed Command: ${returnData.commandName}`);
-                    return;
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+        if (!botCommands.has(command)) {
+            return;
+        }
+        try {
+            console.log(`Command: '${command}' entered by system.`);
+            const returnData = await botCommands.get(command)?.function(client, member, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
+            return;
+        } catch (error) {
+            console.log(error);
         }
     }
 
     export async function onGuildMemberRemove(member: Discord.GuildMember, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: member.guild.id, name: member.guild.name, memberCount: member.guild.memberCount});
         await guildData.getFromDataBase();
-        for (let x = 0; x < guildData.logs.length; x += 1) {
-            if (guildData.logs[x]!.nameSmall === 'guildmemberremove') {
-                if (guildData.logs[x]!.enabled === false) {
-                    return;
-                }
-                const command = 'onguildmemberremove';
+        const command = 'onguildmemberremove';
 
-                if (!botCommands.has(command)) {
-                    return;
-                }
-                try {
-                    console.log(`Command: '${command}' entered by system.`);
-                    const returnData = await botCommands.get(command)?.function(client, member, discordUser) as FoundationClasses.CommandReturnData;
+        if (!botCommands.has(command)) {
+            return;
+        }
+        try {
+            console.log(`Command: '${command}' entered by system.`);
+            const returnData = await botCommands.get(command)?.function(client, member, discordUser) as FoundationClasses.CommandReturnData;
             console.log(`Completed Command: ${returnData.commandName}`);
-                    return;
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+            return;
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -499,49 +470,35 @@ module IndexFunctions{
         if (oldGuildMember.displayName !== newGuildMember.displayName) {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: oldGuildMember.guild.id, name: oldGuildMember.guild.name, memberCount: oldGuildMember.guild.memberCount});
             await guildData.getFromDataBase();
-            for (let x = 0; x < guildData.logs.length; x += 1) {
-                if (guildData.logs[x]!.nameSmall === 'guildmemberupdate') {
-                    if (guildData.logs[x]!.enabled === false) {
-                        return;
-                    }
-                    const command = 'ondisplaynamechange';
+            const command = 'ondisplaynamechange';
                     
-                    if (!botCommands.has(command)) {
-                        return;
-                    }
-                    try {
-                        console.log(`Command: '${command}' entered by system.`);
-                        const returnData = await botCommands.get(command)?.function(client, oldGuildMember, newGuildMember, discordUser) as FoundationClasses.CommandReturnData;
-                        console.log(`Completed Command: ${returnData.commandName}`);
-                        return;
-                    } catch (error) {
-                        return;
-                    }
-                }
+            if (!botCommands.has(command)) {
+                return;
+            }
+            try {
+                console.log(`Command: '${command}' entered by system.`);
+                const returnData = await botCommands.get(command)?.function(client, oldGuildMember, newGuildMember, discordUser) as FoundationClasses.CommandReturnData;
+                console.log(`Completed Command: ${returnData.commandName}`);
+                return;
+            } catch (error) {
+                return;
             }
         }
         if (oldGuildMember.nickname !== newGuildMember.nickname) {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: oldGuildMember.guild.id, name: oldGuildMember.guild.name, memberCount: oldGuildMember.guild.memberCount});
             await guildData.getFromDataBase();
-            for (let x = 0; x < guildData.logs.length; x += 1) {
-                if (guildData.logs[x]!.nameSmall === 'nicknamechange') {
-                    if (guildData.logs[x]!.enabled === false) {
-                        return;
-                    }
-                    const command = 'onnicknamechange';
+            const command = 'onnicknamechange';
 
-                    if (!botCommands.has(command)) {
-                        return;
-                    }
-                    try {
-                        console.log(`Command: '${command}' entered by system.`);
-                        const returnData = await botCommands.get(command)?.function(client, oldGuildMember, newGuildMember, discordUser) as FoundationClasses.CommandReturnData;
-                        console.log(`Completed Command: ${returnData.commandName}`);
-                        return;
-                    } catch (error) {
-                        return;
-                    }
-                }
+            if (!botCommands.has(command)) {
+                return;
+            }
+            try {
+                console.log(`Command: '${command}' entered by system.`);
+                const returnData = await botCommands.get(command)?.function(client, oldGuildMember, newGuildMember, discordUser) as FoundationClasses.CommandReturnData;
+                console.log(`Completed Command: ${returnData.commandName}`);
+                return;
+            } catch (error) {
+                return;
             }
         }
         const oldGuildMemberRoleManager = new Discord.GuildMemberRoleManager(oldGuildMember);
@@ -556,25 +513,18 @@ module IndexFunctions{
         if (collectionSizeDifference !== 0) {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newGuildMember.guild.id, name: newGuildMember.guild.name, memberCount: newGuildMember.guild.memberCount});
             await guildData.getFromDataBase();
-            for (let x = 0; x < guildData.logs.length; x += 1) {
-                if (guildData.logs[x]!.nameSmall === 'roleaddorremove') {
-                    if (guildData.logs[x]!.enabled === false) {
-                        return;
-                    }
-                    const command = 'onroleaddorremove';
+            const command = 'onroleaddorremove';
     
-                    if (!botCommands.has(command)) {
-                        return;
-                    }
-                    try {
-                        console.log(`Command: '${command}' entered by system.`);
-                        const returnData = await botCommands.get(command)?.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser) as FoundationClasses.CommandReturnData;
-                        console.log(`Completed Command: ${returnData.commandName}`);
-                        return;
-                    } catch (error) {
-                        console.log(error);
-                    }
-                }
+            if (!botCommands.has(command)) {
+                return;
+            }
+            try {
+                console.log(`Command: '${command}' entered by system.`);
+                const returnData = await botCommands.get(command)?.function(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, newGuildMember, collectionSizeDifference, discordUser) as FoundationClasses.CommandReturnData;
+                console.log(`Completed Command: ${returnData.commandName}`);
+                return;
+            } catch (error) {
+                console.log(error);
             }
         }
     }
@@ -582,51 +532,36 @@ module IndexFunctions{
     export async function onInviteCreate(invite: Discord.Invite, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: invite.guild!.id, name: invite.guild!.name, memberCount: invite.guild!.memberCount});
         await guildData.getFromDataBase();
-        for (let x = 0; x < guildData.logs.length; x += 1) {
-            if (guildData.logs[x]!.nameSmall === 'invitecreate') {
-                if (guildData.logs[x]!.enabled === false) {
-                    return;
-                }
-                const command = 'oninvitecreate';
+        const command = 'oninvitecreate';
 
-                if (!botCommands.has(command)) {
-                    return;
-                }
-                try {
-                    console.log(`Command: '${command}' entered by system.`);
-                    const returnData = await botCommands.get(command)?.function(client, invite, discordUser) as FoundationClasses.CommandReturnData;
-                    console.log(`Completed Command: ${returnData.commandName}`);
-                    return;
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+        if (!botCommands.has(command)) {
+            return;
+        }
+        try {
+            console.log(`Command: '${command}' entered by system.`);
+            const returnData = await botCommands.get(command)?.function(client, invite, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
+            return;
+        } catch (error) {
+            console.log(error);
         }
     }
 
     export async function onMessageDelete(message: Discord.Message, client: Discord.Client, discordUser: DiscordUser) {
         if (message.channel.type !== 'dm') {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: message.guild!.id, name: message.guild!.name, memberCount: message.guild!.memberCount});
-            await guildData.getFromDataBase();
-            for (let x = 0; x < guildData.logs.length; x += 1) {
-                if (guildData.logs[x]!.nameSmall === 'messagedelete') {
-                    if (guildData.logs[x]!.enabled === false) {
-                        return;
-                    }
-                    const command = 'onmessagedelete';
+            const command = 'onmessagedelete';
         
-                    if (!botCommands.has(command)) {
-                        return;
-                    }
-                    try {
-                        console.log(`Command: '${command}' entered by system.`);
-                        const returnData = await botCommands.get(command)?.function(client, message, discordUser) as FoundationClasses.CommandReturnData;
-                        console.log(`Completed Command: ${returnData.commandName}`);
-                        return;
-                    } catch (error) {
-                        console.log(error);
-                    }
-                }
+            if (!botCommands.has(command)) {
+                return;
+            }
+            try {
+                console.log(`Command: '${command}' entered by system.`);
+                const returnData = await botCommands.get(command)?.function(client, message, discordUser) as FoundationClasses.CommandReturnData;
+                console.log(`Completed Command: ${returnData.commandName}`);
+                return;
+            } catch (error) {
+                console.log(error);
             }
         }
     }
@@ -634,25 +569,18 @@ module IndexFunctions{
     export async function onMessageDeleteBulk(collection: Discord.Collection<string, Discord.Message>, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: collection.first()!.guild!.id, name: collection.first()!.guild!.name, memberCount: collection.first()!.guild!.memberCount});
         await guildData.getFromDataBase();
-        for (let x = 0; x < guildData.logs.length; x += 1) {
-            if (guildData.logs[x]!.nameSmall === 'messagedeletebulk') {
-                if (guildData.logs[x]!.enabled === false) {
-                    return;
-                }
-                const command = 'onmessagedeletebulk';
+        const command = 'onmessagedeletebulk';
 
-                if (!botCommands.has(command)) {
-                    return;
-                }
-                try {
-                    console.log(`Command: '${command}' entered by system.`);
-                    const returnData = await botCommands.get(command)?.function(client, collection, discordUser) as FoundationClasses.CommandReturnData;
-                    console.log(`Completed Command: ${returnData.commandName}`);
-                    return;
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+        if (!botCommands.has(command)) {
+            return;
+        }
+        try {
+            console.log(`Command: '${command}' entered by system.`);
+            const returnData = await botCommands.get(command)?.function(client, collection, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
+            return;
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -677,25 +605,18 @@ module IndexFunctions{
     export async function onRoleDelete(role: Discord.Role, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild.id, name: role.guild.name, memberCount: role.guild.memberCount});
         await guildData.getFromDataBase();
-        for (let x = 0; x < guildData.logs.length; x += 1) {
-            if (guildData.logs[x]!.nameSmall === 'roledelete') {
-                if (guildData.logs[x]!.enabled === false) {
-                    return;
-                }
-                const command = 'onroledelete';
+        const command = 'onroledelete';
 
-                if (!botCommands.has(command)) {
-                    return;
-                }
-                try {
-                    console.log(`Command: '${command}' entered by system.`);
-                    const returnData = await botCommands.get(command)?.function(client, role, discordUser) as FoundationClasses.CommandReturnData;
-                    console.log(`Completed Command: ${returnData.commandName}`);
-                    return;
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+        if (!botCommands.has(command)) {
+            return;
+        }
+        try {
+            console.log(`Command: '${command}' entered by system.`);
+            const returnData = await botCommands.get(command)?.function(client, role, discordUser) as FoundationClasses.CommandReturnData;
+            console.log(`Completed Command: ${returnData.commandName}`);
+            return;
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -708,26 +629,19 @@ module IndexFunctions{
                     if (guildMembersArray[y]!.id === oldUser.id) {
                         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guildArray[x]!.id, name: guildArray[x]!.name, memberCount: guildArray[x]!.memberCount});
                         await guildData.getFromDataBase();
-                        for (let z = 0; z < guildData.logs.length; z += 1) {
-                            if (guildData.logs[z]!.nameSmall === 'userupdate') {
-                                if (guildData.logs[z]!.enabled === false) {
-                                    return;
-                                }
-                                const command = 'onusernamechange';
+                        const command = 'onusernamechange';
 
-                                if (!botCommands.has(command)) {
-                                    return;
-                                }
-                                try {
-                                    console.log(`Command: '${command}' entered by system.`);
-                                    const returnData = await botCommands.get(command)?.function(client, oldUser, newUser, guildArray[x],  discordUser) as FoundationClasses.CommandReturnData;
-                                    console.log(`Completed Command: ${returnData.commandName}`);
-                                    break;
-                                } catch (error) {
-                                    console.log(error);
-                                    return;
-                                }
-                            }
+                        if (!botCommands.has(command)) {
+                            return;
+                        }
+                        try {
+                            console.log(`Command: '${command}' entered by system.`);
+                            const returnData = await botCommands.get(command)?.function(client, oldUser, newUser, guildArray[x],  discordUser) as FoundationClasses.CommandReturnData;
+                            console.log(`Completed Command: ${returnData.commandName}`);
+                            break;
+                        } catch (error) {
+                            console.log(error);
+                            return;
                         }
                     }
                 }

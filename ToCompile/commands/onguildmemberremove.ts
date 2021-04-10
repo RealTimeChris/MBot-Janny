@@ -38,46 +38,48 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
             }
         }
 
-        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
+        if (logs!.enabled === true){
+            const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
 
-        const currentGuild = await client.guilds.fetch(guildMember.guild.id);
-
-        const auditLog = await guildMember.guild.fetchAuditLogs({ type: 'MEMBER_KICK', limit: 1 });
-        const augitLogEntry = auditLog.entries
-            .find(auditLogs => Date.now() - auditLogs.createdTimestamp < 5000);
-        const msgEmbed = new Discord.MessageEmbed();
-        if (augitLogEntry !== undefined) {
-            let msgString = `__**Kicked By:**__ <@!${augitLogEntry.executor.id}> (${augitLogEntry.executor.tag})\n`;
-            msgString += `__**Member Count**__: ${currentGuild.memberCount}\n`;
-            msgString += `__**User:**__ <@!${guildMember.id}>\n`;
-            msgString += `__**User Tag:**__ ${guildMember.user.tag}\n`;
-            msgString += `__**Username:**__ ${guildMember.user.username}\n`;
-            msgString += `__**User ID:**__ ${guildMember.id}\n`;
-
-            msgEmbed
-                .setColor(guildMember.displayColor)
-                .setDescription(msgString)
-                .setThumbnail(guildMember.user.avatarURL()!)
-                .setTimestamp(Date() as unknown as Date)
-                .setTitle('__**Guild Member Kicked:**__');
-
-            await textChannel.send(msgEmbed);
-        } else {
-            let msgString = `__**Member Count**__: ${currentGuild.memberCount}\n`;
-            msgString += `__**User:**__ <@!${guildMember.id}>\n`;
-            msgString += `__**User Tag:**__ ${guildMember.user.tag}\n`;
-            msgString += `__**Username:**__ ${guildMember.user.username}\n`;
-            msgString += `__**User ID:**__ ${guildMember.id}\n`
-
-            msgEmbed
-                .setColor(guildMember.displayColor)
-                .setDescription(msgString)
-                .setThumbnail(guildMember.user.avatarURL()!)
-                .setTimestamp(Date() as unknown as Date)
-                .setTitle('__**Guild Member Left:**__');
-
-            await textChannel.send(msgEmbed);
-        }
+            const currentGuild = await client.guilds.fetch(guildMember.guild.id);
+    
+            const auditLog = await guildMember.guild.fetchAuditLogs({ type: 'MEMBER_KICK', limit: 1 });
+            const augitLogEntry = auditLog.entries
+                .find(auditLogs => Date.now() - auditLogs.createdTimestamp < 5000);
+            const msgEmbed = new Discord.MessageEmbed();
+            if (augitLogEntry !== undefined) {
+                let msgString = `__**Kicked By:**__ <@!${augitLogEntry.executor.id}> (${augitLogEntry.executor.tag})\n`;
+                msgString += `__**Member Count**__: ${currentGuild.memberCount}\n`;
+                msgString += `__**User:**__ <@!${guildMember.id}>\n`;
+                msgString += `__**User Tag:**__ ${guildMember.user.tag}\n`;
+                msgString += `__**Username:**__ ${guildMember.user.username}\n`;
+                msgString += `__**User ID:**__ ${guildMember.id}\n`;
+    
+                msgEmbed
+                    .setColor(guildMember.displayColor)
+                    .setDescription(msgString)
+                    .setThumbnail(guildMember.user.avatarURL()!)
+                    .setTimestamp(Date() as unknown as Date)
+                    .setTitle('__**Guild Member Kicked:**__');
+    
+                await textChannel.send(msgEmbed);
+            } else {
+                let msgString = `__**Member Count**__: ${currentGuild.memberCount}\n`;
+                msgString += `__**User:**__ <@!${guildMember.id}>\n`;
+                msgString += `__**User Tag:**__ ${guildMember.user.tag}\n`;
+                msgString += `__**Username:**__ ${guildMember.user.username}\n`;
+                msgString += `__**User ID:**__ ${guildMember.id}\n`
+    
+                msgEmbed
+                    .setColor(guildMember.displayColor)
+                    .setDescription(msgString)
+                    .setThumbnail(guildMember.user.avatarURL()!)
+                    .setTimestamp(Date() as unknown as Date)
+                    .setTitle('__**Guild Member Left:**__');
+    
+                await textChannel.send(msgEmbed);
+            }
+        }        
 
         return commandReturnData;
     } catch (error) {

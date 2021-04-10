@@ -39,26 +39,28 @@ async function execute(client: Discord.Client, oldMessage: Discord.Message, newM
             }
         }
 
-        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
+        if (logs!.enabled === true) {
+            const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
         
-        const msgEmbed = new Discord.MessageEmbed();
-        let msgString = '';
-        msgString = `__**Message Author:**__ <@!${newMessage.author.id}> (${newMessage.author.tag})\n`;
-        msgString += `__**Message ID:**__ ${newMessage.id}\n`;
-        msgString += `__**Old Content:**__ \n${oldMessage.content}\n`;
-        msgString += `__**New Content:**__ ${newMessage.content}`;
-
-        msgEmbed
-            .setTitle('__**Message Updated:**__')
-            .setTimestamp(Date() as unknown as Date)
-            .setDescription(msgString)
-            .setColor(guildData.borderColor);
-        await textChannel.send(msgEmbed);
-
-        for (let x = 0; x < newMessage.embeds.length; x += 1) {
-            const msgEmbed2 = newMessage.embeds[0];
-            await textChannel.send('Message Content!', { embed: msgEmbed2 });
-        }
+            const msgEmbed = new Discord.MessageEmbed();
+            let msgString = '';
+            msgString = `__**Message Author:**__ <@!${newMessage.author.id}> (${newMessage.author.tag})\n`;
+            msgString += `__**Message ID:**__ ${newMessage.id}\n`;
+            msgString += `__**Old Content:**__ \n${oldMessage.content}\n`;
+            msgString += `__**New Content:**__ ${newMessage.content}`;
+    
+            msgEmbed
+                .setTitle('__**Message Updated:**__')
+                .setTimestamp(Date() as unknown as Date)
+                .setDescription(msgString)
+                .setColor(guildData.borderColor);
+            await textChannel.send(msgEmbed);
+    
+            for (let x = 0; x < newMessage.embeds.length; x += 1) {
+                const msgEmbed2 = newMessage.embeds[0];
+                await textChannel.send('Message Content!', { embed: msgEmbed2 });
+            }
+        }        
 
         return commandReturnData;
     } catch (error) {

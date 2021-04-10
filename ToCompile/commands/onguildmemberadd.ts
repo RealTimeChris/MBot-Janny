@@ -48,30 +48,29 @@ async function execute(client: Discord.Client, guildMember: Discord.GuildMember,
             }
         }
 
-        if (logs!.enabled === false) {
-            return commandReturnData;
+        if (logs!.enabled === true) {
+            const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
+
+            const currentGuild = await client.guilds.fetch(guildMember.guild.id);
+    
+            const msgEmbed = new Discord.MessageEmbed();
+            let msgString = `__**Time Joined:**__ ${guildMember.joinedAt}\n`;
+            msgString += `__**Member Count**__: ${currentGuild.memberCount}\n`;
+            msgString += `__**User:**__ <@!${guildMember.id}>\n`;
+            msgString += `__**User Tag:**__ ${guildMember.user.tag}\n`;
+            msgString += `__**Username:**__ ${guildMember.user.username}\n`;
+            msgString += `__**User ID:**__ ${guildMember.id}\n`;
+    
+            msgEmbed
+                .setColor(guildMember.displayColor)
+                .setDescription(msgString)
+                .setThumbnail(guildMember.user.avatarURL()!)
+                .setTimestamp(Date() as unknown as Date)
+                .setTitle('__**New Guild Member:**__');
+    
+            await textChannel.send(msgEmbed);
         }
 
-        const textChannel = await client.channels.fetch(logs!.loggingChannelID) as Discord.TextChannel;
-
-        const currentGuild = await client.guilds.fetch(guildMember.guild.id);
-
-        const msgEmbed = new Discord.MessageEmbed();
-        let msgString = `__**Time Joined:**__ ${guildMember.joinedAt}\n`;
-        msgString += `__**Member Count**__: ${currentGuild.memberCount}\n`;
-        msgString += `__**User:**__ <@!${guildMember.id}>\n`;
-        msgString += `__**User Tag:**__ ${guildMember.user.tag}\n`;
-        msgString += `__**Username:**__ ${guildMember.user.username}\n`;
-        msgString += `__**User ID:**__ ${guildMember.id}\n`;
-
-        msgEmbed
-            .setColor(guildMember.displayColor)
-            .setDescription(msgString)
-            .setThumbnail(guildMember.user.avatarURL()!)
-            .setTimestamp(Date() as unknown as Date)
-            .setTitle('__**New Guild Member:**__');
-
-        await textChannel.send(msgEmbed);
         return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {

@@ -27,11 +27,10 @@ async function execute(messageReaction: Discord.MessageReaction, client: Discord
             memberCount: messageReaction.message.guild!.memberCount, name: messageReaction.message.guild!.name});
 		await guildData.getFromDataBase();
 
-		if (messageReaction instanceof Discord.MessageReaction === false) {
+		if (!(messageReaction instanceof Discord.MessageReaction)) {
 			return commandReturnData;
 		}
-		const userID = (messageReaction.users.cache
-			.array()[messageReaction.users.cache.array().length - 1]!).id;
+		const userID = (messageReaction.users.cache.array()[messageReaction.users.cache.array().length - 1]!).id;
 		for (let x = 0; x < GuildData.guildsData.size; x += 1) {
 			if (messageReaction.message.guild!.id !== guildData.id) {
 				if (x === GuildData.guildsData.size - 1) {
