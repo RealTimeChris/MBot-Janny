@@ -5,11 +5,11 @@
 
 'use strict';
 
-import Discord = require('discord.js');
+import * as Discord from 'discord.js';
 import EventEmitter from 'events';
 import IndexFunctions from './IndexFunctions';
 import DiscordUser from './DiscordUser';
-import config = require('./config.json');
+import config from './Config';
 
 const discordUser = new DiscordUser();
 const client = new Discord.Client() as any;

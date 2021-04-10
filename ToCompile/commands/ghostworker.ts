@@ -1,4 +1,4 @@
-// ghost.ts - Module for my "ghost" command.
+// ghostworker.ts - Module for my "ghost" command - the worker side.
 // Mar 18, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -7,6 +7,7 @@
 
 import * as Discord from 'discord.js';
 import FoundationClasses from '../FoundationClasses';
+import {parentPort, workerData} from 'worker_threads';
 import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
 import GuildMemberData from '../GuildMemberData';
@@ -18,7 +19,6 @@ const command: FoundationClasses.BotCommand = {
     + '@USERMENTION to ghost a new user.\n!ghost = remove, @USERMENTION to unghost a user.',
     function: Function()
 };
-
 async function execute(commandData: FoundationClasses.CommandData, discordUser: DiscordUser): Promise<FoundationClasses.CommandReturnData> {
     const returnData: FoundationClasses.CommandReturnData = {
         commandName: command.name
@@ -548,3 +548,17 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 }
 command.function = execute;
 export default command as FoundationClasses.BotCommand;
+
+const args = workerData;
+const newCommandData: FoundationClasses.CommandData = JSON.parse(args[0]) as FoundationClasses.CommandData;
+const newDiscordUser: DiscordUser = JSON.parse(args[1]) as DiscordUser;
+console.log(newCommandData);
+console.log(newDiscordUser);
+
+async function Execute() {
+    const commandReturnData = await execute(newCommandData, newDiscordUser);
+    console.log('TESTING MULTITHREADING!');
+    parentPort?.postMessage(commandReturnData);
+    process.exit();    
+}
+Execute();

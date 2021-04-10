@@ -1,4 +1,4 @@
-import Discord = require('discord.js');
+import * as Discord from 'discord.js';
 import Level from 'level-ts';
 import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';

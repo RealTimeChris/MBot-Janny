@@ -1,4 +1,4 @@
-// ghost.ts - Module for my "ghost" command.
+// ghostworker.ts - Module for my "ghost" command - the worker side.
 // Mar 18, 2021
 // Chris M.
 // https://github.com/RealTimeChris
@@ -36,6 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Discord = __importStar(require("discord.js"));
+const worker_threads_1 = require("worker_threads");
 const GuildData_1 = __importDefault(require("../GuildData"));
 const GuildMemberData_1 = __importDefault(require("../GuildMemberData"));
 const HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
@@ -542,3 +543,17 @@ function execute(commandData, discordUser) {
 }
 command.function = execute;
 exports.default = command;
+const args = worker_threads_1.workerData;
+const newCommandData = JSON.parse(args[0]);
+const newDiscordUser = JSON.parse(args[1]);
+console.log(newCommandData);
+console.log(newDiscordUser);
+function Execute() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const commandReturnData = yield execute(newCommandData, newDiscordUser);
+        console.log('TESTING MULTITHREADING!');
+        worker_threads_1.parentPort === null || worker_threads_1.parentPort === void 0 ? void 0 : worker_threads_1.parentPort.postMessage(commandReturnData);
+        process.exit();
+    });
+}
+Execute();

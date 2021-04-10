@@ -5,7 +5,7 @@
 
 'use strict';
 
-import Discord = require('discord.js');
+import * as Discord from 'discord.js';
 
 module FoundationClasses{
     /**

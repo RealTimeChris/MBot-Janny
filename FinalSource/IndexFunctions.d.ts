@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import Discord = require('discord.js');
+import * as Discord from 'discord.js';
 import EventEmitter from 'events';
 import DiscordUser from './DiscordUser';
 declare module IndexFunctions {
