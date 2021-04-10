@@ -6,6 +6,7 @@
 'use strict';
 
 import Discord = require('discord.js');
+import EventEmitter from 'events';
 import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
@@ -13,10 +14,24 @@ import HelperFunctions from './HelperFunctions';
 import botCommands from './CommandIndex';
 
 module IndexFunctions{
-    export async function onReady(client: Discord.Client, discordUser: DiscordUser) {
+    export async function onHeartBeat(client: Discord.Client, discordUser: DiscordUser) {
+        try{
+            await HelperFunctions.sendInviteIfGuildIsActive(client, discordUser);
+            await HelperFunctions.updateAndSaveDiscordRecord(client, discordUser);
+            await discordUser.updateDataCacheAndSaveToFile(client);
+            await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);
+            HelperFunctions.purgeMessageChannels(client, discordUser);    
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    export async function onReady(client: Discord.Client, discordUser: DiscordUser, eventEmitter: EventEmitter) {
         try {
             await discordUser.initializeInstance(client);
             await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
+            eventEmitter.emit('HeartBeat');
         } catch (error) {
             console.log(error);
         }
@@ -71,12 +86,6 @@ module IndexFunctions{
                     const newMsg = await msg.reply('There was an error trying to process that message!');
                     newMsg.delete({timeout: 20000});
                 }
-                await HelperFunctions.sendInviteIfTimeHasPassedAndGuildIsActive(client, discordUser);
-                await HelperFunctions.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser);
-                await discordUser.saveCacheIfTimeHasPassed(client);
-                await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);
-                HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
-                return;
             }
             catch(error) {
                 console.log(error);
@@ -97,19 +106,13 @@ module IndexFunctions{
                     }
     
                     console.log(`Standard message entered: ${msg.author.username}`);
-                    const cmdName = await botCommands.get(command)?.function(msg, commandData);
-                    console.log(`Completed Command: ${cmdName}`);
+                    const cmdReturnData = await botCommands.get(command)?.function(msg, commandData) as FoundationClasses.CommandReturnData;
+                    console.log(`Completed Command: ${cmdReturnData.commandName}`);
                 } catch (error) {
                     console.log(error);
                     const newMsg = await msg.reply('There was an error trying to process that message!');
                     newMsg.delete({timeout: 20000});
                 }
-                await HelperFunctions.sendInviteIfTimeHasPassedAndGuildIsActive(client, discordUser);
-                await HelperFunctions.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser);
-                await discordUser.saveCacheIfTimeHasPassed(client);
-                await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);
-                HelperFunctions.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
-                return;
             }
             catch(error) {
                 console.log(error);

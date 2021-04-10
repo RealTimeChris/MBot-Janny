@@ -534,16 +534,13 @@ var HelperFunctions;
     /**
     * Updates and saves the Discord record, which contains user information.
     */
-    function updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser) {
+    function updateAndSaveDiscordRecord(client, discordUser) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, timeDifference, liveGuildArray, keyNames, x, keyname, error_7;
+            var liveGuildArray, keyNames, x, keyname, error_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 5, , 6]);
-                        currentTime = new Date().getTime();
-                        timeDifference = currentTime - discordUser.userData.timeOfLastRecordUpdate;
-                        if (!(timeDifference >= discordUser.userData.msBetweenRecordUpdates)) return [3 /*break*/, 3];
+                        _a.trys.push([0, 3, , 4]);
                         liveGuildArray = client.guilds.cache.array();
                         keyNames = [];
                         for (x = 0; x < liveGuildArray.length; x += 1) {
@@ -557,29 +554,25 @@ var HelperFunctions;
                         return [4 /*yield*/, discordUser.updateUserDataInDB(discordUser.userData)];
                     case 2:
                         _a.sent();
-                        return [3 /*break*/, 4];
+                        return [2 /*return*/];
                     case 3:
-                        console.log("Time until next record update and backup: " + (discordUser.userData.msBetweenRecordUpdates - timeDifference) + "ms");
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
-                    case 5:
                         error_7 = _a.sent();
                         return [2 /*return*/, new Promise(function (resolve, reject) {
                                 reject(error_7);
                             })];
-                    case 6: return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     }
-    HelperFunctions.updateAndSaveDiscordRecordIfTimeHasPassed = updateAndSaveDiscordRecordIfTimeHasPassed;
+    HelperFunctions.updateAndSaveDiscordRecord = updateAndSaveDiscordRecord;
     /**
     * Sends out an invite to a user from a selected list of users,
     * if the server has been nuked/deleted.
     */
-    function sendInviteIfTimeHasPassedAndGuildIsActive(client, discordUser) {
+    function sendInviteIfGuildIsActive(client, discordUser) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, timeDifference, timeRemaining, x, fileKey, currentFileObject, error_8, userID, guildName, inviteLink, inviteString, currentUser, wereTheyAvailable, dmChannel, error_9, savedUser, availableFileKey, availableFileString, availableFileObject, error_10, serverRecord, deletedUser, notAvailableFileKey, notAvailableFileObject, error_11, serverRecord, error_12;
+            var x, fileKey, currentFileObject, error_8, userID, guildName, inviteLink, inviteString, currentUser, wereTheyAvailable, dmChannel, error_9, savedUser, availableFileKey, availableFileString, availableFileObject, error_10, serverRecord, deletedUser, notAvailableFileKey, notAvailableFileObject, error_11, serverRecord, error_12;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -588,13 +581,6 @@ var HelperFunctions;
                             return [2 /*return*/, new Promise(function (resolve, reject) {
                                     resolve();
                                 })];
-                        }
-                        currentTime = new Date().getTime();
-                        timeDifference = currentTime - discordUser.userData.timeOfLastInvite;
-                        if (timeDifference < discordUser.userData.msBetweenInvites) {
-                            timeRemaining = discordUser.userData.msBetweenInvites - timeDifference;
-                            console.log("Time until next invite can be sent out: " + timeRemaining + "ms");
-                            return [2 /*return*/];
                         }
                         x = 0;
                         _a.label = 1;
@@ -749,15 +735,15 @@ var HelperFunctions;
             });
         });
     }
-    HelperFunctions.sendInviteIfTimeHasPassedAndGuildIsActive = sendInviteIfTimeHasPassedAndGuildIsActive;
+    HelperFunctions.sendInviteIfGuildIsActive = sendInviteIfGuildIsActive;
     /**
     * Purges all of the selected messages within the given channels,
     * of each of the instance's guilds.
     */
-    function deleteMessagesIfTimeHasPassed(client, guildData, channelIndex, discordUser) {
+    function deleteMessages(client, guildData, channelIndex, discordUser) {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function () {
-            var numberOfMessagesToSave, channelID, currentChannel, currentTime, timeDifference, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_13;
+            var numberOfMessagesToSave, channelID, currentChannel, startingMessage, x_1, currentMessageLimit, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, arrayOfMessagesToSave, x, arrayOfMessageArrays, arrayOfMessages, arrayOfMessages, totalMessageCount, y, z, y, z, x, y, arrayOfMessageArrays, startingMessage, arrayOfMessages, totalMessageCount, w, z, w, z, error_13;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -775,14 +761,8 @@ var HelperFunctions;
                     case 2: return [4 /*yield*/, guildData.getFromDataBase()];
                     case 3:
                         _d.sent();
-                        currentTime = new Date().getTime();
-                        timeDifference = currentTime - guildData.deletionChannels[channelIndex].timeOfLastPurge;
                         if (guildData.deletionChannels[channelIndex].currentlyBeingDeleted === true) {
                             console.log("Nope! Still being deleted! Channel: " + currentChannel.name);
-                            return [2 /*return*/];
-                        }
-                        if (timeDifference < discordUser.userData.msBetweenMessageDeletion) {
-                            console.log("Nope! Still " + (discordUser.userData.msBetweenMessageDeletion - timeDifference) + "ms left until we can purge! Channel: " + currentChannel.name);
                             return [2 /*return*/];
                         }
                         console.log("Checking for messages to delete in channel: " + currentChannel.name);
@@ -1022,11 +1002,11 @@ var HelperFunctions;
             });
         });
     }
-    HelperFunctions.deleteMessagesIfTimeHasPassed = deleteMessagesIfTimeHasPassed;
+    HelperFunctions.deleteMessages = deleteMessages;
     /**
     * Purges the actively-being-purged text channels, if enough time has passed.
     */
-    function purgeMessageChannelsIfTimeHasPassed(client, discordUser) {
+    function purgeMessageChannels(client, discordUser) {
         var _this = this;
         try {
             GuildData_1.default.guildsData.forEach(function (guild) { return __awaiter(_this, void 0, void 0, function () {
@@ -1045,7 +1025,7 @@ var HelperFunctions;
                             return [4 /*yield*/, guild.getFromDataBase()];
                         case 3:
                             _a.sent();
-                            return [4 /*yield*/, deleteMessagesIfTimeHasPassed(client, guild, y, discordUser)];
+                            return [4 /*yield*/, deleteMessages(client, guild, y, discordUser)];
                         case 4:
                             _a.sent();
                             return [3 /*break*/, 6];
@@ -1066,7 +1046,7 @@ var HelperFunctions;
             throw error;
         }
     }
-    HelperFunctions.purgeMessageChannelsIfTimeHasPassed = purgeMessageChannelsIfTimeHasPassed;
+    HelperFunctions.purgeMessageChannels = purgeMessageChannels;
     /**
     * Sends out the timed messages within each server, if enough time has passed.
     */

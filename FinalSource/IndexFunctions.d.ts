@@ -1,7 +1,10 @@
+/// <reference types="node" />
 import Discord = require('discord.js');
 import DiscordUser from './DiscordUser';
+import { EventEmitter } from 'node:stream';
 declare module IndexFunctions {
-    function onReady(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
+    function onHeartBeat(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
+    function onReady(client: Discord.Client, discordUser: DiscordUser, eventEmitter: EventEmitter): Promise<void>;
     function onMessage(msg: Discord.Message, client: Discord.Client, discordUser: DiscordUser): Promise<void>;
     function onInteractionCreate(interaction: any, client: any, discordUser: DiscordUser): Promise<void>;
     function onChannelCreate(newChannel: Discord.Channel | Discord.DMChannel | Discord.GuildChannel, client: Discord.Client, discordUser: DiscordUser): Promise<void>;

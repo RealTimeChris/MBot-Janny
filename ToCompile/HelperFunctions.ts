@@ -350,27 +350,19 @@ module HelperFunctions{
     /**
     * Updates and saves the Discord record, which contains user information.
     */
-    export async function updateAndSaveDiscordRecordIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
+    export async function updateAndSaveDiscordRecord(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
         try {
-            const currentTime = new Date().getTime();
+            const liveGuildArray = client.guilds.cache.array();
 
-            const timeDifference = currentTime - discordUser.userData.timeOfLastRecordUpdate;
-
-            if (timeDifference >= discordUser.userData.msBetweenRecordUpdates) {
-                const liveGuildArray = client.guilds.cache.array();
-
-                const keyNames = [];
-                for (let x = 0; x < liveGuildArray.length; x += 1) {
-                    const keyname = `${liveGuildArray[x]!.id} + Record`;
-                    keyNames.push(keyname);
-                }
-
-                await recurseThroughServerRecords(discordUser.dataBase, liveGuildArray, keyNames);
-                discordUser.userData.timeOfLastRecordUpdate = new Date().getTime();
-                await discordUser.updateUserDataInDB(discordUser.userData);
-            } else {
-                console.log(`Time until next record update and backup: ${discordUser.userData.msBetweenRecordUpdates - timeDifference}ms`);
+            const keyNames = [];
+            for (let x = 0; x < liveGuildArray.length; x += 1) {
+                const keyname = `${liveGuildArray[x]!.id} + Record`;
+                keyNames.push(keyname);
             }
+
+            await recurseThroughServerRecords(discordUser.dataBase, liveGuildArray, keyNames);
+            discordUser.userData.timeOfLastRecordUpdate = new Date().getTime();
+            await discordUser.updateUserDataInDB(discordUser.userData);
             return;
         } catch (error) {
             return new Promise((resolve, reject) => {
@@ -383,22 +375,12 @@ module HelperFunctions{
     * Sends out an invite to a user from a selected list of users,
     * if the server has been nuked/deleted.
     */
-    export async function sendInviteIfTimeHasPassedAndGuildIsActive(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
+    export async function sendInviteIfGuildIsActive(client: Discord.Client, discordUser: DiscordUser): Promise<void> {
         try {
             if (discordUser.userData.activeInviteGuilds.length === 0) {
                 return new Promise((resolve, reject) => {
                     resolve();
                 });
-            }
-
-            const currentTime = new Date().getTime();
-
-            const timeDifference = currentTime - discordUser.userData.timeOfLastInvite;
-
-            if (timeDifference < discordUser.userData.msBetweenInvites) {
-                const timeRemaining = discordUser.userData.msBetweenInvites - timeDifference;
-                console.log(`Time until next invite can be sent out: ${timeRemaining}ms`);
-                return;
             }
 
             for (let x = 0; x < discordUser.userData.activeInviteGuilds.length; x += 1) {
@@ -529,7 +511,7 @@ module HelperFunctions{
     * Purges all of the selected messages within the given channels,
     * of each of the instance's guilds.
     */
-    export async function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: GuildData, channelIndex: number, discordUser: DiscordUser): Promise<void> {
+    export async function deleteMessages(client: Discord.Client, guildData: GuildData, channelIndex: number, discordUser: DiscordUser): Promise<void> {
         try {
             const numberOfMessagesToSave = guildData.deletionChannels[channelIndex]?.numberOfMessagesToSave!;
             const channelID = guildData.deletionChannels[channelIndex]?.channelID!;
@@ -541,14 +523,8 @@ module HelperFunctions{
                 return;
             }
             await guildData.getFromDataBase();
-            const currentTime = new Date().getTime();
-            const timeDifference = currentTime - guildData.deletionChannels[channelIndex]!.timeOfLastPurge;
             if (guildData.deletionChannels[channelIndex]!.currentlyBeingDeleted === true) {
                 console.log(`Nope! Still being deleted! Channel: ${currentChannel.name}`);
-                return;
-            }
-            if (timeDifference < discordUser.userData.msBetweenMessageDeletion) {
-                console.log(`Nope! Still ${discordUser.userData.msBetweenMessageDeletion - timeDifference}ms left until we can purge! Channel: ${currentChannel.name}`);
                 return;
             }
 
@@ -721,14 +697,14 @@ module HelperFunctions{
     /**
     * Purges the actively-being-purged text channels, if enough time has passed.
     */
-    export function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): void {
+    export function purgeMessageChannels(client: Discord.Client, discordUser: DiscordUser): void {
         try {
             GuildData.guildsData.forEach(async (guild: GuildData) => {
                 if (guild.deletionChannels.length > 0) {
                     for (let y = 0; y < guild.deletionChannels.length; y += 1) {
                         try{
                             await guild.getFromDataBase();
-                            await deleteMessagesIfTimeHasPassed(client, guild, y, discordUser);
+                            await deleteMessages(client, guild, y, discordUser);
                         }
                         catch(error) {
                             console.log(error);

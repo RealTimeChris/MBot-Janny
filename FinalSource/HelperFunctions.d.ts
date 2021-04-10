@@ -39,21 +39,21 @@ declare module HelperFunctions {
     /**
     * Updates and saves the Discord record, which contains user information.
     */
-    function updateAndSaveDiscordRecordIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
+    function updateAndSaveDiscordRecord(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
     /**
     * Sends out an invite to a user from a selected list of users,
     * if the server has been nuked/deleted.
     */
-    function sendInviteIfTimeHasPassedAndGuildIsActive(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
+    function sendInviteIfGuildIsActive(client: Discord.Client, discordUser: DiscordUser): Promise<void>;
     /**
     * Purges all of the selected messages within the given channels,
     * of each of the instance's guilds.
     */
-    function deleteMessagesIfTimeHasPassed(client: Discord.Client, guildData: GuildData, channelIndex: number, discordUser: DiscordUser): Promise<void>;
+    function deleteMessages(client: Discord.Client, guildData: GuildData, channelIndex: number, discordUser: DiscordUser): Promise<void>;
     /**
     * Purges the actively-being-purged text channels, if enough time has passed.
     */
-    function purgeMessageChannelsIfTimeHasPassed(client: Discord.Client, discordUser: DiscordUser): void;
+    function purgeMessageChannels(client: Discord.Client, discordUser: DiscordUser): void;
     /**
     * Sends out the timed messages within each server, if enough time has passed.
     */

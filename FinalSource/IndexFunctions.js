@@ -50,7 +50,30 @@ var HelperFunctions_1 = __importDefault(require("./HelperFunctions"));
 var CommandIndex_1 = __importDefault(require("./CommandIndex"));
 var IndexFunctions;
 (function (IndexFunctions) {
-    function onReady(client, discordUser) {
+    function onHeartBeat(client, discordUser) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, HelperFunctions_1.default.sendInviteIfGuildIsActive(client, discordUser)];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, HelperFunctions_1.default.updateAndSaveDiscordRecord(client, discordUser)];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, discordUser.updateDataCacheAndSaveToFile(client)];
+                    case 3:
+                        _a.sent();
+                        return [4 /*yield*/, HelperFunctions_1.default.sendTimedMessagesIfTimeHasPassed(client, discordUser)];
+                    case 4:
+                        _a.sent();
+                        HelperFunctions_1.default.purgeMessageChannels(client, discordUser);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    }
+    IndexFunctions.onHeartBeat = onHeartBeat;
+    function onReady(client, discordUser, eventEmitter) {
         return __awaiter(this, void 0, void 0, function () {
             var error_1;
             return __generator(this, function (_a) {
@@ -63,6 +86,7 @@ var IndexFunctions;
                         return [4 /*yield*/, client.user.setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } })];
                     case 2:
                         _a.sent();
+                        eventEmitter.emit('HeartBeat');
                         return [3 /*break*/, 4];
                     case 3:
                         error_1 = _a.sent();
@@ -77,7 +101,7 @@ var IndexFunctions;
     function onMessage(msg, client, discordUser) {
         var _a, _b, _c, _d;
         return __awaiter(this, void 0, void 0, function () {
-            var command, args, x, commandData, cmdReturnData, error_2, newMsg, error_3, command, commandData, cmdName, error_4, newMsg, error_5;
+            var command, args, x, commandData, cmdReturnData, error_2, newMsg, error_3, command, commandData, cmdReturnData, error_4, newMsg, error_5;
             return __generator(this, function (_e) {
                 switch (_e.label) {
                     case 0:
@@ -89,7 +113,7 @@ var IndexFunctions;
                             console.log('Better not track our own messages!');
                             return [2 /*return*/];
                         }
-                        if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 18];
+                        if (!msg.content.startsWith(discordUser.userData.prefix)) return [3 /*break*/, 14];
                         command = '';
                         args = [];
                         if (msg.content.indexOf(' =') === -1) {
@@ -107,7 +131,7 @@ var IndexFunctions;
                         }
                         _e.label = 1;
                     case 1:
-                        _e.trys.push([1, 16, , 17]);
+                        _e.trys.push([1, 12, , 13]);
                         commandData = new FoundationClasses_1.default.CommandData();
                         if (!(msg.channel.type !== 'dm' && msg.member !== null)) return [3 /*break*/, 3];
                         return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
@@ -141,81 +165,55 @@ var IndexFunctions;
                         newMsg = _e.sent();
                         newMsg.delete({ timeout: 20000 });
                         return [3 /*break*/, 11];
-                    case 11: return [4 /*yield*/, HelperFunctions_1.default.sendInviteIfTimeHasPassedAndGuildIsActive(client, discordUser)];
+                    case 11: return [3 /*break*/, 13];
                     case 12:
-                        _e.sent();
-                        return [4 /*yield*/, HelperFunctions_1.default.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser)];
-                    case 13:
-                        _e.sent();
-                        return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
-                    case 14:
-                        _e.sent();
-                        return [4 /*yield*/, HelperFunctions_1.default.sendTimedMessagesIfTimeHasPassed(client, discordUser)];
-                    case 15:
-                        _e.sent();
-                        HelperFunctions_1.default.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
-                        return [2 /*return*/];
-                    case 16:
                         error_3 = _e.sent();
                         console.log(error_3);
-                        return [3 /*break*/, 17];
-                    case 17: return [3 /*break*/, 34];
-                    case 18:
-                        if (!(msg.author.id !== ((_c = client.user) === null || _c === void 0 ? void 0 : _c.id))) return [3 /*break*/, 34];
+                        return [3 /*break*/, 13];
+                    case 13: return [3 /*break*/, 26];
+                    case 14:
+                        if (!(msg.author.id !== ((_c = client.user) === null || _c === void 0 ? void 0 : _c.id))) return [3 /*break*/, 26];
                         command = 'message';
                         if (!CommandIndex_1.default.has(command)) {
                             return [2 /*return*/];
                         }
-                        _e.label = 19;
+                        _e.label = 15;
+                    case 15:
+                        _e.trys.push([15, 25, , 26]);
+                        _e.label = 16;
+                    case 16:
+                        _e.trys.push([16, 22, , 24]);
+                        commandData = new FoundationClasses_1.default.CommandData();
+                        if (!(msg.channel.type !== 'dm' && msg.member !== null)) return [3 /*break*/, 18];
+                        return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
+                    case 17:
+                        _e.sent();
+                        return [3 /*break*/, 20];
+                    case 18: return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id)];
                     case 19:
-                        _e.trys.push([19, 33, , 34]);
+                        _e.sent();
                         _e.label = 20;
                     case 20:
-                        _e.trys.push([20, 26, , 28]);
-                        commandData = new FoundationClasses_1.default.CommandData();
-                        if (!(msg.channel.type !== 'dm' && msg.member !== null)) return [3 /*break*/, 22];
-                        return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.member.id, msg.guild.id)];
-                    case 21:
-                        _e.sent();
-                        return [3 /*break*/, 24];
-                    case 22: return [4 /*yield*/, commandData.initialize(client, msg.channel.id, msg.channel.type, null, msg.author.id)];
-                    case 23:
-                        _e.sent();
-                        _e.label = 24;
-                    case 24:
                         console.log("Standard message entered: " + msg.author.username);
                         return [4 /*yield*/, ((_d = CommandIndex_1.default.get(command)) === null || _d === void 0 ? void 0 : _d.function(msg, commandData))];
-                    case 25:
-                        cmdName = _e.sent();
-                        console.log("Completed Command: " + cmdName);
-                        return [3 /*break*/, 28];
-                    case 26:
+                    case 21:
+                        cmdReturnData = _e.sent();
+                        console.log("Completed Command: " + cmdReturnData.commandName);
+                        return [3 /*break*/, 24];
+                    case 22:
                         error_4 = _e.sent();
                         console.log(error_4);
                         return [4 /*yield*/, msg.reply('There was an error trying to process that message!')];
-                    case 27:
+                    case 23:
                         newMsg = _e.sent();
                         newMsg.delete({ timeout: 20000 });
-                        return [3 /*break*/, 28];
-                    case 28: return [4 /*yield*/, HelperFunctions_1.default.sendInviteIfTimeHasPassedAndGuildIsActive(client, discordUser)];
-                    case 29:
-                        _e.sent();
-                        return [4 /*yield*/, HelperFunctions_1.default.updateAndSaveDiscordRecordIfTimeHasPassed(client, discordUser)];
-                    case 30:
-                        _e.sent();
-                        return [4 /*yield*/, discordUser.saveCacheIfTimeHasPassed(client)];
-                    case 31:
-                        _e.sent();
-                        return [4 /*yield*/, HelperFunctions_1.default.sendTimedMessagesIfTimeHasPassed(client, discordUser)];
-                    case 32:
-                        _e.sent();
-                        HelperFunctions_1.default.purgeMessageChannelsIfTimeHasPassed(client, discordUser);
-                        return [2 /*return*/];
-                    case 33:
+                        return [3 /*break*/, 24];
+                    case 24: return [3 /*break*/, 26];
+                    case 25:
                         error_5 = _e.sent();
                         console.log(error_5);
-                        return [3 /*break*/, 34];
-                    case 34: return [2 /*return*/];
+                        return [3 /*break*/, 26];
+                    case 26: return [2 /*return*/];
                 }
             });
         });
