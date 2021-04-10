@@ -503,6 +503,11 @@ module HelperFunctions{
         }
     }
 
+    async function deleteMessage(message: Discord.Message, messageNumber: number, messageCount: number, channelName: string){
+        console.log(`Deleting message number ${messageNumber} of ${messageCount}, in channel ${channelName}.`);
+        await message.delete();
+    };
+    
     /**
     * Purges all of the selected messages within the given channels,
     * of each of the instance's guilds.
@@ -618,8 +623,7 @@ module HelperFunctions{
                         }
                         if (!arrayOfMessageArrays[y]![z]!.pinned) {
                             if (arrayOfMessageArrays[y]![z]?.deletable) {
-                                await arrayOfMessageArrays[y]![z]!.delete();
-                                console.log(`Deleting Message Number: ${totalMessageCount - (y * 100 + z)} of ${totalMessageCount} in channel ${currentChannel.name}.`);
+                                deleteMessage(arrayOfMessageArrays![y]![z]!, totalMessageCount - (y*100+z), totalMessageCount, currentChannel.name);
                             }
                         }
                     }
@@ -671,8 +675,7 @@ module HelperFunctions{
                             return;
                         }
                         if (!arrayOfMessageArrays[w]![z]!.pinned) {
-                            await arrayOfMessageArrays[w]![z]!.delete({reason:  (w * 100 + z).toString()});
-                            console.log(`Deleting Message Number: ${totalMessageCount - (w * 100 + z)} of ${totalMessageCount} in channel ${currentChannel.name}.`);
+                            deleteMessage(arrayOfMessageArrays![w]![z]!, totalMessageCount - (w * 100 + z), totalMessageCount, currentChannel.name);
                         }
                     }
                 }
