@@ -56,7 +56,7 @@ function execute(client, guild, user, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 4, , 5]);
+                    _a.trys.push([0, 5, , 6]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -74,14 +74,14 @@ function execute(client, guild, user, discordUser) {
                             break;
                         }
                     }
+                    if (!(logs.enabled === true)) return [3 /*break*/, 4];
                     textChannel = guild.channels.resolve(logs.loggingChannelID);
                     return [4 /*yield*/, guild.fetchAuditLogs({ type: 'MEMBER_BAN_REMOVE', limit: 1 })];
                 case 2:
                     auditLogs = _a.sent();
-                    auditLogEntry = auditLogs.entries
-                        .find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
+                    auditLogEntry = auditLogs.entries.find(function (entry) { return Date.now() - entry.createdTimestamp < 5000; });
                     msgString = '';
-                    msgString += "__**Unbanned By:**__ <@!" + auditLogEntry.executor.id + "> \n        (" + auditLogEntry.executor.tag + ")\n";
+                    msgString += "__**Unbanned By:**__ <@!" + auditLogEntry.executor.id + "> \n            (" + auditLogEntry.executor.tag + ")\n";
                     msgString += "__**Time of Unban:**__ " + Date() + "\n";
                     msgString += "__**User:**__ <@!" + user.id + ">\n";
                     msgString += "__**User Tag:**__ " + user.tag + "\n";
@@ -97,13 +97,14 @@ function execute(client, guild, user, discordUser) {
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 3:
                     _a.sent();
-                    return [2 /*return*/, commandReturnData];
-                case 4:
+                    _a.label = 4;
+                case 4: return [2 /*return*/, commandReturnData];
+                case 5:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 5: return [2 /*return*/];
+                case 6: return [2 /*return*/];
             }
         });
     });

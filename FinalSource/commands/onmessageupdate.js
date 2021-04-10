@@ -75,6 +75,7 @@ function execute(client, oldMessage, newMessage, discordUser) {
                             break;
                         }
                     }
+                    if (!(logs.enabled === true)) return [3 /*break*/, 7];
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
                 case 2:
                     textChannel = _a.sent();

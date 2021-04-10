@@ -66,11 +66,10 @@ function execute(messageReaction, client, args, discordUser) {
                     return [4 /*yield*/, guildData.getFromDataBase()];
                 case 1:
                     _c.sent();
-                    if (messageReaction instanceof Discord.MessageReaction === false) {
+                    if (!(messageReaction instanceof Discord.MessageReaction)) {
                         return [2 /*return*/, commandReturnData];
                     }
-                    userID = (messageReaction.users.cache
-                        .array()[messageReaction.users.cache.array().length - 1]).id;
+                    userID = (messageReaction.users.cache.array()[messageReaction.users.cache.array().length - 1]).id;
                     x = 0;
                     _c.label = 2;
                 case 2:

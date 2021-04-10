@@ -57,7 +57,7 @@ function execute(client, guildMember, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 10, , 11]);
+                    _a.trys.push([0, 11, , 12]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -92,9 +92,7 @@ function execute(client, guildMember, discordUser) {
                     x += 1;
                     return [3 /*break*/, 3];
                 case 6:
-                    if (logs.enabled === false) {
-                        return [2 /*return*/, commandReturnData];
-                    }
+                    if (!(logs.enabled === true)) return [3 /*break*/, 10];
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
                 case 7:
                     textChannel = _a.sent();
@@ -117,13 +115,14 @@ function execute(client, guildMember, discordUser) {
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 9:
                     _a.sent();
-                    return [2 /*return*/, commandReturnData];
-                case 10:
+                    _a.label = 10;
+                case 10: return [2 /*return*/, commandReturnData];
+                case 11:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 11: return [2 /*return*/];
+                case 12: return [2 /*return*/];
             }
         });
     });

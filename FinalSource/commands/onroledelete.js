@@ -56,7 +56,7 @@ function execute(client, role, discordUser) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
+                    _a.trys.push([0, 7, , 8]);
                     commandReturnData = {
                         commandName: command.name
                     };
@@ -75,6 +75,7 @@ function execute(client, role, discordUser) {
                             break;
                         }
                     }
+                    if (!(logs.enabled === true)) return [3 /*break*/, 6];
                     return [4 /*yield*/, client.channels.fetch(logs.loggingChannelID)];
                 case 2:
                     textChannel = _a.sent();
@@ -99,13 +100,14 @@ function execute(client, role, discordUser) {
                     return [4 /*yield*/, textChannel.send(msgEmbed)];
                 case 5:
                     _a.sent();
-                    return [2 /*return*/, commandReturnData];
-                case 6:
+                    _a.label = 6;
+                case 6: return [2 /*return*/, commandReturnData];
+                case 7:
                     error_1 = _a.sent();
                     return [2 /*return*/, new Promise(function (resolve, reject) {
                             reject(error_1);
                         })];
-                case 7: return [2 /*return*/];
+                case 8: return [2 /*return*/];
             }
         });
     });

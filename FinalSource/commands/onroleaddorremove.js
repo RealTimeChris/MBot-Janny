@@ -75,6 +75,7 @@ function execute(client, oldGuildMemberRoleManager, newGuildMemberRoleManager, n
                             break;
                         }
                     }
+                    if (!(logs.enabled === true)) return [3 /*break*/, 6];
                     newRoleCollection = oldGuildMemberRoleManager.cache
                         .difference(newGuildMemberRoleManager.cache);
                     newRole = newRoleCollection.first();
