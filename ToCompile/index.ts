@@ -38,11 +38,11 @@ client.on('guildDelete', async (guild: Discord.Guild) => {
 });
 
 client.on('guildBanAdd', async (guild: Discord.Guild, user: Discord.User) => {
-	await IndexFunctions.onGuildBanAdd(guild, user, client, discordUser);
+	await IndexFunctions.onGuildBanAdd(guild, client, user, discordUser);
 });
 
 client.on('guildBanRemove', async (guild: Discord.Guild, user: Discord.User) => {
-	await IndexFunctions.onGuildBanRemove(guild, user, client, discordUser);
+	await IndexFunctions.onGuildBanRemove(guild, client, user, discordUser);
 });
 
 client.on('guildMemberAdd', async (member: Discord.GuildMember) => {

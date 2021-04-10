@@ -112,7 +112,7 @@ client.on('guildDelete', function (guild) { return __awaiter(void 0, void 0, voi
 client.on('guildBanAdd', function (guild, user) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildBanAdd(guild, user, client, discordUser)];
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildBanAdd(guild, client, user, discordUser)];
             case 1:
                 _a.sent();
                 return [2 /*return*/];
@@ -122,7 +122,7 @@ client.on('guildBanAdd', function (guild, user) { return __awaiter(void 0, void 
 client.on('guildBanRemove', function (guild, user) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildBanRemove(guild, user, client, discordUser)];
+            case 0: return [4 /*yield*/, IndexFunctions_1.default.onGuildBanRemove(guild, client, user, discordUser)];
             case 1:
                 _a.sent();
                 return [2 /*return*/];

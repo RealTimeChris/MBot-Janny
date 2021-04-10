@@ -13,7 +13,7 @@ import HelperFunctions from './HelperFunctions';
 import botCommands from './CommandIndex';
 
 module IndexFunctions{
-    export async function onReady(client: any, discordUser: DiscordUser) {
+    export async function onReady(client: Discord.Client, discordUser: DiscordUser) {
         try {
             await discordUser.initializeInstance(client);
             await (client.user as Discord.ClientUser).setPresence({ status: 'online', activity: { name: '!help for commands!', type: 'STREAMING' } });
@@ -22,12 +22,12 @@ module IndexFunctions{
         }
     }
     
-    export async function onMessage(msg: Discord.Message, client: any, discordUser: DiscordUser) {
+    export async function onMessage(msg: Discord.Message, client: Discord.Client, discordUser: DiscordUser) {
         if (client.users.resolve(msg.author.id) === null) {
             console.log('Non-found user! Better escape!');
             return;
         }
-        if (msg.author.id === client.user.id) {
+        if (msg.author.id === client.user?.id) {
             console.log('Better not track our own messages!');
             return;
         }
@@ -81,7 +81,7 @@ module IndexFunctions{
             catch(error) {
                 console.log(error);
             }
-        } else if (msg.author.id !== client.user.id) {
+        } else if (msg.author.id !== client.user?.id) {
             const command = 'message';
             if (!botCommands.has(command)) {
                 return;
@@ -343,7 +343,7 @@ module IndexFunctions{
         console.log(`Completed Command: ${returnData.commandName}`);
     }
 
-    export async function onChannelCreate(newChannel:  Discord.Channel | Discord.DMChannel | Discord.GuildChannel, client: any, discordUser: DiscordUser) {
+    export async function onChannelCreate(newChannel:  Discord.Channel | Discord.DMChannel | Discord.GuildChannel, client: Discord.Client, discordUser: DiscordUser) {
         if (newChannel instanceof Discord.GuildChannel){
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: newChannel.guild.id, memberCount: newChannel.guild.memberCount, name: newChannel.guild.name});
             await guildData.getFromDataBase();
@@ -360,7 +360,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onMessageReactionAdd(messageReaction: Discord.MessageReaction, user: Discord.User, client: any, discordUser: DiscordUser) {
+    export async function onMessageReactionAdd(messageReaction: Discord.MessageReaction, user: Discord.User, client: Discord.Client, discordUser: DiscordUser) {
         const command = 'onmessagereactionadd';
 
         if (!botCommands.has(command)) {
@@ -392,7 +392,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onGuildBanAdd(guild: Discord.Guild, client: any, user: Discord.User, discordUser: DiscordUser) {
+    export async function onGuildBanAdd(guild: Discord.Guild, client: Discord.Client, user: Discord.User, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -417,7 +417,7 @@ module IndexFunctions{
         }	
     }
 
-    export async function onGuildBanRemove(guild: Discord.Guild, user: Discord.User, client: any, discordUser: DiscordUser) {
+    export async function onGuildBanRemove(guild: Discord.Guild, client: Discord.Client, user: Discord.User, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: guild.id, name: guild.name, memberCount: guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -442,7 +442,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onGuildMemberAdd(member: Discord.GuildMember, client: any, discordUser: DiscordUser) {
+    export async function onGuildMemberAdd(member: Discord.GuildMember, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: member.guild.id, name: member.guild.name, memberCount: member.guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -467,7 +467,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onGuildMemberRemove(member: Discord.GuildMember, client: any, discordUser: DiscordUser) {
+    export async function onGuildMemberRemove(member: Discord.GuildMember, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: member.guild.id, name: member.guild.name, memberCount: member.guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -492,7 +492,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onGuildMemberUpdate(oldGuildMember: Discord.GuildMember, newGuildMember: Discord.GuildMember, client: any, discordUser: DiscordUser) {
+    export async function onGuildMemberUpdate(oldGuildMember: Discord.GuildMember, newGuildMember: Discord.GuildMember, client: Discord.Client, discordUser: DiscordUser) {
         if (oldGuildMember.displayName !== newGuildMember.displayName) {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: oldGuildMember.guild.id, name: oldGuildMember.guild.name, memberCount: oldGuildMember.guild.memberCount});
             await guildData.getFromDataBase();
@@ -576,7 +576,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onInviteCreate(invite: Discord.Invite, client: any, discordUser: DiscordUser) {
+    export async function onInviteCreate(invite: Discord.Invite, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: invite.guild!.id, name: invite.guild!.name, memberCount: invite.guild!.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -601,7 +601,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onMessageDelete(message: Discord.Message, client: any, discordUser: DiscordUser) {
+    export async function onMessageDelete(message: Discord.Message, client: Discord.Client, discordUser: DiscordUser) {
         if (message.channel.type !== 'dm') {
             const guildData = new GuildData({dataBase: discordUser.dataBase, id: message.guild!.id, name: message.guild!.name, memberCount: message.guild!.memberCount});
             await guildData.getFromDataBase();
@@ -628,7 +628,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onMessageDeleteBulk(collection: Discord.Collection<string, Discord.Message>, client: any, discordUser: DiscordUser) {
+    export async function onMessageDeleteBulk(collection: Discord.Collection<string, Discord.Message>, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: collection.first()!.guild!.id, name: collection.first()!.guild!.name, memberCount: collection.first()!.guild!.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -653,7 +653,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onRoleCreate(role: Discord.Role, client: any, discordUser: DiscordUser) {
+    export async function onRoleCreate(role: Discord.Role, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild.id, name: role.guild.name, memberCount: role.guild.memberCount});
         await guildData.getFromDataBase();
         const command = 'onrolecreate';
@@ -671,7 +671,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onRoleDelete(role: Discord.Role, client: any, discordUser: DiscordUser) {
+    export async function onRoleDelete(role: Discord.Role, client: Discord.Client, discordUser: DiscordUser) {
         const guildData = new GuildData({dataBase: discordUser.dataBase, id: role.guild.id, name: role.guild.name, memberCount: role.guild.memberCount});
         await guildData.getFromDataBase();
         for (let x = 0; x < guildData.logs.length; x += 1) {
@@ -696,7 +696,7 @@ module IndexFunctions{
         }
     }
 
-    export async function onUserUpdate(oldUser: Discord.User, newUser: Discord.User, client: any, discordUser: DiscordUser) {
+    export async function onUserUpdate(oldUser: Discord.User, newUser: Discord.User, client: Discord.Client, discordUser: DiscordUser) {
         if (oldUser.username !== newUser.username) {
             const guildArray = client.guilds.cache.array() as Discord.Guild[];
             for (let x = 0; x < guildArray.length; x += 1) {
