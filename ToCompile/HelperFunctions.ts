@@ -503,9 +503,9 @@ module HelperFunctions{
         }
     }
 
-    async function deleteMessage(message: Discord.Message, messageNumber: number, messageCount: number, channelName: string){
+    async function deleteMessage(promiseArray: Promise<Discord.Message>[], message: Discord.Message, messageNumber: number, messageCount: number, channelName: string){
         console.log(`Deleting message number ${messageNumber} of ${messageCount}, in channel ${channelName}.`);
-        await message.delete();
+        promiseArray.push(message.delete());
     };
     
     /**
@@ -623,7 +623,9 @@ module HelperFunctions{
                         }
                         if (!arrayOfMessageArrays[y]![z]!.pinned) {
                             if (arrayOfMessageArrays[y]![z]?.deletable) {
-                                deleteMessage(arrayOfMessageArrays![y]![z]!, totalMessageCount - (y*100+z), totalMessageCount, currentChannel.name);
+                                const promiseArray: Promise<Discord.Message>[] = [];
+                                deleteMessage(promiseArray, arrayOfMessageArrays![y]![z]!, totalMessageCount - (y*100+z), totalMessageCount, currentChannel.name);
+                                await Promise.all(promiseArray);
                             }
                         }
                     }
@@ -675,7 +677,9 @@ module HelperFunctions{
                             return;
                         }
                         if (!arrayOfMessageArrays[w]![z]!.pinned) {
-                            deleteMessage(arrayOfMessageArrays![w]![z]!, totalMessageCount - (w * 100 + z), totalMessageCount, currentChannel.name);
+                            const promiseArray: Promise<Discord.Message>[] = [];
+                            deleteMessage(promiseArray, arrayOfMessageArrays![y]![z]!, totalMessageCount - (y*100+z), totalMessageCount, currentChannel.name);
+                            await Promise.all(promiseArray);
                         }
                     }
                 }
