@@ -5,12 +5,12 @@
 
 'use strict';
 
-import * as Discord from 'discord.js';
+import Discord = require('discord.js');
 import Level from 'level-ts';
 import GuildData from './GuildData';
 import GuildMemberData from './GuildMemberData';
 import HelperFunctions from './HelperFunctions';
-import config from './Config';
+import config = require('./config.json');
 
 /**
  * Class representing a single instance of "Discord".

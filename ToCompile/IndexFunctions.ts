@@ -5,9 +5,8 @@
 
 'use strict';
 
-import * as  Discord from 'discord.js';
+import Discord = require('discord.js');
 import EventEmitter from 'events';
-import { Worker } from 'worker_threads'
 import FoundationClasses from './FoundationClasses';
 import DiscordUser from './DiscordUser';
 import GuildData from './GuildData';
@@ -77,21 +76,8 @@ module IndexFunctions{
                 if (msg.deletable) {
                     await msg.delete();
                 }
-                
-                if (command = 'ghost') {
-                    const messageArgs = [commandData, discordUser];
-                    console.log(JSON.stringify(commandData));
-                    // server.js
-                    // Large array
-                    // Create a worker thread and pass to it the originalArray
-                    const worker = new Worker('./commands/ghostworker.js', {});
-                    worker.postMessage(messageArgs);
-                    // Receive messages from the worker thread
-                    worker.once('message', (commandReturnData: FoundationClasses.CommandReturnData) => {
-                    console.log(`Completed Command: ${commandReturnData.commandName}`);
-                });
-                }
-                try {
+    
+                try {	
                     console.log(`Command: '${command}' entered by user: ${msg.author.username}`);
                     const cmdReturnData = await botCommands.get(command)?.function(commandData, discordUser) as FoundationClasses.CommandReturnData;
                     console.log(`Completed Command: ${cmdReturnData.commandName}`);

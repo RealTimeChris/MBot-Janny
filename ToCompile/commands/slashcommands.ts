@@ -5,9 +5,9 @@
 
 'use strict';
 
-import * as Discord from 'discord.js';
+import Discord = require('discord.js');
 import DiscordInteractions from 'slash-commands';
-import * as SlashCommands from 'slash-commands';
+import SlashCommands = require('slash-commands');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
