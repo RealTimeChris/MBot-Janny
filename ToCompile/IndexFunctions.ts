@@ -77,16 +77,15 @@ module IndexFunctions{
                 if (msg.deletable) {
                     await msg.delete();
                 }
-
+                
                 if (command = 'ghost') {
+                    const messageArgs = [commandData, discordUser];
+                    console.log(JSON.stringify(commandData));
                     // server.js
                     // Large array
                     // Create a worker thread and pass to it the originalArray
-                    const passedCommandData = JSON.stringify(commandData);
-                    const passedDiscordUser = JSON.stringify(discordUser);
-                    const worker = new Worker('./commands/ghostworker.js', { 
-                        workerData: [passedCommandData, passedDiscordUser]
-                    });
+                    const worker = new Worker('./commands/ghostworker.js', {});
+                    worker.postMessage(messageArgs);
                     // Receive messages from the worker thread
                     worker.once('message', (commandReturnData: FoundationClasses.CommandReturnData) => {
                     console.log(`Completed Command: ${commandReturnData.commandName}`);

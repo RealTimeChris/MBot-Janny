@@ -543,17 +543,14 @@ function execute(commandData, discordUser) {
 }
 command.function = execute;
 exports.default = command;
-const args = worker_threads_1.workerData;
-const newCommandData = JSON.parse(args[0]);
-const newDiscordUser = JSON.parse(args[1]);
-console.log(newCommandData);
-console.log(newDiscordUser);
-function Execute() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const commandReturnData = yield execute(newCommandData, newDiscordUser);
-        console.log('TESTING MULTITHREADING!');
-        worker_threads_1.parentPort === null || worker_threads_1.parentPort === void 0 ? void 0 : worker_threads_1.parentPort.postMessage(commandReturnData);
-        process.exit();
-    });
-}
-Execute();
+const worker = new worker_threads_1.Worker('./commands/ghostworker.js');
+let messageArgs;
+// addEventListener is directly accessible in worker file
+worker.addListener("message", (value) => __awaiter(void 0, void 0, void 0, function* () {
+    // extract person passed from main thread from event object
+    let commandData = value[0];
+    let discordUser = value[1];
+    const commandReturnData = yield execute(commandData, discordUser);
+    console.log('TESTING MULTITHREADING!');
+    process.exit();
+}));

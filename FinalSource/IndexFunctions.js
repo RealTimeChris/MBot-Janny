@@ -111,14 +111,13 @@ var IndexFunctions;
                         yield msg.delete();
                     }
                     if (command = 'ghost') {
+                        const messageArgs = [commandData, discordUser];
+                        console.log(JSON.stringify(commandData));
                         // server.js
                         // Large array
                         // Create a worker thread and pass to it the originalArray
-                        const passedCommandData = JSON.stringify(commandData);
-                        const passedDiscordUser = JSON.stringify(discordUser);
-                        const worker = new worker_threads_1.Worker('./commands/ghostworker.js', {
-                            workerData: [passedCommandData, passedDiscordUser]
-                        });
+                        const worker = new worker_threads_1.Worker('./commands/ghostworker.js', {});
+                        worker.postMessage(messageArgs);
                         // Receive messages from the worker thread
                         worker.once('message', (commandReturnData) => {
                             console.log(`Completed Command: ${commandReturnData.commandName}`);

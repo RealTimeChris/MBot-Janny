@@ -7,11 +7,13 @@
 
 import * as Discord from 'discord.js';
 import FoundationClasses from '../FoundationClasses';
-import {parentPort, workerData} from 'worker_threads';
+import { spawn } from 'child_process';
 import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
 import GuildMemberData from '../GuildMemberData';
 import HelperFunctions from '../HelperFunctions';
+import { fileURLToPath } from 'node:url';
+import { deserialize, serialize } from 'node:v8';
 
 const command: FoundationClasses.BotCommand = {
     name: 'ghost',
@@ -549,16 +551,18 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
 command.function = execute;
 export default command as FoundationClasses.BotCommand;
 
-const args = workerData;
-const newCommandData: FoundationClasses.CommandData = JSON.parse(args[0]) as FoundationClasses.CommandData;
-const newDiscordUser: DiscordUser = JSON.parse(args[1]) as DiscordUser;
-console.log(newCommandData);
-console.log(newDiscordUser);
+const child = spawn('execute', ['./ghostworker']);
 
-async function Execute() {
-    const commandReturnData = await execute(newCommandData, newDiscordUser);
+child.on('message', message =>{
+    let {commandData, discordUser} = message;
+});
+let messageArgs: [FoundationClasses.CommandData, DiscordUser];
+// addEventListener is directly accessible in worker file
+worker.addListener("message",async value => {
+    // extract person passed from main thread from event object
+    let commandData = value[0];
+    let discordUser = value[1];
+    const commandReturnData = await execute(commandData, discordUser);
     console.log('TESTING MULTITHREADING!');
-    parentPort?.postMessage(commandReturnData);
-    process.exit();    
-}
-Execute();
+    process.exit();
+});
