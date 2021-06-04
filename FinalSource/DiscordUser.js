@@ -20,7 +20,7 @@ const level_ts_1 = __importDefault(require("level-ts"));
 const GuildData_1 = __importDefault(require("./GuildData"));
 const GuildMemberData_1 = __importDefault(require("./GuildMemberData"));
 const HelperFunctions_1 = __importDefault(require("./HelperFunctions"));
-const Config_1 = __importDefault(require("./Config"));
+const config = require("./config.json");
 /**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
  */
@@ -35,7 +35,7 @@ class DiscordUser {
     initializeInstance(client) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const dataBaseFilePath = `${Config_1.default.dataBaseFilePath} + ${client.user.id}`;
+                const dataBaseFilePath = `${config.dataBaseFilePath} + ${client.user.id}`;
                 this.dataBase = new level_ts_1.default(dataBaseFilePath);
                 this.userData = yield this.getUserDataFromDB(client);
                 this.userData.dataBaseFilePath = dataBaseFilePath;
@@ -67,13 +67,13 @@ class DiscordUser {
                     console.log("Adding new entry for the current user's data!");
                     const userData = {
                         activeInviteGuilds: [],
-                        botCommanders: Config_1.default.botCommanders,
-                        botToken: Config_1.default.botToken,
-                        currencyName: Config_1.default.currencyName,
+                        botCommanders: config.botCommanders,
+                        botToken: config.botToken,
+                        currencyName: config.currencyName,
                         dataBaseFilePath: this.userData.dataBaseFilePath,
                         guildCount: client.guilds.cache.size,
-                        prefix: Config_1.default.prefix,
-                        publicKey: Config_1.default.publicKey,
+                        prefix: config.prefix,
+                        publicKey: config.publicKey,
                         startupCall: true,
                         userID: client.user.id,
                         userName: client.user.username
@@ -116,13 +116,13 @@ class DiscordUser {
                 console.log('Updating the user data!');
                 const newUserData = {
                     activeInviteGuilds: userData.activeInviteGuilds,
-                    botCommanders: Config_1.default.botCommanders,
-                    botToken: Config_1.default.botToken,
-                    currencyName: Config_1.default.currencyName,
+                    botCommanders: config.botCommanders,
+                    botToken: config.botToken,
+                    currencyName: config.currencyName,
                     dataBaseFilePath: this.userData.dataBaseFilePath,
                     guildCount: client.guilds.cache.size,
-                    prefix: Config_1.default.prefix,
-                    publicKey: Config_1.default.publicKey,
+                    prefix: config.prefix,
+                    publicKey: config.publicKey,
                     startupCall: this.userData.startupCall,
                     userID: client.user.id,
                     userName: client.user.username,

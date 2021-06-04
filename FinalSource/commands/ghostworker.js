@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Discord = __importStar(require("discord.js"));
-const worker_threads_1 = require("worker_threads");
+const child_process_1 = require("child_process");
 const GuildData_1 = __importDefault(require("../GuildData"));
 const GuildMemberData_1 = __importDefault(require("../GuildMemberData"));
 const HelperFunctions_1 = __importDefault(require("../HelperFunctions"));
@@ -543,7 +543,10 @@ function execute(commandData, discordUser) {
 }
 command.function = execute;
 exports.default = command;
-const worker = new worker_threads_1.Worker('./commands/ghostworker.js');
+const child = child_process_1.spawn('execute', ['./ghostworker']);
+child.on('message', message => {
+    let { commandData, discordUser } = message;
+});
 let messageArgs;
 // addEventListener is directly accessible in worker file
 worker.addListener("message", (value) => __awaiter(void 0, void 0, void 0, function* () {

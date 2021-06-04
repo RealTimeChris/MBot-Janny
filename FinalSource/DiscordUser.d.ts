@@ -1,4 +1,4 @@
-import * as Discord from 'discord.js';
+import Discord = require('discord.js');
 /**
  * Class representing a single instance of "Discord".
  */

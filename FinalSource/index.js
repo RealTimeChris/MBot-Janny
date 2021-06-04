@@ -3,25 +3,6 @@
 // Chris M.s
 // https://github.com/RealTimeChris
 'use strict';
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,11 +16,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Discord = __importStar(require("discord.js"));
+const Discord = require("discord.js");
 const events_1 = __importDefault(require("events"));
 const IndexFunctions_1 = __importDefault(require("./IndexFunctions"));
 const DiscordUser_1 = __importDefault(require("./DiscordUser"));
-const Config_1 = __importDefault(require("./Config"));
+const config = require("./config.json");
 const discordUser = new DiscordUser_1.default();
 const client = new Discord.Client();
 const eventEmitter = new events_1.default();
@@ -101,4 +82,4 @@ client.on('roleDelete', (role) => __awaiter(void 0, void 0, void 0, function* ()
 client.on('userUpdate', (oldUser, newUser) => __awaiter(void 0, void 0, void 0, function* () {
     yield IndexFunctions_1.default.onUserUpdate(oldUser, newUser, client, discordUser);
 }));
-client.login(Config_1.default.botToken);
+client.login(config.botToken);

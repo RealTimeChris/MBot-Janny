@@ -1,4 +1,4 @@
-import * as Discord from 'discord.js';
+import Discord = require('discord.js');
 declare module FoundationClasses {
     /**
      * Class representing permission overwrites for Discord.
