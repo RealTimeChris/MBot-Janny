@@ -206,7 +206,7 @@ module HelperFunctions{
     export async function applyDefaultRoles(guildData: GuildData, guildMember: Discord.GuildMember): Promise<void> {
         let currentIndex = 0;
         try {
-            if (guildData.verificationSystem.channelID === null) {
+            if (guildData.verificationSystem.channelID === null||guildData.verificationSystem.channelID === "") {
                 const guildMemberRoleManager = new Discord.GuildMemberRoleManager(guildMember);
 
                 for (let x = 0; x < guildData.defaultRoleIDs.length; x += 1) {

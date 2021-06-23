@@ -116,7 +116,7 @@ export default class DiscordUser {
             const userData = await this.getUserDataFromDB(client);
             console.log('Updating the user data!');
             const newUserData: DiscordUserData = {
-                activeInviteGuilds: userData.activeInviteGuilds,
+                activeInviteGuilds: [],
                 botCommanders: config.botCommanders,
                 botToken: config.botToken,
                 currencyName: config.currencyName,

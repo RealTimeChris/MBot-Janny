@@ -16,7 +16,7 @@ import botCommands from './CommandIndex';
 module IndexFunctions{
     export async function onHeartBeat(client: Discord.Client, discordUser: DiscordUser) {
         try{
-            await HelperFunctions.sendInviteIfGuildIsActive(client, discordUser);
+            //await HelperFunctions.sendInviteIfGuildIsActive(client, discordUser);
             await HelperFunctions.updateAndSaveDiscordRecord(client, discordUser);
             await discordUser.updateDataCacheAndSaveToFile(client);
             await HelperFunctions.sendTimedMessagesIfTimeHasPassed(client, discordUser);

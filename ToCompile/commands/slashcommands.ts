@@ -626,7 +626,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
         let msgEmbeds: Discord.MessageEmbed[] = [];
         for (let x = 0; x < globalCommands.length; x += 1) {
             msgString += `__**Name**__: ${globalCommands[x]?.name} __**Description**__: ${globalCommands[x]?.description}\n`;
-            if (msgString.length >= 2000 || x === globalCommands.length - 1) {
+            if (msgString.length >= 1900 || x === globalCommands.length - 1) {
                 let msgEmbed = new Discord.MessageEmbed();
                 if (commandData.guildMember instanceof Discord.User) {
                     msgEmbed
