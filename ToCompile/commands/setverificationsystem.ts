@@ -10,7 +10,6 @@ import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
 import HelperFunctions from '../HelperFunctions';
-import { RSA_PKCS1_OAEP_PADDING } from 'node:constants';
 
 const command: FoundationClasses.BotCommand = {
     name: 'setverificationsystem',

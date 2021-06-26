@@ -9,7 +9,6 @@ import Discord = require('discord.js');
 import FoundationClasses from '../FoundationClasses';
 import DiscordUser from '../DiscordUser';
 import GuildData from '../GuildData';
-import { FormatInputPathObject } from 'node:path';
 
 const command: FoundationClasses.BotCommand = {
     name: 'onguildbanremove',
