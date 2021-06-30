@@ -123,10 +123,11 @@ function execute(commandData) {
                     _a.label = 6;
                 case 6: return [2 /*return*/, commandReturnData];
                 case 7:
+                    if (!(commandData.args[0] == "janny")) return [3 /*break*/, 13];
                     isFound_1 = false;
                     commandName_1 = '';
                     commandFiles_1.forEach(function (value) {
-                        if (commandData.args[0] === value.name) {
+                        if (commandData.args[1] === value.name) {
                             isFound_1 = true;
                             commandDescription_1 = value.description;
                             commandName_1 = value.name;

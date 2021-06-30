@@ -80,60 +80,61 @@ async function execute(commandData: FoundationClasses.CommandData): Promise<Foun
 
             return commandReturnData;
         }
-
-        let isFound = false;
-        let commandDescription;
-        let commandName = '';
-
-        commandFiles.forEach((value: FoundationClasses.BotCommand) => {
-            if (commandData.args[0] === value.name) {
-                isFound = true;
-                commandDescription = value.description;
-                commandName = value.name;
-            }
-        });
-
-        if (isFound === false) {
-            const msgString = `------\n**Sorry, but that command was not found!**\n------`;
-            let msgEmbed = new Discord.MessageEmbed()
-				.setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
-				.setColor([254, 254, 254])
-				.setDescription(msgString)
-				.setTimestamp(Date() as unknown as Date)
-				.setTitle('__**Command Issue:**__')
-			await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
-            return commandReturnData;
-        }
-
-        if ((commandDescription as unknown as Discord.MessageEmbed) instanceof Discord.MessageEmbed) {
-            (commandDescription as unknown as Discord.MessageEmbed)
-                .setAuthor(commandData.guildMember!.client.user!.username,
-                commandData.guildMember!.client.user!.avatarURL()!)
-                .setColor([254, 254, 254])
-                .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
-                .setTimestamp(Date() as unknown as Date);
-            await HelperFunctions.sendMessageWithCorrectChannel(commandData, commandDescription as unknown as Discord.MessageEmbed);
-        } 
-        else {
-            const messageEmbed = new Discord.MessageEmbed();
-            if (commandData.guildMember instanceof Discord.GuildMember) {
-                messageEmbed
-                    .setDescription(commandDescription)
+        else if (commandData.args[0] == "janny"){
+            let isFound = false;
+            let commandDescription;
+            let commandName = '';
+    
+            commandFiles.forEach((value: FoundationClasses.BotCommand) => {
+                if (commandData.args[1] === value.name) {
+                    isFound = true;
+                    commandDescription = value.description;
+                    commandName = value.name;
+                }
+            });
+    
+            if (isFound === false) {
+                const msgString = `------\n**Sorry, but that command was not found!**\n------`;
+                let msgEmbed = new Discord.MessageEmbed()
+                    .setAuthor((commandData.guildMember as Discord.GuildMember).user.username, (commandData.guildMember as Discord.GuildMember).user.avatarURL()!)
+                    .setColor([254, 254, 254])
+                    .setDescription(msgString)
                     .setTimestamp(Date() as unknown as Date)
-                    .setAuthor(commandData.guildMember.client.user!.username, commandData.guildMember.client.user!.avatarURL()!)
-                    .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
-                    .setColor([254, 254, 254]);
+                    .setTitle('__**Command Issue:**__')
+                await HelperFunctions.sendMessageWithCorrectChannel(commandData, msgEmbed);
+                return commandReturnData;
             }
-            else if (commandData.guildMember instanceof Discord.User) {
-                messageEmbed
-                    .setDescription(commandDescription)
-                    .setTimestamp(Date() as unknown as Date)
-                    .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL()!)
+    
+            if ((commandDescription as unknown as Discord.MessageEmbed) instanceof Discord.MessageEmbed) {
+                (commandDescription as unknown as Discord.MessageEmbed)
+                    .setAuthor(commandData.guildMember!.client.user!.username,
+                    commandData.guildMember!.client.user!.avatarURL()!)
+                    .setColor([254, 254, 254])
                     .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
-                    .setColor([254, 254, 254]);
+                    .setTimestamp(Date() as unknown as Date);
+                await HelperFunctions.sendMessageWithCorrectChannel(commandData, commandDescription as unknown as Discord.MessageEmbed);
+            } 
+            else {
+                const messageEmbed = new Discord.MessageEmbed();
+                if (commandData.guildMember instanceof Discord.GuildMember) {
+                    messageEmbed
+                        .setDescription(commandDescription)
+                        .setTimestamp(Date() as unknown as Date)
+                        .setAuthor(commandData.guildMember.client.user!.username, commandData.guildMember.client.user!.avatarURL()!)
+                        .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
+                        .setColor([254, 254, 254]);
+                }
+                else if (commandData.guildMember instanceof Discord.User) {
+                    messageEmbed
+                        .setDescription(commandDescription)
+                        .setTimestamp(Date() as unknown as Date)
+                        .setAuthor(commandData.guildMember.username, commandData.guildMember.avatarURL()!)
+                        .setTitle(`__**${commandName.charAt(0).toUpperCase() + commandName.slice(1)} Help:**__`)
+                        .setColor([254, 254, 254]);
+                }
+                await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
             }
-            await HelperFunctions.sendMessageWithCorrectChannel(commandData, messageEmbed);
-        }
+        }       
         return commandReturnData;
     } catch (error) {
         return new Promise((resolve, reject) => {
