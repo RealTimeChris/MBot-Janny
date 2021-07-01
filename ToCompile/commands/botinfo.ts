@@ -59,8 +59,6 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
        fields.push(field5);
        const field6 = { name: '__Locale:__', value:commandData.guild?.client.user?.locale?.toString()!, inline: true };
        fields.push(field6);
-       const field7 = { name: 'Verified?:__', value:commandData.guild?.client.user?.verified.valueOf.toString()!, inline: true};
-       fields.push(field7);
 
         const messageEmbed = new Discord.MessageEmbed()
            .setImage(commandData.guildMember?.client.user?.avatarURL()!)
