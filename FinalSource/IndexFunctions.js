@@ -303,7 +303,8 @@ var IndexFunctions;
                         if (name_full === 'help') {
                             if (options_full[0].options !== undefined) {
                                 value = options_full[0].options[0].value;
-                                commandData.args[0] = value;
+                                commandData.args[0] = 'janny';
+                                commandData.args[1] = value;
                             }
                         }
                         if (name_full === 'jannyoptinos') {

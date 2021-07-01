@@ -22,6 +22,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
             commandName: command.name
         };
 
+
         if (commandData.guildMember instanceof Discord.User) {
             const msgString = '------\n**TEST!**\n------';
             let msgEmbed = new Discord.MessageEmbed()
