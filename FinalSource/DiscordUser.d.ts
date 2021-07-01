@@ -14,6 +14,7 @@ interface DiscordUserData {
     startupCall: boolean;
     userID: string;
     userName: string;
+    guildMemberList: string[];
 }
 /**
  *  Class representing an entire instance of Discord, from the perspective of a given bot.
