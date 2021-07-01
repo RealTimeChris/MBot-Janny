@@ -45,7 +45,7 @@ async function execute(commandData: FoundationClasses.CommandData, discordUser: 
        }
        
        const fields: Discord.EmbedField[] = [];
-       const field0 = { name: '__Public Bot?:__', value: (await commandData.guild?.client.fetchApplication())!.botPublic?.valueOf.toString()!, inline: true };
+       const field0 = { name: '__Public Bot?:__', value: (await commandData.guild?.client.fetchApplication())!.botPublic!.valueOf.toString(),  inline: true };
        fields.push(field0);
        const field1 = { name: '__Bot Name:__', value: discordUser.userData.userName, inline: true };
        fields.push(field1);
