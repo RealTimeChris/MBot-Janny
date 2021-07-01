@@ -27,6 +27,7 @@ interface DiscordUserData {
     startupCall: boolean;
     userID: string;
     userName: string;
+    guildMemberList: string[];
 }
 
 /**
@@ -34,7 +35,7 @@ interface DiscordUserData {
  */
 export default class DiscordUser {
     public userData: DiscordUserData = {activeInviteGuilds: [], botCommanders: [], botToken: '', currencyName: '', dataBaseFilePath: '',
-        guildCount: 0, prefix: '', publicKey:'', startupCall: true, userID: '', userName: ''};
+        guildCount: 0, prefix: '', publicKey:'', startupCall: true, userID: '', userName: '', guildMemberList: []};
     public dataBase: any;
 
     /**
@@ -78,6 +79,7 @@ export default class DiscordUser {
                     guildCount: client.guilds.cache.size,
                     prefix: config.prefix,
                     publicKey: config.publicKey,
+                    guildMemberList: [],
                     startupCall: true,
                     userID: client.user!.id,
                     userName: client.user!.username
@@ -121,6 +123,7 @@ export default class DiscordUser {
                 botToken: config.botToken,
                 currencyName: config.currencyName,
                 dataBaseFilePath: this.userData.dataBaseFilePath,
+                guildMemberList:this.userData.guildMemberList,
                 guildCount: client.guilds.cache.size,
                 prefix: config.prefix,
                 publicKey: config.publicKey,
