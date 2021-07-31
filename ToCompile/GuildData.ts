@@ -36,7 +36,7 @@ export default class GuildData extends FoundationClasses.DiscordEntity {
     public timedMessages: FoundationClasses.TimedMessage[] = [];
     public trackedUsers: FoundationClasses.TrackedUser[] = [];
     public verificationSystem: FoundationClasses.VerificationSystem = {channelID: '', emoji: '', messageID: ''};
-    
+
     public async getFromDataBase(): Promise<void> {
         try{
             const guildData = await this.dataBase.get(this.dataBaseKey) as GuildData;
